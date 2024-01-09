@@ -21,6 +21,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
     <swagger.version>2.2.19</swagger.version>
+    <spring-core.version>6.1.2</spring-core.version>
+    <jakarta.version>3.1.0</jakarta.version>
   </properties>
 
   <distributionManagement>
@@ -31,37 +33,19 @@
   </distributionManagement>
 
   <dependencies>
-    <dependency>
-      <groupId>org.jetbrains.kotlin</groupId>
-      <artifactId>kotlin-test-junit5</artifactId>
-      <version>${kotlin.version}</version>
-      <scope>test</scope>
-    </dependency>
+
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-reflect</artifactId>
-      <version>${kotlin.version}</version>
     </dependency>
     <dependency>
       <groupId>org.jetbrains.kotlin</groupId>
       <artifactId>kotlin-stdlib-jdk8</artifactId>
-      <version>${kotlin.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.kotest</groupId>
-      <artifactId>kotest-assertions-core-jvm</artifactId>
-      <version>${kotest.version}</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>com.fasterxml.jackson.datatype</groupId>
-      <artifactId>jackson-datatype-jsr310</artifactId>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.module</groupId>
       <artifactId>jackson-module-kotlin</artifactId>
-      <scope>test</scope>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>com.fasterxml.jackson.core</groupId>
@@ -78,25 +62,33 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-core</artifactId>
-      <version>6.1.2</version>
+      <version>${spring-core.version}</version>
     </dependency>
     <dependency>
       <groupId>jakarta.persistence</groupId>
       <artifactId>jakarta.persistence-api</artifactId>
-      <version>3.1.0</version>
+      <version>${jakarta.version}</version>
     </dependency>
     <dependency>
       <groupId>io.swagger.core.v3</groupId>
       <artifactId>swagger-annotations</artifactId>
-      <version>${swagger.version}</version>
     </dependency>
-      <dependency>
-          <groupId>com.fasterxml.jackson.module</groupId>
-          <artifactId>jackson-module-kotlin</artifactId>
-          <version>2.16.0</version>
-          <scope>compile</scope>
-      </dependency>
 
+    <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-test-junit5</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.kotest</groupId>
+      <artifactId>kotest-assertions-core-jvm</artifactId>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>com.fasterxml.jackson.datatype</groupId>
+      <artifactId>jackson-datatype-jsr310</artifactId>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <profiles>
