@@ -1,0 +1,14 @@
+MED_FORELDER:
+  intern: "Registrert på adresse"
+DOKUMENTERT_SKOLEGANG:
+  intern: "Dokumentert skolegang"
+IKKE_MED_FORELDER:
+  intern: "Ikke registrert på adresse"
+MED_VERGE:
+  intern: "Bor med verge"
+ALENE:
+  intern: "Bor alene"
+DELT_BOSTED:
+  intern: "Delt bosted"
+REGNES_IKKE_SOM_BARN:
+  intern: "Regnes ikke som barn"

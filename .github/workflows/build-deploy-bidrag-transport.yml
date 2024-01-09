@@ -1,0 +1,23 @@
+name: Build-Deploy
+on:
+  push:
+    paths:
+      - "bidrag-transport/**"
+    branches-ignore:
+      - main
+  pull_request:
+    types: [closed]
+
+permissions:
+  contents: "read"
+  id-token: "write"
+  packages: "write"
+
+jobs:
+  build-and-release:
+    name: Build and release package
+    needs: build-artifact
+    uses: ./.github/workflows/build_and_release_package.yml
+    with:
+      package-name: bidrag-transport
+    secrets: inherit

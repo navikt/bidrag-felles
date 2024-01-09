@@ -1,0 +1,12 @@
+GIFT_SAMBOER:
+  intern: "Gift/samboer"
+  bruker:
+    NB: "Gift/samboer"
+BOR_ALENE_MED_BARN:
+  intern: "Bor alene med barn"
+  bruker:
+    NB: "Bor alene med barn"
+SAMBOER:
+  intern: "Samboer"
+ENSLIG:
+  intern: "Enslig"
