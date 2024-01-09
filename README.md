@@ -1,1 +1,3 @@
-# bidrag-felles
+# Bidrag-felles
+
+Felles biblioteker for bidrag
