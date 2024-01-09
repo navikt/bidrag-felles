@@ -3,8 +3,6 @@ on:
   push:
     paths:
       - "bidrag-domene/**"
-    branches-ignore:
-      - main
   pull_request:
     types: [closed]
 
@@ -16,7 +14,6 @@ permissions:
 jobs:
   build-and-release:
     name: Build and release package
-    needs: build-artifact
     uses: ./.github/workflows/build_and_release_package.yml
     with:
       package-name: bidrag-domene
