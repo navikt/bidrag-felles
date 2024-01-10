@@ -40,6 +40,14 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - name: Setting version
+        run: |
+          export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y.%m%d.%H%M%S')
+          export VERSION=${GIT_COMMIT_DATE}
+          echo "VERSION=${GIT_COMMIT_DATE}" >> $GITHUB_ENV
+          echo "Setting version $VERSION"
       - uses: release-drafter/release-drafter@v5
+        with:
+          version: ${{VERSION}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
