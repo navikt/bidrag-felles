@@ -15,6 +15,7 @@ categories:
   - title: '🧰 Maintenance'
     labels:
       - 'chore'
+      - 'changes'
   - title: '⬆️ Dependency upgrades'
     labels:
       - 'bump'
