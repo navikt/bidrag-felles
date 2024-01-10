@@ -26,10 +26,5 @@ jobs:
         run: mvn clean install
       - name: Deploy to Github Package
         run: |
-          echo "Release package ${{inputs.package-name}} with version ${{ env.VERSION }}"
-      #   mvn source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false
-      - name: Create a GitHub release
-        uses: ncipollo/release-action@v1
-        with:
-          tag: ${{inputs.package-name}}_${{env.VERSION}}
-          name: ${{inputs.package-name}}:${{env.VERSION}}
+          echo "Release package with version ${{ env.VERSION }}"
+          mvn source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false
