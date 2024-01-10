@@ -1,0 +1,31 @@
+name: Publish artifacts
+on:
+  release:
+    types: [published]
+env:
+  VERSION: ${{ github.event.release.tag_name }}
+
+permissions:
+  contents: "write"
+  id-token: "write"
+  packages: "write"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'temurin'
+          cache: 'maven'
+      - name: Deploy to Github Package
+        run: |
+          echo "Release package ${{inputs.package-name}} with version ${{ env.VERSION }}"
+      #   mvn source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{inputs.package-name}}_${{env.VERSION}}
+          name: ${{inputs.package-name}}:${{env.VERSION}}

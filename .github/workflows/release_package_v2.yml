@@ -23,14 +23,9 @@ jobs:
             export VERSION=${GIT_COMMIT_DATE}
             echo "VERSION=${GIT_COMMIT_DATE}" >> $GITHUB_ENV
             echo "Setting version $VERSION"
-            mvn versions:set -DnewVersion="$VERSION" --pl ${{inputs.package-name}} --am
-            mvn versions:commit --pl ${{inputs.package-name}} --am
+            mvn versions:set -DnewVersion="$VERSION"
+            mvn versions:commit
         - name: Deploy to Github Package
           run: |
              echo "Release package ${{inputs.package-name}} with version ${{ env.VERSION }}"
-#            mvn source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false --pl ${{inputs.package-name}} --am
-        - name: Create a GitHub release
-          uses: ncipollo/release-action@v1
-          with:
-            tag: ${{inputs.package-name}}_${{env.VERSION}}
-            name: ${{inputs.package-name}}:${{env.VERSION}}
+#            mvn --settings source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false --pl ${{inputs.package-name}} --am

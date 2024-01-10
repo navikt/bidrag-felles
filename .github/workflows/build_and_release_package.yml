@@ -35,7 +35,5 @@ jobs:
     name: Release package
     needs: build-artifact
     if: github.base_ref == 'main' || github.ref == 'refs/heads/main'
-    uses: ./.github/workflows/release_package.yml
-    with:
-      package-name: ${{inputs.package-name}}
+    uses: ./.github/workflows/release_package_v2.yml
     secrets: inherit
