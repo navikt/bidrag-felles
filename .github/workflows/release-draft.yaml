@@ -48,6 +48,6 @@ jobs:
           echo "Setting version $VERSION"
       - uses: release-drafter/release-drafter@v5
         with:
-          version: ${{VERSION}}
+          version: ${{env.VERSION}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
