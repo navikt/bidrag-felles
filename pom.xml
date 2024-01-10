@@ -11,7 +11,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <revision>1.0</revision>
+        <revision>1.0-SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.9.22</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
@@ -29,7 +29,7 @@
     <distributionManagement>
         <repository>
             <id>github</id>
-            <url>https://maven.pkg.github.com/navikt/bidrag-domene</url>
+            <url>https://maven.pkg.github.com/navikt/bidrag-felles</url>
         </repository>
     </distributionManagement>
 
