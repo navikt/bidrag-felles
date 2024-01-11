@@ -1,25 +1,38 @@
 change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
 categories:
-  - title: '🚀 Features'
+  - title: 'Bidrag domene'
     labels:
-      - 'feature'
-      - 'enhancement'
-  - title: '⚠️ Breaking Changes'
+      - 'bidrag-domene'
+  - title: '🚌 Bidrag transport'
     labels:
-      - 'breaking'
-  - title: '🐛 Bug Fixes'
-    labels:
-      - 'fix'
-      - 'bugfix'
-      - 'bug'
-  - title: '🧰 Maintenance'
-    labels:
-      - 'chore'
-      - 'changes'
-  - title: '⬆️ Dependency upgrades'
-    labels:
-      - 'bump'
-      - 'dependencies'
+      - 'bidrag-transport'
+#  - title: '🚀 Features'
+#    labels:
+#      - 'feature'
+#      - 'enhancement'
+#  - title: '⚠️ Breaking Changes'
+#    labels:
+#      - 'breaking'
+#  - title: '🐛 Bug Fixes'
+#    labels:
+#      - 'fix'
+#      - 'bugfix'
+#      - 'bug'
+#  - title: '🧰 Maintenance'
+#    labels:
+#      - 'chore'
+#      - 'changes'
+#  - title: '⬆️ Dependency upgrades'
+#    labels:
+#      - 'bump'
+#      - 'dependencies'
+autolabeler:
+  - label: 'bidrag-domene'
+    files:
+      - 'bidrag-domene/**'
+  - label: 'bidrag-transport'
+    branch:
+      - 'bidrag-transport/**'
 template: |
   ## What's Changed
   $CHANGES
