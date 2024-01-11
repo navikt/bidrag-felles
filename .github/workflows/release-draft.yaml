@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 env:
-  publish: ${{github.ref == 'refs/heads/main' && !contains(github.event.pull_request.labels.*.name, 'dependencies')}}
+  publish: ${{github.ref == 'refs/heads/main' && !startsWith(github.ref, 'refs/dependabot')}}
 
 jobs:
   build-artifact:
