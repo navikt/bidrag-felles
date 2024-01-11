@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.inntekt.response
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
+import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.YearMonth
@@ -44,6 +45,8 @@ data class SummertÅrsinntekt(
 data class InntektPost(
     @Schema(description = "Kode for inntektspost", example = "bonus")
     val kode: String,
+    @Schema(description = "Inntekstype inntekstposten er knyttet til", example = "PENSJON")
+    val inntekstype: Inntektstype? = null,
     @Schema(description = "Visningsnavn for kode", example = "Bonus")
     val visningsnavn: String,
     @Schema(description = "Beløp som utgør inntektsposten", example = "60000")

@@ -65,5 +65,6 @@ jobs:
           version: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
           name: "Release ${{ env.VERSION }}"
+          publish: ${{!contains(github.event.pull_request.labels.*.name, 'dependencies')}}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
