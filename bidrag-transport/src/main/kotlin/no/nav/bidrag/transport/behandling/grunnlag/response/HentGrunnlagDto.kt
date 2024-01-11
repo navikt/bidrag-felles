@@ -1,7 +1,6 @@
 package no.nav.bidrag.transport.behandling.grunnlag.response
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.nav.bidrag.transport.person.SivilstandPdlHistorikkDto
 import java.time.LocalDateTime
 
 data class HentGrunnlagDto(
@@ -28,7 +27,7 @@ data class HentGrunnlagDto(
     val husstandsmedlemmerOgEgneBarnListe: List<RelatertPersonGrunnlagDto>,
 
     @Schema(description = "Periodisert liste over en persons sivilstand")
-    val sivilstandListe: List<SivilstandPdlHistorikkDto>,
+    val sivilstandListe: List<SivilstandGrunnlagDto>,
 
     @Schema(description = "Periodisert liste over innhentet barnetilsyn")
     val barnetilsynListe: List<BarnetilsynGrunnlagDto>,

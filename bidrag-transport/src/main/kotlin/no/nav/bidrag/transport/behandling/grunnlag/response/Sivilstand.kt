@@ -30,3 +30,26 @@ data class SivilstandDto(
     @Schema(description = "Hentet tidspunkt")
     val hentetTidspunkt: LocalDateTime,
 )
+
+data class SivilstandGrunnlagDto(
+    @Schema(description = "Id til personen sivilstanden er rapportert for")
+    val personId: String?,
+
+    @Schema(description = "Type sivilstand fra PDL")
+    val type: SivilstandskodePDL?,
+
+    @Schema(description = "Dato sivilstanden er gyldig fra")
+    val gyldigFom: LocalDate?,
+
+    @Schema(description = "Dato NAV tidligst har fått bekreftet sivilstanden")
+    val bekreftelsesdato: LocalDate?,
+
+    @Schema(description = "Master for opplysningen om sivilstand (FREG eller PDL)")
+    val master: String?,
+
+    @Schema(description = "Tidspunktet sivilstanden er registrert")
+    val registrert: LocalDateTime?,
+
+    @Schema(description = "Angir om sivilstanden er historisk (true) eller aktiv (false)")
+    val historisk: Boolean?,
+)

@@ -21,13 +21,13 @@ data class ArbeidsforholdGrunnlagDto(
     val arbeidsgiverOrgnummer: String?,
 
     @Schema(description = "Liste av ansettelsesdetaljer, med eventuell historikk")
-    val ansettelsesdetaljer: List<Ansettelsesdetaljer>?,
+    val ansettelsesdetaljerListe: List<Ansettelsesdetaljer>?,
 
     @Schema(description = "Liste over registrerte permisjoner")
-    val permisjoner: List<Permisjon>?,
+    val permisjonListe: List<Permisjon>?,
 
     @Schema(description = "Liste over registrerte permitteringer")
-    val permitteringer: List<Permittering>?,
+    val permitteringListe: List<Permittering>?,
 )
 
 data class Ansettelsesdetaljer(
