@@ -90,7 +90,7 @@
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-source-plugin</artifactId>
-            <version>3.3.0</version>
+            <version>${maven-source.version}</version>
             <executions>
               <execution>
                 <id>attach-sources</id>
@@ -107,12 +107,12 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-jar-plugin</artifactId>
-              <version>3.3.0</version>
+              <version>${maven-jar.version}</version>
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-compiler-plugin</artifactId>
-              <version>3.11.0</version>
+              <version>${maven-compiler.version}</version>
               <configuration>
                 <release>17</release>
               </configuration>
@@ -120,7 +120,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-release-plugin</artifactId>
-              <version>3.0.1</version>
+              <version>${maven-release.version}</version>
               <configuration>
                 <autoVersionSubmodules>true</autoVersionSubmodules>
                 <useReleaseProfile>true</useReleaseProfile>
@@ -131,7 +131,7 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-source-plugin</artifactId>
-              <version>3.3.0</version>
+              <version>${maven-source.version}</version>
               <executions>
                 <execution>
                   <id>attach-sources</id>
@@ -144,27 +144,27 @@
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-deploy-plugin</artifactId>
-              <version>3.1.1</version>
+              <version>${maven-deploy.version}</version>
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-surefire-plugin</artifactId>
-              <version>3.2.2</version>
+              <version>${maven-surefire.version}</version>
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-failsafe-plugin</artifactId>
-              <version>3.2.2</version>
+              <version>${maven-failsafe.version}</version>
             </plugin>
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-resources-plugin</artifactId>
-              <version>3.3.1</version>
+              <version>${maven-resources.version}</version>
             </plugin>
             <plugin>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>flatten-maven-plugin</artifactId>
-              <version>1.5.0</version>
+              <version>${flatten-maven.version}</version>
             </plugin>
           </plugins>
         </pluginManagement>
@@ -212,17 +212,17 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
-        <version>2.22.0</version>
+        <version>${maven-surefire.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.3.0</version>
+        <version>${maven-jar.version}</version>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-release-plugin</artifactId>
-        <version>3.0.1</version>
+        <version>${maven-release.version}</version>
         <configuration>
           <autoVersionSubmodules>true</autoVersionSubmodules>
           <useReleaseProfile>true</useReleaseProfile>
@@ -233,7 +233,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-antrun-plugin</artifactId>
-        <version>3.1.0</version>
+        <version>${maven-antrun.version}</version>
         <executions>
           <execution>
             <id>ktlint</id>
