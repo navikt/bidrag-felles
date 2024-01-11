@@ -1,0 +1,31 @@
+name: Release package
+on:
+  workflow_call:
+    inputs:
+      package-name:
+        required: true
+        type: string
+        description: Navn på pakken som skal publiseres
+
+jobs:
+  release:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-java@v4
+          with:
+            java-version: 21
+            distribution: 'temurin'
+            cache: 'maven'
+        - name: Setting version
+          run: |
+            export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y.%m%d.%H%M%S')
+            export VERSION=${GIT_COMMIT_DATE}
+            echo "VERSION=${GIT_COMMIT_DATE}" >> $GITHUB_ENV
+            echo "Setting version $VERSION"
+            mvn versions:set -DnewVersion="$VERSION"
+            mvn versions:commit
+        - name: Deploy to Github Package
+          run: |
+             echo "Release package ${{inputs.package-name}} with version ${{ env.VERSION }}"
+#            mvn --settings source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false --pl ${{inputs.package-name}} --am
