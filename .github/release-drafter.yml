@@ -42,6 +42,10 @@ autolabeler:
   - label: 'bidrag-transport'
     branch:
       - 'bidrag-transport/**'
+  - label: 'chore'
+    branch:
+      - '/chore\/.+/'
+      - '/changes\/.+/'
   - label: 'feature'
     branch:
       - '/feature\/.+/'
