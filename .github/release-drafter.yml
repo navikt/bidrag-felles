@@ -40,7 +40,7 @@ autolabeler:
     files:
       - 'bidrag-domene/**'
   - label: 'bidrag-transport'
-    branch:
+    files:
       - 'bidrag-transport/**'
   - label: 'feature'
     branch:
