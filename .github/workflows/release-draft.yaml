@@ -10,6 +10,9 @@ on:
 permissions:
   contents: write
 
+env:
+  publish: ${{github.ref == 'refs/heads/main' && !contains(github.event.pull_request.labels.*.name, 'dependencies')}}
+
 jobs:
   build-artifact:
     name: Build
@@ -55,6 +58,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Setting version
+        id: set_version
         run: |
           export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y.%m%d.%H%M%S')
           export VERSION=${GIT_COMMIT_DATE}
@@ -65,6 +69,22 @@ jobs:
           version: ${{ env.VERSION }}
           tag: ${{ env.VERSION }}
           name: "Release ${{ env.VERSION }}"
-          publish: ${{!contains(github.event.pull_request.labels.*.name, 'dependencies')}}
+          publish: ${{ env.publish }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    outputs:
+      version: ${{ env.VERSION }}
+      published: ${{ env.publish == true }}
+
+  publish:
+    needs: update_release_draft
+    if: ${{ needs.update_release_draft.outputs.published }}
+    permissions:
+      contents: "write"
+      id-token: "write"
+      packages: "write"
+    name: Publish package
+    uses: ./.github/workflows/publish_dispatcher.yaml
+    with:
+      version: ${{ needs.update_release_draft.outputs.version }}
+    secrets: inherit
