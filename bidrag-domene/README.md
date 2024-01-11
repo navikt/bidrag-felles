@@ -11,3 +11,4 @@ Mappen fileTemplates inneholder templates til IntelliJ for å støtte opprettels
 Disse importeres via "File" -> "Manage IDE Settings" -> "Import Settings..."
 Etter at disse er importert kan man når man velger "File" -> "New" velge  "DomainBoolean", "DomainString", "DomainLocalDate" 
 eller "DomainLocalDateTime" for å opprette nye domeneobjekter inkludert Convertes for de respektive typene.  
+2
