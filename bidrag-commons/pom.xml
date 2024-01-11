@@ -43,7 +43,7 @@
     <spring-retry.version>2.0.5</spring-retry.version>
     <spring-security.version>6.2.1</spring-security.version>
     <spring-expression.version>6.1.2</spring-expression.version>
-    <mockk.version>1.13.8</mockk.version>
+    <mockk.version>1.13.9</mockk.version>
     <httpclient5.version>5.3</httpclient5.version>
     <token-support.version>3.2.0</token-support.version>
     <jackson.fasterXml.version>2.16.0</jackson.fasterXml.version>
