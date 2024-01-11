@@ -8,7 +8,9 @@ data class AdresseDto(
     @Schema(description = "Første adresselinje inneholder normalt gatenavn, men kan også innehold f.eks c/o.")
     val adresselinje1: String? = null,
     @Schema(
-        description = "Andre adresselinje brukes primært i utlandsadresser, hvor postnr og poststed ikke er tilgjengelig som strukturerte data.",
+        description =
+            "Andre adresselinje brukes primært i utlandsadresser, " +
+                "hvor postnr og poststed ikke er tilgjengelig som strukturerte data.",
     )
     val adresselinje2: String? = null,
     @Schema(description = "Tredje adresselinje brukes i noen tilfeller til region.")

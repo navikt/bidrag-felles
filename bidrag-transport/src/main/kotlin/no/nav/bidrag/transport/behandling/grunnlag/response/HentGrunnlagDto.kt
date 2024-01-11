@@ -17,7 +17,8 @@ data class HentGrunnlagDto(
     @Schema(
         description =
             "Liste over alle personer som har bodd sammen med BM/BP i perioden fra virkningstidspunkt og fremover med en liste " +
-                "over hvilke perioder de har delt bolig. Listen inkluderer i tillegg personens egne barn, selv om de ikke har delt bolig med BM/BP",
+                "over hvilke perioder de har delt bolig. " +
+                "Listen inkluderer i tillegg personens egne barn, selv om de ikke har delt bolig med BM/BP",
     )
     val husstandsmedlemmerOgEgneBarnListe: List<RelatertPersonGrunnlagDto>,
     @Schema(description = "Periodisert liste over en persons sivilstand")

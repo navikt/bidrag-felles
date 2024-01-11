@@ -11,9 +11,13 @@ import java.math.BigDecimal
         "\t\n" +
             "En kontering angir hvor mye som skal betales av skyldner til mottaker på vegne av kravhaver.\n" +
             "\n" +
-            "Konteringen kan unikt identifiseres med kombinasjonen transaksjonskode, delytelsesId og periode. Det forutsettes at delytelsesid'n er unik også på tvers av fagsystemid'er.\n" +
+            "Konteringen kan unikt identifiseres med kombinasjonen transaksjonskode, delytelsesId og periode. " +
+            "Det forutsettes at delytelsesid'n er unik også på tvers av fagsystemid'er.\n" +
             "\n" +
-            "Personidenter for gjelderIdent, kravhaverIdent, mottakerIdent og skyldnerIdent angis med enten FNR eller DNR. (Håndtering av BNR og NPID er uavklart.) Aktoernummer kan benyttes i kravhaverIdent, mottakerIdent og skyldnerIdent. Aktoernummere er elleve siffer og starter med enten 8 eller 9.\n" +
+            "Personidenter for gjelderIdent, kravhaverIdent, mottakerIdent og skyldnerIdent angis med enten FNR eller DNR. " +
+            "(Håndtering av BNR og NPID er uavklart.) " +
+            "Aktoernummer kan benyttes i kravhaverIdent, mottakerIdent og skyldnerIdent." +
+            " Aktoernummere er elleve siffer og starter med enten 8 eller 9.\n" +
             "\n" +
             "I testmiljøene må Tenor-identer støttes i stedet for FNR/DNR. Disse identene har 8 eller 9 i tredje siffer.",
 )
@@ -56,7 +60,9 @@ data class Kravkontering(
         required = true,
     ) val soknadType: Søknadstype,
     @field:Schema(
-        description = "Personident (FNR/DNR) til bidragsmottaker i bidragssaken. I saker der bidragsmottaker ikke er satt benyttes et dummynr 22222222226",
+        description =
+            "Personident (FNR/DNR) til bidragsmottaker i bidragssaken. " +
+                "I saker der bidragsmottaker ikke er satt benyttes et dummynr 22222222226",
         example = "15878598161",
         required = true,
     ) val gjelderIdent: String,
@@ -136,8 +142,8 @@ data class Kravkontering(
     @field:Schema(
         description =
             "Unik referanse til oppdragsperioden i vedtaket angitt som String. " +
-                "I bidragssaken kan en oppdragsperiode strekke over flere måneder, og samme referanse blir da benyttet for alle månedene. " +
-                "Samme referanse kan ikke benyttes to ganger for samme transaksjonskode i samme måned.",
+                "I bidragssaken kan en oppdragsperiode strekke over flere måneder, og samme referanse blir da benyttet for alle månedene." +
+                " Samme referanse kan ikke benyttes to ganger for samme transaksjonskode i samme måned.",
         example = "123456789",
         required = true,
     ) val delytelsesId: String,

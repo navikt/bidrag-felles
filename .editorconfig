@@ -1,4 +1,0 @@
-[bidrag-domene/**/*.{kt,kts}]
-max_line_length = off
-[bidrag-transport/**/*.{kt,kts}]
-max_line_length = off

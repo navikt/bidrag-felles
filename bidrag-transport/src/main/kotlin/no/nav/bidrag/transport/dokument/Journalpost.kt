@@ -218,7 +218,9 @@ enum class Kanal {
     SENTRAL_UTSKRIFT,
 
     @Schema(
-        description = "Digital postkasse til innbyggere. Brevet er sendt via digital post til innbyggere. Brukes for utgående journalposter",
+        description =
+            "Digital postkasse til innbyggere. " +
+                "Brevet er sendt via digital post til innbyggere. Brukes for utgående journalposter",
     )
     SDP,
 

@@ -145,7 +145,8 @@ data class EngangsbeløpDto(
     @Schema(
         description =
             "Referanse til engangsbeløp, brukes for å kunne omgjøre engangsbeløp senere i et klagevedtak. Unik innenfor et vedtak." +
-                "Referansen er enten angitt i requesten for opprettelse av vedtak eller generert av bidrag-vedtak hvis den ikke var angitt i requesten.",
+                "Referansen er enten angitt i requesten for opprettelse av vedtak " +
+                "eller generert av bidrag-vedtak hvis den ikke var angitt i requesten.",
     )
     val referanse: String,
     @Schema(description = "Referanse - delytelsesId/beslutningslinjeId -> bidrag-regnskap. Skal fjernes senere")

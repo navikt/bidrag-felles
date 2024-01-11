@@ -2,7 +2,9 @@ package no.nav.bidrag.domene.enums.beregning
 
 enum class ResultatkodeBarnebidrag {
     BARNET_ER_SELVFORSØRGET, // Barnet er selvforsørget
-    BEGRENSET_EVNE_FLERE_SAKER_UTFØR_FORHOLDSMESSIG_FORDELING, // Resultat av beregning av barnebidrag, angir at det må gjøres en forholdsmessig fordeling
+
+    // Resultat av beregning av barnebidrag, angir at det må gjøres en forholdsmessig fordeling
+    BEGRENSET_EVNE_FLERE_SAKER_UTFØR_FORHOLDSMESSIG_FORDELING,
     BEGRENSET_REVURDERING, // Beregnet bidrag er større enn forskuddsats, settes lik forskuddssats
     BIDRAG_IKKE_BEREGNET_DELT_BOSTED, // Barnet har delt bosted og BPs andel av U er under 50%, bidrag skal ikke beregnes
     BIDRAG_REDUSERT_AV_EVNE, // Bidrag redusert pga ikke full evne

@@ -15,7 +15,9 @@ data class Avvikshendelse(
     @Schema(description = "Saksnummer til sak når journalpost er journalført")
     val saksnummer: String? = null,
     @Schema(
-        description = "Addresse som skal brukes ved bestilling av ny distribusjon av utgående journalpost. Benyttes ved avvik BESTILL_NY_DISTRIBUSJON",
+        description =
+            "Addresse som skal brukes ved bestilling av ny distribusjon av utgående journalpost. " +
+                "Benyttes ved avvik BESTILL_NY_DISTRIBUSJON",
     )
     val adresse: DistribuerTilAdresse? = null,
     @Schema(description = "Dokumenter som brukes ved kopiering ny journalpost. Benyttes ved avvik KOPIER_FRA_ANNEN_FAGOMRADE")

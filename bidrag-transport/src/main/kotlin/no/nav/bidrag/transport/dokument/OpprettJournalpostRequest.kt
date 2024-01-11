@@ -9,7 +9,9 @@ import java.time.LocalDateTime
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class OpprettJournalpostRequest(
     @Schema(
-        description = "Om journalposten skal journalføres etter opprettelse. Journalføring betyr at journalpost låses for framtidige endringer",
+        description =
+            "Om journalposten skal journalføres etter opprettelse. " +
+                "Journalføring betyr at journalpost låses for framtidige endringer",
     )
     val skalFerdigstilles: Boolean = false,
     @Schema(description = "Tittel på journalposten (Tittel settes til hoveddokumentes tittel for Joark journalposter)", deprecated = true)
@@ -47,7 +49,10 @@ data class OpprettJournalpostRequest(
     @Schema(description = "Journalposttype, dette kan enten være Inngående, Utgående eller Notat", required = true, enumAsRef = true)
     val journalposttype: JournalpostType,
     @Schema(
-        description = "Referanse for journalpost. Hvis journalpost med samme referanse finnes vil tjenesten gå videre uten å opprette journalpost. Kan brukes for å lage løsninger idempotent",
+        description =
+            "Referanse for journalpost. " +
+                "Hvis journalpost med samme referanse finnes vil tjenesten gå videre uten å opprette journalpost. " +
+                "Kan brukes for å lage løsninger idempotent",
     )
     val referanseId: String? = null,
     @Schema(description = "NAV-enheten som oppretter journalposten", deprecated = true)
@@ -56,7 +61,9 @@ data class OpprettJournalpostRequest(
     @Schema(description = "NAV-enheten som oppretter journalposten")
     val journalførendeEnhet: String? = null,
     @Schema(
-        description = "Ident til saksbehandler som oppretter journalpost. Dette vil prioriteres over ident som tilhører tokenet til kallet.",
+        description =
+            "Ident til saksbehandler som oppretter journalpost. " +
+                "Dette vil prioriteres over ident som tilhører tokenet til kallet.",
     )
     val saksbehandlerIdent: String? = null,
 )
