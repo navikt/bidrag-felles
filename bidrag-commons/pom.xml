@@ -8,7 +8,7 @@
     <version>${revision}</version>
   </parent>
 
-  <artifactId>bidrag-commons</artifactId>
+  <artifactId>bidrag-commons-felles</artifactId>
   <name>bidrag-commons</name>
   <version>${parent.version}</version>
   <packaging>jar</packaging>

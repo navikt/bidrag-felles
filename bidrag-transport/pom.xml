@@ -10,7 +10,7 @@
     <version>${revision}</version>
   </parent>
 
-  <artifactId>bidrag-transport</artifactId>
+  <artifactId>bidrag-transport-felles</artifactId>
   <name>bidrag-transport</name>
   <version>${parent.version}</version>
   <packaging>jar</packaging>
@@ -27,7 +27,7 @@
   <repositories>
     <repository>
       <id>github</id>
-      <url>https://maven.pkg.github.com/navikt/bidrag-commons</url>
+      <url>https://maven.pkg.github.com/navikt/bidrag-felles</url>
     </repository>
   </repositories>
 

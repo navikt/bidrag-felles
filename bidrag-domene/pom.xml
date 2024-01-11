@@ -9,7 +9,7 @@
     <version>${revision}</version>
   </parent>
 
-  <artifactId>bidrag-domene</artifactId>
+  <artifactId>bidrag-domene-felles</artifactId>
   <name>bidrag-domene</name>
   <version>${parent.version}</version>
   <packaging>jar</packaging>
