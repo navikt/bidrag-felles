@@ -20,10 +20,10 @@ jobs:
           java-version: 21
           distribution: 'temurin'
           cache: 'maven'
-      - name: Resolve/Update Dependencies
-        run: mvn package dependency:resolve-plugins dependency:go-offline
-      - name: Build (and run tests)
-        run: mvn clean install
+#      - name: Resolve/Update Dependencies
+#        run: mvn package dependency:resolve-plugins dependency:go-offline
+#      - name: Build (and run tests)
+#        run: mvn clean install
       - name: Setting version
         run: |
           mvn versions:set -DnewVersion="${{ env.VERSION }}"
@@ -34,4 +34,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Release package with version ${{ env.VERSION }}"
-          mvn --settings .github/.m2/maven-settings.xml source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false -DdeplyAtEnd=true
+          mvn --settings .github/.m2/maven-settings.xml source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false -DdeployAtEnd=true
