@@ -58,6 +58,11 @@ autolabeler:
   - label: 'breaking'
     branch:
       - '/breaking\/.+/'
+  - label: 'dependencies'
+    branch:
+      - '/dependencies\/.+/'
+      - '/deps\/.+/'
+      - '/avhengigheter\/.+/'
   - label: 'documentation'
     files:
       - '*.md'
