@@ -11,30 +11,43 @@ permissions:
   contents: write
 
 jobs:
-#  build-artifact:
-#    name: Build
-#    runs-on: ubuntu-latest
-#    steps:
-#      - uses: actions/checkout@v4
-#      - uses: actions/setup-java@v4
-#        with:
-#          java-version: 21
-#          distribution: 'temurin'
-#          cache: 'maven'
-#
-#      - name: Resolve/Update Dependencies
-#        run: mvn package dependency:resolve-plugins dependency:go-offline
-#
-#      - name: Build (and run tests)
-#        run: mvn clean install
-#
-#      - name: Save test results
-#        run: |
-#          mkdir -p ~/test-results/junit/
-#          find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+  build-artifact:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: 'temurin'
+          cache: 'maven'
+
+      - name: Resolve/Update Dependencies
+        run: mvn package dependency:resolve-plugins dependency:go-offline
+
+      - name: Build (and run tests)
+        run: mvn clean install
+
+      - name: Save test results
+        run: |
+          mkdir -p ~/test-results/junit/
+          find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+
+  update_release_draft_labels:
+    if: github.ref != 'refs/heads/main'
+    permissions:
+      contents: write
+      pull-requests: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   update_release_draft:
-#    needs: build-artifact
+    needs: build-artifact
+    if: github.ref == 'refs/heads/main'
     permissions:
       contents: write
       pull-requests: write
