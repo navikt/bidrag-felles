@@ -151,7 +151,7 @@
     </dependency>
     <dependency>
       <groupId>no.nav.bidrag</groupId>
-      <artifactId>bidrag-transport</artifactId>
+      <artifactId>bidrag-transport-felles</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
     <!-- test -->

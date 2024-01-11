@@ -70,7 +70,7 @@
     </dependency>
     <dependency>
       <groupId>no.nav.bidrag</groupId>
-      <artifactId>bidrag-domene</artifactId>
+      <artifactId>bidrag-domene-felles</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
 
