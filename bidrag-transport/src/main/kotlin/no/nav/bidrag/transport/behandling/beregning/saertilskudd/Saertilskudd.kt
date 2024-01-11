@@ -15,21 +15,16 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 // Grunnlag
-open class BasePeriode {
+open class BasePeriode(datoFom: LocalDate, datoTil: LocalDate) {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer::class)
     @JsonSerialize(using = LocalDateSerializer::class)
-    val datoFom: LocalDate?
+    val datoFom: LocalDate? = datoFom
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @JsonDeserialize(using = LocalDateDeserializer::class)
     @JsonSerialize(using = LocalDateSerializer::class)
-    val datoTil: LocalDate?
-
-    constructor(datoFom: LocalDate, datoTil: LocalDate) {
-        this.datoFom = datoFom
-        this.datoTil = datoTil
-    }
+    val datoTil: LocalDate? = datoTil
 }
 
 open class InntektBase(
@@ -133,7 +128,8 @@ data class SoknadsBarnInfo(
 
 // Resultat
 data class BeregnetTotalSaertilskuddResultat(
-    @Schema(description = "Periodisert liste over resultat av særtilskuddsberegning") var beregnetSaertilskuddPeriodeListe: List<ResultatPeriode> = emptyList(),
+    @Schema(description = "Periodisert liste over resultat av særtilskuddsberegning")
+    var beregnetSaertilskuddPeriodeListe: List<ResultatPeriode> = emptyList(),
     @Schema(description = "Liste over grunnlag brukt i beregning") var grunnlagListe: List<Grunnlag> = emptyList(),
 )
 

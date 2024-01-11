@@ -29,5 +29,6 @@ data class RolleDto(
     fun rmErSamhandlerId() = reellMottager?.erSamhandlerId() ?: false
 
     fun rmSamhandlerId() = reellMottager?.samhandlerId()
+
     fun rmFødselsnummer() = reellMottager?.personIdent()
 }

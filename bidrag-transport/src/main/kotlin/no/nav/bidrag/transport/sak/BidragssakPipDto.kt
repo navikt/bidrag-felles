@@ -4,8 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.sak.Saksnummer
 
 @Schema(
-    description = "Metadata for pip tjeneste " +
-        "(paragraf 19 på bidragssak, samt fnr for involverte roller",
+    description =
+        "Metadata for pip tjeneste " +
+            "(paragraf 19 på bidragssak, samt fnr for involverte roller",
 )
 data class BidragssakPipDto(
     @Schema(description = "Saksnummeret til bidragssaken")

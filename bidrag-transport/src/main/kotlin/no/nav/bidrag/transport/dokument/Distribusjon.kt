@@ -7,14 +7,18 @@ import java.time.LocalDateTime
 @Schema(description = "Bestill distribusjon av journalpost")
 data class DistribuerJournalpostRequest(
     @Schema(description = "Identifiserer batch som forsendelsen inngår i. Brukes for sporing") val batchId: String? = null,
-    @Schema(description = "Forsendelsen er skrevet ut og distribuert lokalt. Distribusjon registreres men ingen distribusjon bestilles.") val lokalUtskrift: Boolean = false,
+    @Schema(
+        description = "Forsendelsen er skrevet ut og distribuert lokalt. Distribusjon registreres men ingen distribusjon bestilles.",
+    ) val lokalUtskrift: Boolean = false,
     @Schema(description = "Adresse for hvor brev sendes ved sentral print") val adresse: DistribuerTilAdresse? = null,
 )
 
 @Schema(description = "Respons etter bestilt distribusjon")
 data class DistribuerJournalpostResponse(
     @Schema(description = "Journalpostid for dokument som det ble bestilt distribusjon for") val journalpostId: String,
-    @Schema(description = "Bestillingid som unikt identifiserer distribusjonsbestillingen. Vil være null hvis ingen distribusjon er bestilt.") val bestillingsId: String?,
+    @Schema(
+        description = "Bestillingid som unikt identifiserer distribusjonsbestillingen. Vil være null hvis ingen distribusjon er bestilt.",
+    ) val bestillingsId: String?,
 )
 
 @Schema(description = "Adresse for hvor brev sendes ved sentral print")

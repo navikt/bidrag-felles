@@ -18,6 +18,7 @@
         <jackson.version>2.16.0</jackson.version>
         <kotest.version>5.8.0</kotest.version>
         <swagger.version>2.2.20</swagger.version>
+        <ktlint.version>1.1.0</ktlint.version>
 
 
         <!-- plugins -->
@@ -247,6 +248,52 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
                     <version>${flatten-maven.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-antrun-plugin</artifactId>
+                    <version>${maven-antrun.version}</version>
+                    <executions>
+                        <execution>
+                            <id>ktlint</id>
+                            <phase>verify</phase>
+                            <configuration>
+                                <target name="ktlint">
+                                    <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
+                                        <arg value="src/**/*.kt"/>
+                                    </java>
+                                </target>
+                            </configuration>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>ktlint-format</id>
+                            <phase>validate</phase>
+                            <configuration>
+                                <target name="ktlint">
+                                    <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
+                                        <jvmarg value="--add-opens"/>
+                                        <jvmarg value="java.base/java.lang=ALL-UNNAMED"/>
+                                        <arg value="-F"/>
+                                        <arg value="src/**/*.kt"/>
+                                    </java>
+                                </target>
+                            </configuration>
+                            <goals>
+                                <goal>run</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <dependencies>
+                        <dependency>
+                            <groupId>com.pinterest.ktlint</groupId>
+                            <artifactId>ktlint-cli</artifactId>
+                            <version>${ktlint.version}</version>
+                        </dependency>
+                        <!-- additional 3rd party ruleset(s) can be specified here -->
+                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>

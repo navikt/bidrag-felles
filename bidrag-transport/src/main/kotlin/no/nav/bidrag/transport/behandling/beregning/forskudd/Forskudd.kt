@@ -9,7 +9,8 @@ import java.math.BigDecimal
 // Resultat
 @Schema(description = "Resultatet av en forskuddsberegning")
 data class BeregnetForskuddResultat(
-    @Schema(description = "Periodisert liste over resultat av forskuddsberegning") var beregnetForskuddPeriodeListe: List<ResultatPeriode> = emptyList(),
+    @Schema(description = "Periodisert liste over resultat av forskuddsberegning") var beregnetForskuddPeriodeListe: List<ResultatPeriode> =
+        emptyList(),
     @Schema(description = "Liste over grunnlag brukt i beregning") var grunnlagListe: List<Grunnlag> = emptyList(),
 )
 

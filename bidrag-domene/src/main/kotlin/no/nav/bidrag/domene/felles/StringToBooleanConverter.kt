@@ -4,7 +4,6 @@ import org.springframework.core.convert.converter.Converter
 import java.util.Locale
 
 internal class StringToBooleanConverter : Converter<String, Boolean> {
-
     private val trueValues = setOf("true", "on", "yes", "1")
 
     private val falseValues = setOf("false", "off", "no", "0")

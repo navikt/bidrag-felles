@@ -4,8 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.land.Landkode3
 
 @Schema(
-    description = "Representerer kontonummer for en samhandler. For norske kontonummer " +
-        "er det kun norskKontornr som er utfyllt, ellers benyttes de andre feltene for utlandske kontonummer.",
+    description =
+        "Representerer kontonummer for en samhandler. For norske kontonummer " +
+            "er det kun norskKontornr som er utfyllt, ellers benyttes de andre feltene for utlandske kontonummer.",
 )
 data class KontonummerDto(
     @Schema(description = "Norsk kontonummer, 11 siffer.")

@@ -6,7 +6,6 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class SøktAvTypeTest {
-
     val objectmapper = ObjectMapper().findAndRegisterModules().registerKotlinModule()
 
     @Test

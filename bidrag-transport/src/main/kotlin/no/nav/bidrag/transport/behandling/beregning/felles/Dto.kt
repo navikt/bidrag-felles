@@ -27,27 +27,29 @@ fun <T> BeregnGrunnlag.hentInnholdBasertPåEgenReferanse(
     grunnlagType: Grunnlagstype,
     clazz: Class<T>,
     referanse: String = "",
-): List<InnholdMedReferanse<T>> = grunnlagListe!!
-    .filter { it.type == grunnlagType }
-    .filter { referanse.isEmpty() || referanse == it.referanse }
-    .map {
-        val mapper = ObjectMapper()
-        val innhold = mapper.findAndRegisterModules().readValue(it.innhold.toString(), clazz)
-        InnholdMedReferanse(it.referanse!!, innhold)
-    }
+): List<InnholdMedReferanse<T>> =
+    grunnlagListe!!
+        .filter { it.type == grunnlagType }
+        .filter { referanse.isEmpty() || referanse == it.referanse }
+        .map {
+            val mapper = ObjectMapper()
+            val innhold = mapper.findAndRegisterModules().readValue(it.innhold.toString(), clazz)
+            InnholdMedReferanse(it.referanse!!, innhold)
+        }
 
 fun <T> BeregnGrunnlag.hentInnholdBasertPåFremmedReferanse(
     grunnlagType: Grunnlagstype,
     clazz: Class<T>,
     referanse: String = "",
-): List<InnholdMedReferanse<T>> = grunnlagListe!!
-    .filter { it.type == grunnlagType }
-    .filter { referanse.isEmpty() || it.grunnlagsreferanseListe!!.contains(referanse) }
-    .map {
-        val mapper = ObjectMapper()
-        val innhold = mapper.findAndRegisterModules().readValue(it.innhold.toString(), clazz)
-        InnholdMedReferanse(it.referanse!!, innhold)
-    }
+): List<InnholdMedReferanse<T>> =
+    grunnlagListe!!
+        .filter { it.type == grunnlagType }
+        .filter { referanse.isEmpty() || it.grunnlagsreferanseListe!!.contains(referanse) }
+        .map {
+            val mapper = ObjectMapper()
+            val innhold = mapper.findAndRegisterModules().readValue(it.innhold.toString(), clazz)
+            InnholdMedReferanse(it.referanse!!, innhold)
+        }
 
 @Schema(description = "Grunnlag")
 data class Grunnlag(

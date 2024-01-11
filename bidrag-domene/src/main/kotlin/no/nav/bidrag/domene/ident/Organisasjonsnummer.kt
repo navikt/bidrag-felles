@@ -8,7 +8,6 @@ import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
 class Organisasjonsnummer(override val verdi: String) : Verdiobjekt<String>() {
-
     override fun gyldig(): Boolean {
         if (verdi.length != 9 || verdi.toLongOrNull() == null) {
             return false
@@ -23,7 +22,10 @@ class Organisasjonsnummer(override val verdi: String) : Verdiobjekt<String>() {
         return gyldigKontrollSiffer(kontrollMod, kontrollsiffer)
     }
 
-    private fun gyldigKontrollSiffer(kontrollMod: Int, kontrollsiffer: Int): Boolean {
+    private fun gyldigKontrollSiffer(
+        kontrollMod: Int,
+        kontrollsiffer: Int,
+    ): Boolean {
         if (kontrollMod == kontrollsiffer) {
             return true
         }
@@ -39,11 +41,11 @@ class OrganisasjonsnummerReadingConverter : Converter<String, Organisasjonsnumme
 }
 
 class OrganisasjonsnummerWritingConverter : Converter<Organisasjonsnummer, String> {
-
     override fun convert(source: Organisasjonsnummer) = source.verdi.trimToNull()
 }
 
 class OrganisasjonsnummerConverter : AttributeConverter<Organisasjonsnummer, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Organisasjonsnummer(source) }
+
     override fun convertToDatabaseColumn(source: Organisasjonsnummer?) = source?.verdi.trimToNull()
 }

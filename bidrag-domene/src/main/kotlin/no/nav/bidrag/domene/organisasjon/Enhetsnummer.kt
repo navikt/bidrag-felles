@@ -8,7 +8,6 @@ import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
 class Enhetsnummer(override val verdi: String) : Verdiobjekt<String>() {
-
     override fun gyldig() = verdi.matches(ENHET_REGEX)
 
     companion object {
@@ -26,5 +25,6 @@ class EnhetsnummerWritingConverter : Converter<Enhetsnummer, String> {
 
 class EnhetsnummerConverter : AttributeConverter<Enhetsnummer, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Enhetsnummer(source) }
+
     override fun convertToDatabaseColumn(source: Enhetsnummer?) = source?.verdi.trimToNull()
 }

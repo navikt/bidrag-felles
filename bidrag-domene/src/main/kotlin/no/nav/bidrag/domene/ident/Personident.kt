@@ -9,9 +9,10 @@ import org.springframework.core.convert.converter.Converter
 import java.time.LocalDate
 
 class Personident(override val verdi: String) : Verdiobjekt<String>() {
-
     fun erDNummer() = verdi.substring(0, 1).toInt() in 4..7
+
     fun erNAVSyntetisk() = verdi.substring(2, 3).toInt() in 4..7
+
     fun erSkattSyntetisk() = verdi.substring(2, 3).toInt() >= 8
 
     /**
@@ -21,7 +22,16 @@ class Personident(override val verdi: String) : Verdiobjekt<String>() {
 
     private fun beregnFødselsdato(): LocalDate {
         val dag = verdi.substring(0, 2).toInt() - (if (erDNummer()) 40 else 0)
-        val måned = verdi.substring(2, 4).toInt() - (if (erNAVSyntetisk()) 40 else if (erSkattSyntetisk()) 80 else 0)
+        val måned =
+            verdi.substring(2, 4).toInt() - (
+                if (erNAVSyntetisk()) {
+                    40
+                } else if (erSkattSyntetisk()) {
+                    80
+                } else {
+                    0
+                }
+            )
         val år = verdi.substring(4, 6).toInt()
         val datoUtenÅrhundre = LocalDate.of(år, måned, dag)
         val individnummer = verdi.substring(6, 9).toInt()
@@ -51,7 +61,10 @@ class Personident(override val verdi: String) : Verdiobjekt<String>() {
         return gyldigKontrollSiffer(kontrollMod1, kontrollsiffer1) && gyldigKontrollSiffer(kontrollMod2, kontrollsiffer2)
     }
 
-    private fun gyldigKontrollSiffer(kontrollMod: Int, kontrollsiffer: Int): Boolean {
+    private fun gyldigKontrollSiffer(
+        kontrollMod: Int,
+        kontrollsiffer: Int,
+    ): Boolean {
         if (kontrollMod == kontrollsiffer) {
             return true
         }
@@ -71,11 +84,11 @@ class PersonIdentReadingConverter : Converter<String, Personident> {
 }
 
 class PersonIdentWritingConverter : Converter<Personident, String> {
-
     override fun convert(source: Personident) = source.verdi.trimToNull()
 }
 
 class PersonIdentConverter : AttributeConverter<Personident, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Personident(source) }
+
     override fun convertToDatabaseColumn(source: Personident?) = source?.verdi.trimToNull()
 }

@@ -8,7 +8,6 @@ import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
 class Ident(override val verdi: String) : Verdiobjekt<String>() {
-
     override fun gyldig(): Boolean {
         return Organisasjonsnummer(verdi).gyldig() ||
             Personident(verdi).gyldig() ||
@@ -50,11 +49,11 @@ class IdentReadingConverter : Converter<String, Ident> {
 }
 
 class IdentWritingConverter : Converter<Ident, String> {
-
     override fun convert(source: Ident) = source.verdi.trimToNull()
 }
 
 class IdentConverter : AttributeConverter<Ident, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Ident(source) }
+
     override fun convertToDatabaseColumn(source: Ident?) = source?.verdi.trimToNull()
 }

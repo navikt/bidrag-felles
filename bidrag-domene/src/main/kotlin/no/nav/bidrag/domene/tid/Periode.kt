@@ -5,14 +5,15 @@ package no.nav.bidrag.domene.tid
 import java.time.temporal.Temporal
 
 sealed class Periode<T> : Comparable<Periode<T>> where T : Comparable<T>, T : Temporal {
-
     abstract val fom: T
     abstract val til: T?
+
     protected fun validate() {
         require(tilEllerMax() >= fom) { "Til før fra-og-med: $fom > $til" }
     }
 
     abstract fun tilEllerMax(): T
+
     infix fun inneholder(dato: T): Boolean {
         return dato in fom..tilEllerMax()
     }
@@ -53,11 +54,9 @@ sealed class Periode<T> : Comparable<Periode<T>> where T : Comparable<T>, T : Te
         }
     }
 
-    infix fun overlapperKunIStartenAv(annen: Periode<T>) =
-        annen.fom in fom..tilEllerMax() && tilEllerMax() < annen.tilEllerMax()
+    infix fun overlapperKunIStartenAv(annen: Periode<T>) = annen.fom in fom..tilEllerMax() && tilEllerMax() < annen.tilEllerMax()
 
-    infix fun overlapperKunISluttenAv(annen: Periode<T>) =
-        annen.tilEllerMax() in fom..tilEllerMax() && fom > annen.fom
+    infix fun overlapperKunISluttenAv(annen: Periode<T>) = annen.tilEllerMax() in fom..tilEllerMax() && fom > annen.fom
 
     abstract infix fun påfølgesAv(påfølgende: Periode<T>): Boolean
 
@@ -67,7 +66,10 @@ sealed class Periode<T> : Comparable<Periode<T>> where T : Comparable<T>, T : Te
         return Comparator.comparing(Periode<T>::fom).thenComparing(Periode<T>::tilEllerMax).compare(this, other)
     }
 
-    abstract fun lagPeriode(fom: T, til: T?): Periode<T>
+    abstract fun lagPeriode(
+        fom: T,
+        til: T?,
+    ): Periode<T>
 }
 
 fun <T> List<Periode<T>>.erSammenhengende(): Boolean where T : Comparable<T>, T : Temporal =

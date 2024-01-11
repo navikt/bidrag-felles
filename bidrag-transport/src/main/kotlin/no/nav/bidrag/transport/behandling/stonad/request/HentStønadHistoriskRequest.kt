@@ -10,16 +10,12 @@ import java.time.LocalDateTime
 data class HentStønadHistoriskRequest(
     @Schema(description = "Stønadstype")
     val type: Stønadstype,
-
     @Schema(description = "Referanse til sak")
     val sak: Saksnummer,
-
     @Schema(description = "Personidenten til den som skal betale stønadem")
     val skyldner: Personident,
-
     @Schema(description = "Personidenten til den som krever stønadem")
     val kravhaver: Personident,
-
     @Schema(description = "Tidspunkt som det ønskes å hente gyldige perioder for")
     val gyldigTidspunkt: LocalDateTime,
 )

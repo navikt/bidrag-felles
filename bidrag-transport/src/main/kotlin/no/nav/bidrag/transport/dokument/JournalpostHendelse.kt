@@ -31,7 +31,9 @@ data class JournalpostHendelse(
     val journalfortDato: LocalDate? = null,
 ) {
     fun erHendelseTypeJournalforing() = hendelseType == HendelseType.JOURNALFORING
+
     fun harEnhet() = enhet != null
+
     fun harAktorId() = aktorId != null
 
     fun hentJournalposttype(): JournalpostType? {
@@ -44,15 +46,23 @@ data class JournalpostHendelse(
     }
 
     fun harJournalpostIdPrefix() = journalpostId.contains("-")
+
     fun harJournalpostId() = journalpostId != "-1"
+
     fun hentJournalpostIdNumerisk(): Long = JournalpostId(journalpostId).idNumerisk!!
+
     fun erBidragJournalpost() = JournalpostId(journalpostId).erSystemBidrag
+
     fun erJoarkJournalpost() = JournalpostId(journalpostId).erSystemJoark
+
     fun erForsendelse() = JournalpostId(journalpostId).erSystemForsendelse
+
     fun erInngående() = hentJournalposttype() == JournalpostType.INNGÅENDE
+
     fun erUtgående() = hentJournalposttype() == JournalpostType.UTGÅENDE
 
     fun hentEndretAvEnhetsnummer() = sporing?.enhetsnummer ?: enhet
+
     fun hentSaksbehandlerInfo() = sporing?.lagSaksbehandlerInfo() ?: "ukjent saksbehandler"
 
     fun printSummary() =
@@ -74,7 +84,6 @@ data class Sporingsdata(
     val saksbehandlersNavn: String? = "ukjent saksbehandler",
     val enhetsnummer: String? = null,
 ) {
-
     fun lagSaksbehandlerInfo(saksbehandlerEnhet: String? = null) =
         if (brukerident == null && saksbehandlersNavn == null) {
             "ukjent saksbehandler"

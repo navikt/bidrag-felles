@@ -21,5 +21,6 @@ class Landkode2WritingConverter : Converter<Landkode2, String> {
 
 class Landkode2Converter : AttributeConverter<Landkode2, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Landkode2(source) }
+
     override fun convertToDatabaseColumn(source: Landkode2?) = source?.verdi.trimToNull()
 }

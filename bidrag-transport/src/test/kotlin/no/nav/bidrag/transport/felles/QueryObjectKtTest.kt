@@ -7,18 +7,17 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 internal class QueryObjectKtTest {
-
     @Test
     fun `toQueryParams mapper alle verdier til MultivalueMap korrekt for et objekt`() {
-        val søkSamhandlerQuery = TestQueryObject(
-            int = 1,
-            string = "string",
-            boolean = true,
-            date = LocalDate.of(2012, 5, 17),
-            dateTime = LocalDateTime.of(2012, 5, 17, 8, 0, 0),
-            list = listOf("string1", "string2", "string3"),
-
-        )
+        val søkSamhandlerQuery =
+            TestQueryObject(
+                int = 1,
+                string = "string",
+                boolean = true,
+                date = LocalDate.of(2012, 5, 17),
+                dateTime = LocalDateTime.of(2012, 5, 17, 8, 0, 0),
+                list = listOf("string1", "string2", "string3"),
+            )
 
         val multiValueMap = søkSamhandlerQuery.toQueryParams()
 
@@ -32,14 +31,15 @@ internal class QueryObjectKtTest {
 
     @Test
     fun `toQueryParams ignorerer null-verdier`() {
-        val søkSamhandlerQuery = TestQueryObject(
-            int = null,
-            string = null,
-            boolean = null,
-            date = null,
-            dateTime = null,
-            list = null,
-        )
+        val søkSamhandlerQuery =
+            TestQueryObject(
+                int = null,
+                string = null,
+                boolean = null,
+                date = null,
+                dateTime = null,
+                list = null,
+            )
 
         val multiValueMap = søkSamhandlerQuery.toQueryParams()
 
@@ -53,14 +53,15 @@ internal class QueryObjectKtTest {
 
     @Test
     fun `toQueryParams ignorerer tomme lister`() {
-        val søkSamhandlerQuery = TestQueryObject(
-            int = null,
-            string = null,
-            boolean = null,
-            date = null,
-            dateTime = null,
-            list = listOf(),
-        )
+        val søkSamhandlerQuery =
+            TestQueryObject(
+                int = null,
+                string = null,
+                boolean = null,
+                date = null,
+                dateTime = null,
+                list = listOf(),
+            )
 
         val multiValueMap = søkSamhandlerQuery.toQueryParams()
 
@@ -69,11 +70,12 @@ internal class QueryObjectKtTest {
 
     @Test
     fun `toQueryParams bruker JsonProperty`() {
-        val søkSamhandlerQuery = SøkSamhandlerQuery(
-            navn = "navn",
-            postnummer = "postnummer",
-            område = "område",
-        )
+        val søkSamhandlerQuery =
+            SøkSamhandlerQuery(
+                navn = "navn",
+                postnummer = "postnummer",
+                område = "område",
+            )
 
         val multiValueMap = søkSamhandlerQuery.toQueryParams()
 

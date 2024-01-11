@@ -5,11 +5,9 @@ import jakarta.validation.constraints.Min
 
 @Schema
 data class OpprettStønadsendringGrunnlagRequestDto(
-
     @Schema(description = "Stønadsendring-id")
     @Min(0)
     val stønadsendringId: Int,
-
     @Schema(description = "grunnlag-id")
     @Min(0)
     val grunnlagId: Int,

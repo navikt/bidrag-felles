@@ -7,7 +7,6 @@ import no.nav.bidrag.domene.enums.rolle.Rolletype
 import org.junit.jupiter.api.Test
 
 class RolletypeMapperTest {
-
     val objectmapper = ObjectMapper().findAndRegisterModules().registerKotlinModule()
 
     @Test

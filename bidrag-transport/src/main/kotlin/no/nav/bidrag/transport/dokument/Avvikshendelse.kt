@@ -14,12 +14,15 @@ data class Avvikshendelse(
     val detaljer: Map<String, String> = HashMap(),
     @Schema(description = "Saksnummer til sak når journalpost er journalført")
     val saksnummer: String? = null,
-    @Schema(description = "Addresse som skal brukes ved bestilling av ny distribusjon av utgående journalpost. Benyttes ved avvik BESTILL_NY_DISTRIBUSJON")
+    @Schema(
+        description =
+            "Addresse som skal brukes ved bestilling av ny distribusjon av utgående journalpost. " +
+                "Benyttes ved avvik BESTILL_NY_DISTRIBUSJON",
+    )
     val adresse: DistribuerTilAdresse? = null,
     @Schema(description = "Dokumenter som brukes ved kopiering ny journalpost. Benyttes ved avvik KOPIER_FRA_ANNEN_FAGOMRADE")
     val dokumenter: List<DokumentDto>? = emptyList(),
 ) {
-
     constructor(avvikType: String, enhetsnummer: String) :
         this(avvikType, detaljer = mapOf(Pair("enhetsnummer", enhetsnummer)), beskrivelse = null, saksnummer = null, adresse = null)
     constructor(avvikType: String, enhetsnummer: String, saksnummer: String?) :

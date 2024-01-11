@@ -7,19 +7,18 @@ import no.nav.bidrag.domene.land.Landkode3
 data class AdresseDto(
     @Schema(description = "Første adresselinje inneholder normalt gatenavn, men kan også innehold f.eks c/o.")
     val adresselinje1: String? = null,
-
-    @Schema(description = "Andre adresselinje brukes primært i utlandsadresser, hvor postnr og poststed ikke er tilgjengelig som strukturerte data.")
+    @Schema(
+        description =
+            "Andre adresselinje brukes primært i utlandsadresser, " +
+                "hvor postnr og poststed ikke er tilgjengelig som strukturerte data.",
+    )
     val adresselinje2: String? = null,
-
     @Schema(description = "Tredje adresselinje brukes i noen tilfeller til region.")
     val adresselinje3: String? = null,
-
     @Schema(description = "Postnr dersom dette er tilgjengelig som strukturerte data.")
     val postnr: String? = null,
-
     @Schema(description = "Poststed dersom dette er tilgjengelig som strukturerte data.")
     val poststed: String? = null,
-
     @Schema(description = "Land. ISO 3166-1 alfa-3.")
     val land: Landkode3? = null,
 )

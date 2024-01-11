@@ -9,8 +9,10 @@ import java.math.BigDecimal
 // Barnebidrag
 @Schema(description = "Resultatet av en barnebidragsberegning")
 data class BeregnetTotalBarnebidragResultat(
-    @Schema(description = "Periodisert liste over resultat av barnebidragsberegning") var beregnetBarnebidragPeriodeListe: List<ResultatPeriode> = emptyList(),
-    @Schema(description = "Liste over grunnlag brukt i beregning") var grunnlagListe: List<Grunnlag> = emptyList(),
+    @Schema(description = "Periodisert liste over resultat av barnebidragsberegning")
+    var beregnetBarnebidragPeriodeListe: List<ResultatPeriode> = emptyList(),
+    @Schema(description = "Liste over grunnlag brukt i beregning")
+    var grunnlagListe: List<Grunnlag> = emptyList(),
 )
 
 @Schema(description = "Resultatet av en beregning for en gitt periode - barnebidrag")

@@ -20,6 +20,7 @@ data class Saksrolle(
     val reelMottager: ReellMottager? = null,
     val ukjent: Boolean = false,
 )
+
 enum class Sakshendelsestype {
     ENDRING,
     OPPRETTELSE,

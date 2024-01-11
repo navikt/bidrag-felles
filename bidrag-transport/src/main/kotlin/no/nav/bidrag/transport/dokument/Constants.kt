@@ -31,6 +31,7 @@ enum class JournalpostStatus(val kode: String) {
     OPPRETTET("O"),
     UNDER_PRODUKSJON("D"),
     ;
+
     companion object {
         fun fraKode(kode: String?): JournalpostStatus? {
             return try {

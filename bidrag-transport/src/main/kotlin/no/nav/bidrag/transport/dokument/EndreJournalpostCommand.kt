@@ -39,7 +39,6 @@ data class EndreJournalpostCommand(
     @Schema(description = "Liste med retur detaljer som skal endres")
     val endreReturDetaljer: List<EndreReturDetaljer> = listOf(),
 ) {
-
     @Suppress("unused")
     fun manglerGjelder() = gjelder == null
 }

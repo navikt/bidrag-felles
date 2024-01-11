@@ -15,18 +15,19 @@ import java.time.format.DateTimeFormatter
  * En LinkedMultiValueMap kan brukes i UriComponentsBuilder med .queryParams(<linkeMultiValueMap>)
  */
 interface QueryObject {
-
     private val objectMapper: ObjectMapper
-        get() = ObjectMapper()
-            .registerKotlinModule()
-            .registerModule(
-                JavaTimeModule()
-                    .addDeserializer(
-                        YearMonth::class.java,
-                        YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")), // Denne trengs for å parse år over 9999 riktig.
-                    ),
-            )
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+        get() =
+            ObjectMapper()
+                .registerKotlinModule()
+                .registerModule(
+                    JavaTimeModule()
+                        .addDeserializer(
+                            YearMonth::class.java,
+                            // Denne trengs for å parse år over 9999 riktig.
+                            YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")),
+                        ),
+                )
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 
     fun toQueryParams(): LinkedMultiValueMap<String, String> {
         val writeValueAsString = objectMapper.writeValueAsString(this)
