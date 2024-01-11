@@ -18,8 +18,8 @@
         <jackson.version>2.16.0</jackson.version>
         <kotest.version>5.8.0</kotest.version>
         <swagger.version>2.2.20</swagger.version>
-        <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
-        <java.version>1.8</java.version>
+
+        <maven-source.version>3.3.0</maven-source.version>
     </properties>
 
     <modules>
@@ -109,6 +109,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source.version}</version>
             </plugin>
         </plugins>
     </build>

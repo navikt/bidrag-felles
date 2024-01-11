@@ -59,7 +59,6 @@
     <!-- plugins -->
     <maven-compiler.version>3.11.0</maven-compiler.version>
     <maven-surefire.version>3.2.3</maven-surefire.version>
-    <maven-source.version>3.3.0</maven-source.version>
     <maven-deploy.version>3.1.1</maven-deploy.version>
     <maven-failsafe.version>3.2.3</maven-failsafe.version>
     <maven-resources.version>3.3.1</maven-resources.version>
@@ -165,7 +164,7 @@
     <dependency>
       <groupId>no.nav.bidrag</groupId>
       <artifactId>bidrag-transport</artifactId>
-      <version>${project.version}</version>
+      <version>${project.parent.version}</version>
     </dependency>
     <!-- test -->
     <dependency>
