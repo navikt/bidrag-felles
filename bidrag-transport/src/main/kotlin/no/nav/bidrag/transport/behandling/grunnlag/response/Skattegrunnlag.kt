@@ -44,7 +44,7 @@ data class SkattegrunnlagGrunnlagDto(
     val periodeTil: LocalDate,
 
     @Schema(description = "Liste over poster med skattegrunnlag")
-    val skattegrunnlagListe: List<SkattegrunnlagspostDto>,
+    val skattegrunnlagspostListe: List<SkattegrunnlagspostDto>,
 )
 
 data class SkattegrunnlagspostDto(
