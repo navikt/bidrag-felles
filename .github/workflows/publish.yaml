@@ -33,6 +33,9 @@ jobs:
           mvn versions:set -DnewVersion="${{ env.VERSION }}"
           mvn versions:commit
       - name: Deploy to Github Package
+        env:
+          GITHUB_USERNAME: x-access-token
+          GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Release package with version ${{ env.VERSION }}"
           mvn source:jar-no-fork deploy -DskipTests=true -Dmaven.wagon.http.pool=false
