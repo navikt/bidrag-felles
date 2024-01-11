@@ -25,6 +25,7 @@
     <modules>
         <module>bidrag-domene</module>
         <module>bidrag-transport</module>
+        <module>bidrag-commons</module>
     </modules>
     <distributionManagement>
         <repository>

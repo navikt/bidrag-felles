@@ -6,6 +6,9 @@ categories:
   - title: '🚌 Bidrag transport'
     labels:
       - 'bidrag-transport'
+  - title: '🔭 Bidrag commons'
+    labels:
+      - 'bidrag-commons'
   - title: '🚀 Features'
     labels:
       - 'feature'
@@ -30,6 +33,9 @@ categories:
     labels:
       - 'documentation'
 autolabeler:
+  - label: 'bidrag-commons'
+    files:
+      - 'bidrag-commons/**'
   - label: 'bidrag-domene'
     files:
       - 'bidrag-domene/**'
