@@ -10,7 +10,7 @@
 
   <artifactId>bidrag-commons-felles</artifactId>
   <name>bidrag-commons</name>
-  <version>${parent.version}</version>
+  <version>${project.parent.version}</version>
   <packaging>jar</packaging>
 
   <licenses>
@@ -33,6 +33,7 @@
   </description>
 
   <properties>
+    <revision>1.0-SNAPSHOT</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -192,6 +193,11 @@
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
+        <configuration>
+          <compilerPlugins>
+            <plugin>spring</plugin>
+          </compilerPlugins>
+        </configuration>
         <dependencies>
           <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
