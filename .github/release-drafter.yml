@@ -6,26 +6,29 @@ categories:
   - title: '🚌 Bidrag transport'
     labels:
       - 'bidrag-transport'
-#  - title: '🚀 Features'
-#    labels:
-#      - 'feature'
-#      - 'enhancement'
-#  - title: '⚠️ Breaking Changes'
-#    labels:
-#      - 'breaking'
-#  - title: '🐛 Bug Fixes'
-#    labels:
-#      - 'fix'
-#      - 'bugfix'
-#      - 'bug'
-#  - title: '🧰 Maintenance'
-#    labels:
-#      - 'chore'
-#      - 'changes'
-#  - title: '⬆️ Dependency upgrades'
-#    labels:
-#      - 'bump'
-#      - 'dependencies'
+  - title: '🚀 Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+  - title: '⚠️ Breaking Changes'
+    labels:
+      - 'breaking'
+  - title: '🐛 Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bugfix'
+      - 'bug'
+  - title: '🧰 Maintenance'
+    labels:
+      - 'chore'
+      - 'changes'
+  - title: '⬆️ Dependency upgrades'
+    labels:
+      - 'bump'
+      - 'dependencies'
+  - title: '📄 Documentation'
+    labels:
+      - 'documentation'
 autolabeler:
   - label: 'bidrag-domene'
     files:
@@ -33,6 +36,22 @@ autolabeler:
   - label: 'bidrag-transport'
     branch:
       - 'bidrag-transport/**'
+  - label: 'feature'
+    branch:
+      - '/feature\/.+/'
+  - label: 'bugfix'
+    title:
+      - '/fix/i'
+      - '/bugfix/i'
+    branch:
+      - '/bugfix\/.+/'
+      - '/fix\/.+/'
+  - label: 'breaking'
+    branch:
+      - '/breaking\/.+/'
+  - label: 'documentation'
+    files:
+      - '*.md'
 template: |
   ## What's Changed
   $CHANGES
