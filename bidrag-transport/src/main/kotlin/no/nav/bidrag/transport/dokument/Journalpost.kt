@@ -66,13 +66,16 @@ data class JournalpostDto(
     @Schema(description = "Saksbehandler som opprettet journalposten")
     val opprettetAvIdent: String? = null,
     @Schema(
-        description = "Referanse til originale kilden til journalposten. Kan være referanse til forsendelse " +
-            "eller bidrag journalpost med prefiks. Feks BID_12323 eller BIF_123213",
+        description =
+            "Referanse til originale kilden til journalposten. Kan være referanse til forsendelse " +
+                "eller bidrag journalpost med prefiks. Feks BID_12323 eller BIF_123213",
     )
     val eksternReferanseId: String? = null,
 ) {
     fun hentHoveddokument() = dokumenter.firstOrNull()
+
     fun hentTittel() = hentHoveddokument()?.tittel ?: innhold
+
     fun erFarskapUtelukket() = hentTittel()?.startsWith(FARSKAP_UTELUKKET_PREFIKS, ignoreCase = true) == true
 }
 
@@ -101,21 +104,15 @@ enum class AvsenderMottakerDtoIdType {
 }
 
 data class MottakerAdresseTo(
-
     val adresselinje1: String,
-
     val adresselinje2: String? = null,
-
     val adresselinje3: String? = null,
-
     val bruksenhetsnummer: String? = null,
     @Schema(description = "Lankode må være i ISO 3166-1 alpha-2 format")
     val landkode: String? = null,
     @Schema(description = "Lankode må være i ISO 3166-1 alpha-3 format")
     val landkode3: String? = null,
-
     val postnummer: String? = null,
-
     val poststed: String? = null,
 )
 
@@ -164,8 +161,9 @@ data class DokumentDto(
     @Schema(description = "Referansen til dokumentet i arkivsystemet")
     val dokumentreferanse: String? = null,
     @Schema(
-        description = "Journalpost hvor dokumentet er arkivert. Dette brukes hvis dokumentet er arkivert i annen arkivsystem " +
-            "enn det som er sendt med i forespørsel.",
+        description =
+            "Journalpost hvor dokumentet er arkivert. Dette brukes hvis dokumentet er arkivert i annen arkivsystem " +
+                "enn det som er sendt med i forespørsel.",
     )
     val journalpostId: String? = null,
     @Schema(description = "Inngående (I), utgående (U) dokument, (X) internt notat", deprecated = true)
@@ -219,7 +217,9 @@ enum class Kanal {
     @Schema(description = "Sentral utskrift. Brukes kun for utgående journalposter")
     SENTRAL_UTSKRIFT,
 
-    @Schema(description = "Digital postkasse til innbyggere. Brevet er sendt via digital post til innbyggere. Brukes for utgående journalposter")
+    @Schema(
+        description = "Digital postkasse til innbyggere. Brevet er sendt via digital post til innbyggere. Brukes for utgående journalposter",
+    )
     SDP,
 
     @Schema(description = "Ingen distribusjon av journalpost. Mottaker har ingen gyldig adresse å sende til.")
@@ -292,6 +292,7 @@ val BID_JP_RANGE = (18900000L..40000000L)
 val FORSENDELSE_RANGE = (1000000000L..10000000000L)
 
 fun isBidJournalpostId(jpId: String) = jpId.isNumeric && jpId.toLong() in BID_JP_RANGE
+
 fun isForsendelse(jpId: String) = jpId.isNumeric && jpId.toLong() in FORSENDELSE_RANGE
 
 val String.numeric get() = this.replace("\\D".toRegex(), "").toLong()
@@ -314,7 +315,6 @@ class JournalpostId(
     val id: String?,
     private val defaultSystem: JournalpostSystem? = null,
 ) {
-
     private val system: JournalpostSystem
 
     val idNumerisk get() = id?.numeric

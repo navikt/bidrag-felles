@@ -15,10 +15,8 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class VisningsnavnTest {
-
     @Nested
     internal inner class InntektsrapporteringTest {
-
         @Test
         fun `Valider at alle kodeverdier har visningsnavn`() {
             Inntektsrapportering.entries.forEach {
@@ -30,7 +28,12 @@ class VisningsnavnTest {
 
         @Test
         fun `Skal returnere inntekstrapporteringer som krever årstall`() {
-            Inntektsrapportering.visningsnavnSomKreverÅrstall shouldContainAll listOf(Inntektsrapportering.LIGNINGSINNTEKT, Inntektsrapportering.AINNTEKT, Inntektsrapportering.KAPITALINNTEKT)
+            Inntektsrapportering.visningsnavnSomKreverÅrstall shouldContainAll
+                listOf(
+                    Inntektsrapportering.LIGNINGSINNTEKT,
+                    Inntektsrapportering.AINNTEKT,
+                    Inntektsrapportering.KAPITALINNTEKT,
+                )
         }
 
         @Test

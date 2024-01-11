@@ -4,7 +4,6 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class OrganisasjonsnummerTest {
-
     @Test
     fun `gyldig() returnerer false ved lengder ulik 9`() {
         Organisasjonsnummer("9").gyldig() shouldBe false

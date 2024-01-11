@@ -9,6 +9,7 @@ data class DokumentHendelse(
     val status: DokumentStatusDto? = null,
     val hendelseType: DokumentHendelseType,
 )
+
 enum class DokumentHendelseType {
     /**
      Bestilling av et nytt dokument

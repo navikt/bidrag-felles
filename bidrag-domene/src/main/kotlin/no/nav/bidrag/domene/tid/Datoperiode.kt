@@ -6,7 +6,6 @@ import java.time.LocalDate
 import java.time.YearMonth
 
 data class Datoperiode(override val fom: LocalDate, override val til: LocalDate?) : Periode<LocalDate>() {
-
     init {
         validate()
     }
@@ -15,7 +14,10 @@ data class Datoperiode(override val fom: LocalDate, override val til: LocalDate?
     constructor(fom: String, til: String) : this(LocalDate.parse(fom), LocalDate.parse(til))
     constructor(periode: Pair<String, String>) : this(periode.first, periode.second)
 
-    override fun lagPeriode(fom: LocalDate, til: LocalDate?): Datoperiode {
+    override fun lagPeriode(
+        fom: LocalDate,
+        til: LocalDate?,
+    ): Datoperiode {
         return Datoperiode(fom, til)
     }
 

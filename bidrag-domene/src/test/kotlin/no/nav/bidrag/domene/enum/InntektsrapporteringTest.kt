@@ -6,7 +6,6 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering.Companion.kanBruk
 import org.junit.jupiter.api.Test
 
 class InntektsrapporteringTest {
-
     @Test
     fun `skal sjekke om to inntektsrapporteringer kan opptre samtidig`() {
         Inntektsrapportering.AINNTEKT.kanBrukesSammenMed(Inntektsrapportering.AINNTEKT_BEREGNET_3MND) shouldBe false
@@ -50,7 +49,9 @@ class InntektsrapporteringTest {
         Inntektsrapportering.AINNTEKT_BEREGNET_3MND.kanBrukesSammenMed(Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET) shouldBe true
         Inntektsrapportering.AINNTEKT_BEREGNET_3MND.kanBrukesSammenMed(Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER) shouldBe false
         Inntektsrapportering.AINNTEKT_BEREGNET_3MND.kanBrukesSammenMed(Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT) shouldBe false
-        Inntektsrapportering.AINNTEKT_BEREGNET_3MND.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe false
+        Inntektsrapportering.AINNTEKT_BEREGNET_3MND.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe false
 
         Inntektsrapportering.AINNTEKT_BEREGNET_12MND.kanBrukesSammenMed(Inntektsrapportering.KAPITALINNTEKT) shouldBe true
         Inntektsrapportering.AINNTEKT_BEREGNET_12MND.kanBrukesSammenMed(Inntektsrapportering.LIGNINGSINNTEKT) shouldBe false
@@ -70,7 +71,9 @@ class InntektsrapporteringTest {
         Inntektsrapportering.AINNTEKT_BEREGNET_12MND.kanBrukesSammenMed(Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET) shouldBe true
         Inntektsrapportering.AINNTEKT_BEREGNET_12MND.kanBrukesSammenMed(Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER) shouldBe false
         Inntektsrapportering.AINNTEKT_BEREGNET_12MND.kanBrukesSammenMed(Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT) shouldBe false
-        Inntektsrapportering.AINNTEKT_BEREGNET_12MND.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe false
+        Inntektsrapportering.AINNTEKT_BEREGNET_12MND.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe false
 
         Inntektsrapportering.KAPITALINNTEKT.kanBrukesSammenMed(Inntektsrapportering.LIGNINGSINNTEKT) shouldBe true
         Inntektsrapportering.KAPITALINNTEKT.kanBrukesSammenMed(Inntektsrapportering.KONTANTSTØTTE) shouldBe true
@@ -205,7 +208,9 @@ class InntektsrapporteringTest {
         Inntektsrapportering.INTRODUKSJONSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET) shouldBe true
         Inntektsrapportering.INTRODUKSJONSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER) shouldBe false
         Inntektsrapportering.INTRODUKSJONSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT) shouldBe false
-        Inntektsrapportering.INTRODUKSJONSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe false
+        Inntektsrapportering.INTRODUKSJONSSTØNAD.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe false
 
         Inntektsrapportering.KVALIFISERINGSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.OVERGANGSSTØNAD) shouldBe true
         Inntektsrapportering.KVALIFISERINGSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.PENSJON) shouldBe true
@@ -215,7 +220,9 @@ class InntektsrapporteringTest {
         Inntektsrapportering.KVALIFISERINGSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET) shouldBe true
         Inntektsrapportering.KVALIFISERINGSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER) shouldBe false
         Inntektsrapportering.KVALIFISERINGSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT) shouldBe false
-        Inntektsrapportering.KVALIFISERINGSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe false
+        Inntektsrapportering.KVALIFISERINGSSTØNAD.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe false
 
         Inntektsrapportering.OVERGANGSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.PENSJON) shouldBe true
         Inntektsrapportering.OVERGANGSSTØNAD.kanBrukesSammenMed(Inntektsrapportering.SYKEPENGER) shouldBe true
@@ -245,20 +252,42 @@ class InntektsrapporteringTest {
         Inntektsrapportering.LØNN_MANUELT_BEREGNET.kanBrukesSammenMed(Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET) shouldBe true
         Inntektsrapportering.LØNN_MANUELT_BEREGNET.kanBrukesSammenMed(Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER) shouldBe false
         Inntektsrapportering.LØNN_MANUELT_BEREGNET.kanBrukesSammenMed(Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT) shouldBe false
-        Inntektsrapportering.LØNN_MANUELT_BEREGNET.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe true
+        Inntektsrapportering.LØNN_MANUELT_BEREGNET.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe true
 
-        Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET) shouldBe true
-        Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER) shouldBe true
-        Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT) shouldBe true
-        Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe true
+        Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(
+            Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET,
+        ) shouldBe true
+        Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(
+            Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER,
+        ) shouldBe true
+        Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(
+            Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT,
+        ) shouldBe true
+        Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe true
 
-        Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET.kanBrukesSammenMed(Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER) shouldBe true
-        Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET.kanBrukesSammenMed(Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT) shouldBe true
-        Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe true
+        Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET.kanBrukesSammenMed(
+            Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER,
+        ) shouldBe true
+        Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET.kanBrukesSammenMed(
+            Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT,
+        ) shouldBe true
+        Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe true
 
-        Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT) shouldBe false
-        Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe false
+        Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(
+            Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT,
+        ) shouldBe false
+        Inntektsrapportering.PERSONINNTEKT_EGNE_OPPLYSNINGER.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe false
 
-        Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT.kanBrukesSammenMed(Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET) shouldBe false
+        Inntektsrapportering.SAKSBEHANDLER_BEREGNET_INNTEKT.kanBrukesSammenMed(
+            Inntektsrapportering.YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET,
+        ) shouldBe false
     }
 }

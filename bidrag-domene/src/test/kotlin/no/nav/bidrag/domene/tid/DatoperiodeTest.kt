@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 internal class DatoperiodeTest {
-
     @Test
     fun soretdBySortererrikitg() {
         val nummer1 = ÅrMånedsperiode("2021-01" to "2021-02")

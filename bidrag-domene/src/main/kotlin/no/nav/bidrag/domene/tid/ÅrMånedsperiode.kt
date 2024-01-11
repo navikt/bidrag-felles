@@ -10,7 +10,6 @@ data class ÅrMånedsperiode(
     @Schema(example = "2023-01", type = "String", pattern = "YYYY-MM") override val fom: YearMonth,
     @Schema(example = "2023-01", type = "String", pattern = "YYYY-MM") override val til: YearMonth?,
 ) : Periode<YearMonth>() {
-
     init {
         validate()
     }
@@ -21,7 +20,10 @@ data class ÅrMånedsperiode(
 
     constructor(periode: Pair<String, String>) : this(periode.first, periode.second)
 
-    override fun lagPeriode(fom: YearMonth, til: YearMonth?): ÅrMånedsperiode {
+    override fun lagPeriode(
+        fom: YearMonth,
+        til: YearMonth?,
+    ): ÅrMånedsperiode {
         return ÅrMånedsperiode(fom, til)
     }
 

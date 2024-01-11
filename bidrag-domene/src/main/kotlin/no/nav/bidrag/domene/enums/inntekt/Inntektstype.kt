@@ -21,12 +21,10 @@ enum class Inntektstype {
     ;
 
     companion object {
-
         /**
          * Extension function som returnerer en liste av inntektrapporteringer som inneholder den aktuelle inntekttypen.
          * @return Liste av type InntektRapportering
          */
-        fun Inntektstype.inngårIInntektRapporteringer() =
-            Inntektsrapportering.entries.filter { this in it.inneholderInntektstypeListe }
+        fun Inntektstype.inngårIInntektRapporteringer() = Inntektsrapportering.entries.filter { this in it.inneholderInntektstypeListe }
     }
 }

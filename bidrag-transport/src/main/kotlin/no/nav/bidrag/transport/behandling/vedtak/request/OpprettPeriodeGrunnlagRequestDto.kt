@@ -5,11 +5,9 @@ import jakarta.validation.constraints.Min
 
 @Schema
 data class OpprettPeriodeGrunnlagRequestDto(
-
     @Schema(description = "Periode-id")
     @Min(0)
     val periodeId: Int,
-
     @Schema(description = "grunnlag-id")
     @Min(0)
     val grunnlagId: Int,

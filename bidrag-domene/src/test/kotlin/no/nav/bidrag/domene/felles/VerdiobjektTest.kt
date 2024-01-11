@@ -6,7 +6,6 @@ import no.nav.bidrag.domene.sak.Saksnummer
 import org.junit.jupiter.api.Test
 
 class VerdiobjektTest {
-
     @Test
     fun `verdier() for et set av verdiobjekter returnerer et sett med verdier`() {
         val saksnumre = setOf(Saksnummer("1234567"), Saksnummer("7654321"), Saksnummer("7142589"))

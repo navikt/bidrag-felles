@@ -4,7 +4,6 @@ import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class SamhandlerIdTest {
-
     @Test
     fun `gyldig returnerer false for annet enn 11 siffer`() {
         SamhandlerId("987654321987").gyldig() shouldBe false

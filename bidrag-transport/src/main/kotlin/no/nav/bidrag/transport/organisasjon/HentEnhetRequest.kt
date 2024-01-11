@@ -12,8 +12,6 @@ data class HentEnhetRequest(
     val behandlingstema: String? = null,
     val sakskategori: Sakskategori? = null,
     val behandlingstype: Behandlingstype? = null,
-
 ) {
-
     val alleIdenter get() = biidenter + ident
 }

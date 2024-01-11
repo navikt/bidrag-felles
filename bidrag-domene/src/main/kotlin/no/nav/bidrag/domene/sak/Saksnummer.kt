@@ -25,5 +25,6 @@ class SaksnummerWritingConverter : Converter<Saksnummer, String> {
 
 class SaksnummerConverter : AttributeConverter<Saksnummer, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Saksnummer(source) }
+
     override fun convertToDatabaseColumn(source: Saksnummer?) = source?.verdi.trimToNull()
 }
