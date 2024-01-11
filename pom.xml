@@ -18,13 +18,14 @@
         <jackson.version>2.16.0</jackson.version>
         <kotest.version>5.8.0</kotest.version>
         <swagger.version>2.2.20</swagger.version>
-        <kotlin.compiler.jvmTarget>1.8</kotlin.compiler.jvmTarget>
-        <java.version>1.8</java.version>
+
+        <maven-source.version>3.3.0</maven-source.version>
     </properties>
 
     <modules>
         <module>bidrag-domene</module>
         <module>bidrag-transport</module>
+        <module>bidrag-commons</module>
     </modules>
     <distributionManagement>
         <repository>
@@ -63,6 +64,19 @@
                 <scope>test</scope>
             </dependency>
             <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-test-junit5</artifactId>
+                <version>${kotest.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.kotest</groupId>
+                <artifactId>kotest-runner-junit5-jvm</artifactId>
+                <version>${kotest.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>com.fasterxml.jackson.datatype</groupId>
                 <artifactId>jackson-datatype-jsr310</artifactId>
                 <version>${jackson.version}</version>
@@ -95,6 +109,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>${maven-source.version}</version>
             </plugin>
         </plugins>
     </build>
