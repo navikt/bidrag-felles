@@ -166,3 +166,7 @@ KVALIFISERINGSSTØNAD:
   intern: "Kvalifiseringsstønad"
   bruker:
     NB: "Kvalifiseringsstønad"
+BARNETILLEGG:
+  intern: "Barnetillegg"
+  bruker:
+    NB: "Barnetillegg"

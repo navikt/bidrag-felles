@@ -185,6 +185,24 @@ enum class Inntektsrapportering(
             ),
     ),
 
+    BARNETILLEGG(
+        hentesAutomatisk = true,
+        kanLeggesInnManuelt = true,
+        inneholderInntektstypeListe =
+            listOf(
+                Inntektstype.BARNETILLEGG_PENSJON,
+                Inntektstype.BARNETILLEGG_UFØRETRYGD,
+                Inntektstype.BARNETILLEGG_DAGPENGER,
+                Inntektstype.BARNETILLEGG_KVALIFISERINGSSTØNAD,
+                Inntektstype.BARNETILLEGG_AAP,
+                Inntektstype.BARNETILLEGG_DNB,
+                Inntektstype.BARNETILLEGG_NORDEA,
+                Inntektstype.BARNETILLEGG_STOREBRAND,
+                Inntektstype.BARNETILLEGG_KLP,
+                Inntektstype.BARNETILLEGG_SPK,
+            ),
+    ),
+
     // Manuelt registrerte rapporteringer
 
     PERSONINNTEKT_EGNE_OPPLYSNINGER(
