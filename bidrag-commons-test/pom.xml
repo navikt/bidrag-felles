@@ -112,14 +112,17 @@
   </dependencies>
 
   <build>
+    <sourceDirectory>src/main/kotlin</sourceDirectory>
+    <testSourceDirectory>src/test/kotlin</testSourceDirectory>
+
     <plugins>
-      <plugin>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <version>${maven-surefire.version}</version>
-      </plugin>
       <plugin>
         <groupId>org.jetbrains.kotlin</groupId>
         <artifactId>kotlin-maven-plugin</artifactId>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
       </plugin>
     </plugins>
   </build>
