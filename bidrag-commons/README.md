@@ -179,3 +179,4 @@ Hvis du bruker CaffeineCacheManager kan følgende brukes for å konfigurere cach
 Gjøres med 'workflows' og 'actions' fra GitHub. Ny pakker bygges og reslease ved merge til main i github.
 
 
+Dette er test
