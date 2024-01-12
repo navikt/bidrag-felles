@@ -1,6 +1,6 @@
 change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
 categories:
-  - title: 'Bidrag domene'
+  - title: '🍩 Bidrag domene'
     labels:
       - 'bidrag-domene'
   - title: '🚌 Bidrag transport'
@@ -9,6 +9,9 @@ categories:
   - title: '🔭 Bidrag commons'
     labels:
       - 'bidrag-commons'
+  - title: '🛠️ Bidrag commons-test'
+    labels:
+      - 'bidrag-commons-test'
   - title: '🚀 Features'
     labels:
       - 'feature'
@@ -42,6 +45,9 @@ autolabeler:
   - label: 'bidrag-transport'
     files:
       - 'bidrag-transport/**'
+  - label: 'bidrag-commons-test'
+    files:
+      - 'bidrag-commons-test/**'
   - label: 'chore'
     branch:
       - '/chore\/.+/'

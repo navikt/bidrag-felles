@@ -15,7 +15,7 @@ env:
 
 jobs:
   build-artifact:
-    name: Build
+    name: "Build and run tests"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
