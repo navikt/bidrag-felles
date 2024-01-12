@@ -55,7 +55,12 @@
             <url>https://maven.pkg.github.com/navikt/bidrag-felles</url>
         </repository>
     </distributionManagement>
-
+    <scm>
+        <developerConnection>scm:git:git@github.com:navikt/bidrag-felles.git</developerConnection>
+        <connection>scm:git:git@github.com:navikt/bidrag-fellest.git</connection>
+        <url>https://github.com/navikt/bidrag-felles.git</url>
+        <tag>HEAD</tag>
+    </scm>
     <dependencyManagement>
         <dependencies>
             <dependency>
