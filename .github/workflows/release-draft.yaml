@@ -60,7 +60,7 @@ jobs:
       - name: Setting version
         id: set_version
         run: |
-          export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y.%m%d.%H%M%S')
+          export GIT_COMMIT_DATE=$(git log -1 --pretty='%ad' --date=format:'%Y.%m.%d.%H%M%S')
           export VERSION=${GIT_COMMIT_DATE}
           echo "VERSION=${GIT_COMMIT_DATE}" >> $GITHUB_ENV
           echo "Setting version $VERSION"

@@ -3,21 +3,21 @@
 package no.nav.bidrag.commons.service.organisasjon
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.commons.service.AppContext
-import no.nav.bidrag.commons.util.LoggingRetryListener
+import no.nav.bidrag.commons.service.retryTemplate
 import no.nav.bidrag.commons.util.secureLogger
 import no.nav.bidrag.commons.web.client.AbstractRestClient
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
-import org.springframework.retry.backoff.FixedBackOffPolicy
-import org.springframework.retry.policy.SimpleRetryPolicy
-import org.springframework.retry.support.RetryTemplate
 import org.springframework.stereotype.Component
 import org.springframework.web.client.HttpClientErrorException
 import org.springframework.web.client.RestOperations
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
+
+private val logger = KotlinLogging.logger {}
 
 /**
  * SaksbehandlernavnProvider brukes for å hente saksbehandlernavn for NAV-ident.
@@ -89,22 +89,9 @@ class SaksbehandlernavnProvider {
                         .hentSaksbehandlerInfo(saksbehandlerIdent)?.navn
                 }
             } catch (e: Exception) {
-                secureLogger.error("Det skjedde en feil ved henting av saksbehandlernavn for saksbehandler $saksbehandlerIdent", e)
+                secureLogger.error(e) { "Det skjedde en feil ved henting av saksbehandlernavn for saksbehandler $saksbehandlerIdent" }
                 null
             }
         }
     }
-}
-
-private fun retryTemplate(details: String? = null): RetryTemplate {
-    val retryTemplate = RetryTemplate()
-    val fixedBackOffPolicy = FixedBackOffPolicy()
-    fixedBackOffPolicy.backOffPeriod = 500L
-    retryTemplate.setBackOffPolicy(fixedBackOffPolicy)
-    val retryPolicy = SimpleRetryPolicy()
-    retryPolicy.maxAttempts = 3
-    retryTemplate.setRetryPolicy(retryPolicy)
-    retryTemplate.setThrowLastExceptionOnExhausted(true)
-    retryTemplate.registerListener(LoggingRetryListener(details))
-    return retryTemplate
 }
