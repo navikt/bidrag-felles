@@ -1,10 +1,10 @@
 package no.nav.bidrag.transport.behandling.beregning.felles
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.databind.ObjectMapper
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.felles.objectmapper
 
 @Schema(description = "Grunnlaget for en beregning av barnebidrag, forskudd og særtilskudd")
 data class BeregnGrunnlag(
@@ -32,8 +32,7 @@ fun <T> BeregnGrunnlag.hentInnholdBasertPåEgenReferanse(
         .filter { it.type == grunnlagType }
         .filter { referanse.isEmpty() || referanse == it.referanse }
         .map {
-            val mapper = ObjectMapper()
-            val innhold = mapper.findAndRegisterModules().readValue(it.innhold.toString(), clazz)
+            val innhold = objectmapper.treeToValue(it.innhold, clazz)
             InnholdMedReferanse(it.referanse!!, innhold)
         }
 
@@ -46,8 +45,7 @@ fun <T> BeregnGrunnlag.hentInnholdBasertPåFremmedReferanse(
         .filter { it.type == grunnlagType }
         .filter { referanse.isEmpty() || it.grunnlagsreferanseListe!!.contains(referanse) }
         .map {
-            val mapper = ObjectMapper()
-            val innhold = mapper.findAndRegisterModules().readValue(it.innhold.toString(), clazz)
+            val innhold = objectmapper.treeToValue(it.innhold, clazz)
             InnholdMedReferanse(it.referanse!!, innhold)
         }
 
@@ -64,3 +62,5 @@ fun Grunnlag.valider() {
     requireNotNull(type) { "type kan ikke være null" }
     requireNotNull(innhold) { "innhold kan ikke være null" }
 }
+
+fun JsonNode.toString() = objectmapper.writeValueAsString(this)
