@@ -16,6 +16,7 @@ import java.util.concurrent.atomic.AtomicReference
 private val kodeverkUrl = AtomicReference("")
 const val POSTNUMMER = "Postnummer"
 const val LANDKODER = "Landkoder"
+const val LANDKODER_ISO2 = "LandkoderISO2"
 const val SUMMERT_SKATTEGRUNNLAG = "Summert skattegrunnlag"
 const val LOENNSBESKRIVELSE = "Loennsbeskrivelse"
 const val YTELSEFRAOFFENTLIGE = "YtelseFraOffentligeBeskrivelse"
@@ -33,6 +34,8 @@ fun finnVisningsnavnSkattegrunnlag(fulltNavnInntektspost: String): String =
 fun finnPoststedForPostnummer(postnummer: String): String? = finnVisningsnavn(postnummer, POSTNUMMER)
 
 fun finnLandkodeForLandkoder(landkode: String): String? = finnVisningsnavn(landkode, LANDKODER)
+
+fun finnLandkodeForLandkoderIso2(landkode: String): String? = finnVisningsnavn(landkode, LANDKODER_ISO2)
 
 fun finnVisningsnavnLønnsbeskrivelse(fulltNavnInntektspost: String): String =
     finnVisningsnavn(fulltNavnInntektspost, LOENNSBESKRIVELSE) ?: ""
