@@ -1,5 +1,5 @@
 package no.nav.bidrag.commons.util
 
-import org.slf4j.LoggerFactory
+import io.github.oshai.kotlinlogging.KotlinLogging
 
-val secureLogger = LoggerFactory.getLogger("secureLogger")
+val secureLogger = KotlinLogging.logger("secureLogger")
