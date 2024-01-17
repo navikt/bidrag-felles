@@ -22,6 +22,7 @@
         <mockk.version>1.13.9</mockk.version>
         <spring-boot.version>3.2.1</spring-boot.version>
         <kotlin-logging-jvm.version>6.0.2</kotlin-logging-jvm.version>
+        <springdoc-openapi-ui.version>2.3.0</springdoc-openapi-ui.version>
 
         <!-- plugins -->
         <maven-compiler.version>3.12.1</maven-compiler.version>
@@ -87,7 +88,13 @@
                 <artifactId>kotlin-logging-jvm</artifactId>
                 <version>${kotlin-logging-jvm.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+                <version>${springdoc-openapi-ui.version}</version>
+            </dependency>
 
+            <!-- test-->
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-test-junit5</artifactId>
