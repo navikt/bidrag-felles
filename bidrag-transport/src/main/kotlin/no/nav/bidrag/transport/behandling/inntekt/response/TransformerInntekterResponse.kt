@@ -36,7 +36,7 @@ data class SummertÅrsinntekt(
     val sumInntekt: BigDecimal,
     @Schema(description = "Perioden inntekten gjelder for (fom-til)")
     val periode: ÅrMånedsperiode,
-    @Schema(description = "Id til barnet kontantstøtten mottas for, brukes kun for kontantstøtte", example = "12345678910")
+    @Schema(description = "Id til barnet inntekten mottas for, brukes for kontantstøtte og barnetillegg", example = "12345678910")
     val gjelderBarnPersonId: String = "",
     @Schema(description = "Liste over inntektsposter (generisk, avhengig av type) som utgjør grunnlaget for summert inntekt")
     val inntektPostListe: List<InntektPost>,
