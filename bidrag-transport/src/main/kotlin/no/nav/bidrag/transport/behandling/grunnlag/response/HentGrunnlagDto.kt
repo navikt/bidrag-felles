@@ -27,6 +27,8 @@ data class HentGrunnlagDto(
     val barnetilsynListe: List<BarnetilsynGrunnlagDto>,
     @Schema(description = "Periodisert liste over arbeidsforhold")
     val arbeidsforholdListe: List<ArbeidsforholdGrunnlagDto>,
+    @Schema(description = "Liste over evt. feil rapportert under henting av grunnlag")
+    val feilrapporteringListe: List<FeilrapporteringDto>,
     @Schema(description = "Hentet tidspunkt")
     val hentetTidspunkt: LocalDateTime,
 )
