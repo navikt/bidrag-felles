@@ -6,10 +6,12 @@ import java.time.LocalDateTime
 data class HentGrunnlagDto(
     @Schema(description = "Periodisert liste over innhentede inntekter fra a-inntekt og underliggende poster")
     val ainntektListe: List<AinntektGrunnlagDto>,
-    @Schema(description = "Periodisert liste over innhentede fra skatt og underliggende poster")
+    @Schema(description = "Periodisert liste over innhentede inntekter fra skatt og underliggende poster")
     val skattegrunnlagListe: List<SkattegrunnlagGrunnlagDto>,
-    @Schema(description = "Periodisert liste over innhentet utvidet barnetrygd og småbarnstillegg")
-    val ubstListe: List<UtvidetBarnetrygdOgSmaabarnstilleggGrunnlagDto>,
+    @Schema(description = "Periodisert liste over innhentet utvidet barnetrygd")
+    val utvidetBarnetrygdListe: List<UtvidetBarnetrygdGrunnlagDto>,
+    @Schema(description = "Periodisert liste over innhentet småbarnstillegg")
+    val småbarnstilleggListe: List<SmåbarnstilleggGrunnlagDto>,
     @Schema(description = "Periodisert liste over innhentet barnetillegg")
     val barnetilleggListe: List<BarnetilleggGrunnlagDto>,
     @Schema(description = "Periodisert liste over innhentet kontantstøtte")
