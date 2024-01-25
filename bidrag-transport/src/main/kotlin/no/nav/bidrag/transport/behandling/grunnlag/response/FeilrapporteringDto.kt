@@ -2,7 +2,7 @@ package no.nav.bidrag.transport.behandling.grunnlag.response
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.grunnlag.GrunnlagRequestType
-import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
 import java.time.LocalDate
 
 data class FeilrapporteringDto(
@@ -15,7 +15,7 @@ data class FeilrapporteringDto(
     @Schema(description = "Periode til-dato")
     val periodeTil: LocalDate?,
     @Schema(description = "Http statuskode")
-    val feilkode: HttpStatus?,
+    val feilkode: HttpStatusCode?,
     @Schema(description = "Feilmelding")
     val feilmelding: String?,
 )
