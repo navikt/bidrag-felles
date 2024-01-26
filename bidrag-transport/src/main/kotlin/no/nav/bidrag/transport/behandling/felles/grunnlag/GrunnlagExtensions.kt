@@ -37,7 +37,7 @@ inline fun <reified T : GrunnlagInnhold> List<GrunnlagDto>.filtrerOgKonverterBas
 ): List<InnholdMedReferanse<T>> =
     filtrerBasertPåEgenReferanse(grunnlagType, referanse)
         .map {
-            InnholdMedReferanse(referanse, it.innholdTilObjekt<T>())
+            InnholdMedReferanse(it.referanse, it.innholdTilObjekt<T>())
         }
 
 inline fun <reified T : GrunnlagInnhold> List<GrunnlagDto>.filtrerOgKonverterBasertPåFremmedReferanse(
@@ -46,5 +46,5 @@ inline fun <reified T : GrunnlagInnhold> List<GrunnlagDto>.filtrerOgKonverterBas
 ): List<InnholdMedReferanse<T>> =
     filtrerBasertPåFremmedReferanse(grunnlagType, referanse)
         .map {
-            InnholdMedReferanse(referanse, it.innholdTilObjekt<T>())
+            InnholdMedReferanse(it.referanse, it.innholdTilObjekt<T>())
         }
