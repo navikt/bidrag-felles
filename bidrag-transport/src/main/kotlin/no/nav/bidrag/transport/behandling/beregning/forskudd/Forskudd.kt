@@ -17,7 +17,7 @@ data class BeregnetForskuddResultat(
 @Schema(description = "Resultatet av en beregning for en gitt periode")
 data class ResultatPeriode(
     @Schema(description = "Beregnet resultat periode") var periode: ÅrMånedsperiode,
-    @Schema(description = "Beregnet resultat innhold") var resultat: ResultatBeregning,
+    @Schema(description = "Beregnet resultat") var resultat: ResultatBeregning,
     @Schema(description = "Beregnet grunnlag innhold") var grunnlagsreferanseListe: List<String>,
 )
 

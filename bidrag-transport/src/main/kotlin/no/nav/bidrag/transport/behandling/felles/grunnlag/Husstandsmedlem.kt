@@ -5,14 +5,14 @@ import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.time.LocalDateTime
 
-data class InnhentetHusstandsmedlemGrunnlag(
+data class InnhentetHusstandsmedlem(
     override val periode: ÅrMånedsperiode,
-    override val grunnlag: Husstandsmedlem,
+    override val grunnlag: HusstandsmedlemPDL,
     override val hentetTidspunkt: LocalDateTime,
-) : InnhentetGrunnlagInnhold<InnhentetHusstandsmedlemGrunnlag.Husstandsmedlem> {
-    data class Husstandsmedlem(
-        val partPersonId: String?,
-        val relatertPersonPersonId: String?,
+) : InnhentetGrunnlagInnhold<InnhentetHusstandsmedlem.HusstandsmedlemPDL> {
+    data class HusstandsmedlemPDL(
+        @Schema(description = "Referanse til person som er husstandsmedlem")
+        val relatertPerson: String?,
         val erBarnAvBmBp: Boolean,
     )
 }

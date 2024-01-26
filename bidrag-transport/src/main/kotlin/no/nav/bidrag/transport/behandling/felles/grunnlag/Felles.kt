@@ -1,7 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.databind.JsonNode
-import com.fasterxml.jackson.module.kotlin.treeToValue
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.ident.Personident
@@ -47,10 +46,6 @@ interface BaseGrunnlag {
     fun BaseGrunnlag.valider() {
         require(referanse.isNotEmpty()) { "referanse kan ikke være en tom streng" }
     }
-}
-
-inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T {
-    return commonObjectmapper.treeToValue(innhold)
 }
 
 interface GrunnlagInnhold

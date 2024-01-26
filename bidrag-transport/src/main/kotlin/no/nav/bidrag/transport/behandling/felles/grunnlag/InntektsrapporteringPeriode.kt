@@ -7,7 +7,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
 @Schema(description = "Rapportert inntekt for person")
-data class InntektRapporteringPeriode(
+data class InntektsrapporteringPeriode(
     override val periode: ÅrMånedsperiode,
     override val manueltRegistrert: Boolean,
     @Schema(description = "Type inntektsrapportering") val inntektsrapportering: Inntektsrapportering,
@@ -16,9 +16,9 @@ data class InntektRapporteringPeriode(
     @Schema(description = "Om inntekt er tatt med i beregningen") val valgt: Boolean,
     @Schema(
         description = "Liste med inntekstposter som inntekten består av. Vil være tom hvis det er manuelt registrert",
-    ) val inntekstpostListe: List<InntektPost>,
+    ) val inntekstpostListe: List<Inntektspost> = emptyList(),
 ) : GrunnlagPeriodeInnhold {
-    data class InntektPost(
+    data class Inntektspost(
         @Schema(description = "Kode for inntektspost", example = "bonus")
         val kode: String,
         @Schema(description = "Inntekstype inntekstposten er knyttet til", example = "PENSJON")

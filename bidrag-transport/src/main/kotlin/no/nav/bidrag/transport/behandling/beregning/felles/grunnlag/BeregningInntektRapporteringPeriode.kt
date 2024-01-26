@@ -6,6 +6,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
 @Schema(description = "Rapportert inntekt for person")
+@Deprecated("Bruk InntektsrapporteringPeriode", ReplaceWith("InntektsrapporteringPeriode"))
 data class BeregningInntektRapporteringPeriode(
     @Schema(description = "Periode") val periode: ÅrMånedsperiode,
     @Schema(description = "Type inntektsrapportering") val inntektsrapportering: Inntektsrapportering,

@@ -15,8 +15,6 @@ data class InnhentetArbeidsforhold(
     override val hentetTidspunkt: LocalDateTime,
 ) : InnhentetGrunnlagInnhold<InnhentetArbeidsforhold.Arbeidsforhold> {
     data class Arbeidsforhold(
-        @Schema(description = "Id til personen arbeidsforholdet gjelder")
-        val partPersonId: String,
         @Schema(description = "Startdato for arbeidsforholdet")
         val startdato: LocalDate?,
         @Schema(description = "Eventuell sluttdato for arbeidsforholdet")
@@ -78,8 +76,6 @@ data class InnhentetSkattegrunnlag(
     override val grunnlag: Skattegrunnlag,
 ) : InnhentetGrunnlagInnhold<InnhentetSkattegrunnlag.Skattegrunnlag> {
     data class Skattegrunnlag(
-        @Schema(description = "Id til personen inntekten er rapportert for")
-        val personId: String,
         val skattegrunnlagListe: List<Skattegrunnlagspost>,
     )
 
@@ -103,10 +99,8 @@ data class InnhentetBarnetillegg(
     override val grunnlag: Barnetillegg,
 ) : InnhentetGrunnlagInnhold<InnhentetBarnetillegg.Barnetillegg> {
     data class Barnetillegg(
-        @Schema(description = "Id til personen barnetillegg er rapportert for")
-        val partPersonId: String,
-        @Schema(description = "Id til barnet barnetillegget er rapportert for")
-        val barnPersonId: String,
+        @Schema(description = "Referansen barnet barnetillegget er rapportert for")
+        val gjelderBarn: String,
         @Schema(description = "Type barnetillegg.")
         val barnetilleggType: String,
         val beløpBrutto: BigDecimal,
@@ -121,7 +115,6 @@ data class InnhentetAinntekt(
     override val grunnlag: AinntektInnhentet,
 ) : InnhentetGrunnlagInnhold<InnhentetAinntekt.AinntektInnhentet> {
     data class AinntektInnhentet(
-        val personId: String,
         val ainntektspostListe: List<Ainntektspost>,
     )
 
@@ -145,8 +138,6 @@ data class InnhentetUtvidetBarnetrygd(
     override val grunnlag: UtvidetBarnetrygd,
 ) : InnhentetGrunnlagInnhold<InnhentetUtvidetBarnetrygd.UtvidetBarnetrygd> {
     data class UtvidetBarnetrygd(
-        @Schema(description = "Id til personen ubst er rapportert for")
-        val personId: String,
         @Schema(description = "Beløp")
         val beløp: BigDecimal,
         @Schema(description = "Angir om stønaden er manuelt beregnet")
@@ -160,8 +151,6 @@ data class InnhentetSmåbarnstillegg(
     override val grunnlag: Småbarnstillegg,
 ) : InnhentetGrunnlagInnhold<InnhentetSmåbarnstillegg.Småbarnstillegg> {
     data class Småbarnstillegg(
-        @Schema(description = "Id til personen ubst er rapportert for")
-        val personId: String,
         @Schema(description = "Beløp")
         val beløp: BigDecimal,
         @Schema(description = "Angir om stønaden er manuelt beregnet")
@@ -175,8 +164,7 @@ data class InnhentetBarnetilsyn(
     override val grunnlag: Barnetilsyn,
 ) : InnhentetGrunnlagInnhold<InnhentetBarnetilsyn.Barnetilsyn> {
     data class Barnetilsyn(
-        val partPersonId: String,
-        val barnPersonId: String,
+        val gjelderBarn: String,
         val beløp: Int?,
         val tilsynstype: Tilsynstype?,
         val skolealder: Skolealder?,
@@ -189,8 +177,7 @@ data class InnhentetKontantstøtte(
     override val grunnlag: Kontantstøtte,
 ) : InnhentetGrunnlagInnhold<InnhentetKontantstøtte.Kontantstøtte> {
     data class Kontantstøtte(
-        val partPersonId: String,
-        val barnPersonId: String,
+        val gjelderBarn: String,
         val beløp: Int,
     )
 }
