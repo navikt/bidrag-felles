@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
 import no.nav.bidrag.domene.enums.rolle.Rolle
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
-import no.nav.bidrag.transport.behandling.beregning.felles.Grunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -130,7 +130,7 @@ data class SoknadsBarnInfo(
 data class BeregnetTotalSaertilskuddResultat(
     @Schema(description = "Periodisert liste over resultat av særtilskuddsberegning")
     var beregnetSaertilskuddPeriodeListe: List<ResultatPeriode> = emptyList(),
-    @Schema(description = "Liste over grunnlag brukt i beregning") var grunnlagListe: List<Grunnlag> = emptyList(),
+    @Schema(description = "Liste over grunnlag brukt i beregning") var grunnlagListe: List<GrunnlagDto> = emptyList(),
 )
 
 @Schema(description = "Resultatet av en beregning for en gitt periode")

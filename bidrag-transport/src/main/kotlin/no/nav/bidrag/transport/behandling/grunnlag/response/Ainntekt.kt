@@ -46,16 +46,25 @@ data class AinntektspostDto(
     val opplysningspliktigId: String?,
     @Schema(description = "Id til virksomheten som rapporterer inn inntekten")
     val virksomhetId: String?,
-    @Schema(description = "Type inntekt: Lonnsinntekt, Naeringsinntekt, Pensjon eller trygd, Ytelse fra offentlig")
-    val inntektType: String,
     @Schema(description = "Type fordel: Kontantytelse, Naturalytelse, Utgiftsgodtgjorelse")
     val fordelType: String?,
     @Schema(description = "Beskrivelse av inntekt")
     val beskrivelse: String?,
-    @Schema(description = "Beløp")
-    val belop: BigDecimal,
     @Schema(description = "Fra-dato etterbetaling")
     val etterbetalingsperiodeFra: LocalDate?,
     @Schema(description = "Til-dato etterbetaling")
     val etterbetalingsperiodeTil: LocalDate?,
+    @Schema(description = "Type inntekt: Lonnsinntekt, Naeringsinntekt, Pensjon eller trygd, Ytelse fra offentlig")
+    @Deprecated("", replaceWith = ReplaceWith("kategori"))
+    val inntektType: String,
+    @Schema(
+        description = "Type inntekt: Lonnsinntekt, Naeringsinntekt, Pensjon eller trygd, Ytelse fra offentlig",
+        allowableValues = ["LOENNSINNTEKT", "NAERINGSINNTEKT", "PENSJON_ELLER_TRYGD", "YTELSE_FRA_OFFENTLIGE"],
+    )
+    val kategori: String = inntektType,
+    @Schema(description = "Beløp")
+    @Deprecated("", replaceWith = ReplaceWith("beløp"))
+    val belop: BigDecimal,
+    @Schema(description = "Beløp")
+    val beløp: BigDecimal = belop,
 )

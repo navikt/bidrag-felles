@@ -7,7 +7,7 @@
     <groupId>no.nav.bidrag</groupId>
     <artifactId>bidrag-felles</artifactId>
     <name>Bidrag felles</name>
-    <version>${revision}</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -184,6 +184,62 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>ktlint</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <version>${maven-antrun.version}</version>
+                        <executions>
+                            <execution>
+                                <id>ktlint</id>
+                                <phase>verify</phase>
+                                <configuration>
+                                    <target name="ktlint">
+                                        <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
+                                            <arg value="src/**/*.kt"/>
+                                        </java>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>ktlint-format</id>
+                                <phase>validate</phase>
+                                <configuration>
+                                    <target name="ktlint">
+                                        <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
+                                            <jvmarg value="--add-opens"/>
+                                            <jvmarg value="java.base/java.lang=ALL-UNNAMED"/>
+                                            <arg value="-F"/>
+                                            <arg value="src/**/*.kt"/>
+                                        </java>
+                                    </target>
+                                </configuration>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <dependencies>
+                            <dependency>
+                                <groupId>com.pinterest.ktlint</groupId>
+                                <artifactId>ktlint-cli</artifactId>
+                                <version>${ktlint.version}</version>
+                            </dependency>
+                            <!-- additional 3rd party ruleset(s) can be specified here -->
+                        </dependencies>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
 
@@ -275,52 +331,6 @@
                     <groupId>org.codehaus.mojo</groupId>
                     <artifactId>flatten-maven-plugin</artifactId>
                     <version>${flatten-maven.version}</version>
-                </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-antrun-plugin</artifactId>
-                    <version>${maven-antrun.version}</version>
-                    <executions>
-                        <execution>
-                            <id>ktlint</id>
-                            <phase>verify</phase>
-                            <configuration>
-                                <target name="ktlint">
-                                    <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
-                                        <arg value="src/**/*.kt"/>
-                                    </java>
-                                </target>
-                            </configuration>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                        </execution>
-                        <execution>
-                            <id>ktlint-format</id>
-                            <phase>validate</phase>
-                            <configuration>
-                                <target name="ktlint">
-                                    <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true" classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
-                                        <jvmarg value="--add-opens"/>
-                                        <jvmarg value="java.base/java.lang=ALL-UNNAMED"/>
-                                        <arg value="-F"/>
-                                        <arg value="src/**/*.kt"/>
-                                    </java>
-                                </target>
-                            </configuration>
-                            <goals>
-                                <goal>run</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                    <dependencies>
-                        <dependency>
-                            <groupId>com.pinterest.ktlint</groupId>
-                            <artifactId>ktlint-cli</artifactId>
-                            <version>${ktlint.version}</version>
-                        </dependency>
-                        <!-- additional 3rd party ruleset(s) can be specified here -->
-                    </dependencies>
                 </plugin>
             </plugins>
         </pluginManagement>
