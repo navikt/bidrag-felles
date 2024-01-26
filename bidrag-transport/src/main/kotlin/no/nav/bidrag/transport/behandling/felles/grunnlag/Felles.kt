@@ -43,7 +43,8 @@ interface BaseGrunnlag {
             "${::innhold.name}=${commonObjectmapper.writeValueAsString(innhold)}"
     }
 
-    fun BaseGrunnlag.valider() {
+    fun valider() {
+        require(innhold.asText() != "null" && !innhold.isNull) { "innhold kan ikke være null" }
         require(referanse.isNotEmpty()) { "referanse kan ikke være en tom streng" }
     }
 }

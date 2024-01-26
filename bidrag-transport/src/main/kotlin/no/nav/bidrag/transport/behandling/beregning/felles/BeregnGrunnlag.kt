@@ -12,6 +12,9 @@ data class BeregnGrunnlag(
 )
 
 fun BeregnGrunnlag.valider() {
+    require(søknadsbarnReferanse.isNotEmpty()) { "søknadsbarnReferanse kan ikke være tom strebg" }
+    require(grunnlagListe.isNotEmpty()) { "grunnlagListe kan ikke være tom" }
     requireNotNull(periode.fom) { "beregningsperiode fom kan ikke være null" }
     requireNotNull(periode.til) { "beregningsperiode til kan ikke være null" }
+    grunnlagListe.forEach(GrunnlagDto::valider)
 }
