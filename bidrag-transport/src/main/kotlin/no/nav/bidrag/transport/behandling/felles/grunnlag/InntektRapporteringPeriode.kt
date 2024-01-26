@@ -7,7 +7,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
 @Schema(description = "Rapportert inntekt for person")
-data class InntektRapporteringPeriodeGrunnlag(
+data class InntektRapporteringPeriode(
     override val periode: ÅrMånedsperiode,
     override val manueltRegistrert: Boolean,
     @Schema(description = "Type inntektsrapportering") val inntektsrapportering: Inntektsrapportering,

@@ -3,11 +3,11 @@ package no.nav.bidrag.transport.behandling.vedtak
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagInnhold
-import no.nav.bidrag.transport.behandling.felles.grunnlag.InntektRapporteringPeriodeGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.InntektRapporteringPeriode
 import no.nav.bidrag.transport.behandling.vedtak.response.VedtakDto
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
-fun VedtakDto.hentInntekter(): List<InntektRapporteringPeriodeGrunnlag> = hentGrunnagDetaljer(Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE)
+fun VedtakDto.hentInntekter(): List<InntektRapporteringPeriode> = hentGrunnagDetaljer(Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE)
 
 inline fun <reified T : GrunnlagInnhold> VedtakDto.hentGrunnagDetaljer(
     grunnlagType: Grunnlagstype,
