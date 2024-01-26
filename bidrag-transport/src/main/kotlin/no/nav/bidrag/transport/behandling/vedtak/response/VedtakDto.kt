@@ -1,10 +1,8 @@
 package no.nav.bidrag.transport.behandling.vedtak.response
 
-import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Min
 import jakarta.validation.constraints.NotBlank
-import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.vedtak.BehandlingsrefKilde
 import no.nav.bidrag.domene.enums.vedtak.Beslutningstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
@@ -16,6 +14,7 @@ import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -50,16 +49,6 @@ data class VedtakDto(
     val engangsbeløpListe: List<EngangsbeløpDto>,
     @Schema(description = "Liste med referanser til alle behandlinger som ligger som grunnlag til vedtaket")
     val behandlingsreferanseListe: List<BehandlingsreferanseDto>,
-)
-
-@Schema
-data class GrunnlagDto(
-    @Schema(description = "Referanse til grunnlaget")
-    val referanse: String,
-    @Schema(description = "Grunnlagstype")
-    val type: Grunnlagstype,
-    @Schema(description = "Innholdet i grunnlaget")
-    val innhold: JsonNode,
 )
 
 @Schema

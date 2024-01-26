@@ -1,10 +1,10 @@
 package no.nav.bidrag.domene.enums.beregning
 
-enum class ResultatkodeBarnebidrag {
-    BARNET_ER_SELVFORSØRGET, // Barnet er selvforsørget
+enum class ResultatkodeBarnebidrag(val kode: String? = null) {
+    BARNET_ER_SELVFORSØRGET("5SF"), // Barnet er selvforsørget
 
     // Resultat av beregning av barnebidrag, angir at det må gjøres en forholdsmessig fordeling
-    BEGRENSET_EVNE_FLERE_SAKER_UTFØR_FORHOLDSMESSIG_FORDELING,
+    BEGRENSET_EVNE_FLERE_SAKER_UTFØR_FORHOLDSMESSIG_FORDELING(""),
     BEGRENSET_REVURDERING, // Beregnet bidrag er større enn forskuddsats, settes lik forskuddssats
     BIDRAG_IKKE_BEREGNET_DELT_BOSTED, // Barnet har delt bosted og BPs andel av U er under 50%, bidrag skal ikke beregnes
     BIDRAG_REDUSERT_AV_EVNE, // Bidrag redusert pga ikke full evne
@@ -12,9 +12,9 @@ enum class ResultatkodeBarnebidrag {
     BIDRAG_SATT_TIL_BARNETILLEGG_BP, // BarnetilleggBP er høyere enn beregnet bidrag
     BIDRAG_SATT_TIL_BARNETILLEGG_FORSVARET, // Barnebidrag settes likt barnetillegg fra forsvaret
     BIDRAG_SATT_TIL_UNDERHOLDSKOSTNAD_MINUS_BARNETILLEGG_BM, // Beregnet bidrag er lavere enn underholdskostnad minus barnetilleggBM
-    DELT_BOSTED, // Barnet bor like mye hos begge foreldre
+    DELT_BOSTED("8DN"), // Barnet bor like mye hos begge foreldre
     FORHOLDSMESSIG_FORDELING_BIDRAGSBELØP_ENDRET, // Beregning av forholdsmessig fordeling er utført og det er beregnet nytt bidragsbeløp
     FORHOLDSMESSIG_FORDELING_INGEN_ENDRING, // Beregning av forholdsmessig fordeling er utført og det er ingen endringer på bidragsbeløp
-    INGEN_EVNE, // BP har 0.- i bidragsevne, bidrag satt til 0.-
+    INGEN_EVNE("AB"), // BP har 0.- i bidragsevne, bidrag satt til 0.-
     KOSTNADSBEREGNET_BIDRAG, // Kostnadsberegnet bidrag
 }

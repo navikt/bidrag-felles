@@ -5,8 +5,9 @@ import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Person
-import no.nav.bidrag.transport.felles.objectmapper
+import no.nav.bidrag.transport.felles.commonObjectmapper
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
@@ -16,13 +17,13 @@ class BeregninFellesTest {
         val personreferanse = "person_bm_1"
         val beregnGrunnlag =
             BeregnGrunnlag(
-                grunnlagListe =
+                grunnlagDtoListe =
                     listOf(
-                        Grunnlag(
+                        GrunnlagDto(
                             referanse = personreferanse,
                             type = Grunnlagstype.PERSON,
                             innhold =
-                                objectmapper.convertValue(
+                                commonObjectmapper.convertValue(
                                     Person(Personident("123123123"), fødselsdato = LocalDate.parse("2023-01-01")),
                                 ),
                         ),

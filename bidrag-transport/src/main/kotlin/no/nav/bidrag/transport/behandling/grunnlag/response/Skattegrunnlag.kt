@@ -39,7 +39,17 @@ data class SkattegrunnlagspostDto(
     @Schema(description = "Type skattegrunnlag: Ordinær eller Svalbard")
     val skattegrunnlagType: String,
     @Schema(description = "Type inntekt: Lonnsinntekt, Naeringsinntekt, Pensjon eller trygd, Ytelse fra offentlig")
+    @Deprecated("", replaceWith = ReplaceWith("kode"))
     val inntektType: String,
     @Schema(description = "Beløp")
+    @Deprecated("", replaceWith = ReplaceWith("beløp"))
     val belop: BigDecimal,
+    @Schema(description = "Beløp på skattegrunnlagposten")
+    val beløp: BigDecimal = belop,
+    @Schema(
+        description =
+            "Tekniske navnet på inntektsposten. Er samme verdi som \"Summert skattegrunnlag\"" +
+                " fra NAV kodeverk ( https://kodeverk-web.dev.adeo.no/kodeverksoversikt/kodeverk/Summert%20skattegrunnlag )",
+    )
+    val kode: String = inntektType,
 )

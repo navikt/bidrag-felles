@@ -4,13 +4,14 @@ import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
-import no.nav.bidrag.transport.felles.objectmapper
+import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
+import no.nav.bidrag.transport.felles.commonObjectmapper
 
 @Schema(description = "Grunnlaget for en beregning av barnebidrag, forskudd og særtilskudd")
 data class BeregnGrunnlag(
     @Schema(description = "Beregningsperiode") val periode: ÅrMånedsperiode? = null,
     @Schema(description = "Referanse til Person-objekt som tilhører søknadsbarnet") val søknadsbarnReferanse: String? = null,
-    @Schema(description = "Periodisert liste over grunnlagselementer") val grunnlagListe: List<Grunnlag>? = null,
+    @Schema(description = "Periodisert liste over grunnlagselementer") val grunnlagListe: List<GrunnlagDto>? = null,
 )
 
 fun BeregnGrunnlag.valider() {
@@ -18,7 +19,7 @@ fun BeregnGrunnlag.valider() {
     requireNotNull(periode.fom) { "beregningsperiode fom kan ikke være null" }
     requireNotNull(periode.til) { "beregningsperiode til kan ikke være null" }
     requireNotNull(søknadsbarnReferanse) { "søknadsbarnReferanse kan ikke være null" }
-    grunnlagListe?.map { it.valider() } ?: throw IllegalArgumentException("grunnlagListe kan ikke være null")
+    requireNotNull(grunnlagListe) { "grunnlagListe kan ikke være null" }
 }
 
 data class InnholdMedReferanse<T>(val referanse: String, val innhold: T)
@@ -32,8 +33,8 @@ fun <T> BeregnGrunnlag.hentInnholdBasertPåEgenReferanse(
         .filter { it.type == grunnlagType }
         .filter { referanse.isEmpty() || referanse == it.referanse }
         .map {
-            val innhold = objectmapper.treeToValue(it.innhold, clazz)
-            InnholdMedReferanse(it.referanse!!, innhold)
+            val innhold = commonObjectmapper.treeToValue(it.innhold, clazz)
+            InnholdMedReferanse(it.referanse, innhold)
         }
 
 fun <T> BeregnGrunnlag.hentInnholdBasertPåFremmedReferanse(
@@ -45,22 +46,8 @@ fun <T> BeregnGrunnlag.hentInnholdBasertPåFremmedReferanse(
         .filter { it.type == grunnlagType }
         .filter { referanse.isEmpty() || it.grunnlagsreferanseListe!!.contains(referanse) }
         .map {
-            val innhold = objectmapper.treeToValue(it.innhold, clazz)
-            InnholdMedReferanse(it.referanse!!, innhold)
+            val innhold = commonObjectmapper.treeToValue(it.innhold, clazz)
+            InnholdMedReferanse(it.referanse, innhold)
         }
 
-@Schema(description = "Grunnlag")
-data class Grunnlag(
-    @Schema(description = "Referanse (unikt navn på grunnlaget)") val referanse: String? = null,
-    @Schema(description = "Grunnlagstype") val type: Grunnlagstype? = null,
-    @Schema(description = "Liste over grunnlagsreferanser") val grunnlagsreferanseListe: List<String>? = null,
-    @Schema(description = "Grunnlagsinnhold (generisk)") val innhold: JsonNode? = null,
-)
-
-fun Grunnlag.valider() {
-    requireNotNull(referanse) { "referanse kan ikke være null" }
-    requireNotNull(type) { "type kan ikke være null" }
-    requireNotNull(innhold) { "innhold kan ikke være null" }
-}
-
-fun JsonNode.toString() = objectmapper.writeValueAsString(this)
+fun JsonNode.toString() = commonObjectmapper.writeValueAsString(this)
