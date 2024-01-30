@@ -47,6 +47,6 @@ data class InntektPost(
     val inntekstype: Inntektstype? = null,
     @Schema(description = "Visningsnavn for kode", example = "Bonus")
     val visningsnavn: String,
-    @Schema(description = "Beløp som utgør inntektsposten", example = "60000")
+    @Schema(description = "Beløp som utgjør inntektsposten", example = "60000")
     val beløp: BigDecimal,
 )
