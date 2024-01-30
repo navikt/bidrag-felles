@@ -30,8 +30,6 @@ data class SummertÅrsinntekt(
     val inntektRapportering: Inntektsrapportering,
     @Schema(description = "Visningsnavn for inntekt", example = "Lønn og trekk 2022")
     val visningsnavn: String,
-    @Schema(description = "Referanse", example = "Referanse")
-    val referanse: String,
     @Schema(description = "Summert inntekt for perioden, omgjort til årsinntekt", example = "600000")
     val sumInntekt: BigDecimal,
     @Schema(description = "Perioden inntekten gjelder for (fom-til)")
@@ -49,6 +47,6 @@ data class InntektPost(
     val inntekstype: Inntektstype? = null,
     @Schema(description = "Visningsnavn for kode", example = "Bonus")
     val visningsnavn: String,
-    @Schema(description = "Beløp som utgør inntektsposten", example = "60000")
+    @Schema(description = "Beløp som utgjør inntektsposten", example = "60000")
     val beløp: BigDecimal,
 )
