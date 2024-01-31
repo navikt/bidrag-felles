@@ -3,9 +3,8 @@ package no.nav.bidrag.domene.enums.grunnlag
 import io.swagger.v3.oas.annotations.media.Schema
 
 /**
- * Typer grunnlag som kan innhentes av tjenesten bidrag-grunnlag.
- * Brukes for å spesifisere hvilke grunnlag man ønsker at skal innhentes for en grunnlagspakke.
- * Må ikke forveksles med GrunnlagType.
+ * Brukes for å spesifisere hvilke grunnlag man ønsker at skal innhentes av tjenesten bidrag-grunnlag.
+ * Må ikke forveksles med Grunnlagstype.
  */
 @Schema(enumAsRef = true)
 enum class GrunnlagRequestType {
