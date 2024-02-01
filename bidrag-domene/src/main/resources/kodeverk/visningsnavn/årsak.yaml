@@ -1,0 +1,88 @@
+ANNET:
+  intern: "Annet"
+
+ENDRING_3_MÅNEDER_TILBAKE:
+  intern: "Endring 3 måneder tilbake"
+
+ENDRING_3_ÅRS_REGELEN:
+  intern: "Endring 3 års regelen"
+
+FRA_BARNETS_FØDSEL:
+  intern: "Fra barnets fødsel"
+
+FRA_BARNETS_FLYTTEMÅNED:
+  intern: "Fra barnets flyttemåned"
+
+FRA_KRAVFREMSETTELSE:
+  intern: "Fra kravfremsettelse"
+
+FRA_MÅNED_ETTER_INNTEKTEN_ØKTE:
+  intern: "Fra måned etter inntekten økte"
+
+FRA_OPPHOLDSTILLATELSE:
+  intern: "Fra oppholdstillatelse"
+
+FRA_SØKNADSTIDSPUNKT:
+  intern: "Fra søknadstidspunkt"
+
+FRA_SAMLIVSBRUDD:
+  intern: "Fra samlivsbrudd"
+
+FRA_SAMME_MÅNED_SOM_INNTEKTEN_BLE_REDUSERT:
+  intern: "Fra samme måned som inntekten ble redusert"
+
+PRIVAT_AVTALE:
+  intern: "Privat avtale"
+
+REVURDERING_MÅNEDEN_ETTER:
+  intern: "Revurdering måneden etter"
+
+SØKNADSTIDSPUNKT_ENDRING:
+  intern: "Søknadstidspunkt endring"
+
+TIDLIGERE_FEILAKTIG_AVSLAG:
+  intern: "Tidligere feilaktig avslag"
+
+TRE_MÅNEDER_TILBAKE:
+  intern: "Tre måneder tilbake"
+
+TRE_ÅRS_REGELEN:
+  intern: "Tre års regelen"
+
+#Avslag koder
+
+ANNET_AVSLAG:
+  intern: "Annet avslag"
+
+PÅ_GRUNN_AV_BARNEPENSJON:
+  intern: "På grunn av barnepensjon"
+
+BARNETS_EKTESKAP:
+  intern: "Barnets ekteskap"
+
+BARNETS_INNTEKT:
+  intern: "Barnets inntekt"
+
+PÅ_GRUNN_AV_YTELSE_FRA_FOLKETRYGDEN:
+  intern: "På grunn av ytelse fra folketrygden"
+
+FULLT_UNDERHOLDT_AV_OFFENTLIG:
+  intern: "Fullt underholdt av offentlig"
+
+IKKE_OMSORG:
+  intern: "Ikke omsorg"
+
+IKKE_OPPHOLD_I_RIKET:
+  intern: "Ikke opphold i riket"
+
+MANGLENDE_DOKUMENTASJON:
+  intern: "Manglende dokumentasjon"
+
+PÅ_GRUNN_AV_SAMMENFLYTTING:
+  intern: "På grunn av sammenflytting"
+
+OPPHOLD_I_UTLANDET:
+  intern: "Opphold i utlandet"
+
+UTENLANDSK_YTELSE:
+  intern: "Utenlandsk ytelse"
