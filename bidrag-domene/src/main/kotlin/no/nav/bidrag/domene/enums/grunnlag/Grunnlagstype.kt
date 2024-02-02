@@ -52,6 +52,8 @@ enum class Grunnlagstype {
     VIRKNINGSTIDSPUNKT,
     NOTAT,
 
+    @Deprecated("Bruk de spesifikke grunnlagstypene som starter med PERSON_ i stedet")
+    PERSON,
     PERSON_BIDRAGSMOTTAKER,
     PERSON_BIDRAGSPLIKTIG,
     PERSON_REELL_MOTTAKER,
@@ -61,10 +63,7 @@ enum class Grunnlagstype {
     INNTEKT_RAPPORTERING_PERIODE,
 
     // Inntekt som er beregnet av bidrag-inntekt
-    BEREGNET_INNTEKT_PERIODE,
-
-    // Sivilstand som er beregnet av bidrag-sivilstand
-    BEREGNET_SIVILSTAND_PERIODE,
+    BEREGNET_INNTEKT,
 
     INNHENTET_HUSSTANDSMEDLEM_PERIODE,
     INNHENTET_SIVILSTAND_PERIODE,
