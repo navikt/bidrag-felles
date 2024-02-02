@@ -40,9 +40,15 @@ fun Inntektsrapportering.visningsnavnIntern(årstall: Int?) = "${visningsnavn.in
 val VirkningstidspunktÅrsakstype.visningsnavn get() = lastVisningsnavnFraFil("årsak.yaml")[name] ?: visningsnavnMangler(name)
 val Sivilstandskode.visningsnavn get() = lastVisningsnavnFraFil("sivilstand.yaml")[name] ?: visningsnavnMangler(name)
 val Bostatuskode.visningsnavn get() = lastVisningsnavnFraFil("bostatus.yaml")[name] ?: visningsnavnMangler(name)
-val ResultatkodeForskudd.visningsnavn get() = lastVisningsnavnFraFil("resultatDeprecated.yaml", "FORSKUDD")[name] ?: visningsnavnMangler(name)
-val ResultatkodeBarnebidrag.visningsnavn get() = lastVisningsnavnFraFil("resultatDeprecated.yaml", "BARNEBIDRAG")[name] ?: visningsnavnMangler(name)
-val ResultatkodeSærtilskudd.visningsnavn get() = lastVisningsnavnFraFil("resultatDeprecated.yaml", "SÆRTILSKUDD")[name] ?: visningsnavnMangler(name)
+val ResultatkodeForskudd.visningsnavn get() =
+    lastVisningsnavnFraFil("resultatDeprecated.yaml", "FORSKUDD")[name]
+        ?: visningsnavnMangler(name)
+val ResultatkodeBarnebidrag.visningsnavn get() =
+    lastVisningsnavnFraFil("resultatDeprecated.yaml", "BARNEBIDRAG")[name]
+        ?: visningsnavnMangler(name)
+val ResultatkodeSærtilskudd.visningsnavn get() =
+    lastVisningsnavnFraFil("resultatDeprecated.yaml", "SÆRTILSKUDD")[name]
+        ?: visningsnavnMangler(name)
 val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[name] ?: visningsnavnMangler(name)
 
 private fun lastVisningsnavnFraFil(
