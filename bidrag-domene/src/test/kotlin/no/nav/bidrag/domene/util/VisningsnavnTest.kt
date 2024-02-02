@@ -4,6 +4,7 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.assertions.withClue
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
+import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeBarnebidrag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
@@ -11,10 +12,23 @@ import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
+import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class VisningsnavnTest {
+    @Nested
+    internal inner class VirkningstidspunktÅrsakstypeTest {
+        @Test
+        fun `Valider at alle kodeverdier har visningsnavn`() {
+            VirkningstidspunktÅrsakstype.entries.forEach {
+                withClue("${it.name} mangler visningsnavn") {
+                    it.visningsnavn.intern.isNotEmpty() shouldBe true
+                }
+            }
+        }
+    }
+
     @Nested
     internal inner class InntektsrapporteringTest {
         @Test
@@ -69,7 +83,7 @@ class VisningsnavnTest {
         }
 
         @Test
-        fun `Skal hente visningsnavn for sivilstand AINNTEKT_BEREGNET_12MND`() {
+        fun `Skal hente visningsnavn for sivilstand GIFT_SAMBOER`() {
             val visningsnavn = Sivilstandskode.GIFT_SAMBOER.visningsnavn
 
             visningsnavn.intern shouldBe "Gift/samboer"
@@ -138,6 +152,11 @@ class VisningsnavnTest {
     internal inner class ResultatkodeTest {
         @Test
         fun `Valider at alle kodeverdier har visningsnavn`() {
+            Resultatkode.entries.forEach {
+                withClue("${it.name} mangler visningsnavn") {
+                    it.visningsnavn.intern.isNotEmpty() shouldBe true
+                }
+            }
             ResultatkodeForskudd.entries.forEach {
                 withClue("${it.name} mangler visningsnavn") {
                     it.visningsnavn.intern.isNotEmpty() shouldBe true

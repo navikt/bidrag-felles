@@ -1,5 +1,6 @@
 package no.nav.bidrag.domene.enums.beregning
 
+@Deprecated("", replaceWith = ReplaceWith("Resultatkode"))
 enum class ResultatkodeBarnebidrag {
     BARNET_ER_SELVFORSØRGET, // Barnet er selvforsørget
 

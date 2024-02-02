@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -11,9 +12,9 @@ data class SøknadGrunnlag(
     val søktAv: SøktAvType,
 ) : GrunnlagInnhold
 
-data class VirkningsdatoGrunnlag(
-    val virkningsdato: LocalDate,
-    val årsak: String,
+data class VirkningstidspunktGrunnlag(
+    val virkningstidspunkt: LocalDate,
+    val årsak: VirkningstidspunktÅrsakstype,
 ) : GrunnlagInnhold
 
 data class SluttberegningBBM(

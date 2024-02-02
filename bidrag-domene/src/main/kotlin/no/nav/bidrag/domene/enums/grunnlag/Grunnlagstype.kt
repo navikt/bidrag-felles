@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package no.nav.bidrag.domene.enums.grunnlag
 
 import io.swagger.v3.oas.annotations.media.Schema
@@ -43,14 +45,25 @@ enum class Grunnlagstype {
     FORHOLDSMESSIG_FORDELING,
     SLUTTBEREGNING_BBM,
     KLAGE_STATISTIKK,
-    PERSON,
+
     BOSTATUS_PERIODE,
     SØKNAD,
     SIVILSTAND_PERIODE,
-    VIRKNINGSDATO,
+    VIRKNINGSTIDSPUNKT,
     NOTAT,
 
+    @Deprecated("Bruk de spesifikke grunnlagstypene som starter med PERSON_ i stedet")
+    PERSON,
+    PERSON_BIDRAGSMOTTAKER,
+    PERSON_BIDRAGSPLIKTIG,
+    PERSON_REELL_MOTTAKER,
+    PERSON_SØKNADSBARN,
+    PERSON_HUSSTANDSMEDLEM,
+
     INNTEKT_RAPPORTERING_PERIODE,
+
+    // Inntekt som er beregnet av bidrag-inntekt
+    BEREGNET_INNTEKT,
 
     INNHENTET_HUSSTANDSMEDLEM_PERIODE,
     INNHENTET_SIVILSTAND_PERIODE,

@@ -1,5 +1,6 @@
 package no.nav.bidrag.domene.enums.beregning
 
+@Deprecated("", replaceWith = ReplaceWith("Resultatkode"))
 enum class ResultatkodeForskudd(val legacyKode: String) {
     AVSLAG("A"),
     REDUSERT_FORSKUDD_50_PROSENT("50"),

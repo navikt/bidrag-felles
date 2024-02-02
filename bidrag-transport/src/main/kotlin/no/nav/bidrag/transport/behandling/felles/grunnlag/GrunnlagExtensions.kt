@@ -8,31 +8,33 @@ inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T {
     return commonObjectmapper.treeToValue(innhold)
 }
 
-inline fun <reified T : GrunnlagInnhold> List<GrunnlagDto>.innholdTilObjekt(): List<T> = map(BaseGrunnlag::innholdTilObjekt)
+inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.innholdTilObjekt(): List<T> = map(BaseGrunnlag::innholdTilObjekt)
 
-fun List<GrunnlagDto>.filtrerBasertPåFremmedReferanse(
-    grunnlagType: Grunnlagstype,
+fun List<BaseGrunnlag>.hentAllePersoner(): List<BaseGrunnlag> = filter { it.type.name.startsWith("PERSON_") }
+
+fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
+    grunnlagType: Grunnlagstype? = null,
     referanse: String = "",
-): List<GrunnlagDto> =
-    filter { it.type == grunnlagType }
+): List<BaseGrunnlag> =
+    filter { grunnlagType == null || it.type == grunnlagType }
         .filter { referanse.isEmpty() || it.grunnlagsreferanseListe.contains(referanse) }
 
-fun List<GrunnlagDto>.filtrerBasertPåEgenReferanse(
-    grunnlagType: Grunnlagstype,
+fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanse(
+    grunnlagType: Grunnlagstype? = null,
     referanse: String = "",
-): List<GrunnlagDto> =
-    filter { it.type == grunnlagType }
+): List<BaseGrunnlag> =
+    filter { grunnlagType == null || it.type == grunnlagType }
         .filter { referanse.isEmpty() || referanse == it.referanse }
 
-fun List<GrunnlagDto>.hentInntekter(): List<InntektsrapporteringPeriode> =
+fun List<BaseGrunnlag>.hentInntekter(): List<InntektsrapporteringPeriode> =
     filtrerBasertPåEgenReferanse(
         Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE,
     ).innholdTilObjekt()
 
 data class InnholdMedReferanse<T>(val referanse: String, val innhold: T)
 
-inline fun <reified T : GrunnlagInnhold> List<GrunnlagDto>.filtrerOgKonverterBasertPåEgenReferanse(
-    grunnlagType: Grunnlagstype,
+inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBasertPåEgenReferanse(
+    grunnlagType: Grunnlagstype? = null,
     referanse: String = "",
 ): List<InnholdMedReferanse<T>> =
     filtrerBasertPåEgenReferanse(grunnlagType, referanse)
@@ -40,8 +42,8 @@ inline fun <reified T : GrunnlagInnhold> List<GrunnlagDto>.filtrerOgKonverterBas
             InnholdMedReferanse(it.referanse, it.innholdTilObjekt<T>())
         }
 
-inline fun <reified T : GrunnlagInnhold> List<GrunnlagDto>.filtrerOgKonverterBasertPåFremmedReferanse(
-    grunnlagType: Grunnlagstype,
+inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBasertPåFremmedReferanse(
+    grunnlagType: Grunnlagstype? = null,
     referanse: String = "",
 ): List<InnholdMedReferanse<T>> =
     filtrerBasertPåFremmedReferanse(grunnlagType, referanse)

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeBarnebidrag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
@@ -11,6 +12,7 @@ import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
+import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import java.net.URL
 
 typealias VisningsnavnKodeMap = Map<String, Visningsnavn>
@@ -35,11 +37,19 @@ val Inntektsrapportering.visningsnavn get() = lastVisningsnavnFraFil("inntekttyp
 
 fun Inntektsrapportering.visningsnavnIntern(årstall: Int?) = "${visningsnavn.intern} $årstall".trim()
 
+val VirkningstidspunktÅrsakstype.visningsnavn get() = lastVisningsnavnFraFil("årsak.yaml")[name] ?: visningsnavnMangler(name)
 val Sivilstandskode.visningsnavn get() = lastVisningsnavnFraFil("sivilstand.yaml")[name] ?: visningsnavnMangler(name)
 val Bostatuskode.visningsnavn get() = lastVisningsnavnFraFil("bostatus.yaml")[name] ?: visningsnavnMangler(name)
-val ResultatkodeForskudd.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml", "FORSKUDD")[name] ?: visningsnavnMangler(name)
-val ResultatkodeBarnebidrag.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml", "BARNEBIDRAG")[name] ?: visningsnavnMangler(name)
-val ResultatkodeSærtilskudd.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml", "SÆRTILSKUDD")[name] ?: visningsnavnMangler(name)
+val ResultatkodeForskudd.visningsnavn get() =
+    lastVisningsnavnFraFil("resultatDeprecated.yaml", "FORSKUDD")[name]
+        ?: visningsnavnMangler(name)
+val ResultatkodeBarnebidrag.visningsnavn get() =
+    lastVisningsnavnFraFil("resultatDeprecated.yaml", "BARNEBIDRAG")[name]
+        ?: visningsnavnMangler(name)
+val ResultatkodeSærtilskudd.visningsnavn get() =
+    lastVisningsnavnFraFil("resultatDeprecated.yaml", "SÆRTILSKUDD")[name]
+        ?: visningsnavnMangler(name)
+val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[name] ?: visningsnavnMangler(name)
 
 private fun lastVisningsnavnFraFil(
     filnavn: String,
