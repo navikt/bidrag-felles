@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import java.time.LocalDate
@@ -62,17 +63,19 @@ interface GrunnlagPeriodeInnhold : GrunnlagInnhold {
     val manueltRegistrert: Boolean
 }
 
-interface InnhentetGrunnlagInnhold<out T> : GrunnlagPeriodeInnhold {
+interface InnhentetGrunnlagPeriodeInnhold : GrunnlagInnhold {
+    val periode: Datoperiode
+}
+
+interface InnhentetGrunnlagInnhold<out T> : InnhentetGrunnlagPeriodeInnhold {
     @get:Schema(description = "Tidspunkt data hentet fra kilden")
     val hentetTidspunkt: LocalDateTime
     val grunnlag: T
-    override val manueltRegistrert: Boolean
-        get() = false
 }
 
 @Schema(description = "Informasjon om en person som er inkludert i vedtaket")
 data class Person(
-    val ident: Personident = Personident(""),
-    val navn: String = "",
+    val ident: Personident? = null,
+    val navn: String? = null,
     val fødselsdato: LocalDate = LocalDate.parse("2000-01-01"),
 ) : GrunnlagInnhold

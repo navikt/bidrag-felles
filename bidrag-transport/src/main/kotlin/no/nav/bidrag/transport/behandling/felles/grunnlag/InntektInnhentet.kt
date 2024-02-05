@@ -3,14 +3,14 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.barnetilsyn.Skolealder
 import no.nav.bidrag.domene.enums.barnetilsyn.Tilsynstype
-import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.domene.tid.Datoperiode
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
 
 data class InnhentetArbeidsforhold(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     override val grunnlag: Arbeidsforhold,
     override val hentetTidspunkt: LocalDateTime,
 ) : InnhentetGrunnlagInnhold<InnhentetArbeidsforhold.Arbeidsforhold> {
@@ -70,7 +70,7 @@ data class InnhentetArbeidsforhold(
 }
 
 data class InnhentetSkattegrunnlag(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     val år: Int = periode.fom.year,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Skattegrunnlag,
@@ -94,7 +94,7 @@ data class InnhentetSkattegrunnlag(
 }
 
 data class InnhentetBarnetillegg(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Barnetillegg,
 ) : InnhentetGrunnlagInnhold<InnhentetBarnetillegg.Barnetillegg> {
@@ -110,7 +110,7 @@ data class InnhentetBarnetillegg(
 }
 
 data class InnhentetAinntekt(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: AinntektInnhentet,
 ) : InnhentetGrunnlagInnhold<InnhentetAinntekt.AinntektInnhentet> {
@@ -133,7 +133,7 @@ data class InnhentetAinntekt(
 // Innhentet grunnlag (rådata)
 
 data class InnhentetUtvidetBarnetrygd(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: UtvidetBarnetrygd,
 ) : InnhentetGrunnlagInnhold<InnhentetUtvidetBarnetrygd.UtvidetBarnetrygd> {
@@ -146,7 +146,7 @@ data class InnhentetUtvidetBarnetrygd(
 }
 
 data class InnhentetSmåbarnstillegg(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Småbarnstillegg,
 ) : InnhentetGrunnlagInnhold<InnhentetSmåbarnstillegg.Småbarnstillegg> {
@@ -159,7 +159,7 @@ data class InnhentetSmåbarnstillegg(
 }
 
 data class InnhentetBarnetilsyn(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Barnetilsyn,
 ) : InnhentetGrunnlagInnhold<InnhentetBarnetilsyn.Barnetilsyn> {
@@ -172,7 +172,7 @@ data class InnhentetBarnetilsyn(
 }
 
 data class InnhentetKontantstøtte(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Kontantstøtte,
 ) : InnhentetGrunnlagInnhold<InnhentetKontantstøtte.Kontantstøtte> {

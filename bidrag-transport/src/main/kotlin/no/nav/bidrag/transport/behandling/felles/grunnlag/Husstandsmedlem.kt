@@ -2,11 +2,12 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.person.Bostatuskode
+import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.time.LocalDateTime
 
 data class InnhentetHusstandsmedlem(
-    override val periode: ÅrMånedsperiode,
+    override val periode: Datoperiode,
     override val grunnlag: HusstandsmedlemPDL,
     override val hentetTidspunkt: LocalDateTime,
 ) : InnhentetGrunnlagInnhold<InnhentetHusstandsmedlem.HusstandsmedlemPDL> {
