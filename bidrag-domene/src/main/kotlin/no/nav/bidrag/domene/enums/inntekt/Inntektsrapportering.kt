@@ -203,6 +203,15 @@ enum class Inntektsrapportering(
             ),
     ),
 
+    BARNETILSYN(
+        hentesAutomatisk = true,
+        kanLeggesInnManuelt = true,
+        inneholderInntektstypeListe =
+            listOf(
+                Inntektstype.BARNETILSYN,
+            ),
+    ),
+
     // Manuelt registrerte rapporteringer
 
     PERSONINNTEKT_EGNE_OPPLYSNINGER(

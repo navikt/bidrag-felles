@@ -30,6 +30,8 @@ UTVIDET_BARNETRYGD:
   intern: "Utvidet barnetrygd"
   bruker:
     NB: "Utvidet barnetrygd"
+BARNETILSYN:
+  intern: "Barnetilsyn"
 PERSONINNTEKT_EGNE_OPPLYSNINGER:
   intern: "Personinntekt egne opplysninger"
   bruker:
