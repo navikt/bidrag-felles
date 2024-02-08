@@ -1,5 +1,8 @@
 package no.nav.bidrag.domene.enums.beregning
 
+import io.swagger.v3.oas.annotations.media.Schema
+
+@Schema(enumAsRef = true, name = "Resultatkode")
 enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeType) {
     BARNET_ER_SELVFORSØRGET("", ResultatkodeType.BARNEBIDRAG, ResultatkodeType.SÆRTILSKUDD),
 
