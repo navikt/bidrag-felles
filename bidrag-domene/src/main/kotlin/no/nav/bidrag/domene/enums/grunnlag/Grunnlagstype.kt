@@ -11,14 +11,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 enum class Grunnlagstype {
     SÆRFRADRAG,
     SKATTEKLASSE,
-    BARN_I_HUSSTAND,
-    BOSTATUS,
-    BOSTATUS_BP,
-    INNTEKT,
-    INNTEKT_BARN,
-    INNTEKT_UTVIDET_BARNETRYGD,
-    KAPITALINNTEKT,
-    KAPITALINNTEKT_BARN,
     NETTO_SÆRTILSKUDD,
     SAMVÆRSKLASSE,
     BIDRAGSEVNE,
@@ -29,9 +21,6 @@ enum class Grunnlagstype {
     BARNETILSYN_MED_STØNAD,
     FORPLEINING_UTGIFT,
     BARN,
-    SIVILSTAND,
-    BARNETILLEGG,
-    BARNETILLEGG_FORSVARET,
     DELT_BOSTED,
     NETTO_BARNETILSYN,
     UNDERHOLDSKOSTNAD,
@@ -43,14 +32,19 @@ enum class Grunnlagstype {
     GEBYRFRITAK,
     INNBETALT_BELØP,
     FORHOLDSMESSIG_FORDELING,
-    SLUTTBEREGNING_BBM,
     KLAGE_STATISTIKK,
 
     BOSTATUS_PERIODE,
-    SØKNAD,
     SIVILSTAND_PERIODE,
+    INNTEKT_RAPPORTERING_PERIODE,
+
+    SØKNAD,
     VIRKNINGSTIDSPUNKT,
     NOTAT,
+
+    SLUTTBEREGNING,
+    DELBEREGNING_INNTEKT,
+    DELBEREGNING_BARN_I_HUSSTAND,
 
     @Deprecated("Bruk de spesifikke grunnlagstypene som starter med PERSON_ i stedet")
     PERSON,
@@ -59,8 +53,6 @@ enum class Grunnlagstype {
     PERSON_REELL_MOTTAKER,
     PERSON_SØKNADSBARN,
     PERSON_HUSSTANDSMEDLEM,
-
-    INNTEKT_RAPPORTERING_PERIODE,
 
     // Inntekt som er beregnet av bidrag-inntekt
     BEREGNET_INNTEKT,

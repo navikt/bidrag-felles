@@ -52,6 +52,12 @@ interface BaseGrunnlag {
 
 interface GrunnlagInnhold
 
+interface GrunnlagBeregningPeriode : GrunnlagInnhold {
+    val periode: ÅrMånedsperiode
+}
+
+interface Delberegning : GrunnlagBeregningPeriode
+
 interface GrunnlagPeriodeInnhold : GrunnlagInnhold {
     val periode: ÅrMånedsperiode
 
