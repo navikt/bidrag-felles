@@ -18,6 +18,7 @@ enum class Inntektstype {
     KAPITALINNTEKT,
     LØNNSINNTEKT,
     NÆRINGSINNTEKT,
+    BARNETILSYN, // Ytelse fra offentlig
 
     // BARNETILLEGG
     BARNETILLEGG_PENSJON,
