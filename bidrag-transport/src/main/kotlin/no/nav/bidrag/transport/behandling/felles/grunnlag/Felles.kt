@@ -11,13 +11,15 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 val NULL_PERIODE_FRA = LocalDate.of(0, 1, 1)
+typealias Grunnlagsreferanse = String
 
 @Schema(description = "Grunnlag")
 data class GrunnlagDto(
     override val referanse: String,
     override val type: Grunnlagstype,
     override val innhold: JsonNode,
-    override val grunnlagsreferanseListe: List<String> = emptyList(),
+    override val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
+    override val gjelderReferanse: Grunnlagsreferanse? = null,
 ) : BaseGrunnlag {
     override fun toString(): String {
         return super.asString()
@@ -35,8 +37,11 @@ interface BaseGrunnlag {
     @get:Schema(description = "Grunnlagsinnhold (generisk)", type = "GrunnlagInnhold")
     val innhold: JsonNode
 
+    @get:Schema(description = "Referanse til personobjektet grunnlaget gjelder")
+    val gjelderReferanse: Grunnlagsreferanse?
+
     @get:Schema(description = "Liste over grunnlagsreferanser")
-    val grunnlagsreferanseListe: List<String>
+    val grunnlagsreferanseListe: List<Grunnlagsreferanse>
 
     fun asString(): String {
         return "$type - ${::referanse.name}=$referanse, " +

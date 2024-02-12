@@ -19,6 +19,7 @@ import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -62,7 +63,8 @@ data class OpprettGrunnlagRequestDto(
     override val type: Grunnlagstype,
     @NotBlank
     override val innhold: JsonNode,
-    override val grunnlagsreferanseListe: List<String> = emptyList(),
+    override val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
+    override val gjelderReferanse: Grunnlagsreferanse? = null,
 ) : BaseGrunnlag {
     override fun toString(): String {
         return super.asString()
@@ -97,7 +99,7 @@ data class OpprettStønadsendringRequestDto(
     @Schema(description = "Referanse som brukes i utlandssaker")
     val eksternReferanse: String? = null,
     @Schema(description = "Liste over grunnlag som er knyttet direkte til stønadsendringen")
-    val grunnlagReferanseListe: List<String>,
+    val grunnlagReferanseListe: List<Grunnlagsreferanse>,
     @Schema(description = "Liste over alle perioder som inngår i stønadsendringen")
     @field:Valid
     val periodeListe: List<OpprettPeriodeRequestDto>,

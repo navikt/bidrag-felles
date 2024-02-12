@@ -15,6 +15,7 @@ import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
+import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -78,7 +79,7 @@ data class StønadsendringDto(
     @Schema(description = "Referanse som brukes i utlandssaker")
     val eksternReferanse: String?,
     @Schema(description = "Liste over grunnlag som er knyttet direkte til stønadsendringen")
-    val grunnlagReferanseListe: List<String>,
+    val grunnlagReferanseListe: List<Grunnlagsreferanse>,
     @Schema(description = "Liste over alle perioder som inngår i stønadsendringen")
     val periodeListe: List<VedtakPeriodeDto>,
 )
@@ -97,7 +98,7 @@ data class VedtakPeriodeDto(
     @Schema(description = "Referanse - delytelseId/beslutningslinjeId -> bidrag-regnskap. Skal fjernes senere")
     val delytelseId: String?,
     @Schema(description = "Liste over alle grunnlag som inngår i perioden")
-    val grunnlagReferanseListe: List<String>,
+    val grunnlagReferanseListe: List<Grunnlagsreferanse>,
 )
 
 @Schema
@@ -143,7 +144,7 @@ data class EngangsbeløpDto(
     @Schema(description = "Referanse som brukes i utlandssaker")
     val eksternReferanse: String?,
     @Schema(description = "Liste over alle grunnlag som inngår i beregningen")
-    val grunnlagReferanseListe: List<String>,
+    val grunnlagReferanseListe: List<Grunnlagsreferanse>,
 )
 
 @Schema

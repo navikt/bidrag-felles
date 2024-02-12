@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
+import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
 inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T {
@@ -50,3 +51,12 @@ inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBa
         .map {
             InnholdMedReferanse(it.referanse, it.innholdTilObjekt<T>())
         }
+
+fun Rolletype.tilGrunnlagstype() =
+    when (this) {
+        Rolletype.BIDRAGSPLIKTIG -> Grunnlagstype.PERSON_BIDRAGSPLIKTIG
+        Rolletype.BARN -> Grunnlagstype.PERSON_SØKNADSBARN
+        Rolletype.BIDRAGSMOTTAKER -> Grunnlagstype.PERSON_BIDRAGSMOTTAKER
+        Rolletype.REELMOTTAKER -> Grunnlagstype.PERSON_REELL_MOTTAKER
+        else -> throw RuntimeException("Mangler grunnlagsmapping for rolletype $this")
+    }

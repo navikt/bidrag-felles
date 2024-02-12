@@ -7,6 +7,6 @@ import java.time.format.DateTimeFormatter
 val formatterCompact = DateTimeFormatter.ofPattern("yyyyMMdd")
 val formatterCompactYearMonth = DateTimeFormatter.ofPattern("yyyyMM")
 
-fun LocalDate.toCompactString(): String = this.format(formatterCompact)
+fun LocalDate?.toCompactString(): String = this?.format(formatterCompact) ?: ""
 
-fun YearMonth.toCompactString(): String = this.format(formatterCompactYearMonth)
+fun YearMonth?.toCompactString(): String = this?.format(formatterCompactYearMonth) ?: ""
