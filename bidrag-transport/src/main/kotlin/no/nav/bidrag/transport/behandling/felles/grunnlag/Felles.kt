@@ -63,6 +63,8 @@ interface GrunnlagBeregningPeriode : GrunnlagInnhold {
 
 interface Delberegning : GrunnlagBeregningPeriode
 
+interface Sluttberegning : GrunnlagBeregningPeriode
+
 interface GrunnlagPeriodeInnhold : GrunnlagInnhold {
     val periode: ÅrMånedsperiode
 

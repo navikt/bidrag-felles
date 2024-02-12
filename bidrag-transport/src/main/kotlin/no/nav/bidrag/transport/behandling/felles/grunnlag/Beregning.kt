@@ -1,21 +1,15 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
-import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
-data class Sluttberegning(
+data class SluttberegningForskudd(
     override val periode: ÅrMånedsperiode,
-    val beregnetBeløp: BigDecimal,
-    @Schema(
-        description = """
-        Endelig beløp som enten er lik beregnet beløp eller er justert manuelt av saksbehandler. 
-        Er alltid lik beregnet beløp for forskudd og særtilskudd.
-        """,
-    )
-    val endeligBeløp: BigDecimal = beregnetBeløp,
+    val beløp: BigDecimal,
     val resultatKode: String,
-) : GrunnlagBeregningPeriode
+    val aldersgruppe: AldersgruppeForskudd,
+) : Sluttberegning
 
 data class DelberegningInntekt(
     override val periode: ÅrMånedsperiode,
