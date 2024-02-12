@@ -100,7 +100,7 @@ data class InnhentetBarnetillegg(
 ) : InnhentetGrunnlagInnhold<InnhentetBarnetillegg.Barnetillegg> {
     data class Barnetillegg(
         @Schema(description = "Referansen barnet barnetillegget er rapportert for")
-        val gjelderBarn: String,
+        val gjelderBarn: Grunnlagsreferanse,
         @Schema(description = "Type barnetillegg.")
         val barnetilleggType: String,
         val beløpBrutto: BigDecimal,
@@ -164,7 +164,7 @@ data class InnhentetBarnetilsyn(
     override val grunnlag: Barnetilsyn,
 ) : InnhentetGrunnlagInnhold<InnhentetBarnetilsyn.Barnetilsyn> {
     data class Barnetilsyn(
-        val gjelderBarn: String,
+        val gjelderBarn: Grunnlagsreferanse,
         val beløp: Int?,
         val tilsynstype: Tilsynstype?,
         val skolealder: Skolealder?,
@@ -177,7 +177,7 @@ data class InnhentetKontantstøtte(
     override val grunnlag: Kontantstøtte,
 ) : InnhentetGrunnlagInnhold<InnhentetKontantstøtte.Kontantstøtte> {
     data class Kontantstøtte(
-        val gjelderBarn: String,
+        val gjelderBarn: Grunnlagsreferanse,
         val beløp: Int,
     )
 }

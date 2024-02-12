@@ -22,12 +22,18 @@ data class TransformerInntekterRequest(
     val barnetilleggsliste: List<Barnetillegg> = emptyList(),
 )
 
+interface TransformerInntekterGrunnlag {
+    @get:Schema(description = "Referanse som brukes for å lage grunnlagsreferanseliste som er brukt for hvert inntekstrapportering.")
+    val referanse: Grunnlagsreferanse
+}
+
 data class SkattegrunnlagForLigningsår(
     @Schema(description = "Årstall skattegrunnlaget gjelder for")
     val ligningsår: Int,
     @Schema(description = "Poster med skattegrunnlag")
     val skattegrunnlagsposter: List<SkattegrunnlagspostDto>,
-)
+    override val referanse: Grunnlagsreferanse = "",
+) : TransformerInntekterGrunnlag
 
 data class Ainntektspost(
     @Schema(description = "Perioden innteksposten er utbetalt YYYYMM")
@@ -40,7 +46,8 @@ data class Ainntektspost(
     val beskrivelse: String?,
     @Schema(description = "Beløp")
     val beløp: BigDecimal,
-)
+    override val referanse: Grunnlagsreferanse = "",
+) : TransformerInntekterGrunnlag
 
 data class Kontantstøtte(
     @Schema(description = "Periode fra-dato")
@@ -51,7 +58,8 @@ data class Kontantstøtte(
     val beløp: BigDecimal,
     @Schema(description = "Id til barnet kontantstøtten mottas for")
     val barnPersonId: String,
-)
+    override val referanse: Grunnlagsreferanse = "",
+) : TransformerInntekterGrunnlag
 
 data class UtvidetBarnetrygd(
     @Schema(description = "Periode fra-dato")
@@ -60,7 +68,8 @@ data class UtvidetBarnetrygd(
     val periodeTil: LocalDate?,
     @Schema(description = "Beløp utvidet barnetrygd")
     val beløp: BigDecimal,
-)
+    override val referanse: Grunnlagsreferanse = "",
+) : TransformerInntekterGrunnlag
 
 data class Småbarnstillegg(
     @Schema(description = "Periode fra-dato")
@@ -69,7 +78,8 @@ data class Småbarnstillegg(
     val periodeTil: LocalDate?,
     @Schema(description = "Beløp småbarnstillegg")
     val beløp: BigDecimal,
-)
+    override val referanse: Grunnlagsreferanse = "",
+) : TransformerInntekterGrunnlag
 
 data class Barnetillegg(
     @Schema(description = "Periode fra-dato")
@@ -80,4 +90,5 @@ data class Barnetillegg(
     val beløp: BigDecimal,
     @Schema(description = "Id til barnet barnetillegget mottas for")
     val barnPersonId: String,
-)
+    override val referanse: Grunnlagsreferanse = "",
+) : TransformerInntekterGrunnlag

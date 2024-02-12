@@ -23,13 +23,14 @@ data class SummertMånedsinntekt(
     val sumInntekt: BigDecimal,
     @Schema(description = "Liste over inntektsposter som utgjør grunnlaget for summert inntekt")
     val inntektPostListe: List<InntektPost>,
+    val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
 )
 
 data class SummertÅrsinntekt(
     @Schema(description = "Type inntektrapportering", example = "AINNTEKT")
     val inntektRapportering: Inntektsrapportering,
     @Schema(description = "Visningsnavn for inntekt", example = "Lønn og trekk 2022")
-    val visningsnavn: String,
+    val visningsnavn: String = "",
     @Schema(description = "Summert inntekt for perioden, omgjort til årsinntekt", example = "600000")
     val sumInntekt: BigDecimal,
     @Schema(description = "Perioden inntekten gjelder for (fom-til)")
@@ -37,7 +38,8 @@ data class SummertÅrsinntekt(
     @Schema(description = "Id til barnet inntekten mottas for, brukes for kontantstøtte og barnetillegg", example = "12345678910")
     val gjelderBarnPersonId: String = "",
     @Schema(description = "Liste over inntektsposter (generisk, avhengig av type) som utgjør grunnlaget for summert inntekt")
-    val inntektPostListe: List<InntektPost>,
+    val inntektPostListe: List<InntektPost> = emptyList(),
+    val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
 )
 
 data class InntektPost(
@@ -46,7 +48,7 @@ data class InntektPost(
     @Schema(description = "Inntekstype inntekstposten er knyttet til", example = "PENSJON")
     val inntekstype: Inntektstype? = null,
     @Schema(description = "Visningsnavn for kode", example = "Bonus")
-    val visningsnavn: String,
+    val visningsnavn: String = "",
     @Schema(description = "Beløp som utgjør inntektsposten", example = "60000")
     val beløp: BigDecimal,
 )

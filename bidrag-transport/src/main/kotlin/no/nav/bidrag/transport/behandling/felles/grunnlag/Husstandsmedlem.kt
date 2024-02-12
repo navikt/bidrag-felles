@@ -13,7 +13,7 @@ data class InnhentetHusstandsmedlem(
 ) : InnhentetGrunnlagInnhold<InnhentetHusstandsmedlem.HusstandsmedlemPDL> {
     data class HusstandsmedlemPDL(
         @Schema(description = "Referanse til person som er husstandsmedlem")
-        val relatertPerson: String?,
+        val relatertPerson: Grunnlagsreferanse?,
         val erBarnAvBmBp: Boolean,
     )
 }

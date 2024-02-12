@@ -12,7 +12,7 @@ data class InntektsrapporteringPeriode(
     override val periode: ÅrMånedsperiode,
     override val manueltRegistrert: Boolean,
     @Schema(description = "Type inntektsrapportering") val inntektsrapportering: Inntektsrapportering,
-    @Schema(description = "Referanse til barnet inntekten gjelder for") val gjelderBarn: String? = null,
+    @Schema(description = "Referanse til barnet inntekten gjelder for") val gjelderBarn: Grunnlagsreferanse? = null,
     @Schema(description = "Inntekt beløp") val beløp: BigDecimal,
     @Schema(description = "Om inntekt er tatt med i beregningen") val valgt: Boolean,
     @Schema(
