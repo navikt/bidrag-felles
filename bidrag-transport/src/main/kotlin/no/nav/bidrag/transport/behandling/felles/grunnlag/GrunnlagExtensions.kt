@@ -18,7 +18,7 @@ fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
     referanse: String = "",
 ): List<BaseGrunnlag> =
     filter { grunnlagType == null || it.type == grunnlagType }
-        .filter { referanse.isEmpty() || it.grunnlagsreferanseListe.contains(referanse) }
+        .filter { referanse.isEmpty() || it.grunnlagsreferanseListe.contains(referanse) || referanse == it.gjelderReferanse }
 
 fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanse(
     grunnlagType: Grunnlagstype? = null,

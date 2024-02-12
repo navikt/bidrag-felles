@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.inntekt.request
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.grunnlag.response.SkattegrunnlagspostDto
 import java.math.BigDecimal
 import java.time.LocalDate

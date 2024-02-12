@@ -30,7 +30,7 @@ class BeregninFellesTest {
                     listOf(
                         GrunnlagDto(
                             referanse = personreferanse,
-                            type = Grunnlagstype.PERSON,
+                            type = Grunnlagstype.PERSON_BIDRAGSMOTTAKER,
                             innhold =
                                 POJONode(
                                     Person(Personident("123123123"), fødselsdato = LocalDate.parse("2023-01-01")),
@@ -39,7 +39,11 @@ class BeregninFellesTest {
                     ),
             )
 
-        val person = beregnGrunnlag.grunnlagListe.filtrerOgKonverterBasertPåEgenReferanse<Person>(Grunnlagstype.PERSON, personreferanse)
+        val person =
+            beregnGrunnlag.grunnlagListe.filtrerOgKonverterBasertPåEgenReferanse<Person>(
+                Grunnlagstype.PERSON_BIDRAGSMOTTAKER,
+                personreferanse,
+            )
         person shouldHaveSize 1
         person.firstOrNull()?.innhold?.ident?.verdi shouldBe "123123123"
     }
@@ -55,7 +59,7 @@ class BeregninFellesTest {
                     listOf(
                         GrunnlagDto(
                             referanse = personreferanse,
-                            type = Grunnlagstype.PERSON,
+                            type = Grunnlagstype.PERSON_BIDRAGSMOTTAKER,
                             innhold =
                                 POJONode(
                                     Person(Personident("123123123"), fødselsdato = LocalDate.parse("2023-01-01")),
@@ -64,7 +68,7 @@ class BeregninFellesTest {
                         GrunnlagDto(
                             referanse = "inntekt_1",
                             type = Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE,
-                            grunnlagsreferanseListe = listOf(personreferanse),
+                            gjelderReferanse = personreferanse,
                             innhold =
                                 POJONode(
                                     InntektsrapporteringPeriode(
@@ -79,7 +83,7 @@ class BeregninFellesTest {
                         GrunnlagDto(
                             referanse = "inntekt_2",
                             type = Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE,
-                            grunnlagsreferanseListe = listOf(personreferanse),
+                            gjelderReferanse = personreferanse,
                             innhold =
                                 POJONode(
                                     InntektsrapporteringPeriode(
@@ -93,8 +97,8 @@ class BeregninFellesTest {
                         ),
                         GrunnlagDto(
                             referanse = personreferanse,
-                            type = Grunnlagstype.PERSON,
-                            grunnlagsreferanseListe = listOf(personreferanse),
+                            type = Grunnlagstype.BOSTATUS_PERIODE,
+                            gjelderReferanse = personreferanse,
                             innhold =
                                 POJONode(
                                     BostatusPeriode(
