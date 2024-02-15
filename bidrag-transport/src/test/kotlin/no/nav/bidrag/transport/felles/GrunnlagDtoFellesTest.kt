@@ -22,7 +22,8 @@ class GrunnlagDtoFellesTest {
                 POJONode(Person(Personident("123213213213"), "Navn Navnesen", LocalDate.parse("2020-01-01"))),
             )
 
-        grunnlag.toString() shouldBe "PERSON_BIDRAGSMOTTAKER - referanse=Person-150-BM, gjelderReferanse=null, grunnlagsreferanseListe=<tomt>," +
+        grunnlag.toString() shouldBe "PERSON_BIDRAGSMOTTAKER - referanse=Person-150-BM, " +
+            "gjelderReferanse=null, grunnlagsreferanseListe=<tomt>," +
             " innhold={\"ident\":\"123213213213\",\"navn\":\"Navn Navnesen\",\"fødselsdato\":\"2020-01-01\"}"
     }
 

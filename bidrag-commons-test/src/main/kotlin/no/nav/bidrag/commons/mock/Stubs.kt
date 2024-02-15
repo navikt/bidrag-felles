@@ -26,7 +26,7 @@ fun stubKodeverkProvider() {
     every { finnVisningsnavnSkattegrunnlag(any()) } returns "Visningsnavn skattegrunnlag"
 }
 
-fun stubSjablonProvider()  {
+fun stubSjablonProvider() {
     mockkObject(SjablonProvider)
     every {
         SjablonProvider.hentSjablontall()
