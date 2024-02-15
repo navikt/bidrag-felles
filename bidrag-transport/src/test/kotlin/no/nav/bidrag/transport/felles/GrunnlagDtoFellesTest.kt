@@ -22,8 +22,8 @@ class GrunnlagDtoFellesTest {
                 POJONode(Person(Personident("123213213213"), "Navn Navnesen", LocalDate.parse("2020-01-01"))),
             )
 
-        grunnlag.toString() shouldBe "PERSON - referanse=Person-150-BM, grunnlagsreferanseListe=<tomt>, " +
-            "innhold={\"ident\":\"123213213213\",\"navn\":\"Navn Navnesen\",\"fødselsdato\":\"2020-01-01\"}"
+        grunnlag.toString() shouldBe "PERSON_BIDRAGSMOTTAKER - referanse=Person-150-BM, gjelderReferanse=null, grunnlagsreferanseListe=<tomt>," +
+            " innhold={\"ident\":\"123213213213\",\"navn\":\"Navn Navnesen\",\"fødselsdato\":\"2020-01-01\"}"
     }
 
     @Test
@@ -64,9 +64,9 @@ class GrunnlagDtoFellesTest {
             )
 
         val grunnlagSet = setOf(grunnlag1, grunnlag1Duplicate, grunnlag2, grunnlag3)
-        grunnlagSet shouldHaveSize 3
+        grunnlagSet shouldHaveSize 2
         grunnlag1 shouldBeEqual grunnlag1Duplicate
-        grunnlag1 shouldNotBeEqual grunnlag2
+        grunnlag1 shouldBeEqual grunnlag2
         grunnlag1 shouldNotBeEqual grunnlag3
         grunnlag2 shouldNotBeEqual grunnlag3
     }
