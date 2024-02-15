@@ -122,7 +122,7 @@ data class OpprettPeriodeRequestDto(
     val delytelseId: String? = null,
     @Schema(description = "Liste over alle grunnlag som inngår i perioden")
     @NotEmpty
-    val grunnlagReferanseListe: List<String>,
+    val grunnlagReferanseListe: List<Grunnlagsreferanse>,
 )
 
 @Schema
@@ -169,7 +169,7 @@ data class OpprettEngangsbeløpRequestDto(
     val eksternReferanse: String? = null,
     @Schema(description = "Liste over alle grunnlag som inngår i engangsbeløpet")
     @NotEmpty
-    val grunnlagReferanseListe: List<String>,
+    val grunnlagReferanseListe: List<Grunnlagsreferanse>,
 )
 
 @Schema

@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
@@ -24,6 +25,26 @@ data class GrunnlagDto(
     override fun toString(): String {
         return super.asString()
     }
+
+    override fun hashCode(): Int {
+        // +grunnlagsreferanseListe.sorted().hashCode()
+        // + gjelderReferanse.hashCode()
+        return referanse.hashCode() + type.hashCode() + innholdString.hashCode()
+    }
+
+    @get:JsonIgnore
+    val innholdString get() = commonObjectmapper.writeValueAsString(innhold)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is GrunnlagDto) return false
+        if (referanse != other.referanse) return false
+        if (type != other.type) return false
+//        if (gjelderReferanse != other.gjelderReferanse) return false
+//        if (grunnlagsreferanseListe.sorted() != other.grunnlagsreferanseListe.sorted()) return false
+        if (innholdString != other.innholdString) return false
+        return true
+    }
 }
 
 @Schema(description = "BaseGrunnlag")
@@ -44,7 +65,7 @@ interface BaseGrunnlag {
     val grunnlagsreferanseListe: List<Grunnlagsreferanse>
 
     fun asString(): String {
-        return "$type - ${::referanse.name}=$referanse, " +
+        return "$type - ${::referanse.name}=$referanse, ${::gjelderReferanse.name}=$gjelderReferanse, " +
             "${::grunnlagsreferanseListe.name}=${grunnlagsreferanseListe.ifEmpty { listOf("<tomt>") }.joinToString(",")}, " +
             "${::innhold.name}=${commonObjectmapper.writeValueAsString(innhold)}"
     }
