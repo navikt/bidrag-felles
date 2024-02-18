@@ -9,6 +9,10 @@ inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T {
     return commonObjectmapper.treeToValue(innhold)
 }
 
+inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjektListe(): List<T> {
+    return commonObjectmapper.treeToValue(innhold)
+}
+
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.innholdTilObjekt(): List<T> = map(BaseGrunnlag::innholdTilObjekt)
 
 fun List<BaseGrunnlag>.hentAllePersoner(): List<BaseGrunnlag> = filter { it.type.name.startsWith("PERSON_") }

@@ -10,10 +10,9 @@ import java.time.LocalDateTime
 import java.time.YearMonth
 
 data class InnhentetArbeidsforhold(
-    override val periode: Datoperiode,
-    override val grunnlag: Arbeidsforhold,
+    override val grunnlag: List<Arbeidsforhold>,
     override val hentetTidspunkt: LocalDateTime,
-) : InnhentetGrunnlagInnhold<InnhentetArbeidsforhold.Arbeidsforhold> {
+) : InnhentetGrunnlagInnhold<List<InnhentetArbeidsforhold.Arbeidsforhold>> {
     data class Arbeidsforhold(
         @Schema(description = "Startdato for arbeidsforholdet")
         val startdato: LocalDate?,
@@ -74,7 +73,7 @@ data class InnhentetSkattegrunnlag(
     val år: Int = periode.fom.year,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Skattegrunnlag,
-) : InnhentetGrunnlagInnhold<InnhentetSkattegrunnlag.Skattegrunnlag> {
+) : InnhentetGrunnlagPeriodeInnhold<InnhentetSkattegrunnlag.Skattegrunnlag> {
     data class Skattegrunnlag(
         val skattegrunnlagListe: List<Skattegrunnlagspost>,
     )
@@ -97,7 +96,7 @@ data class InnhentetBarnetillegg(
     override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Barnetillegg,
-) : InnhentetGrunnlagInnhold<InnhentetBarnetillegg.Barnetillegg> {
+) : InnhentetGrunnlagPeriodeInnhold<InnhentetBarnetillegg.Barnetillegg> {
     data class Barnetillegg(
         @Schema(description = "Referansen barnet barnetillegget er rapportert for")
         val gjelderBarn: Grunnlagsreferanse,
@@ -113,7 +112,7 @@ data class InnhentetAinntekt(
     override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: AinntektInnhentet,
-) : InnhentetGrunnlagInnhold<InnhentetAinntekt.AinntektInnhentet> {
+) : InnhentetGrunnlagPeriodeInnhold<InnhentetAinntekt.AinntektInnhentet> {
     data class AinntektInnhentet(
         val ainntektspostListe: List<Ainntektspost>,
     )
@@ -136,7 +135,7 @@ data class InnhentetUtvidetBarnetrygd(
     override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: UtvidetBarnetrygd,
-) : InnhentetGrunnlagInnhold<InnhentetUtvidetBarnetrygd.UtvidetBarnetrygd> {
+) : InnhentetGrunnlagPeriodeInnhold<InnhentetUtvidetBarnetrygd.UtvidetBarnetrygd> {
     data class UtvidetBarnetrygd(
         @Schema(description = "Beløp")
         val beløp: BigDecimal,
@@ -149,7 +148,7 @@ data class InnhentetSmåbarnstillegg(
     override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Småbarnstillegg,
-) : InnhentetGrunnlagInnhold<InnhentetSmåbarnstillegg.Småbarnstillegg> {
+) : InnhentetGrunnlagPeriodeInnhold<InnhentetSmåbarnstillegg.Småbarnstillegg> {
     data class Småbarnstillegg(
         @Schema(description = "Beløp")
         val beløp: BigDecimal,
@@ -162,7 +161,7 @@ data class InnhentetBarnetilsyn(
     override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Barnetilsyn,
-) : InnhentetGrunnlagInnhold<InnhentetBarnetilsyn.Barnetilsyn> {
+) : InnhentetGrunnlagPeriodeInnhold<InnhentetBarnetilsyn.Barnetilsyn> {
     data class Barnetilsyn(
         val gjelderBarn: Grunnlagsreferanse,
         val beløp: Int?,
@@ -175,7 +174,7 @@ data class InnhentetKontantstøtte(
     override val periode: Datoperiode,
     override val hentetTidspunkt: LocalDateTime,
     override val grunnlag: Kontantstøtte,
-) : InnhentetGrunnlagInnhold<InnhentetKontantstøtte.Kontantstøtte> {
+) : InnhentetGrunnlagPeriodeInnhold<InnhentetKontantstøtte.Kontantstøtte> {
     data class Kontantstøtte(
         val gjelderBarn: Grunnlagsreferanse,
         val beløp: Int,
