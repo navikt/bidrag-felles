@@ -11,7 +11,9 @@ inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T {
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.innholdTilObjekt(): List<T> = map(BaseGrunnlag::innholdTilObjekt)
 
-fun List<BaseGrunnlag>.hentAllePersoner(): List<BaseGrunnlag> = filter { it.type.name.startsWith("PERSON_") }
+fun List<BaseGrunnlag>.hentAllePersoner(): List<BaseGrunnlag> = filter { it.erPerson() }
+
+fun BaseGrunnlag.erPerson(): Boolean = type.name.startsWith("PERSON_")
 
 fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
     grunnlagType: Grunnlagstype? = null,

@@ -4,10 +4,10 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class InnhentetHusstandsmedlem(
-    override val periode: Datoperiode,
     override val grunnlag: HusstandsmedlemPDL,
     override val hentetTidspunkt: LocalDateTime,
 ) : InnhentetGrunnlagInnhold<InnhentetHusstandsmedlem.HusstandsmedlemPDL> {
@@ -15,6 +15,11 @@ data class InnhentetHusstandsmedlem(
         @Schema(description = "Referanse til person som er husstandsmedlem")
         val relatertPerson: Grunnlagsreferanse?,
         val erBarnAvBmBp: Boolean,
+        @Schema(description = "Navn på den relaterte personen, format <Fornavn, mellomnavn, Etternavn")
+        val navn: String? = null,
+        @Schema(description = "Den relaterte personens fødselsdato")
+        val fødselsdato: LocalDate? = null,
+        val perioder: List<Datoperiode>,
     )
 }
 
@@ -22,5 +27,7 @@ data class InnhentetHusstandsmedlem(
 data class BostatusPeriode(
     override val periode: ÅrMånedsperiode,
     val bostatus: Bostatuskode,
+    @Schema(description = "Referanse til BM eller BP som bosstatus for personen som gjelder")
+    val relatertTilPart: Grunnlagsreferanse,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold

@@ -97,14 +97,14 @@ interface GrunnlagPeriodeInnhold : GrunnlagInnhold {
     val manueltRegistrert: Boolean
 }
 
-interface InnhentetGrunnlagPeriodeInnhold : GrunnlagInnhold {
-    val periode: Datoperiode
-}
-
-interface InnhentetGrunnlagInnhold<out T> : InnhentetGrunnlagPeriodeInnhold {
+interface InnhentetGrunnlagInnhold<out T> : GrunnlagInnhold {
     @get:Schema(description = "Tidspunkt data hentet fra kilden")
     val hentetTidspunkt: LocalDateTime
     val grunnlag: T
+}
+
+interface InnhentetGrunnlagPeriodeInnhold<out T> : InnhentetGrunnlagInnhold<T> {
+    val periode: Datoperiode
 }
 
 @Schema(description = "Informasjon om en person som er inkludert i vedtaket")

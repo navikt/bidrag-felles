@@ -105,6 +105,7 @@ class BeregninFellesTest {
                                         periode = ÅrMånedsperiode(LocalDate.parse("2020-01-01"), null),
                                         manueltRegistrert = false,
                                         bostatus = Bostatuskode.MED_FORELDER,
+                                        relatertTilPart = "person_bm_2",
                                     ),
                                 ),
                         ),
