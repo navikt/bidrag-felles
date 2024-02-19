@@ -8,7 +8,6 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class InnhentetHusstandsmedlem(
-    // Periode grunnlaget er hentet for. Er vanligvis fra virkingstidspunkt
     override val grunnlag: HusstandsmedlemPDL,
     override val hentetTidspunkt: LocalDateTime,
 ) : InnhentetGrunnlagInnhold<InnhentetHusstandsmedlem.HusstandsmedlemPDL> {

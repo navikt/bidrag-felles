@@ -3,12 +3,9 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.grunnlag.response.AinntektGrunnlagDto
-import no.nav.bidrag.transport.behandling.grunnlag.response.ArbeidsforholdGrunnlagDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.BarnetilleggGrunnlagDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.BarnetilsynGrunnlagDto
-import no.nav.bidrag.transport.behandling.grunnlag.response.BorISammeHusstandDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.KontantstøtteGrunnlagDto
-import no.nav.bidrag.transport.behandling.grunnlag.response.SivilstandGrunnlagDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.SkattegrunnlagGrunnlagDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.SmåbarnstilleggGrunnlagDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.UtvidetBarnetrygdGrunnlagDto
@@ -19,26 +16,7 @@ fun Grunnlagstype.tilPersonreferanse(
     id: Int,
 ) = "person_${this}_${identifikator}_$id"
 
-fun opprettInnhentetHusstandsmedlemGrunnlagsreferanse(
-    referanseGjelder: Grunnlagsreferanse,
-    referanseRelatertTil: Grunnlagsreferanse,
-) = "innhentet_husstandsmedlem_${referanseGjelder}_$referanseRelatertTil"
-
-fun opprettInnhentetSivilstandGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) = "innhentet_sivilstand_$referanseGjelder"
-
-fun SivilstandGrunnlagDto.tilGrunnlagsreferanse(
-    referanseGjelder: Grunnlagsreferanse,
-    index: Int,
-) = "innhentet_sivilstand_${referanseGjelder}_${type}_${gyldigFom.toCompactString()}_$index"
-
-fun BorISammeHusstandDto.tilGrunnlagsreferanse(
-    referanseGjelder: Grunnlagsreferanse,
-    referanseRelatertTil: Grunnlagsreferanse,
-) = "innhentet_husstandsmedlem_${referanseGjelder}_${referanseRelatertTil}_${periodeFra.toCompactString()}"
-
-fun List<ArbeidsforholdGrunnlagDto>.tilGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) =
-    "innhentet_arbeidsforhold_$referanseGjelder"
-
+// Bidrag-grunnlag objekter til referanse
 fun SmåbarnstilleggGrunnlagDto.tilGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) =
     "innhentet_småbarnstillegg_${referanseGjelder}_${periodeFra.toCompactString()}"
 
@@ -67,6 +45,16 @@ fun SkattegrunnlagGrunnlagDto.tilGrunnlagsreferanse(referanseGjelder: Grunnlagsr
 fun AinntektGrunnlagDto.tilGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) =
     "innhentet_ainntekt_${referanseGjelder}_${periodeFra.toCompactString()}"
 
+fun opprettInnhentetHusstandsmedlemGrunnlagsreferanse(
+    referanseGjelder: Grunnlagsreferanse,
+    referanseRelatertTil: Grunnlagsreferanse,
+) = "innhentet_husstandsmedlem_${referanseGjelder}_$referanseRelatertTil"
+
+fun opprettArbeidsforholdGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) = "innhentet_arbeidsforhold_$referanseGjelder"
+
+fun opprettInnhentetSivilstandGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) = "innhentet_sivilstand_$referanseGjelder"
+
+// Beregning
 fun opprettSluttberegningreferanse(
     barnreferanse: Grunnlagsreferanse,
     periode: ÅrMånedsperiode,
