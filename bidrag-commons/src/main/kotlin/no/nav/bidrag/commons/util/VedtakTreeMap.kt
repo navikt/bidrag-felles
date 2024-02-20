@@ -1,4 +1,4 @@
-package no.nav.bidrag.behandling.transformers.vedtak
+package no.nav.bidrag.commons.util
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.node.POJONode
