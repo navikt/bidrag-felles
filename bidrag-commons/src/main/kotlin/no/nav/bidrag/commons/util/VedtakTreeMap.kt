@@ -36,6 +36,7 @@ import no.nav.bidrag.transport.behandling.vedtak.response.EngangsbeløpDto
 import no.nav.bidrag.transport.behandling.vedtak.response.StønadsendringDto
 import no.nav.bidrag.transport.behandling.vedtak.response.VedtakDto
 import no.nav.bidrag.transport.behandling.vedtak.response.VedtakPeriodeDto
+import no.nav.bidrag.transport.felles.commonObjectmapper
 import no.nav.bidrag.transport.felles.toCompactString
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -82,12 +83,16 @@ data class TreeChild(
     val children: MutableList<TreeChild> = mutableListOf(),
     @JsonIgnore
     val parent: TreeChild?,
-    val grunnlag: BaseGrunnlag? = null,
-    val periode: TreePeriode? = null,
-    val stønad: TreeStønad? = null,
-    val vedtak: TreeVedtak? = null,
+    val innhold: POJONode? = null,
 ) {
     val grunnlagstype get() = grunnlag?.type
+
+    val grunnlag get() =
+        if (type == TreeChildType.GRUNNLAG) {
+            innhold?.let { commonObjectmapper.convertValue(it, GrunnlagDto::class.java) }
+        } else {
+            null
+        }
 }
 
 data class TreeVedtak(
@@ -257,18 +262,20 @@ fun VedtakDto.toTree(): TreeChild {
             name = "Vedtak",
             type = TreeChildType.VEDTAK,
             parent = null,
-            vedtak =
-                TreeVedtak(
-                    kilde = kilde,
-                    type = type,
-                    opprettetAv = opprettetAv ?: "",
-                    opprettetAvNavn = opprettetAv,
-                    kildeapplikasjon = "behandling",
-                    vedtakstidspunkt = vedtakstidspunkt,
-                    enhetsnummer = enhetsnummer,
-                    innkrevingUtsattTilDato = innkrevingUtsattTilDato,
-                    fastsattILand = fastsattILand,
-                    opprettetTidspunkt = LocalDateTime.now(),
+            innhold =
+                POJONode(
+                    TreeVedtak(
+                        kilde = kilde,
+                        type = type,
+                        opprettetAv = opprettetAv ?: "",
+                        opprettetAvNavn = opprettetAv,
+                        kildeapplikasjon = "behandling",
+                        vedtakstidspunkt = vedtakstidspunkt,
+                        enhetsnummer = enhetsnummer,
+                        innkrevingUtsattTilDato = innkrevingUtsattTilDato,
+                        fastsattILand = fastsattILand,
+                        opprettetTidspunkt = LocalDateTime.now(),
+                    ),
                 ),
         )
     val grunnlagSomIkkeErReferert =
@@ -302,18 +309,20 @@ fun VedtakDto.toTree(): TreeChild {
                 name = "Stønadsendring Barn ${i + 1}",
                 type = TreeChildType.STØNADSENDRING,
                 parent = vedtakParent,
-                stønad =
-                    TreeStønad(
-                        type = st.type,
-                        sak = st.sak,
-                        skyldner = st.skyldner,
-                        kravhaver = st.kravhaver,
-                        mottaker = st.mottaker,
-                        førsteIndeksreguleringsår = st.førsteIndeksreguleringsår,
-                        innkreving = st.innkreving,
-                        beslutning = st.beslutning,
-                        omgjørVedtakId = st.omgjørVedtakId,
-                        eksternReferanse = st.eksternReferanse,
+                innhold =
+                    POJONode(
+                        TreeStønad(
+                            type = st.type,
+                            sak = st.sak,
+                            skyldner = st.skyldner,
+                            kravhaver = st.kravhaver,
+                            mottaker = st.mottaker,
+                            førsteIndeksreguleringsår = st.førsteIndeksreguleringsår,
+                            innkreving = st.innkreving,
+                            beslutning = st.beslutning,
+                            omgjørVedtakId = st.omgjørVedtakId,
+                            eksternReferanse = st.eksternReferanse,
+                        ),
                     ),
             )
         vedtakParent.children.add(stønadsendringTree)
@@ -331,12 +340,14 @@ fun VedtakDto.toTree(): TreeChild {
                     name = "Periode(${it.periode.fom.toCompactString()})",
                     type = TreeChildType.PERIODE,
                     parent = stønadsendringTree,
-                    periode =
-                        TreePeriode(
-                            beløp = it.beløp,
-                            valutakode = it.valutakode,
-                            resultatkode = it.resultatkode,
-                            delytelseId = it.delytelseId,
+                    innhold =
+                        POJONode(
+                            TreePeriode(
+                                beløp = it.beløp,
+                                valutakode = it.valutakode,
+                                resultatkode = it.resultatkode,
+                                delytelseId = it.delytelseId,
+                            ),
                         ),
                 )
 
@@ -383,10 +394,9 @@ fun Grunnlagsreferanse.toTree(
                 Grunnlagstype.SLUTTBEREGNING_FORSKUDD ->
                     "Sluttberegning" +
                         "(${grunnlag.innholdTilObjekt<SluttberegningForskudd>().periode.fom.toCompactString()})"
-
                 Grunnlagstype.SJABLON ->
                     "Sjablon(" +
-                        "${((grunnlag.innhold as POJONode).pojo as LinkedHashMap<*, *>).get("sjablonNavn")})"
+                        "${commonObjectmapper.readTree(commonObjectmapper.writeValueAsString(grunnlag.innhold)).get("sjablonNavn")})"
 
                 Grunnlagstype.DELBEREGNING_INNTEKT ->
                     "Delberegning inntekt " +
@@ -431,7 +441,7 @@ fun Grunnlagsreferanse.toTree(
                     }
             },
         id = this,
-        grunnlag = grunnlag,
+        innhold = POJONode(grunnlag),
         type = TreeChildType.GRUNNLAG,
         parent = parent,
         children = treeMap.filterNotNull().toMutableList(),
