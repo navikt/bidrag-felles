@@ -15,7 +15,7 @@ import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningInntekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetAinntekt
@@ -399,8 +399,8 @@ fun Grunnlagsreferanse.toTree(
                         "${commonObjectmapper.readTree(commonObjectmapper.writeValueAsString(grunnlag.innhold)).get("sjablonNavn")})"
 
                 Grunnlagstype.DELBEREGNING_INNTEKT ->
-                    "Delberegning inntekt " +
-                        grunnlag.innholdTilObjekt<DelberegningInntekt>().periode.fom.toCompactString()
+                    "Delberegning sum inntekt " +
+                        grunnlag.innholdTilObjekt<DelberegningSumInntekt>().periode.fom.toCompactString()
 
                 Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND ->
                     "Delberegning barn i husstand(" +
