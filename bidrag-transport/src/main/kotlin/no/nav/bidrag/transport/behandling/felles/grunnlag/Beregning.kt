@@ -12,6 +12,7 @@ data class SluttberegningForskudd(
     val aldersgruppe: AldersgruppeForskudd,
 ) : Sluttberegning
 
+@Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))
 data class DelberegningInntekt(
     override val periode: ÅrMånedsperiode,
     val summertBeløp: BigDecimal,
