@@ -12,6 +12,11 @@ data class SluttberegningForskudd(
     val aldersgruppe: AldersgruppeForskudd,
 ) : Sluttberegning
 
+data class DelberegningInntekt(
+    override val periode: ÅrMånedsperiode,
+    val summertBeløp: BigDecimal,
+) : Delberegning
+
 data class DelberegningSumInntekt(
     override val periode: ÅrMånedsperiode,
     val totalinntekt: BigDecimal,

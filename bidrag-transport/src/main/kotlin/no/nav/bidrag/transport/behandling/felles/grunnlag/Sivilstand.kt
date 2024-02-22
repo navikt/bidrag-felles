@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.grunnlag.GrunnlagDatakilde
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.person.SivilstandskodePDL
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -8,6 +9,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 
 data class InnhentetSivilstand(
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.PDL,
     override val grunnlag: List<SivilstandPDL>,
     override val hentetTidspunkt: LocalDateTime,
 ) : InnhentetGrunnlagInnhold<List<InnhentetSivilstand.SivilstandPDL>> {
