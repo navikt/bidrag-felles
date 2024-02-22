@@ -171,7 +171,7 @@ fun TreeChild.tilSubgraph(): String? =
                 Grunnlagstype.SJABLON -> MermaidSubgraph.SJABLON.name
                 Grunnlagstype.NOTAT -> MermaidSubgraph.NOTAT.name
                 Grunnlagstype.SLUTTBEREGNING_FORSKUDD -> parent?.tilSubgraph()
-                Grunnlagstype.DELBEREGNING_INNTEKT -> "Delberegning"
+                Grunnlagstype.DELBEREGNING_SUM_INNTEKT -> "Delberegning"
                 Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND -> "Delberegning"
                 else -> if (this.name.startsWith("PERSON_")) MermaidSubgraph.PERSON.name else "Delberegning"
             }
@@ -208,7 +208,7 @@ fun TreeChild.toMermaidSubgraphMap(parent: TreeChild? = null): Map<String, Mutab
                     "${parent.id}[${parent.name.removeParanteses()}] -->$id{${name.removeParanteses()}}",
                 )
             } else if (parent.grunnlagstype == Grunnlagstype.SLUTTBEREGNING_FORSKUDD && (
-                    grunnlagstype == Grunnlagstype.DELBEREGNING_INNTEKT ||
+                    grunnlagstype == Grunnlagstype.DELBEREGNING_SUM_INNTEKT ||
                         grunnlagstype == Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND
                 )
             ) {
@@ -216,7 +216,7 @@ fun TreeChild.toMermaidSubgraphMap(parent: TreeChild? = null): Map<String, Mutab
                     parent.tilSubgraph()!!,
                     "${parent.id}[${parent.name.removeParanteses()}] -->|${name.removeParanteses()}| $id[[${name.removeParanteses()}]]",
                 )
-            } else if (parent.grunnlagstype == Grunnlagstype.DELBEREGNING_INNTEKT ||
+            } else if (parent.grunnlagstype == Grunnlagstype.DELBEREGNING_SUM_INNTEKT ||
                 parent.grunnlagstype == Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND
             ) {
                 mermaidSubgraphMap.add(
@@ -398,7 +398,7 @@ fun Grunnlagsreferanse.toTree(
                     "Sjablon(" +
                         "${commonObjectmapper.readTree(commonObjectmapper.writeValueAsString(grunnlag.innhold)).get("sjablonNavn")})"
 
-                Grunnlagstype.DELBEREGNING_INNTEKT ->
+                Grunnlagstype.DELBEREGNING_SUM_INNTEKT ->
                     "Delberegning sum inntekt " +
                         grunnlag.innholdTilObjekt<DelberegningSumInntekt>().periode.fom.toCompactString()
 
