@@ -11,10 +11,6 @@ inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T {
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.innholdTilObjekt(): List<T> = map(BaseGrunnlag::innholdTilObjekt)
 
-fun List<BaseGrunnlag>.hentAllePersoner(): List<BaseGrunnlag> = filter { it.erPerson() }
-
-fun BaseGrunnlag.erPerson(): Boolean = type.name.startsWith("PERSON_")
-
 fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
     grunnlagType: Grunnlagstype? = null,
     referanse: String = "",
@@ -61,4 +57,39 @@ fun Rolletype.tilGrunnlagstype() =
         Rolletype.BIDRAGSMOTTAKER -> Grunnlagstype.PERSON_BIDRAGSMOTTAKER
         Rolletype.REELMOTTAKER -> Grunnlagstype.PERSON_REELL_MOTTAKER
         else -> throw RuntimeException("Mangler grunnlagsmapping for rolletype $this")
+    }
+
+// Hjelpefunksjoner for personobjekter
+
+fun Collection<BaseGrunnlag>.hentAllePersoner(): Collection<BaseGrunnlag> = filter { it.erPerson() }
+
+fun BaseGrunnlag.erPerson(): Boolean = type.name.startsWith("PERSON_")
+
+val BaseGrunnlag.personObjekt get() = commonObjectmapper.treeToValue(innhold, Person::class.java)!!
+val BaseGrunnlag.personIdent get() = personObjekt.ident?.verdi
+val Collection<BaseGrunnlag>.bidragspliktig
+    get() =
+        find { it.type == Grunnlagstype.PERSON_BIDRAGSPLIKTIG }
+
+val Collection<BaseGrunnlag>.bidragsmottaker
+    get() =
+        find { it.type == Grunnlagstype.PERSON_BIDRAGSMOTTAKER }
+val Collection<BaseGrunnlag>.barn
+    get() =
+        filter {
+            it.type == Grunnlagstype.PERSON_SØKNADSBARN || it.type == Grunnlagstype.PERSON_HUSSTANDSMEDLEM
+        }.toSet()
+
+val Collection<GrunnlagDto>.søknadsbarn
+    get() =
+        filter {
+            it.type == Grunnlagstype.PERSON_SØKNADSBARN
+        }.toSet()
+
+fun Collection<GrunnlagDto>.hentPerson(ident: String?) = filter { it.erPerson() }.find { it.personIdent == ident }
+
+fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferanse?) =
+    referanse?.let {
+        toList().filtrerBasertPåEgenReferanse(referanse = referanse)
+            .firstOrNull()
     }

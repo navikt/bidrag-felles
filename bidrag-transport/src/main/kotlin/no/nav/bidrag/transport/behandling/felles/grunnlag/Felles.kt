@@ -1,8 +1,11 @@
+@file:Suppress("unused")
+
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.grunnlag.GrunnlagDatakilde
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.Datoperiode
@@ -100,6 +103,7 @@ interface GrunnlagPeriodeInnhold : GrunnlagInnhold {
 interface InnhentetGrunnlagInnhold<out T> : GrunnlagInnhold {
     @get:Schema(description = "Tidspunkt data hentet fra kilden")
     val hentetTidspunkt: LocalDateTime
+    val datakilde: GrunnlagDatakilde
     val grunnlag: T
 }
 

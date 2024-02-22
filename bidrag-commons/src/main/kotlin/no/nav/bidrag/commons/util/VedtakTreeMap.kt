@@ -12,23 +12,25 @@ import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.util.visningsnavn
+import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
-import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetAinntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetHusstandsmedlem
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetSkattegrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InntektsrapporteringPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.NotatGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Person
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SivilstandPeriode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SjablonGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningForskudd
 import no.nav.bidrag.transport.behandling.felles.grunnlag.erPerson
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåFremmedReferanse
+import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
 import no.nav.bidrag.transport.behandling.vedtak.request.OpprettVedtakRequestDto
 import no.nav.bidrag.transport.behandling.vedtak.response.BehandlingsreferanseDto
@@ -181,15 +183,17 @@ fun TreeChild.tilSubgraph(): String? =
 
 fun String.removeParanteses() = this.replace("(", " ").replace(")", "")
 
+val mermaidSkipGrunnlag = listOf(Grunnlagstype.SJABLON, Grunnlagstype.SØKNAD, Grunnlagstype.NOTAT, Grunnlagstype.VIRKNINGSTIDSPUNKT)
+
 fun TreeChild.toMermaidSubgraphMap(parent: TreeChild? = null): Map<String, MutableList<String>> {
     val mermaidSubgraphMap = mutableMapOf<String, MutableList<String>>()
 
     if (type == TreeChildType.FRITTSTÅENDE) return emptyMap()
-    if (parent != null) {
+    if (parent != null && !mermaidSkipGrunnlag.contains(grunnlagstype)) {
         if (parent.type == TreeChildType.PERIODE) {
             mermaidSubgraphMap.add(
                 parent.tilSubgraph()!!,
-                "${parent.id}[[${parent.name.removeParanteses()}]] --> $id",
+                "${parent.id}[[\"${parent.name}\"]] --> $id",
             )
         } else if (type == TreeChildType.GRUNNLAG) {
             if (grunnlagstype == Grunnlagstype.SJABLON || grunnlag?.erPerson() == true || grunnlagstype == Grunnlagstype.NOTAT) {
@@ -205,7 +209,7 @@ fun TreeChild.toMermaidSubgraphMap(parent: TreeChild? = null): Map<String, Mutab
             } else if (grunnlagstype == Grunnlagstype.SLUTTBEREGNING_FORSKUDD) {
                 mermaidSubgraphMap.add(
                     tilSubgraph()!!,
-                    "${parent.id}[${parent.name.removeParanteses()}] -->$id{${name.removeParanteses()}}",
+                    "${parent.id}[\"${parent.name}\"] -->$id{\"${name}\"}",
                 )
             } else if (parent.grunnlagstype == Grunnlagstype.SLUTTBEREGNING_FORSKUDD && (
                     grunnlagstype == Grunnlagstype.DELBEREGNING_INNTEKT ||
@@ -214,25 +218,25 @@ fun TreeChild.toMermaidSubgraphMap(parent: TreeChild? = null): Map<String, Mutab
             ) {
                 mermaidSubgraphMap.add(
                     parent.tilSubgraph()!!,
-                    "${parent.id}[${parent.name.removeParanteses()}] -->|${name.removeParanteses()}| $id[[${name.removeParanteses()}]]",
+                    "${parent.id}[\"${parent.name}\"] -->|\"${name}\"| $id[[\"${name}\"]]",
                 )
             } else if (parent.grunnlagstype == Grunnlagstype.DELBEREGNING_INNTEKT ||
                 parent.grunnlagstype == Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND
             ) {
                 mermaidSubgraphMap.add(
                     parent.tilSubgraph()!!,
-                    "${parent.id}[[${parent.name.removeParanteses()}]] --> $id[${name.removeParanteses()}]",
+                    "${parent.id}[[\"${parent.name}\"]] --> $id[\"${name}\"]",
                 )
             } else {
                 mermaidSubgraphMap.add(
                     parent.tilSubgraph()!!,
-                    "${parent.id}[${parent.name.removeParanteses()}] --> $id[${name.removeParanteses()}]",
+                    "${parent.id}[\"${parent.name}\"] --> $id[\"${name}\"]",
                 )
             }
         } else {
             mermaidSubgraphMap.add(
                 parent.tilSubgraph()!!,
-                "${parent.id}[${parent.name.removeParanteses()}] --> $id[${name.removeParanteses()}]",
+                "${parent.id}[\"${parent.name}\"] --> $id[\"${name}\"]",
             )
         }
     }
@@ -388,6 +392,16 @@ fun Grunnlagsreferanse.toTree(
                 it.gjelderReferanse?.toTree(grunnlagsListe, parent)
         }
 
+    val gjelderGrunnlag = grunnlagsListe.hentPersonMedReferanse(grunnlag.gjelderReferanse)
+    val rolleVisningsnavn =
+        when (gjelderGrunnlag?.type) {
+            Grunnlagstype.PERSON_SØKNADSBARN -> "søknadsbarn"
+            Grunnlagstype.PERSON_BIDRAGSPLIKTIG -> "bidragspliktig"
+            Grunnlagstype.PERSON_BIDRAGSMOTTAKER -> "bidragsmottaker"
+            Grunnlagstype.PERSON_REELL_MOTTAKER -> "reell mottaker"
+            Grunnlagstype.PERSON_HUSSTANDSMEDLEM -> "husstandsmedlem"
+            else -> ""
+        }
     return TreeChild(
         name =
             when (grunnlag.type) {
@@ -396,46 +410,61 @@ fun Grunnlagsreferanse.toTree(
                         "(${grunnlag.innholdTilObjekt<SluttberegningForskudd>().periode.fom.toCompactString()})"
                 Grunnlagstype.SJABLON ->
                     "Sjablon(" +
-                        "${commonObjectmapper.readTree(commonObjectmapper.writeValueAsString(grunnlag.innhold)).get("sjablonNavn")})"
+                        "${grunnlag.innholdTilObjekt<SjablonGrunnlag>().sjablon})"
 
                 Grunnlagstype.DELBEREGNING_INNTEKT ->
                     "Delberegning sum inntekt " +
-                        grunnlag.innholdTilObjekt<DelberegningSumInntekt>().periode.fom.toCompactString()
+                        grunnlag.innholdTilObjekt<DelberegningInntekt>().periode.fom.toCompactString()
 
                 Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND ->
                     "Delberegning barn i husstand(" +
                         grunnlag.innholdTilObjekt<DelberegningBarnIHusstand>().periode.fom.toCompactString() + ")"
 
-                Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE ->
-                    "Inntektsrapportering(" +
-                        "${grunnlag.innholdTilObjekt<InntektsrapporteringPeriode>().inntektsrapportering})"
+                Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE -> {
+                    val inntekt = grunnlag.innholdTilObjekt<InntektsrapporteringPeriode>()
+                    inntekt.inntektsrapportering.visningsnavnMedÅrstall(inntekt.periode.fom.year) +
+                        if (inntekt.manueltRegistrert) " (manuelt registrert)" else ""
+                }
 
                 Grunnlagstype.SIVILSTAND_PERIODE ->
                     "Sivilstand(" +
-                        "${grunnlag.innholdTilObjekt<SivilstandPeriode>().sivilstand.visningsnavn.intern})"
+                        "${grunnlag.innholdTilObjekt<SivilstandPeriode>().sivilstand.visningsnavn.intern}-" +
+                        grunnlag.innholdTilObjekt<SivilstandPeriode>().periode.fom.toCompactString() +
+                        ")"
 
                 Grunnlagstype.BOSTATUS_PERIODE ->
                     "Bosstatus(" +
-                        "${grunnlag.innholdTilObjekt<BostatusPeriode>().bostatus.visningsnavn.intern})"
+                        "${grunnlag.innholdTilObjekt<BostatusPeriode>().bostatus.visningsnavn.intern}-" +
+                        grunnlag.innholdTilObjekt<BostatusPeriode>().periode.fom.toCompactString() +
+                        ")"
 
                 Grunnlagstype.NOTAT -> "Notat(${grunnlag.innholdTilObjekt<NotatGrunnlag>().type})"
                 Grunnlagstype.INNHENTET_HUSSTANDSMEDLEM ->
                     "Innhentet husstandsmedlem(" +
                         grunnlag.innholdTilObjekt<InnhentetHusstandsmedlem>().grunnlag.fødselsdato?.toCompactString() + ")"
 
-                Grunnlagstype.INNHENTET_SIVILSTAND -> "Innhentet sivilstand"
-                Grunnlagstype.INNHENTET_ARBEIDSFORHOLD -> "Innhentet arbeidsforhold"
                 Grunnlagstype.INNHENTET_INNTEKT_SKATTEGRUNNLAG_PERIODE ->
                     "Innhentet skattegrunnlag(" +
-                        grunnlag.innholdTilObjekt<InnhentetSkattegrunnlag>().periode.fom.toCompactString() + ")"
-
-                Grunnlagstype.INNHENTET_INNTEKT_AINNTEKT_PERIODE ->
-                    "Innhentet ainntekt(" +
-                        grunnlag.innholdTilObjekt<InnhentetAinntekt>().periode.fom.toCompactString() + ")"
+                        grunnlag.innholdTilObjekt<InnhentetSkattegrunnlag>().år + ")"
+                Grunnlagstype.INNHENTET_SIVILSTAND ->
+                    "Innhentet sivilstand"
 
                 else ->
                     if (grunnlag.erPerson()) {
                         "${grunnlag.type}(${grunnlag.innholdTilObjekt<Person>().fødselsdato.toCompactString()})"
+                    } else if (grunnlag.type.name.startsWith("INNHENTET")) {
+                        val type =
+                            when (grunnlag?.type) {
+                                Grunnlagstype.INNHENTET_ARBEIDSFORHOLD -> "Arbeidforshold"
+                                Grunnlagstype.INNHENTET_INNTEKT_SMÅBARNSTILLEGG -> "Småbarnstillegg"
+                                Grunnlagstype.INNHENTET_INNTEKT_AINNTEKT -> "Ainntekt"
+                                Grunnlagstype.INNHENTET_INNTEKT_UTVIDETBARNETRYGD -> "Utvidetbarneygd"
+                                Grunnlagstype.INNHENTET_INNTEKT_KONTANTSTØTTE -> "Kontantstøtte"
+                                Grunnlagstype.INNHENTET_INNTEKT_BARNETILSYN -> "Barnetilsyn"
+                                Grunnlagstype.INNHENTET_INNTEKT_BARNETILLEGG -> "Barnetillegg"
+                                else -> ""
+                            }
+                        "Innhentet $type($rolleVisningsnavn)"
                     } else {
                         this
                     }

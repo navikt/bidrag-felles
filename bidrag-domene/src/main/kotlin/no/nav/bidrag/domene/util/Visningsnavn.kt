@@ -37,6 +37,16 @@ val Inntektsrapportering.visningsnavn get() = lastVisningsnavnFraFil("inntekttyp
 
 fun Inntektsrapportering.visningsnavnIntern(årstall: Int?) = "${visningsnavn.intern} $årstall".trim()
 
+fun Inntektsrapportering.visningsnavnMedÅrstall(årstall: Int?) =
+    if (Inntektsrapportering.visningsnavnSomKreverÅrstall.contains(
+            this,
+        )
+    ) {
+        visningsnavnIntern(årstall)
+    } else {
+        visningsnavn.intern
+    }
+
 val VirkningstidspunktÅrsakstype.visningsnavn get() = lastVisningsnavnFraFil("årsak.yaml")[name] ?: visningsnavnMangler(name)
 val Sivilstandskode.visningsnavn get() = lastVisningsnavnFraFil("sivilstand.yaml")[name] ?: visningsnavnMangler(name)
 val Bostatuskode.visningsnavn get() = lastVisningsnavnFraFil("bostatus.yaml")[name] ?: visningsnavnMangler(name)

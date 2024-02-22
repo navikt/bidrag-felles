@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.barnetilsyn.Skolealder
 import no.nav.bidrag.domene.enums.barnetilsyn.Tilsynstype
+import no.nav.bidrag.domene.enums.grunnlag.GrunnlagDatakilde
 import no.nav.bidrag.domene.tid.Datoperiode
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -10,6 +11,7 @@ import java.time.LocalDateTime
 import java.time.YearMonth
 
 data class InnhentetArbeidsforhold(
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.AAREG,
     override val grunnlag: List<Arbeidsforhold>,
     override val hentetTidspunkt: LocalDateTime,
 ) : InnhentetGrunnlagInnhold<List<InnhentetArbeidsforhold.Arbeidsforhold>> {
@@ -69,15 +71,12 @@ data class InnhentetArbeidsforhold(
 }
 
 data class InnhentetSkattegrunnlag(
-    override val periode: Datoperiode,
+    val periode: Datoperiode,
     val år: Int = periode.fom.year,
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.SIGRUN,
     override val hentetTidspunkt: LocalDateTime,
-    override val grunnlag: Skattegrunnlag,
-) : InnhentetGrunnlagPeriodeInnhold<InnhentetSkattegrunnlag.Skattegrunnlag> {
-    data class Skattegrunnlag(
-        val skattegrunnlagListe: List<Skattegrunnlagspost>,
-    )
-
+    override val grunnlag: List<Skattegrunnlagspost>,
+) : InnhentetGrunnlagInnhold<List<InnhentetSkattegrunnlag.Skattegrunnlagspost>> {
     data class Skattegrunnlagspost(
         @Schema(description = "Type skattegrunnlag: Ordinær eller Svalbard")
         val skattegrunnlagType: String,
@@ -93,11 +92,12 @@ data class InnhentetSkattegrunnlag(
 }
 
 data class InnhentetBarnetillegg(
-    override val periode: Datoperiode,
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.PENSJON,
     override val hentetTidspunkt: LocalDateTime,
-    override val grunnlag: Barnetillegg,
-) : InnhentetGrunnlagPeriodeInnhold<InnhentetBarnetillegg.Barnetillegg> {
+    override val grunnlag: List<Barnetillegg>,
+) : InnhentetGrunnlagInnhold<List<InnhentetBarnetillegg.Barnetillegg>> {
     data class Barnetillegg(
+        val periode: Datoperiode,
         @Schema(description = "Referansen barnet barnetillegget er rapportert for")
         val gjelderBarn: Grunnlagsreferanse,
         @Schema(description = "Type barnetillegg.")
@@ -106,14 +106,17 @@ data class InnhentetBarnetillegg(
         @Schema(description = "Angir om barnet er felles- eller særkullsbarn")
         val barnType: String,
     )
+
+    fun hentBarnetilleggForBarn(barnReferanse: Grunnlagsreferanse) = grunnlag.filter { it.gjelderBarn == barnReferanse }
 }
 
 data class InnhentetAinntekt(
-    override val periode: Datoperiode,
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.INNTEKSKOMPONENTEN,
     override val hentetTidspunkt: LocalDateTime,
-    override val grunnlag: AinntektInnhentet,
-) : InnhentetGrunnlagPeriodeInnhold<InnhentetAinntekt.AinntektInnhentet> {
+    override val grunnlag: List<AinntektInnhentet>,
+) : InnhentetGrunnlagInnhold<List<InnhentetAinntekt.AinntektInnhentet>> {
     data class AinntektInnhentet(
+        val periode: Datoperiode,
         val ainntektspostListe: List<Ainntektspost>,
     )
 
@@ -132,11 +135,12 @@ data class InnhentetAinntekt(
 // Innhentet grunnlag (rådata)
 
 data class InnhentetUtvidetBarnetrygd(
-    override val periode: Datoperiode,
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.FAMILIE_BA_SAK,
     override val hentetTidspunkt: LocalDateTime,
-    override val grunnlag: UtvidetBarnetrygd,
-) : InnhentetGrunnlagPeriodeInnhold<InnhentetUtvidetBarnetrygd.UtvidetBarnetrygd> {
+    override val grunnlag: List<UtvidetBarnetrygd>,
+) : InnhentetGrunnlagInnhold<List<InnhentetUtvidetBarnetrygd.UtvidetBarnetrygd>> {
     data class UtvidetBarnetrygd(
+        val periode: Datoperiode,
         @Schema(description = "Beløp")
         val beløp: BigDecimal,
         @Schema(description = "Angir om stønaden er manuelt beregnet")
@@ -145,11 +149,12 @@ data class InnhentetUtvidetBarnetrygd(
 }
 
 data class InnhentetSmåbarnstillegg(
-    override val periode: Datoperiode,
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.FAMILIE_BA_SAK,
     override val hentetTidspunkt: LocalDateTime,
-    override val grunnlag: Småbarnstillegg,
-) : InnhentetGrunnlagPeriodeInnhold<InnhentetSmåbarnstillegg.Småbarnstillegg> {
+    override val grunnlag: List<Småbarnstillegg>,
+) : InnhentetGrunnlagInnhold<List<InnhentetSmåbarnstillegg.Småbarnstillegg>> {
     data class Småbarnstillegg(
+        val periode: Datoperiode,
         @Schema(description = "Beløp")
         val beløp: BigDecimal,
         @Schema(description = "Angir om stønaden er manuelt beregnet")
@@ -158,25 +163,31 @@ data class InnhentetSmåbarnstillegg(
 }
 
 data class InnhentetBarnetilsyn(
-    override val periode: Datoperiode,
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.FAMILIE_EF_SAK,
     override val hentetTidspunkt: LocalDateTime,
-    override val grunnlag: Barnetilsyn,
-) : InnhentetGrunnlagPeriodeInnhold<InnhentetBarnetilsyn.Barnetilsyn> {
+    override val grunnlag: List<Barnetilsyn>,
+) : InnhentetGrunnlagInnhold<List<InnhentetBarnetilsyn.Barnetilsyn>> {
     data class Barnetilsyn(
+        val periode: Datoperiode,
         val gjelderBarn: Grunnlagsreferanse,
         val beløp: Int?,
         val tilsynstype: Tilsynstype?,
         val skolealder: Skolealder?,
     )
+
+    fun hentBarnetilsynForBarn(barnReferanse: Grunnlagsreferanse) = grunnlag.filter { it.gjelderBarn == barnReferanse }
 }
 
 data class InnhentetKontantstøtte(
-    override val periode: Datoperiode,
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.FAMILIE_KONTANTSTØTTE_SAK,
     override val hentetTidspunkt: LocalDateTime,
-    override val grunnlag: Kontantstøtte,
-) : InnhentetGrunnlagPeriodeInnhold<InnhentetKontantstøtte.Kontantstøtte> {
+    override val grunnlag: List<Kontantstøtte>,
+) : InnhentetGrunnlagInnhold<List<InnhentetKontantstøtte.Kontantstøtte>> {
     data class Kontantstøtte(
+        val periode: Datoperiode,
         val gjelderBarn: Grunnlagsreferanse,
         val beløp: Int,
     )
+
+    fun hentKontantstøtteForBarn(barnReferanse: Grunnlagsreferanse) = grunnlag.filter { it.gjelderBarn == barnReferanse }
 }
