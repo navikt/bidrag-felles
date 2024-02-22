@@ -43,7 +43,7 @@ enum class Grunnlagstype {
     NOTAT,
 
     SLUTTBEREGNING_FORSKUDD,
-    DELBEREGNING_INNTEKT,
+    DELBEREGNING_SUM_INNTEKT,
     DELBEREGNING_BARN_I_HUSSTAND,
 
     @Deprecated("Bruk de spesifikke grunnlagstypene som starter med PERSON_ i stedet")

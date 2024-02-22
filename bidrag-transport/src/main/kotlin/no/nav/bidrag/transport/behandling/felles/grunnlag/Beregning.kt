@@ -23,7 +23,6 @@ data class DelberegningSumInntekt(
     val totalinntekt: BigDecimal,
     val kontantstøtte: BigDecimal? = null,
     val skattepliktigInntekt: BigDecimal? = null,
-    val kapitalinntekt: BigDecimal? = null,
     val barnetillegg: BigDecimal? = null,
     val utvidetBarnetrygd: BigDecimal? = null,
     val småbarnstillegg: BigDecimal? = null,
