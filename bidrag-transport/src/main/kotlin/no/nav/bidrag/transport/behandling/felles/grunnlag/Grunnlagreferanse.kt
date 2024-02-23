@@ -50,3 +50,8 @@ fun opprettDelberegningreferanse(
     type: Grunnlagstype,
     periode: ÅrMånedsperiode,
 ) = "delberegning_${type}_${periode.fom.toCompactString()}"
+
+fun opprettSjablonreferanse(
+    navn: String,
+    periode: ÅrMånedsperiode,
+) = "sjablon_${navn}_${periode.fom.toCompactString()}"

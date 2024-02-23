@@ -400,5 +400,7 @@ enum class SjablonTallNavn(
 
     companion object {
         fun from(search: String): SjablonTallNavn = requireNotNull(entries.find { it.navn == search }) { DUMMY }
+
+        fun fromId(search: String): SjablonTallNavn = requireNotNull(entries.find { it.id == search }) { DUMMY }
     }
 }
