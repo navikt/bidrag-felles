@@ -16,7 +16,7 @@ import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningInntekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetHusstandsmedlem
@@ -68,6 +68,7 @@ enum class MermaidSubgraph {
     SJABLON,
     PERSON,
     INGEN,
+    ACTION,
 }
 
 enum class TreeChildType {
@@ -89,15 +90,17 @@ data class TreeChild(
 ) {
     val grunnlagstype get() = grunnlag?.type
 
-    val grunnlag get() =
-        if (type == TreeChildType.GRUNNLAG) {
-            innhold?.let { commonObjectmapper.convertValue(it, GrunnlagDto::class.java) }
-        } else {
-            null
-        }
+    val grunnlag
+        get() =
+            if (type == TreeChildType.GRUNNLAG) {
+                innhold?.let { commonObjectmapper.convertValue(it, GrunnlagDto::class.java) }
+            } else {
+                null
+            }
 }
 
 data class TreeVedtak(
+    val nodeId: String,
     val kilde: Vedtakskilde,
     val type: Vedtakstype,
     val opprettetAv: String,
@@ -111,6 +114,7 @@ data class TreeVedtak(
 )
 
 data class TreeStønad(
+    val nodeId: String,
     val type: Stønadstype,
     val sak: Saksnummer,
     val skyldner: Personident,
@@ -124,13 +128,22 @@ data class TreeStønad(
 )
 
 data class TreePeriode(
+    val nodeId: String,
     val beløp: BigDecimal?,
     val valutakode: String?,
     val resultatkode: String,
     val delytelseId: String?,
 )
 
-fun OpprettVedtakRequestDto.toMermaid(): List<String> {
+data class MermaidResponse(
+    val mermaidGraph: String,
+    val vedtak: TreeVedtak,
+    val stønadsendringer: List<TreeStønad>,
+    val perioder: List<TreePeriode>,
+    val grunnlagListe: List<BaseGrunnlag>,
+)
+
+fun OpprettVedtakRequestDto.toMermaid(): MermaidResponse {
     return tilVedtakDto().toMermaid()
 }
 
@@ -140,28 +153,49 @@ fun OpprettVedtakRequestDto.toTree(): TreeChild {
 
 fun Map<String, List<String>>.toMermaid(): List<String> {
     val printList = mutableListOf<String>()
-    entries.sortedWith { a, b -> if (a.key.contains("Stønadsendring_")) 1 else -1 }.forEach {
-        if (it.key != MermaidSubgraph.INGEN.name) {
-            printList.add("\tsubgraph ${it.key}\n")
-            if (it.key == MermaidSubgraph.SJABLON.name || it.key == MermaidSubgraph.NOTAT.name) {
-                printList.add("\tdirection TB\n")
-            }
-            printList.addAll(it.value.map { "\t\t$it\n" })
-            printList.add("\tend\n")
-        } else {
-            printList.addAll(it.value.map { "\t$it\n" })
+    val order = listOf("Delberegning", "Stønadsendring_", "ACTION")
+    entries.sortedWith { a, b ->
+        when {
+            order.indexOf(a.key) < order.indexOf(b.key) -> -1
+            order.indexOf(a.key) > order.indexOf(b.key) -> 1
+            else -> 0
         }
     }
+        .forEach {
+            if (it.key != MermaidSubgraph.INGEN.name && it.key != MermaidSubgraph.ACTION.name) {
+                printList.add("\tsubgraph ${it.key}\n")
+                if (it.key == MermaidSubgraph.SJABLON.name || it.key == MermaidSubgraph.NOTAT.name) {
+                    printList.add("\tdirection TB\n")
+                }
+                printList.addAll(it.value.map { "\t\t$it\n" })
+                printList.add("\tend\n")
+            } else {
+                printList.addAll(it.value.map { "\t$it\n" })
+            }
+        }
     return printList
 }
 
-fun VedtakDto.toMermaid(): List<String> {
+fun VedtakDto.toMermaid(): MermaidResponse {
     val printList = mutableListOf<String>()
     printList.add("\nflowchart LR\n")
     printList.addAll(
         toTree().toMermaidSubgraphMap().toMermaid().removeDuplicates(),
     )
-    return printList
+    return MermaidResponse(
+        mermaidGraph = printList.joinToString(""),
+        grunnlagListe = grunnlagListe,
+        vedtak = toTreeDto(),
+        stønadsendringer = stønadsendringListe.map { it.toTreeDto() },
+        perioder =
+            stønadsendringListe.flatMap { st ->
+                st.periodeListe.map {
+                    it.toTreeDto(
+                        st,
+                    )
+                }
+            },
+    )
 }
 
 fun TreeChild.tilSubgraph(): String? =
@@ -183,12 +217,19 @@ fun TreeChild.tilSubgraph(): String? =
 
 fun String.removeParanteses() = this.replace("(", " ").replace(")", "")
 
-val mermaidSkipGrunnlag = listOf(Grunnlagstype.SJABLON, Grunnlagstype.SØKNAD, Grunnlagstype.NOTAT, Grunnlagstype.VIRKNINGSTIDSPUNKT)
+val mermaidSkipGrunnlag =
+    listOf(
+        Grunnlagstype.SJABLON,
+        Grunnlagstype.SØKNAD,
+        Grunnlagstype.NOTAT,
+        Grunnlagstype.VIRKNINGSTIDSPUNKT,
+    )
 
 fun TreeChild.toMermaidSubgraphMap(parent: TreeChild? = null): Map<String, MutableList<String>> {
     val mermaidSubgraphMap = mutableMapOf<String, MutableList<String>>()
 
     if (type == TreeChildType.FRITTSTÅENDE) return emptyMap()
+    mermaidSubgraphMap.add(MermaidSubgraph.ACTION.name, "click $id call callback() \"$id\"")
     if (parent != null && !mermaidSkipGrunnlag.contains(grunnlagstype)) {
         if (parent.type == TreeChildType.PERIODE) {
             mermaidSubgraphMap.add(
@@ -196,15 +237,11 @@ fun TreeChild.toMermaidSubgraphMap(parent: TreeChild? = null): Map<String, Mutab
                 "${parent.id}[[\"${parent.name}\"]] --> $id",
             )
         } else if (type == TreeChildType.GRUNNLAG) {
-            if (grunnlagstype == Grunnlagstype.SJABLON || grunnlag?.erPerson() == true || grunnlagstype == Grunnlagstype.NOTAT) {
+            if (grunnlag?.erPerson() == true) {
                 val subgraph = tilSubgraph()
 //                mermaidSubgraphMap.add(
-//                    subgraph!!,
-//                    "$id[${name.removeParanteses()}] ~~~ END",
-//                )
-//                mermaidSubgraphMap.add(
 //                    parent.tilSubgraph()!!,
-//                    "${parent.id}[${parent.name}] -.- $subgraph",
+//                    "${parent.id}[\"${parent.name}\"] -.- $id[\"${name}\"]",
 //                )
             } else if (grunnlagstype == Grunnlagstype.SLUTTBEREGNING_FORSKUDD) {
                 mermaidSubgraphMap.add(
@@ -262,24 +299,13 @@ fun List<String>.removeDuplicates(): List<String> {
 fun VedtakDto.toTree(): TreeChild {
     val vedtakParent =
         TreeChild(
-            id = "Vedtak",
+            id = nodeId(),
             name = "Vedtak",
             type = TreeChildType.VEDTAK,
             parent = null,
             innhold =
                 POJONode(
-                    TreeVedtak(
-                        kilde = kilde,
-                        type = type,
-                        opprettetAv = opprettetAv ?: "",
-                        opprettetAvNavn = opprettetAv,
-                        kildeapplikasjon = "behandling",
-                        vedtakstidspunkt = vedtakstidspunkt,
-                        enhetsnummer = enhetsnummer,
-                        innkrevingUtsattTilDato = innkrevingUtsattTilDato,
-                        fastsattILand = fastsattILand,
-                        opprettetTidspunkt = LocalDateTime.now(),
-                    ),
+                    toTreeDto(),
                 ),
         )
     val grunnlagSomIkkeErReferert =
@@ -305,8 +331,7 @@ fun VedtakDto.toTree(): TreeChild {
             }.filterNotNull(),
     )
     stønadsendringListe.forEachIndexed { i, st ->
-        val stønadsendringId =
-            "Stønadsendring_${st.type}_${st.kravhaver.verdi}"
+        val stønadsendringId = st.nodeId()
         val stønadsendringTree =
             TreeChild(
                 id = stønadsendringId,
@@ -315,18 +340,7 @@ fun VedtakDto.toTree(): TreeChild {
                 parent = vedtakParent,
                 innhold =
                     POJONode(
-                        TreeStønad(
-                            type = st.type,
-                            sak = st.sak,
-                            skyldner = st.skyldner,
-                            kravhaver = st.kravhaver,
-                            mottaker = st.mottaker,
-                            førsteIndeksreguleringsår = st.førsteIndeksreguleringsår,
-                            innkreving = st.innkreving,
-                            beslutning = st.beslutning,
-                            omgjørVedtakId = st.omgjørVedtakId,
-                            eksternReferanse = st.eksternReferanse,
-                        ),
+                        st.toTreeDto(),
                     ),
             )
         vedtakParent.children.add(stønadsendringTree)
@@ -337,21 +351,15 @@ fun VedtakDto.toTree(): TreeChild {
             ),
         )
         st.periodeListe.forEach {
-            val periodeId = "Periode${it.periode.fom.toCompactString()}${st.kravhaver.verdi}"
             val periodeTree =
                 TreeChild(
-                    id = periodeId,
+                    id = it.nodeId(st),
                     name = "Periode(${it.periode.fom.toCompactString()})",
                     type = TreeChildType.PERIODE,
                     parent = stønadsendringTree,
                     innhold =
                         POJONode(
-                            TreePeriode(
-                                beløp = it.beløp,
-                                valutakode = it.valutakode,
-                                resultatkode = it.resultatkode,
-                                delytelseId = it.delytelseId,
-                            ),
+                            it.toTreeDto(st),
                         ),
                 )
 
@@ -408,17 +416,20 @@ fun Grunnlagsreferanse.toTree(
                 Grunnlagstype.SLUTTBEREGNING_FORSKUDD ->
                     "Sluttberegning" +
                         "(${grunnlag.innholdTilObjekt<SluttberegningForskudd>().periode.fom.toCompactString()})"
+
                 Grunnlagstype.SJABLON ->
                     "Sjablon(" +
                         "${grunnlag.innholdTilObjekt<SjablonGrunnlag>().sjablon})"
 
-                Grunnlagstype.DELBEREGNING_SUM_INNTEKT ->
-                    "Delberegning sum inntekt " +
-                        grunnlag.innholdTilObjekt<DelberegningInntekt>().periode.fom.toCompactString()
+                Grunnlagstype.DELBEREGNING_SUM_INNTEKT -> {
+                    val delberegning = grunnlag.innholdTilObjekt<DelberegningSumInntekt>()
+                    "Delberegning sum inntekt(${delberegning.periode.fom.toCompactString()})"
+                }
 
-                Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND ->
-                    "Delberegning barn i husstand(" +
-                        grunnlag.innholdTilObjekt<DelberegningBarnIHusstand>().periode.fom.toCompactString() + ")"
+                Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND -> {
+                    val barnIHusstand = grunnlag.innholdTilObjekt<DelberegningBarnIHusstand>()
+                    "Delberegning barn i husstand(${barnIHusstand.periode.fom.toCompactString()})"
+                }
 
                 Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE -> {
                     val inntekt = grunnlag.innholdTilObjekt<InntektsrapporteringPeriode>()
@@ -426,28 +437,30 @@ fun Grunnlagsreferanse.toTree(
                         if (inntekt.manueltRegistrert) " (manuelt registrert)" else ""
                 }
 
-                Grunnlagstype.SIVILSTAND_PERIODE ->
-                    "Sivilstand(" +
-                        "${grunnlag.innholdTilObjekt<SivilstandPeriode>().sivilstand.visningsnavn.intern}-" +
-                        grunnlag.innholdTilObjekt<SivilstandPeriode>().periode.fom.toCompactString() +
-                        ")"
+                Grunnlagstype.SIVILSTAND_PERIODE -> {
+                    val sivilstand = grunnlag.innholdTilObjekt<SivilstandPeriode>()
+                    "Sivilstand(${sivilstand.sivilstand.visningsnavn.intern}/${sivilstand.periode.fom.toCompactString()})"
+                }
 
-                Grunnlagstype.BOSTATUS_PERIODE ->
-                    "Bosstatus(" +
-                        "${grunnlag.innholdTilObjekt<BostatusPeriode>().bostatus.visningsnavn.intern}-" +
-                        grunnlag.innholdTilObjekt<BostatusPeriode>().periode.fom.toCompactString() +
-                        ")"
+                Grunnlagstype.BOSTATUS_PERIODE -> {
+                    val bosstatus = grunnlag.innholdTilObjekt<BostatusPeriode>()
+                    "Bosstatus(${bosstatus.bostatus.visningsnavn.intern}/${bosstatus.periode.fom.toCompactString()})"
+                }
 
                 Grunnlagstype.NOTAT -> "Notat(${grunnlag.innholdTilObjekt<NotatGrunnlag>().type})"
-                Grunnlagstype.INNHENTET_HUSSTANDSMEDLEM ->
-                    "Innhentet husstandsmedlem(" +
-                        grunnlag.innholdTilObjekt<InnhentetHusstandsmedlem>().grunnlag.fødselsdato?.toCompactString() + ")"
+                Grunnlagstype.INNHENTET_HUSSTANDSMEDLEM -> {
+                    val innhentetHusstandsmedlem = grunnlag.innholdTilObjekt<InnhentetHusstandsmedlem>()
+                    "Innhentet husstandsmedlem(${innhentetHusstandsmedlem.grunnlag.fødselsdato?.toCompactString()})"
+                }
 
-                Grunnlagstype.INNHENTET_INNTEKT_SKATTEGRUNNLAG_PERIODE ->
-                    "Innhentet skattegrunnlag(" +
-                        grunnlag.innholdTilObjekt<InnhentetSkattegrunnlag>().år + ")"
-                Grunnlagstype.INNHENTET_SIVILSTAND ->
-                    "Innhentet sivilstand"
+                Grunnlagstype.INNHENTET_INNTEKT_SKATTEGRUNNLAG_PERIODE -> {
+                    val skattegrunnlag = grunnlag.innholdTilObjekt<InnhentetSkattegrunnlag>()
+                    "Innhentet skattegrunnlag(${skattegrunnlag.år})"
+                }
+
+                Grunnlagstype.INNHENTET_SIVILSTAND -> {
+                    "Innhentet sivilstand (Alle)"
+                }
 
                 else ->
                     if (grunnlag.erPerson()) {
@@ -555,3 +568,48 @@ fun OpprettVedtakRequestDto.tilVedtakDto(): VedtakDto {
             },
     )
 }
+
+fun VedtakDto.nodeId() = "Vedtak"
+
+fun StønadsendringDto.nodeId() = "Stønadsendring_${type}_${kravhaver.verdi}"
+
+fun VedtakPeriodeDto.nodeId(st: StønadsendringDto) = "Periode${periode.fom.toCompactString()}${st.kravhaver.verdi}"
+
+fun VedtakDto.toTreeDto() =
+    TreeVedtak(
+        nodeId = nodeId(),
+        kilde = kilde,
+        type = type,
+        opprettetAv = opprettetAv,
+        opprettetAvNavn = opprettetAv,
+        kildeapplikasjon = kildeapplikasjon,
+        vedtakstidspunkt = vedtakstidspunkt,
+        enhetsnummer = enhetsnummer,
+        innkrevingUtsattTilDato = innkrevingUtsattTilDato,
+        fastsattILand = fastsattILand,
+        opprettetTidspunkt = opprettetTidspunkt,
+    )
+
+fun VedtakPeriodeDto.toTreeDto(st: StønadsendringDto) =
+    TreePeriode(
+        nodeId = nodeId(st),
+        beløp = beløp,
+        valutakode = valutakode,
+        resultatkode = resultatkode,
+        delytelseId = delytelseId,
+    )
+
+fun StønadsendringDto.toTreeDto() =
+    TreeStønad(
+        nodeId = nodeId(),
+        type = type,
+        sak = sak,
+        skyldner = skyldner,
+        kravhaver = kravhaver,
+        mottaker = mottaker,
+        førsteIndeksreguleringsår = førsteIndeksreguleringsår,
+        innkreving = innkreving,
+        beslutning = beslutning,
+        omgjørVedtakId = omgjørVedtakId,
+        eksternReferanse = eksternReferanse,
+    )
