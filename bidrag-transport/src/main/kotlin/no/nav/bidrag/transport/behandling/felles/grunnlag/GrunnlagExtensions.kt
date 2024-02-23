@@ -80,7 +80,7 @@ val Collection<BaseGrunnlag>.barn
             it.type == Grunnlagstype.PERSON_SØKNADSBARN || it.type == Grunnlagstype.PERSON_HUSSTANDSMEDLEM
         }.toSet()
 
-val Collection<GrunnlagDto>.søknadsbarn
+val Collection<BaseGrunnlag>.søknadsbarn
     get() =
         filter {
             it.type == Grunnlagstype.PERSON_SØKNADSBARN
