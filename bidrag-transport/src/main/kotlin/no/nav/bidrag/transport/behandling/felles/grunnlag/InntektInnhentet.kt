@@ -125,10 +125,13 @@ data class InnhentetAinntekt(
         val opptjeningsperiodeFra: LocalDate?,
         val opptjeningsperiodeTil: LocalDate?,
         val kategori: String,
+        val opplysningspliktigId: String?,
+        val virksomhetId: String?,
         val fordelType: String?,
         val beløp: BigDecimal,
         val etterbetalingsperiodeFra: LocalDate?,
         val etterbetalingsperiodeTil: LocalDate?,
+        val beskrivelse: String? = null,
     )
 }
 
