@@ -10,6 +10,14 @@ AINNTEKT_BEREGNET_12MND:
   intern: "Lønn og trekk siste 12 mnd"
   bruker:
     NB: "Lønn og trekk siste 12 mnd"
+AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAK:
+  intern: "Lønn og trekk siste 3 mnd (opprinnelig vedtak)"
+  bruker:
+    NB: "Lønn og trekk siste 3 mnd"
+AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAK:
+  intern: "Lønn og trekk siste 12 mnd (opprinnelig vedtak)"
+  bruker:
+    NB: "Lønn og trekk siste 12 mnd"
 KAPITALINNTEKT:
   intern: "Sigrun kapitalinntekt (KAPS)"
   bruker:
