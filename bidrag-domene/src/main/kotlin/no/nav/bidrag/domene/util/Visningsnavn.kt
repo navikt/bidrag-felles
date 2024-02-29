@@ -10,6 +10,7 @@ import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
 import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
+import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
@@ -33,7 +34,8 @@ val Inntektsrapportering.Companion.visningsnavnSomKreverÅrstall get() =
         Inntektsrapportering.KAPITALINNTEKT,
         Inntektsrapportering.LIGNINGSINNTEKT,
     )
-val Inntektsrapportering.visningsnavn get() = lastVisningsnavnFraFil("inntekttype.yaml")[name] ?: visningsnavnMangler(name)
+val Inntektstype.visningsnavn get() = lastVisningsnavnFraFil("inntektstype.yaml")[name] ?: visningsnavnMangler(name)
+val Inntektsrapportering.visningsnavn get() = lastVisningsnavnFraFil("inntektsrapportering.yaml")[name] ?: visningsnavnMangler(name)
 
 fun Inntektsrapportering.visningsnavnIntern(årstall: Int?) = "${visningsnavn.intern} $årstall".trim()
 
