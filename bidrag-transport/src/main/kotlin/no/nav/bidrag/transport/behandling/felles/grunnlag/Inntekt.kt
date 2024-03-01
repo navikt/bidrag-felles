@@ -11,6 +11,8 @@ import java.time.YearMonth
 data class InntektsrapporteringPeriode(
     override val periode: ÅrMånedsperiode,
     override val manueltRegistrert: Boolean,
+    @Schema(description = "Opprinnelig periode for inntekten hvis det er offentlig inntekt")
+    val opprinneligPeriode: ÅrMånedsperiode? = null,
     @Schema(description = "Type inntektsrapportering") val inntektsrapportering: Inntektsrapportering,
     @Schema(description = "Referanse til barnet inntekten gjelder for") val gjelderBarn: Grunnlagsreferanse? = null,
     @Schema(description = "Inntekt beløp") val beløp: BigDecimal,
