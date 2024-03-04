@@ -1,4 +1,4 @@
-package no.nav.bidrag.reskontro.dto.request
+package no.nav.bidrag.transport.reskontro.request
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.sak.Saksnummer
