@@ -1,4 +1,4 @@
-package no.nav.bidrag.reskontro.dto.response.transaksjoner
+package no.nav.bidrag.transport.reskontro.response.transaksjoner
 
 import io.swagger.v3.oas.annotations.media.Schema
 

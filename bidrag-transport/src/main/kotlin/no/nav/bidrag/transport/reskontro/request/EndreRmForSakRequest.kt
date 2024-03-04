@@ -1,4 +1,4 @@
-package no.nav.bidrag.reskontro.dto.request
+package no.nav.bidrag.transport.reskontro.request
 
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
