@@ -13,6 +13,12 @@ data class InntektsrapporteringPeriode(
     override val manueltRegistrert: Boolean,
     @Schema(description = "Opprinnelig periode for inntekten hvis det er offentlig inntekt")
     val opprinneligPeriode: ÅrMånedsperiode? = null,
+    @Schema(
+        description =
+            "Settes bare hvis manueltRegistrert = false. " +
+                "Versjon bidrag-inntekt beregner inntekt basert på offentlig informasjon",
+    )
+    val versjon: String? = null,
     @Schema(description = "Type inntektsrapportering") val inntektsrapportering: Inntektsrapportering,
     @Schema(description = "Referanse til barnet inntekten gjelder for") val gjelderBarn: Grunnlagsreferanse? = null,
     @Schema(description = "Inntekt beløp") val beløp: BigDecimal,
