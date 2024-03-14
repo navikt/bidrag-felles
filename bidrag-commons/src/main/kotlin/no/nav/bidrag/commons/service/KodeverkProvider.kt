@@ -18,6 +18,7 @@ const val POSTNUMMER = "Postnummer"
 const val LANDKODER = "Landkoder"
 const val LANDKODER_ISO2 = "LandkoderISO2"
 const val SUMMERT_SKATTEGRUNNLAG = "Summert skattegrunnlag"
+const val SPESIFISERT_SUMMERT_SKATTEGRUNNLAG = "SpesifisertSummertSkattegrunnlag"
 const val LOENNSBESKRIVELSE = "Loennsbeskrivelse"
 const val YTELSEFRAOFFENTLIGE = "YtelseFraOffentligeBeskrivelse"
 const val PENSJONELLERTRYGDEBESKRIVELSE = "PensjonEllerTrygdeBeskrivelse"
@@ -51,6 +52,7 @@ fun finnVisningsnavn(fulltNavnInntektspost: String): String {
         ?: finnVisningsnavn(fulltNavnInntektspost, YTELSEFRAOFFENTLIGE)
         ?: finnVisningsnavn(fulltNavnInntektspost, PENSJONELLERTRYGDEBESKRIVELSE)
         ?: finnVisningsnavn(fulltNavnInntektspost, NAERINGSINNTEKTSBESKRIVELSE)
+        ?: finnVisningsnavn(fulltNavnInntektspost, SPESIFISERT_SUMMERT_SKATTEGRUNNLAG)
         ?: ""
 }
 
