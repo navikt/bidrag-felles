@@ -43,7 +43,7 @@
     <spring-retry.version>2.0.5</spring-retry.version>
     <spring-security.version>6.2.1</spring-security.version>
     <spring-expression.version>6.1.3</spring-expression.version>
-    <httpclient5.version>5.3</httpclient5.version>
+    <httpclient5.version>5.3.1</httpclient5.version>
     <token-support.version>3.2.0</token-support.version>
     <jackson.fasterXml.version>2.16.0</jackson.fasterXml.version>
     <aspectj.version>1.9.21</aspectj.version>
