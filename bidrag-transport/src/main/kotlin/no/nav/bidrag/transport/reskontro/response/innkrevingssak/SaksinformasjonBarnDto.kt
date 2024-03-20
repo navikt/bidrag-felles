@@ -25,8 +25,8 @@ data class SaksinformasjonBarnDto(
     val restGjeldPrivat: BigDecimal,
     @field:Schema(
         description =
-        "Sum av beløp som ikke er utbetalt tilbake til bidragspliktig. Dette kan skje ved for mye innbetalt eller annullerte beløp. " +
-            "Beregnes ikke for kall på personIdent.",
+            "Sum av beløp som ikke er utbetalt tilbake til bidragspliktig. Dette kan skje ved for mye innbetalt eller annullerte beløp. " +
+                "Beregnes ikke for kall på personIdent.",
     )
     val sumIkkeUtbetalt: BigDecimal? = null,
     @field:Schema(
@@ -35,32 +35,32 @@ data class SaksinformasjonBarnDto(
     val sumForskuddUtbetalt: BigDecimal,
     @field:Schema(
         description =
-        "Sum av restbeløp på forskudd (A1). " +
-            "Beregnes ikke for kall på saksnummer.",
+            "Sum av restbeløp på forskudd (A1). " +
+                "Beregnes ikke for kall på saksnummer.",
     )
     val restGjeldPrivatAndel: BigDecimal? = null,
     @field:Schema(
         description =
-        "Sum av restbeløp på forskudd (A1). " +
-            "Beregnes ikke for kall på saksnummer.",
+            "Sum av restbeløp på forskudd (A1). " +
+                "Beregnes ikke for kall på saksnummer.",
     )
     val sumInnbetaltAndel: BigDecimal? = null,
     @field:Schema(
         description =
-        "Sum av restbeløp på forskudd (A1). " +
-            "Beregnes ikke for kall på saksnummer.",
+            "Sum av restbeløp på forskudd (A1). " +
+                "Beregnes ikke for kall på saksnummer.",
     )
     val sumForskuddUtbetaltAndel: BigDecimal? = null,
     @field:Schema(
         description =
-        "Periode for B1, D1 eller F1. Angitt som første dato i måneden. " +
-            "Beregnes ikke for kall på personIdent.",
+            "Periode for B1, D1 eller F1. Angitt som første dato i måneden. " +
+                "Beregnes ikke for kall på personIdent.",
     )
     val periode: Periode<LocalDate>? = null,
     @field:Schema(
         description =
-        "Angir om det er stopp i utbetaling. " +
-            "Beregnes ikke for kall på personIdent.",
+            "Angir om det er stopp i utbetaling. " +
+                "Beregnes ikke for kall på personIdent.",
     )
     val erStoppIUtbetaling: Boolean? = null,
 )
