@@ -10,5 +10,5 @@ data class InnkrevingssaksinformasjonDto(
     val skyldnerinformasjon: SkyldnerinformasjonDto?,
     val gjeldendeBetalingsordning: GjeldendeBetalingsordningDto?,
     val nyBetalingsordning: NyBetalingsordningDto?,
-    val innkrevingssakshistorikk: List<InnkrevingssakshistorikkDto>,
+    val innkrevingssakshistorikk: List<InnkrevingssakshistorikkDto>?,
 )
