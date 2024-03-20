@@ -7,6 +7,6 @@ import io.swagger.v3.oas.annotations.media.Schema
     description = "Inneholder informasjon om bidragssaken fra skatt med skyldner",
 )
 data class BidragssakMedSkyldnerDto(
-    val skyldner: SkyldnerDto,
-    val bidragssak: BidragssakDto,
+    val skyldner: SkyldnerDto?,
+    val bidragssak: BidragssakDto?,
 )

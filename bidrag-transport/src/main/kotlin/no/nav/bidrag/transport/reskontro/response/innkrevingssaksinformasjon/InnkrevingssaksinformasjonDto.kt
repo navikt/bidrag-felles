@@ -7,8 +7,8 @@ import io.swagger.v3.oas.annotations.media.Schema
     description = "Inneholder informasjon om innkrevingssaken.",
 )
 data class InnkrevingssaksinformasjonDto(
-    val skyldnerinformasjon: SkyldnerinformasjonDto,
-    val gjeldendeBetalingsordning: GjeldendeBetalingsordningDto,
-    val nyBetalingsordning: NyBetalingsordningDto,
+    val skyldnerinformasjon: SkyldnerinformasjonDto?,
+    val gjeldendeBetalingsordning: GjeldendeBetalingsordningDto?,
+    val nyBetalingsordning: NyBetalingsordningDto?,
     val innkrevingssakshistorikk: List<InnkrevingssakshistorikkDto>,
 )
