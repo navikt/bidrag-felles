@@ -2,9 +2,8 @@ package no.nav.bidrag.transport.reskontro.response.innkrevingssak
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.ident.Personident
-import no.nav.bidrag.domene.tid.Periode
+import no.nav.bidrag.domene.tid.Datoperiode
 import java.math.BigDecimal
-import java.time.LocalDate
 
 @Schema(
     name = "SaksinformasjonBarn",
@@ -56,7 +55,7 @@ data class SaksinformasjonBarnDto(
             "Periode for B1, D1 eller F1. Angitt som første dato i måneden. " +
                 "Beregnes ikke for kall på personIdent.",
     )
-    val periode: Periode<LocalDate>? = null,
+    val periode: Datoperiode? = null,
     @field:Schema(
         description =
             "Angir om det er stopp i utbetaling. " +

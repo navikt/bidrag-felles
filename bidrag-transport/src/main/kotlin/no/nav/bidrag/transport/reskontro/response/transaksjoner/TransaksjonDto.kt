@@ -3,7 +3,7 @@ package no.nav.bidrag.transport.reskontro.response.transaksjoner
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
-import no.nav.bidrag.domene.tid.Periode
+import no.nav.bidrag.domene.tid.Datoperiode
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -117,7 +117,7 @@ data class TransaksjonDto(
     @field:Schema(
         description = "Periode for transaksjonen.",
     )
-    val periode: Periode<LocalDate>,
+    val periode: Datoperiode,
     @field:Schema(
         description = "Ident til barn.",
     )
