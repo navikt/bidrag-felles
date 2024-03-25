@@ -17,7 +17,7 @@
         <kotlin.code.style>official</kotlin.code.style>
         <jackson.version>2.16.1</jackson.version>
         <kotest.version>5.8.0</kotest.version>
-        <swagger.version>2.2.20</swagger.version>
+        <swagger.version>2.2.21</swagger.version>
         <ktlint.version>1.2.1</ktlint.version>
         <mockk.version>1.13.9</mockk.version>
         <spring-boot.version>3.2.2</spring-boot.version>
