@@ -22,7 +22,7 @@
         <mockk.version>1.13.9</mockk.version>
         <spring-boot.version>3.2.2</spring-boot.version>
         <kotlin-logging-jvm.version>6.0.3</kotlin-logging-jvm.version>
-        <springdoc-openapi-ui.version>2.3.0</springdoc-openapi-ui.version>
+        <springdoc-openapi-ui.version>2.4.0</springdoc-openapi-ui.version>
 
         <!-- plugins -->
         <maven-compiler.version>3.12.1</maven-compiler.version>
