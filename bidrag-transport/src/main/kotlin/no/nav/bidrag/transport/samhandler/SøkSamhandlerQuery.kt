@@ -5,6 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.transport.felles.QueryObject
 
 @Schema(description = "Query-felter for søk etter samhandlere.")
+@Deprecated(message = "Utgår da denne er basert på TSS.", replaceWith = ReplaceWith("SamhandlerSøk"))
 data class SøkSamhandlerQuery(
     val navn: String,
     val postnummer: String? = null,
