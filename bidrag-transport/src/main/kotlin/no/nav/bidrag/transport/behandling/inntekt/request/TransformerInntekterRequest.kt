@@ -46,7 +46,7 @@ data class Ainntektspost(
     @Schema(description = "Fra-dato for etterbetaling")
     val etterbetalingsperiodeFra: LocalDate?,
     @Schema(description = "Til-dato for etterbetaling")
-    val etterbetalingseriodeTil: LocalDate?,
+    val etterbetalingsperiodeTil: LocalDate?,
     @Schema(description = "Beskrivelse av inntekt")
     val beskrivelse: String?,
     @Schema(description = "Beløp")
