@@ -43,6 +43,10 @@ data class Ainntektspost(
     val opptjeningsperiodeFra: LocalDate?,
     @Schema(description = "Til-dato for opptjening")
     val opptjeningsperiodeTil: LocalDate?,
+    @Schema(description = "Fra-dato for etterbetaling")
+    val etterbetalingsperiodeFra: LocalDate?,
+    @Schema(description = "Til-dato for etterbetaling")
+    val etterbetalingseriodeTil: LocalDate?,
     @Schema(description = "Beskrivelse av inntekt")
     val beskrivelse: String?,
     @Schema(description = "Beløp")
