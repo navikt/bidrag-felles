@@ -68,9 +68,9 @@ class VisningsnavnTest {
             val visningsnavn = Inntektsrapportering.AINNTEKT_BEREGNET_12MND.visningsnavn
             val visningsnavnSaksbehandler = Inntektsrapportering.AINNTEKT_BEREGNET_12MND.visningsnavnIntern(2020)
 
-            visningsnavn.intern shouldBe "Lønn og trekk siste 12 mnd"
-            visningsnavnSaksbehandler shouldBe "Lønn og trekk siste 12 mnd 2020"
-            visningsnavn.bruker[Språk.NB] shouldBe "Lønn og trekk siste 12 mnd"
+            visningsnavn.intern shouldBe "A-inntekt siste 12 måneder"
+            visningsnavnSaksbehandler shouldBe "A-inntekt siste 12 måneder 2020"
+            visningsnavn.bruker[Språk.NB] shouldBe "A-inntekt siste 12 måneder"
         }
 
         @Test
