@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.ident.SamhandlerId
 
 data class SamhandlerDto(
-    val tssId: SamhandlerId,
+    val tssId: SamhandlerId?,
     @Schema(description = "Navn på samhandler")
     val navn: String?,
     @Schema(description = "Offentlig id for samhandlere.")
