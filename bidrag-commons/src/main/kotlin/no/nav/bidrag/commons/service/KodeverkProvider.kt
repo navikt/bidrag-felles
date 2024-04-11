@@ -2,10 +2,15 @@
 
 package no.nav.bidrag.commons.service
 
+import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
+import com.fasterxml.jackson.module.kotlin.readValue
+import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import com.github.benmanes.caffeine.cache.Cache
 import com.github.benmanes.caffeine.cache.Caffeine
 import no.nav.bidrag.commons.CorrelationId
 import no.nav.bidrag.commons.cache.InvaliderCacheFørStartenAvArbeidsdag
+import no.nav.bidrag.domene.util.Visningsnavn
 import org.slf4j.LoggerFactory
 import org.springframework.boot.web.client.RestTemplateBuilder
 import org.springframework.web.client.RestTemplate
@@ -13,6 +18,8 @@ import org.springframework.web.client.getForEntity
 import java.time.LocalDate
 import java.util.concurrent.atomic.AtomicReference
 
+internal val objectmapper = ObjectMapper(YAMLFactory()).findAndRegisterModules().registerKotlinModule()
+private val visningsnavnCache: Map<String, Map<String, String>> = emptyMap()
 private val kodeverkUrl = AtomicReference("")
 const val POSTNUMMER = "Postnummer"
 const val LANDKODER = "Landkoder"
@@ -30,29 +37,30 @@ private val kodeverkCache: Cache<String, KodeverkKoderBetydningerResponse> =
 private val log = LoggerFactory.getLogger(KodeverkProvider::class.java)
 
 fun finnVisningsnavnSkattegrunnlag(fulltNavnInntektspost: String): String =
-    finnVisningsnavn(fulltNavnInntektspost, SUMMERT_SKATTEGRUNNLAG) ?: ""
+    finnVisningsnavnForKode(fulltNavnInntektspost, SUMMERT_SKATTEGRUNNLAG) ?: ""
 
-fun finnPoststedForPostnummer(postnummer: String): String? = finnVisningsnavn(postnummer, POSTNUMMER)
+fun finnPoststedForPostnummer(postnummer: String): String? = finnVisningsnavnForKode(postnummer, POSTNUMMER)
 
-fun finnLandkodeForLandkoder(landkode: String): String? = finnVisningsnavn(landkode, LANDKODER)
+fun finnLandkodeForLandkoder(landkode: String): String? = finnVisningsnavnForKode(landkode, LANDKODER)
 
-fun finnLandkodeForLandkoderIso2(landkode: String): String? = finnVisningsnavn(landkode, LANDKODER_ISO2)
+fun finnLandkodeForLandkoderIso2(landkode: String): String? = finnVisningsnavnForKode(landkode, LANDKODER_ISO2)
 
 fun finnVisningsnavnLønnsbeskrivelse(fulltNavnInntektspost: String): String =
-    finnVisningsnavn(fulltNavnInntektspost, LOENNSBESKRIVELSE) ?: ""
+    finnVisningsnavnForKode(fulltNavnInntektspost, LOENNSBESKRIVELSE) ?: ""
 
 fun finnVisningsnavnKodeverk(
     fulltNavnInntektspost: String,
     kodeverk: String,
-): String = finnVisningsnavn(fulltNavnInntektspost, kodeverk) ?: ""
+): String = finnVisningsnavnForKode(fulltNavnInntektspost, kodeverk) ?: ""
 
 fun finnVisningsnavn(fulltNavnInntektspost: String): String {
-    return finnVisningsnavn(fulltNavnInntektspost, SUMMERT_SKATTEGRUNNLAG)
-        ?: finnVisningsnavn(fulltNavnInntektspost, LOENNSBESKRIVELSE)
-        ?: finnVisningsnavn(fulltNavnInntektspost, YTELSEFRAOFFENTLIGE)
-        ?: finnVisningsnavn(fulltNavnInntektspost, PENSJONELLERTRYGDEBESKRIVELSE)
-        ?: finnVisningsnavn(fulltNavnInntektspost, NAERINGSINNTEKTSBESKRIVELSE)
-        ?: finnVisningsnavn(fulltNavnInntektspost, SPESIFISERT_SUMMERT_SKATTEGRUNNLAG)
+    return finnVisningsnavnFraFil(fulltNavnInntektspost)
+        ?: finnVisningsnavnForKode(fulltNavnInntektspost, SUMMERT_SKATTEGRUNNLAG)
+        ?: finnVisningsnavnForKode(fulltNavnInntektspost, LOENNSBESKRIVELSE)
+        ?: finnVisningsnavnForKode(fulltNavnInntektspost, YTELSEFRAOFFENTLIGE)
+        ?: finnVisningsnavnForKode(fulltNavnInntektspost, PENSJONELLERTRYGDEBESKRIVELSE)
+        ?: finnVisningsnavnForKode(fulltNavnInntektspost, NAERINGSINNTEKTSBESKRIVELSE)
+        ?: finnVisningsnavnForKode(fulltNavnInntektspost, SPESIFISERT_SUMMERT_SKATTEGRUNNLAG)
         ?: ""
 }
 
@@ -82,7 +90,7 @@ class KodeverkProvider {
     }
 }
 
-private fun finnVisningsnavn(
+fun finnVisningsnavnForKode(
     kode: String,
     kodeverk: String,
 ): String? {
@@ -91,6 +99,11 @@ private fun finnVisningsnavn(
             .get(kodeverk) { hentKodeverk(kodeverk) }
             .betydninger[kode]?.firstNotNullOf { betydning -> betydning.beskrivelser["nb"] }
     return if (betydning?.tekst.isNullOrEmpty()) betydning?.term else betydning?.tekst
+}
+
+private fun finnVisningsnavnFraFil(kode: String): String? {
+    val visningsnavnMap = lastVisningsnavnFraFil("inntektsposter.yaml")
+    return visningsnavnMap[kode]
 }
 
 private fun hentKodeverk(kodeverk: String): KodeverkKoderBetydningerResponse {
@@ -118,3 +131,16 @@ data class KodeverkBeskrivelse(
     val tekst: String,
     val term: String,
 )
+
+private fun lastVisningsnavnFraFil(filnavn: String): Map<String, String> {
+    val fil = hentFil("/kodeverk/visningsnavn/$filnavn")
+    return visningsnavnCache.getOrDefault(
+        filnavn,
+        objectmapper.readValue(fil),
+    )
+}
+
+private fun hentFil(filsti: String) =
+    Visningsnavn::class.java.getResource(
+        filsti,
+    ) ?: throw RuntimeException("Fant ingen fil på sti $filsti")

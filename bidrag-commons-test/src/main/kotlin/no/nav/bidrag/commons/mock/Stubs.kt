@@ -6,6 +6,7 @@ import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import no.nav.bidrag.commons.service.KodeverkProvider
 import no.nav.bidrag.commons.service.finnVisningsnavn
+import no.nav.bidrag.commons.service.finnVisningsnavnForKode
 import no.nav.bidrag.commons.service.finnVisningsnavnLønnsbeskrivelse
 import no.nav.bidrag.commons.service.finnVisningsnavnSkattegrunnlag
 import no.nav.bidrag.commons.service.sjablon.SjablonProvider
@@ -19,6 +20,8 @@ fun stubKodeverkProvider() {
     mockkStatic(::finnVisningsnavnSkattegrunnlag)
     mockkStatic(::finnVisningsnavnLønnsbeskrivelse)
     mockkStatic(::finnVisningsnavn)
+    mockkStatic(::finnVisningsnavnForKode)
+    every { finnVisningsnavnForKode(any(), any()) } returns "Visningsnavn"
     every { finnVisningsnavn(any()) } returns "Visningsnavn"
     every {
         finnVisningsnavnLønnsbeskrivelse(any())
