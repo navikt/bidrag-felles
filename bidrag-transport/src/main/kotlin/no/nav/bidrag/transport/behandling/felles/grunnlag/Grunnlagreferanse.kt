@@ -44,12 +44,12 @@ fun opprettInnhentetSivilstandGrunnlagsreferanse(referanseGjelder: Grunnlagsrefe
 fun opprettSluttberegningreferanse(
     barnreferanse: Grunnlagsreferanse,
     periode: ÅrMånedsperiode,
-) = "sluttberegning_${barnreferanse}_${periode.fom.toCompactString()}"
+) = "sluttberegning_${barnreferanse}_${periode.fom.toCompactString()}${periode.til?.let { "_${it.toCompactString()}" } ?: ""}"
 
 fun opprettDelberegningreferanse(
     type: Grunnlagstype,
     periode: ÅrMånedsperiode,
-) = "delberegning_${type}_${periode.fom.toCompactString()}"
+) = "delberegning_${type}_${periode.fom.toCompactString()}${periode.til?.let { "_${it.toCompactString()}" } ?: ""}"
 
 fun opprettSjablonreferanse(
     navn: String,
