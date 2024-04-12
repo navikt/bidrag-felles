@@ -54,4 +54,4 @@ fun opprettDelberegningreferanse(
 fun opprettSjablonreferanse(
     navn: String,
     periode: ÅrMånedsperiode,
-) = "sjablon_${navn}_${periode.fom.toCompactString()}"
+) = "sjablon_${navn}_${periode.fom.toCompactString()}${periode.til?.let { "_${it.toCompactString()}" } ?: ""}"
