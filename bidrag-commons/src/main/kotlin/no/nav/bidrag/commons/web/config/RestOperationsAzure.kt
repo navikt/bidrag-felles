@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
+import org.springframework.http.converter.ByteArrayHttpMessageConverter
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 
 @Suppress("SpringFacetCodeInspection")
@@ -21,6 +22,7 @@ class RestOperationsAzure {
         bearerTokenClientInterceptor: BearerTokenClientInterceptor,
     ) = restTemplateBuilder.additionalInterceptors(bearerTokenClientInterceptor)
         .additionalMessageConverters(MappingJackson2HttpMessageConverter(commonObjectmapper))
+        .additionalMessageConverters(ByteArrayHttpMessageConverter())
         .build()
 
     @Bean("azureService")
@@ -30,5 +32,6 @@ class RestOperationsAzure {
         bearerTokenClientInterceptor: ServiceUserAuthTokenInterceptor,
     ) = restTemplateBuilder.additionalInterceptors(bearerTokenClientInterceptor)
         .additionalMessageConverters(MappingJackson2HttpMessageConverter(commonObjectmapper))
+        .additionalMessageConverters(ByteArrayHttpMessageConverter())
         .build()
 }
