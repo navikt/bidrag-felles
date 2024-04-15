@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
+import org.springframework.http.MediaType
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
 
 @Suppress("SpringFacetCodeInspection")
@@ -20,7 +21,7 @@ class RestOperationsAzure {
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: BearerTokenClientInterceptor,
     ) = restTemplateBuilder.additionalInterceptors(bearerTokenClientInterceptor)
-        .additionalMessageConverters(MappingJackson2HttpMessageConverter(commonObjectmapper))
+        .additionalMessageConverters(generateJacksonConverter())
         .build()
 
     @Bean("azureService")
@@ -29,6 +30,12 @@ class RestOperationsAzure {
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: ServiceUserAuthTokenInterceptor,
     ) = restTemplateBuilder.additionalInterceptors(bearerTokenClientInterceptor)
-        .additionalMessageConverters(MappingJackson2HttpMessageConverter(commonObjectmapper))
+        .additionalMessageConverters(generateJacksonConverter())
         .build()
+
+    fun generateJacksonConverter(): MappingJackson2HttpMessageConverter {
+        val converter = MappingJackson2HttpMessageConverter(commonObjectmapper)
+        converter.supportedMediaTypes = listOf(MediaType.ALL)
+        return converter
+    }
 }
