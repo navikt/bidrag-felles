@@ -1,7 +1,7 @@
 AINNTEKT:
-  intern: "Lønn og trekk"
+  intern: "A-inntekt"
   bruker:
-    NB: "Lønn og trekk"
+    NB: "A-inntekt"
 AINNTEKT_BEREGNET_3MND:
   intern: "A-inntekt siste 3 måneder"
   bruker:

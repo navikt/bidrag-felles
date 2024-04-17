@@ -78,8 +78,8 @@ class VisningsnavnTest {
             val visningsnavn = Inntektsrapportering.KAPITALINNTEKT.visningsnavn
             val visningsnavnSaksbehandler = Inntektsrapportering.KAPITALINNTEKT.visningsnavnIntern(2020)
 
-            visningsnavn.intern shouldBe "Sigrun kapitalinntekt (KAPS)"
-            visningsnavnSaksbehandler shouldBe "Sigrun kapitalinntekt (KAPS) 2020"
+            visningsnavn.intern shouldBe "Kapitalinntekt"
+            visningsnavnSaksbehandler shouldBe "Kapitalinntekt 2020"
             visningsnavn.bruker[Språk.NB] shouldBe "Kapitalinntekt"
         }
     }
