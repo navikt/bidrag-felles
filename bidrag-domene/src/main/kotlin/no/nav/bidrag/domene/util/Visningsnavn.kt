@@ -70,16 +70,16 @@ private fun lastVisningsnavnFraFil(
     val fil = hentFil("/kodeverk/visningsnavn/$filnavn")
     return visningsnavnCache.getOrDefault(
         filnavn,
-        if (category != null) lastVisningsnavnFraFilForKategory(fil, category) else objectmapper.readValue(fil),
+        if (category != null) lastVisningsnavnFraFilForKategori(fil, category) else objectmapper.readValue(fil),
     )
 }
 
-private fun lastVisningsnavnFraFilForKategory(
+private fun lastVisningsnavnFraFilForKategori(
     fil: URL,
-    kategory: String,
+    kategori: String,
 ): VisningsnavnKodeMap {
     val jsonNode: Map<String, VisningsnavnKodeMap> = objectmapper.readValue(fil)
-    return jsonNode[kategory] ?: throw RuntimeException("Fant ikke visningsnavn for kategory $kategory i filsti $fil")
+    return jsonNode[kategori] ?: throw RuntimeException("Fant ikke visningsnavn for kategori $kategori i filsti $fil")
 }
 
 private fun hentFil(filsti: String) =
