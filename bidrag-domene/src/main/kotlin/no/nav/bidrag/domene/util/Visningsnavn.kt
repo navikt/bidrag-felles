@@ -14,12 +14,18 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.net.URL
+import java.time.YearMonth
+import java.time.format.DateTimeFormatter
 
 typealias VisningsnavnKodeMap = Map<String, Visningsnavn>
 
 internal val objectmapper = ObjectMapper(YAMLFactory()).findAndRegisterModules().registerKotlinModule()
 private val visningsnavnCache: Map<String, VisningsnavnKodeMap> = emptyMap()
+internal val formatterMonthYear = DateTimeFormatter.ofPattern("MM.yyyy")
+
+fun YearMonth?.toMontYear(): String = this?.format(formatterMonthYear) ?: ""
 
 fun visningsnavnMangler(kode: String): Nothing = throw RuntimeException("Fant ingen visningsnavn for kode $kode")
 
@@ -34,20 +40,31 @@ val Inntektsrapportering.Companion.visningsnavnSomKreverÅrstall get() =
         Inntektsrapportering.KAPITALINNTEKT,
         Inntektsrapportering.LIGNINGSINNTEKT,
     )
+val Inntektsrapportering.Companion.visningsnavnSomKreverPeriode get() =
+    listOf(
+        Inntektsrapportering.OVERGANGSSTØNAD,
+    )
 val Inntektstype.visningsnavn get() = lastVisningsnavnFraFil("inntektstype.yaml")[name] ?: visningsnavnMangler(name)
 val Inntektsrapportering.visningsnavn get() = lastVisningsnavnFraFil("inntektsrapportering.yaml")[name] ?: visningsnavnMangler(name)
 
 fun Inntektsrapportering.visningsnavnIntern(årstall: Int?) = "${visningsnavn.intern} $årstall".trim()
 
-fun Inntektsrapportering.visningsnavnMedÅrstall(årstall: Int?) =
-    if (Inntektsrapportering.visningsnavnSomKreverÅrstall.contains(
-            this,
-        )
-    ) {
-        visningsnavnIntern(årstall)
-    } else {
-        visningsnavn.intern
-    }
+fun Inntektsrapportering.visningsnavnPeriode(periode: ÅrMånedsperiode) =
+    "${visningsnavn.intern} ${periode.fom.toMontYear()} - ${periode.til.toMontYear()}".trim()
+
+fun Inntektsrapportering.visningsnavnMedÅrstall(
+    årstall: Int?,
+    periode: ÅrMånedsperiode? = null,
+) = if (Inntektsrapportering.visningsnavnSomKreverÅrstall.contains(
+        this,
+    )
+) {
+    visningsnavnIntern(årstall)
+} else if (Inntektsrapportering.visningsnavnSomKreverPeriode.contains(this) && periode != null) {
+    visningsnavnPeriode(periode)
+} else {
+    visningsnavn.intern
+}
 
 val VirkningstidspunktÅrsakstype.visningsnavn get() = lastVisningsnavnFraFil("årsak.yaml")[name] ?: visningsnavnMangler(name)
 val Sivilstandskode.visningsnavn get() = lastVisningsnavnFraFil("sivilstand.yaml")[name] ?: visningsnavnMangler(name)
