@@ -10,3 +10,5 @@ SAMBOER:
   intern: "Samboer"
 ENSLIG:
   intern: "Enslig"
+UKJENT:
+  intern: "Ukjent"
