@@ -8,4 +8,5 @@ enum class Sivilstandskode {
     BOR_ALENE_MED_BARN, // Alle andre sivilstander,
     ENSLIG,
     SAMBOER,
+    UKJENT,
 }
