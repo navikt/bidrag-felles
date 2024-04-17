@@ -18,6 +18,14 @@ AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAK:
   intern: "A-inntekt siste 12 måneder (opprinnelig vedtak)"
   bruker:
     NB: "A-inntekt siste 12 måneder"
+AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT:
+  intern: "A-inntekt siste 3 måneder (fra opprinnelig vedtakstidspunkt)"
+  bruker:
+    NB: "A-inntekt siste 3 måneder"
+AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT:
+  intern: "A-inntekt siste 12 måneder (fra opprinnelig vedtakstidspunkt)"
+  bruker:
+    NB: "A-inntekt siste 12 måneder"
 KAPITALINNTEKT:
   intern: "Sigrun kapitalinntekt (KAPS)"
   bruker:

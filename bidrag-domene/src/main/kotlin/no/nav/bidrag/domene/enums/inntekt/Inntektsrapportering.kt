@@ -60,6 +60,44 @@ enum class Inntektsrapportering(
             ),
     ),
 
+    AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT(
+        hentesAutomatisk = true,
+        kanLeggesInnManuelt = false,
+        inneholderInntektstypeListe =
+            listOf(
+                Inntektstype.AAP,
+                Inntektstype.DAGPENGER,
+                Inntektstype.FORELDREPENGER,
+                Inntektstype.INTRODUKSJONSSTØNAD,
+                Inntektstype.KVALIFISERINGSSTØNAD,
+                Inntektstype.LØNNSINNTEKT,
+                Inntektstype.OVERGANGSSTØNAD,
+                Inntektstype.PENSJON,
+                Inntektstype.SYKEPENGER,
+            ),
+    ),
+
+    AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT(
+        hentesAutomatisk = true,
+        kanLeggesInnManuelt = false,
+        inneholderInntektstypeListe =
+            listOf(
+                Inntektstype.AAP,
+                Inntektstype.DAGPENGER,
+                Inntektstype.FORELDREPENGER,
+                Inntektstype.INTRODUKSJONSSTØNAD,
+                Inntektstype.KVALIFISERINGSSTØNAD,
+                Inntektstype.LØNNSINNTEKT,
+                Inntektstype.OVERGANGSSTØNAD,
+                Inntektstype.PENSJON,
+                Inntektstype.SYKEPENGER,
+            ),
+    ),
+
+    @Deprecated(
+        "Bruk heller AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT",
+        replaceWith = ReplaceWith("AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT"),
+    )
     AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAK(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
@@ -77,6 +115,10 @@ enum class Inntektsrapportering(
             ),
     ),
 
+    @Deprecated(
+        "Bruk heller AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT",
+        replaceWith = ReplaceWith("AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT"),
+    )
     AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAK(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
