@@ -27,11 +27,11 @@ AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT:
   bruker:
     NB: "A-inntekt siste 12 måneder"
 KAPITALINNTEKT:
-  intern: "Sigrun kapitalinntekt (KAPS)"
+  intern: "Kapitalinntekt"
   bruker:
     NB: "Kapitalinntekt"
 LIGNINGSINNTEKT:
-  intern: "Sigrun ligningsinntekt (LIGS)"
+  intern: "Ligningsinntekt"
   bruker:
     NB: "Ligningsinntekt"
 KONTANTSTØTTE:
