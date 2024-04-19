@@ -59,6 +59,9 @@ enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeTyp
     AVSLAG("A", ResultatkodeType.AVSLAG),
     AVSLAG2("AA", ResultatkodeType.AVSLAG),
     PÅ_GRUNN_AV_BARNEPENSJON("ABA", ResultatkodeType.AVSLAG),
+    AVSLAG_OVER_18_ÅR("A18", ResultatkodeType.AVSLAG),
+    AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE("AIO", ResultatkodeType.AVSLAG),
+    AVSLAG_HØY_INNTEKT("AHI", ResultatkodeType.AVSLAG),
 
     BARNETS_EKTESKAP("OBE", ResultatkodeType.OPPHØR),
     BARNETS_INNTEKT("OBI", ResultatkodeType.OPPHØR),

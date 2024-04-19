@@ -88,6 +88,19 @@ AVSLAG2:
   intern: "Avslag"
   bruker:
     NB: "Avslag"
+AVSLAG_OVER_18_ÅR:
+  intern: "Avslag, over 18 år"
+  bruker:
+    NB: "Avslag, over 18 år"
+AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE:
+  intern: "Avslag, ikke registrert på adresse"
+  bruker:
+    NB: "Avslag, ikke registrert på adresse"
+AVSLAG_HØY_INNTEKT:
+  intern: "Avslag, høy inntekt"
+  bruker:
+    NB: "Avslag, høy inntekt"
+
 PÅ_GRUNN_AV_BARNEPENSJON:
   intern: "På grunn av barnepensjon"
 
