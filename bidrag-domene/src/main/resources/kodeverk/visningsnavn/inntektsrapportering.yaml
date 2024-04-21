@@ -1,31 +1,31 @@
 AINNTEKT:
   intern: "A-inntekt"
   bruker:
-    NB: "A-inntekt"
+    NB: "Opplysninger fra arbeidsgiver"
 AINNTEKT_BEREGNET_3MND:
   intern: "A-inntekt siste 3 måneder"
   bruker:
-    NB: "A-inntekt siste 3 Måneder"
+    NB: "Vår beregnede inntekt"
 AINNTEKT_BEREGNET_12MND:
   intern: "A-inntekt siste 12 måneder"
   bruker:
-    NB: "A-inntekt siste 12 måneder"
+    NB: "Vår beregnede inntekt"
 AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAK:
   intern: "A-inntekt siste 3 måneder (opprinnelig vedtak)"
   bruker:
-    NB: "A-inntekt siste 3 måneder"
+    NB: "Vår beregnede inntekt"
 AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAK:
   intern: "A-inntekt siste 12 måneder (opprinnelig vedtak)"
   bruker:
-    NB: "A-inntekt siste 12 måneder"
+    NB: "Vår beregnede inntekt"
 AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT:
   intern: "A-inntekt siste 3 måneder (fra opprinnelig vedtakstidspunkt)"
   bruker:
-    NB: "A-inntekt siste 3 måneder"
+    NB: "Vår beregnede inntekt"
 AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT:
   intern: "A-inntekt siste 12 måneder (fra opprinnelig vedtakstidspunkt)"
   bruker:
-    NB: "A-inntekt siste 12 måneder"
+    NB: "Vår beregnede inntekt"
 KAPITALINNTEKT:
   intern: "Kapitalinntekt"
   bruker:
@@ -33,7 +33,7 @@ KAPITALINNTEKT:
 LIGNINGSINNTEKT:
   intern: "Ligningsinntekt"
   bruker:
-    NB: "Ligningsinntekt"
+    NB: "Skattemelding"
 KONTANTSTØTTE:
   intern: "Kontantstøtte"
   bruker:
@@ -59,11 +59,11 @@ KAPITALINNTEKT_EGNE_OPPLYSNINGER:
 SAKSBEHANDLER_BEREGNET_INNTEKT:
   intern: "Saksbehandlers beregnede inntekt"
   bruker:
-    NB: "Saksbehandlers beregnede inntekt"
+    NB: "Vår beregnede inntekt"
 LØNN_MANUELT_BEREGNET:
   intern: "Lønn manuelt beregnet"
   bruker:
-    NB: "Lønn"
+    NB: "Vår beregnede inntekt"
 NÆRINGSINNTEKT_MANUELT_BEREGNET:
   intern: "Næringsinntekt manuelt beregnet"
   bruker:
@@ -95,7 +95,7 @@ DAGPENGER:
 DOKUMENTASJON_MANGLER_SKJØNN:
   intern: "Dokumentasjon mangler (skjønn)"
   bruker:
-    NB: "Dokumentasjon mangler (skjønn)"
+    NB: "Skjønn - mangler dokumentasjon"
 FORDEL_SKATTEKLASSE2:
   intern: "Fordel skatteklasse 2"
   bruker:
@@ -111,7 +111,7 @@ FØDSEL_ADOPSJON:
 INNTEKTSOPPLYSNINGER_ARBEIDSGIVER:
   intern: "Inntektsopplysninger fra arbeidsgiver"
   bruker:
-    NB: "Inntektsopplysninger fra arbeidsgiver"
+    NB: "Opplysninger fra arbeidsgiver"
 KAPITALINNTEKT_SKE:
   intern: "Kapitalinntekt fra Skatteetaten"
   bruker:
@@ -139,7 +139,7 @@ LØNN_TREKK:
 MANGLENDE_BRUK_EVNE_SKJØNN:
   intern: "Manglende bruk av evne (skjønn)"
   bruker:
-    NB: "Manglende bruk av ev"
+    NB: "Manglende bruk av evne"
 NETTO_KAPITALINNTEKT:
   intern: "Netto kapitalinntekt"
   bruker:
