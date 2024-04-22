@@ -2,30 +2,37 @@ AINNTEKT:
   intern: "A-inntekt"
   bruker:
     NB: "Opplysninger fra arbeidsgiver"
+    EN: "Personal income reported by employer"
 AINNTEKT_BEREGNET_3MND:
   intern: "A-inntekt siste 3 måneder"
   bruker:
-    NB: "Vår beregnede inntekt"
+    NB: "Opplysninger fra arbeidsgiver"
+    EN: "Personal income reported by employer"
 AINNTEKT_BEREGNET_12MND:
   intern: "A-inntekt siste 12 måneder"
   bruker:
-    NB: "Vår beregnede inntekt"
+    NB: "Opplysninger fra arbeidsgiver"
+    EN: "Personal income reported by employer"
 AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAK:
   intern: "A-inntekt siste 3 måneder (opprinnelig vedtak)"
   bruker:
-    NB: "Vår beregnede inntekt"
+    NB: "Opplysninger fra arbeidsgiver"
+    EN: "Personal income reported by employer"
 AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAK:
   intern: "A-inntekt siste 12 måneder (opprinnelig vedtak)"
   bruker:
-    NB: "Vår beregnede inntekt"
+    NB: "Opplysninger fra arbeidsgiver"
+    EN: "Personal income reported by employer"
 AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT:
   intern: "A-inntekt siste 3 måneder (fra opprinnelig vedtakstidspunkt)"
   bruker:
-    NB: "Vår beregnede inntekt"
+    NB: "Opplysninger fra arbeidsgiver"
+    EN: "Personal income reported by employer"
 AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT:
   intern: "A-inntekt siste 12 måneder (fra opprinnelig vedtakstidspunkt)"
   bruker:
-    NB: "Vår beregnede inntekt"
+    NB: "Opplysninger fra arbeidsgiver"
+    EN: "Personal income reported by employer"
 KAPITALINNTEKT:
   intern: "Kapitalinntekt"
   bruker:
@@ -34,6 +41,7 @@ LIGNINGSINNTEKT:
   intern: "Ligningsinntekt"
   bruker:
     NB: "Skattemelding"
+    EN: "Tax information"
 KONTANTSTØTTE:
   intern: "Kontantstøtte"
   bruker:
@@ -73,9 +81,9 @@ YTELSE_FRA_OFFENTLIG_MANUELT_BEREGNET:
   bruker:
     NB: "Ytelse fra det offentlige"
 AAP:
-  intern: "AAP"
+  intern: "Arbeidsavklaringspenger"
   bruker:
-    NB: "Arbeidsavklaringspenger"
+    NB: "Ytelse fra det offentlige"
 AINNTEKT_KORRIGERT_BARNETILLEGG:
   intern: "A-inntekt korrigert for barnetillegg"
   bruker:
@@ -91,7 +99,7 @@ BARNS_SYKDOM:
 DAGPENGER:
   intern: "Dagpenger"
   bruker:
-    NB: "Dagpenger"
+    NB: "Ytelse fra det offentlige"
 DOKUMENTASJON_MANGLER_SKJØNN:
   intern: "Dokumentasjon mangler (skjønn)"
   bruker:
@@ -147,7 +155,7 @@ NETTO_KAPITALINNTEKT:
 OVERGANGSSTØNAD:
   intern: "Overgangsstønad"
   bruker:
-    NB: "Overgangsstønad"
+    NB: "Ytelse fra det offentlige"
 PENSJON:
   intern: "Pensjon"
   bruker:
@@ -159,7 +167,7 @@ PENSJON_KORRIGERT_BARNETILLEGG:
 REHABILITERINGSPENGER:
   intern: "Rehabiliteringspenger"
   bruker:
-    NB: "Rehabiliteringspenger"
+    NB: "Ytelse fra det offentlige"
 SKATTEGRUNNLAG_KORRIGERT_BARNETILLEGG:
   intern: "Skattegrunnlag korrigert for barnetillegg"
   bruker:
@@ -171,19 +179,19 @@ SKATTEGRUNNLAG_SKE:
 SYKEPENGER:
   intern: "Sykepenger"
   bruker:
-    NB: "Sykepenger"
+    NB: "Ytelse fra det offentlige"
 FORELDREPENGER:
   intern: "Foreldrepenger"
   bruker:
-    NB: "Foreldrepenger"
+    NB: "Ytelse fra det offentlige"
 INTRODUKSJONSSTØNAD:
   intern: "Introduksjonsstønad"
   bruker:
-    NB: "Introduksjonsstønad"
+    NB: "Ytelse fra det offentlige"
 KVALIFISERINGSSTØNAD:
   intern: "Kvalifiseringsstønad"
   bruker:
-    NB: "Kvalifiseringsstønad"
+    NB: "Ytelse fra det offentlige"
 BARNETILLEGG:
   intern: "Barnetillegg"
   bruker:
