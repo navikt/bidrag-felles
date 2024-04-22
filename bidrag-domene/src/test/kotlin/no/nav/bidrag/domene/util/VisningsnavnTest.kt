@@ -70,7 +70,7 @@ class VisningsnavnTest {
 
             visningsnavn.intern shouldBe "A-inntekt siste 12 måneder"
             visningsnavnSaksbehandler shouldBe "A-inntekt siste 12 måneder 2020"
-            visningsnavn.bruker[Språk.NB] shouldBe "Vår beregnede inntekt"
+            visningsnavn.bruker[Språk.NB] shouldBe "Opplysninger fra arbeidsgiver"
         }
 
         @Test
