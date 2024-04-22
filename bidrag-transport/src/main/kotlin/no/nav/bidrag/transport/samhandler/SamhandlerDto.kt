@@ -4,8 +4,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.ident.SamhandlerId
 
 data class SamhandlerDto(
-    @Deprecated(message = "Replaced by samhandlerId", level = DeprecationLevel.ERROR)
-    val tssId: SamhandlerId? = null,
     @Schema(description = "Identen til samhandler")
     val samhandlerId: SamhandlerId?,
     @Schema(description = "Navn på samhandler")
