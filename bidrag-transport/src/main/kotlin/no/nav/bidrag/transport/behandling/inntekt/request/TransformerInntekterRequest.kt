@@ -11,11 +11,11 @@ data class TransformerInntekterRequest(
     val ainntektHentetDato: LocalDate,
     @Schema(
         description = """
-            Dato opprinnelig vedtak ble fattet. 
-            Vil returnere innteksrapporteringer for 12mnd og 3mnd beregnet basert på denne datoen hvis den er satt
+            Dato opprinnelige vedtak ble fattet. Brukes typisk ifbm. klage hvor det kan være flere runder med klager. 
+            Vil returnere innteksrapporteringer for 12mnd og 3mnd beregnet basert på disse datoene hvis de er satt
             """,
     )
-    val vedtakstidspunktOpprinneligVedtak: LocalDate? = null,
+    val vedtakstidspunktOpprinneligeVedtak: List<LocalDate> = emptyList(),
     @Schema(description = "Periodisert liste over inntekter fra Ainntekt")
     val ainntektsposter: List<Ainntektspost> = emptyList(),
     @Schema(description = "Periodisert liste over inntekter fra Sigrun")
