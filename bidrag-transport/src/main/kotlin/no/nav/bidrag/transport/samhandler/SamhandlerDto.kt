@@ -20,6 +20,8 @@ data class SamhandlerDto(
     val offentligIdType: String? = null,
     @Schema(description = "Definerer hvilket område samhandleren er knyttet til.")
     val områdekode: Områdekode? = null,
+    @Schema(description = "Språk til samhandleren.")
+    val språk: String? = null,
     @Schema(description = "Samhandlerens adresse.")
     val adresse: AdresseDto? = null,
     @Schema(description = "Samhandlerens kontonummer. Kontonummer er ikke inkludert i søkeresultat mot TSS, kun i oppslag.")
