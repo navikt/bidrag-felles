@@ -9,4 +9,11 @@ enum class Områdekode(val tssOmrådekode: String) {
     UTENLANDSK_FOGD("2070"),
     SOSIALKONTO("0280"),
     BARNEVERNSINSTITUSJON("0290"),
+    ;
+
+    companion object {
+        fun fraTssOmrådekode(tssOmrådekode: String): Områdekode? {
+            return entries.find { it.tssOmrådekode == tssOmrådekode }
+        }
+    }
 }
