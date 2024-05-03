@@ -39,7 +39,20 @@ data class SummertÅrsinntekt(
     @Schema(description = "Liste over inntektsposter (generisk, avhengig av type) som utgjør grunnlaget for summert inntekt")
     val inntektPostListe: List<InntektPost> = emptyList(),
     val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is SummertÅrsinntekt) return false
+
+        if (inntektRapportering != other.inntektRapportering) return false
+        if (sumInntekt != other.sumInntekt) return false
+        if (periode != other.periode) return false
+        if (gjelderBarnPersonId != other.gjelderBarnPersonId) return false
+        if (inntektPostListe?.sortedBy { it.kode } != other.inntektPostListe?.sortedBy { it.kode }) return false
+
+        return true
+    }
+}
 
 data class InntektPost(
     @Schema(description = "Kode for inntektspost", example = "bonus")
