@@ -133,3 +133,6 @@ OPPHOLD_I_UTLANDET:
 
 UTENLANDSK_YTELSE:
   intern: "Utenlandsk ytelse"
+
+OPPHØR_PRIVAT_AVTALE:
+  intern: "Opphør, privat avtale"
