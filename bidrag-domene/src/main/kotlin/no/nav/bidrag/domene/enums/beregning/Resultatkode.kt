@@ -73,6 +73,7 @@ enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeTyp
     PÅ_GRUNN_AV_SAMMENFLYTTING("OSA", ResultatkodeType.OPPHØR),
     OPPHOLD_I_UTLANDET("OUT", ResultatkodeType.OPPHØR),
     UTENLANDSK_YTELSE("OUY", ResultatkodeType.OPPHØR),
+    PRIVAT_AVTALE("OPA", ResultatkodeType.OPPHØR),
 
     ;
 
