@@ -13,6 +13,7 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.net.URL
@@ -79,6 +80,16 @@ val ResultatkodeSærtilskudd.visningsnavn get() =
     lastVisningsnavnFraFil("resultatDeprecated.yaml", "SÆRTILSKUDD")[name]
         ?: visningsnavnMangler(name)
 val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[name] ?: visningsnavnMangler(name)
+
+fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype) =
+    when (this) {
+        Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG ->
+            when (vedtakstype) {
+                Vedtakstype.OPPHØR -> visningsnavn.intern.replace("Avslag", "Opphør", ignoreCase = true)
+                else -> visningsnavn.intern
+            }
+        else -> visningsnavn.intern
+    }
 
 private fun lastVisningsnavnFraFil(
     filnavn: String,
