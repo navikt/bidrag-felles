@@ -134,5 +134,8 @@ OPPHOLD_I_UTLANDET:
 UTENLANDSK_YTELSE:
   intern: "Utenlandsk ytelse"
 
-PRIVAT_AVTALE:
-  intern: "Privat avtale"
+AVSLAG_PRIVAT_AVTALE_BIDRAG:
+  intern: "Avslag på grunn av privat avtale om bidrag"
+
+IKKE_SØKT_OM_INNKREVING_AV_BIDRAG:
+  intern: "Ikke søkt om innkreving av bidrag"

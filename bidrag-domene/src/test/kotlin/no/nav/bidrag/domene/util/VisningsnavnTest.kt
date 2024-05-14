@@ -13,6 +13,7 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
@@ -163,6 +164,16 @@ class VisningsnavnTest {
 
     @Nested
     internal inner class ResultatkodeTest {
+        @Test
+        fun `Skal lage visningsnavn for AVSLAG_PRIVAT_AVTALE_BIDRAG`()  {
+            Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG.visningsnavnIntern(
+                Vedtakstype.OPPHØR,
+            ) shouldBe "Opphør på grunn av privat avtale om bidrag"
+            Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG.visningsnavnIntern(
+                Vedtakstype.ENDRING,
+            ) shouldBe "Avslag på grunn av privat avtale om bidrag"
+        }
+
         @Test
         fun `Valider at alle kodeverdier har visningsnavn`() {
             Resultatkode.entries.forEach {
