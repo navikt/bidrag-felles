@@ -136,3 +136,6 @@ UTENLANDSK_YTELSE:
 
 PRIVAT_AVTALE:
   intern: "Privat avtale"
+
+MANGLENDE_SAMARBEID:
+  intern: "Manglende samarbeid"

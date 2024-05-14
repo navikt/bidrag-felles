@@ -73,7 +73,11 @@ enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeTyp
     PÅ_GRUNN_AV_SAMMENFLYTTING("OSA", ResultatkodeType.OPPHØR),
     OPPHOLD_I_UTLANDET("OUT", ResultatkodeType.OPPHØR),
     UTENLANDSK_YTELSE("OUY", ResultatkodeType.OPPHØR),
-    PRIVAT_AVTALE("PA", ResultatkodeType.OPPHØR),
+    PRIVAT_AVTALE("OPA", ResultatkodeType.OPPHØR),
+
+    // I tilfeller når BP bor i Lugano-land og BM søker kun om forskudd, så har vi ikke hjemmel til å ta bidragssaken opp av eget tiltak etter forskotteringsloven.
+    // Da må BM søke om fastsettelse av bidrag før vi innvilger forskuddet. Hvis hen ikke søker, så avslår vi kravet på grunn av manglende samarbeid (§3 i forskotteringsloven).
+    MANGLENDE_SAMARBEID("OMS", ResultatkodeType.OPPHØR),
 
     ;
 
