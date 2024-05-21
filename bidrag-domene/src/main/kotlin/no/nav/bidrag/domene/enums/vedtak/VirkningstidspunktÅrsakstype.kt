@@ -23,4 +23,5 @@ enum class VirkningstidspunktÅrsakstype(val legacyKode: String) {
     TIDLIGERE_FEILAKTIG_AVSLAG("PF"),
     TRE_MÅNEDER_TILBAKE("EF"),
     TRE_ÅRS_REGELEN("FF"),
+    FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK("LF"),
 }

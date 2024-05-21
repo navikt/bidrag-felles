@@ -48,3 +48,6 @@ TRE_MÅNEDER_TILBAKE:
 
 TRE_ÅRS_REGELEN:
   intern: "Tre års regelen"
+
+FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK:
+  intern: "Fra måneden etter i påvente av bidragssak"
