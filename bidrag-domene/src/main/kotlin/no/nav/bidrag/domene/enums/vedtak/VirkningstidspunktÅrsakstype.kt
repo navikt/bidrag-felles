@@ -24,4 +24,17 @@ enum class VirkningstidspunktÅrsakstype(val legacyKode: String) {
     TRE_MÅNEDER_TILBAKE("EF"),
     TRE_ÅRS_REGELEN("FF"),
     FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK("LF"),
+    ;
+
+    companion object {
+        fun fraLegacyKode(legacyKode: String): VirkningstidspunktÅrsakstype? {
+            return try {
+                enumValues<VirkningstidspunktÅrsakstype>().find { it.legacyKode == legacyKode } ?: VirkningstidspunktÅrsakstype.valueOf(
+                    legacyKode,
+                )
+            } catch (e: Exception) {
+                null
+            }
+        }
+    }
 }
