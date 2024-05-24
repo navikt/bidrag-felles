@@ -69,4 +69,7 @@ enum class Grunnlagstype {
     INNHENTET_INNTEKT_BARNETILSYN,
     INNHENTET_INNTEKT_SMÅBARNSTILLEGG,
     INNHENTET_INNTEKT_UTVIDETBARNETRYGD,
+
+    // Brukes ifbm Bisys grunnlag
+    UNNTAK,
 }

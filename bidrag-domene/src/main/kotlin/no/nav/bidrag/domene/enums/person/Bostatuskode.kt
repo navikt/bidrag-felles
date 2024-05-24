@@ -11,4 +11,9 @@ enum class Bostatuskode {
     ALENE,
     DELT_BOSTED,
     REGNES_IKKE_SOM_BARN, // TODO: Avklar (faglig) om dette skal brukes
+
+    // Følgende verdier brukes til unntakskoder i Bisys som påvirker resultatet av beregning
+    UNNTAK_HOS_ANDRE,
+    UNNTAK_ALENE,
+    UNNTAK_ENSLIG_ASYLSØKER,
 }

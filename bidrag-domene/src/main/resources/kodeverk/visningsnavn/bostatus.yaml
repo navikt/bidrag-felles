@@ -12,3 +12,9 @@ DELT_BOSTED:
   intern: "Delt bosted"
 REGNES_IKKE_SOM_BARN:
   intern: "Regnes ikke som barn"
+UNNTAK_HOS_ANDRE:
+  intern: "Unntak - bor hos andre"
+UNNTAK_ALENE:
+  intern: "Unntak - bor alene"
+UNNTAK_ENSLIG_ASYLSØKER:
+  intern: "Unntak - enslig asylsøker"

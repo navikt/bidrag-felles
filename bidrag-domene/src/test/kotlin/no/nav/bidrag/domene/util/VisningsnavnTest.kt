@@ -165,7 +165,7 @@ class VisningsnavnTest {
     @Nested
     internal inner class ResultatkodeTest {
         @Test
-        fun `Skal lage visningsnavn for AVSLAG_PRIVAT_AVTALE_BIDRAG`()  {
+        fun `Skal lage visningsnavn for AVSLAG_PRIVAT_AVTALE_BIDRAG`() {
             Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG.visningsnavnIntern(
                 Vedtakstype.OPPHØR,
             ) shouldBe "Opphør på grunn av privat avtale om bidrag"
