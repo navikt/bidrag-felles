@@ -84,7 +84,7 @@ AAP:
   intern: "Arbeidsavklaringspenger"
   bruker:
     NB: "Ytelse fra det offentlige"
-AINNTEKT_KORRIGERT_BARNETILLEGG:
+AINNTEKT_KORRIGERT_FOR_BARNETILLEGG:
   intern: "A-inntekt korrigert for barnetillegg"
   bruker:
     NB: "A-inntekt korrigert for barnetillegg"
@@ -104,10 +104,6 @@ DOKUMENTASJON_MANGLER_SKJØNN:
   intern: "Dokumentasjon mangler (skjønn)"
   bruker:
     NB: "Skjønn - mangler dokumentasjon"
-FORDEL_SKATTEKLASSE2:
-  intern: "Fordel skatteklasse 2"
-  bruker:
-    NB: "Fordel skatteklasse 2"
 FORDEL_SÆRFRADRAG_ENSLIG_FORSØRGER:
   intern: "Fordel særfradrag enslig forsørger"
   bruker:
@@ -116,35 +112,27 @@ FØDSEL_ADOPSJON:
   intern: "Fødsels- og adopsjonspenger"
   bruker:
     NB: "Fødsels- og adopsjonspenger"
-INNTEKTSOPPLYSNINGER_ARBEIDSGIVER:
+INNTEKTSOPPLYSNINGER_FRA_ARBEIDSGIVER:
   intern: "Inntektsopplysninger fra arbeidsgiver"
   bruker:
     NB: "Opplysninger fra arbeidsgiver"
-KAPITALINNTEKT_SKE:
-  intern: "Kapitalinntekt fra Skatteetaten"
-  bruker:
-    NB: "Kapitalinntekt fra Skatteetaten"
 LIGNINGSOPPLYSNINGER_MANGLER:
   intern: "Ingen ligningsopplysninger finnes"
   bruker:
     NB: "Ingen ligningsopplysninger finnes"
-LIGNING_SKE:
+LIGNING_FRA_SKATTEETATEN:
   intern: "Ligning fra Skatteetaten"
   bruker:
     NB: "Ligning fra Skatteetaten"
-LØNN_SKE:
+LØNNSOPPGAVE_FRA_SKATTEETATEN:
   intern: "Lønnsoppgave fra Skatteetaten"
   bruker:
     NB: "Lønnsoppgave fra Skatteetaten"
-LØNN_SKE_KORRIGERT_BARNETILLEGG:
+LØNNSOPPGAVE_FRA_SKATTEETATEN_KORRIGERT_FOR_BARNETILLEGG:
   intern: "Lønnsoppgave fra Skatteetaten korrigert for barnetillegg"
   bruker:
     NB: "Lønnsoppgave fra Skatteetaten korrigert for barnetillegg"
-LØNN_TREKK:
-  intern: "A-inntekt"
-  bruker:
-    NB: "A-inntekt"
-MANGLENDE_BRUK_EVNE_SKJØNN:
+MANGLENDE_BRUK_AV_EVNE_SKJØNN:
   intern: "Manglende bruk av evne (skjønn)"
   bruker:
     NB: "Manglende bruk av evne"
@@ -160,7 +148,7 @@ PENSJON:
   intern: "Pensjon"
   bruker:
     NB: "Pensjon"
-PENSJON_KORRIGERT_BARNETILLEGG:
+PENSJON_KORRIGERT_FOR_BARNETILLEGG:
   intern: "Pensjon korrigert for barnetillegg"
   bruker:
     NB: "Pensjon korrigert for barnetillegg"
@@ -168,14 +156,10 @@ REHABILITERINGSPENGER:
   intern: "Rehabiliteringspenger"
   bruker:
     NB: "Ytelse fra det offentlige"
-SKATTEGRUNNLAG_KORRIGERT_BARNETILLEGG:
+SKATTEGRUNNLAG_KORRIGERT_FOR_BARNETILLEGG:
   intern: "Skattegrunnlag korrigert for barnetillegg"
   bruker:
     NB: "Skattegrunnlag korrigert for barnetillegg"
-SKATTEGRUNNLAG_SKE:
-  intern: "Skattegrunnlag fra Skatteetaten"
-  bruker:
-    NB: "Skattegrunnlag fra Skatteetaten"
 SYKEPENGER:
   intern: "Sykepenger"
   bruker:
