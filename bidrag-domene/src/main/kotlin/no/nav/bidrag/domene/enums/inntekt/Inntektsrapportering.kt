@@ -7,6 +7,7 @@ enum class Inntektsrapportering(
     val hentesAutomatisk: Boolean,
     val kanLeggesInnManuelt: Boolean,
     val inneholderInntektstypeListe: List<Inntektstype>,
+    val legacyKode: String? = null,
 ) {
     // Rapporteringer fra bidrag-inntekt
     AINNTEKT(
@@ -24,6 +25,7 @@ enum class Inntektsrapportering(
                 Inntektstype.PENSJON,
                 Inntektstype.SYKEPENGER,
             ),
+        legacyKode = "LTA",
     ),
 
     AINNTEKT_BEREGNET_3MND(
@@ -143,6 +145,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.KAPITALINNTEKT,
             ),
+        legacyKode = "KAPS",
     ),
 
     LIGNINGSINNTEKT(
@@ -160,6 +163,7 @@ enum class Inntektsrapportering(
                 Inntektstype.PENSJON,
                 Inntektstype.SYKEPENGER,
             ),
+        legacyKode = "LIGS",
     ),
 
     KONTANTSTØTTE(
@@ -169,6 +173,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.KONTANTSTØTTE,
             ),
+        legacyKode = "KONT",
     ),
 
     SMÅBARNSTILLEGG(
@@ -178,6 +183,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.SMÅBARNSTILLEGG,
             ),
+        legacyKode = "ESBT",
     ),
 
     UTVIDET_BARNETRYGD(
@@ -187,6 +193,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.UTVIDET_BARNETRYGD,
             ),
+        legacyKode = "UBAT",
     ),
 
     AAP(
@@ -196,6 +203,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.AAP,
             ),
+        legacyKode = "AT",
     ),
 
     DAGPENGER(
@@ -205,6 +213,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.DAGPENGER,
             ),
+        legacyKode = "AL",
     ),
 
     FORELDREPENGER(
@@ -241,6 +250,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.OVERGANGSSTØNAD,
             ),
+        legacyKode = "EFOS",
     ),
 
     PENSJON(
@@ -250,6 +260,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.PENSJON,
             ),
+        legacyKode = "PE",
     ),
 
     SYKEPENGER(
@@ -259,6 +270,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.SYKEPENGER,
             ),
+        legacyKode = "SP",
     ),
 
     BARNETILLEGG(
@@ -305,6 +317,7 @@ enum class Inntektsrapportering(
                 Inntektstype.PENSJON,
                 Inntektstype.SYKEPENGER,
             ),
+        legacyKode = "PIEO",
     ),
 
     KAPITALINNTEKT_EGNE_OPPLYSNINGER(
@@ -314,6 +327,7 @@ enum class Inntektsrapportering(
             listOf(
                 Inntektstype.KAPITALINNTEKT,
             ),
+        legacyKode = "KIEO",
     ),
 
     SAKSBEHANDLER_BEREGNET_INNTEKT(
@@ -331,6 +345,7 @@ enum class Inntektsrapportering(
                 Inntektstype.PENSJON,
                 Inntektstype.SYKEPENGER,
             ),
+        legacyKode = "SAK",
     ),
 
     LØNN_MANUELT_BEREGNET(
@@ -369,124 +384,116 @@ enum class Inntektsrapportering(
 
     // Rapporteringer brukt i Bisys/BBM
 
-    AINNTEKT_KORRIGERT_BARNETILLEGG(
+    AINNTEKT_KORRIGERT_FOR_BARNETILLEGG(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "LTAB",
     ),
 
     BARNETRYGD_MANUELL_VURDERING(
         hentesAutomatisk = false,
         kanLeggesInnManuelt = true,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "BAMV",
     ),
 
     BARNS_SYKDOM(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "BS",
     ),
 
     DOKUMENTASJON_MANGLER_SKJØNN(
         hentesAutomatisk = false,
         kanLeggesInnManuelt = true,
         inneholderInntektstypeListe = emptyList(),
-    ),
-
-    FORDEL_SKATTEKLASSE2(
-        hentesAutomatisk = true,
-        kanLeggesInnManuelt = false,
-        inneholderInntektstypeListe = emptyList(),
+        legacyKode = "MDOK",
     ),
 
     FORDEL_SÆRFRADRAG_ENSLIG_FORSØRGER(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = true,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "FSEF",
     ),
 
     FØDSEL_ADOPSJON(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "FA",
     ),
 
-    INNTEKTSOPPLYSNINGER_ARBEIDSGIVER(
+    INNTEKTSOPPLYSNINGER_FRA_ARBEIDSGIVER(
         hentesAutomatisk = false,
         kanLeggesInnManuelt = true,
         inneholderInntektstypeListe = emptyList(),
-    ),
-
-    KAPITALINNTEKT_SKE(
-        hentesAutomatisk = true,
-        kanLeggesInnManuelt = false,
-        inneholderInntektstypeListe = emptyList(),
+        legacyKode = "AG",
     ),
 
     LIGNINGSOPPLYSNINGER_MANGLER(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "ILOF",
     ),
 
-    LIGNING_SKE(
+    LIGNING_FRA_SKATTEETATEN(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "LIGN",
     ),
 
-    LØNN_SKE(
+    LØNNSOPPGAVE_FRA_SKATTEETATEN(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "LTR",
     ),
 
-    LØNN_SKE_KORRIGERT_BARNETILLEGG(
+    LØNNSOPPGAVE_FRA_SKATTEETATEN_KORRIGERT_FOR_BARNETILLEGG(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "LTRB",
     ),
 
-    LØNN_TREKK(
-        hentesAutomatisk = true,
-        kanLeggesInnManuelt = false,
-        inneholderInntektstypeListe = emptyList(),
-    ),
-
-    MANGLENDE_BRUK_EVNE_SKJØNN(
+    MANGLENDE_BRUK_AV_EVNE_SKJØNN(
         hentesAutomatisk = false,
         kanLeggesInnManuelt = true,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "EVNE",
     ),
 
     NETTO_KAPITALINNTEKT(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "KAP",
     ),
 
-    PENSJON_KORRIGERT_BARNETILLEGG(
+    PENSJON_KORRIGERT_FOR_BARNETILLEGG(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "PEB",
     ),
 
     REHABILITERINGSPENGER(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
+        legacyKode = "RP",
     ),
 
-    SKATTEGRUNNLAG_KORRIGERT_BARNETILLEGG(
+    SKATTEGRUNNLAG_KORRIGERT_FOR_BARNETILLEGG(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe = emptyList(),
-    ),
-
-    SKATTEGRUNNLAG_SKE(
-        hentesAutomatisk = true,
-        kanLeggesInnManuelt = false,
-        inneholderInntektstypeListe = emptyList(),
+        legacyKode = "LIGB",
     ),
     ;
 
@@ -498,5 +505,13 @@ enum class Inntektsrapportering(
          */
         fun Inntektsrapportering.kanBrukesSammenMed(inntektsrapportering2: Inntektsrapportering) =
             !(this.inneholderInntektstypeListe.any { inntektsrapportering2.inneholderInntektstypeListe.contains(it) })
+    }
+
+    fun fraLegacyKode(legacyKode: String): Inntektsrapportering? {
+        return try {
+            enumValues<Inntektsrapportering>().find { it.legacyKode == legacyKode } ?: Inntektsrapportering.valueOf(legacyKode)
+        } catch (e: Exception) {
+            null
+        }
     }
 }
