@@ -505,13 +505,13 @@ enum class Inntektsrapportering(
          */
         fun Inntektsrapportering.kanBrukesSammenMed(inntektsrapportering2: Inntektsrapportering) =
             !(this.inneholderInntektstypeListe.any { inntektsrapportering2.inneholderInntektstypeListe.contains(it) })
-    }
 
-    fun fraLegacyKode(legacyKode: String): Inntektsrapportering? {
-        return try {
-            enumValues<Inntektsrapportering>().find { it.legacyKode == legacyKode } ?: Inntektsrapportering.valueOf(legacyKode)
-        } catch (e: Exception) {
-            null
+        fun fraLegacyKode(legacyKode: String): Inntektsrapportering? {
+            return try {
+                enumValues<Inntektsrapportering>().find { it.legacyKode == legacyKode } ?: Inntektsrapportering.valueOf(legacyKode)
+            } catch (e: Exception) {
+                null
+            }
         }
     }
 }
