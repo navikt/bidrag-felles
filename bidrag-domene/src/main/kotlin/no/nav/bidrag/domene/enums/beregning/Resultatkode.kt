@@ -78,6 +78,12 @@ enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeTyp
     // I tilfeller når BP bor i Lugano-land og BM søker kun om forskudd, så har vi ikke hjemmel til å ta bidragssaken opp av eget tiltak etter forskotteringsloven.
     // Da må BM søke om fastsettelse av bidrag før vi innvilger forskuddet. Hvis hen ikke søker, så avslår vi kravet på grunn av manglende samarbeid (§3 i forskotteringsloven).
     IKKE_SØKT_OM_INNKREVING_AV_BIDRAG("OMS", ResultatkodeType.OPPHØR),
+
+    // Særtilskudd avslag
+    UTGIFTER_DEKKES_AV_BARNEBIDRAGET("", ResultatkodeType.AVSLAG),
+    IKKE_NØDVENDIGE_UTGIFTER("", ResultatkodeType.AVSLAG),
+    PRIVAT_AVTALE_OM_SÆRLIGE_UTGIFTER("", ResultatkodeType.AVSLAG),
+    ALLE_UTGIFTER_ER_FORELDET("", ResultatkodeType.AVSLAG),
     ;
 
     companion object {

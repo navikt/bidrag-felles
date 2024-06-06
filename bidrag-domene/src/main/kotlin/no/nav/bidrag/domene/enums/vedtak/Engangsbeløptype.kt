@@ -13,8 +13,12 @@ enum class Engangsbeløptype {
     GEBYR_SKYLDNER,
     INNKREVING_GJELD,
 
+    TILBAKEKREVING,
+
     @Deprecated("SAERTILSKUDD skal ikke brukes", ReplaceWith("SÆRTILSKUDD"))
     SAERTILSKUDD,
     SÆRTILSKUDD,
-    TILBAKEKREVING,
+    SÆRTILSKUDD_KONFIRMASJON,
+    SÆRTILSKUDD_TANNREGULERING,
+    SÆRTILSKUDD_OPTIKK,
 }
