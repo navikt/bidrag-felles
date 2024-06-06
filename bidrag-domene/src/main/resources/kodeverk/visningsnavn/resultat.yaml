@@ -139,3 +139,15 @@ AVSLAG_PRIVAT_AVTALE_BIDRAG:
 
 IKKE_SØKT_OM_INNKREVING_AV_BIDRAG:
   intern: "Ikke søkt om innkreving av bidrag"
+
+UTGIFTER_DEKKES_AV_BARNEBIDRAGET:
+  intern: "Utgifter dekkes av barnebidraget"
+
+IKKE_NØDVENDIGE_UTGIFTER:
+  intern: "Ikke nødvendige utgifter"
+
+PRIVAT_AVTALE_OM_SÆRLIGE_UTGIFTER:
+    intern: "Privat avtale om særlige utgifter"
+
+ALLE_UTGIFTER_ER_FORELDET:
+  intern: "Alle utgifter er foreldet"
