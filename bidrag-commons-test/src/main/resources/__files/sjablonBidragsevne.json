@@ -1,0 +1,398 @@
+﻿[
+  {
+    "boStatus": "EN",
+    "datoFom": "01.01.2003",
+    "datoTom": "31.12.2003",
+    "belopBoutgift": "4,313",
+    "belopUnderhold": "6,245",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818843"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.01.2004",
+    "datoTom": "30.06.2004",
+    "belopBoutgift": "4,313",
+    "belopUnderhold": "6,565",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818844"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2004",
+    "datoTom": "30.06.2005",
+    "belopBoutgift": "4,761",
+    "belopUnderhold": "6,565",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818845"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2005",
+    "datoTom": "30.06.2006",
+    "belopBoutgift": "4,544",
+    "belopUnderhold": "6,637",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818846"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2006",
+    "datoTom": "30.06.2007",
+    "belopBoutgift": "4,556",
+    "belopUnderhold": "6,756",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818847"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2007",
+    "datoTom": "30.06.2008",
+    "belopBoutgift": "4,638",
+    "belopUnderhold": "6,837",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818848"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2008",
+    "datoTom": "30.06.2009",
+    "belopBoutgift": "5,243",
+    "belopUnderhold": "7,09",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818849"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2009",
+    "datoTom": "30.06.2010",
+    "belopBoutgift": "6,113",
+    "belopUnderhold": "7,246",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818850"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2010",
+    "datoTom": "30.06.2011",
+    "belopBoutgift": "6,495",
+    "belopUnderhold": "7,427",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818851"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2011",
+    "datoTom": "30.06.2012",
+    "belopBoutgift": "7,259",
+    "belopUnderhold": "7,576",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818852"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2012",
+    "datoTom": "30.06.2013",
+    "belopBoutgift": "7,295",
+    "belopUnderhold": "7,614",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818853"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2013",
+    "datoTom": "30.06.2014",
+    "belopBoutgift": "7,39",
+    "belopUnderhold": "7,713",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818854"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2014",
+    "datoTom": "30.06.2015",
+    "belopBoutgift": "7,56",
+    "belopUnderhold": "7,89",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818855"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2015",
+    "datoTom": "30.06.2016",
+    "belopBoutgift": "7,711",
+    "belopUnderhold": "8,048",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818856"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.01.2003",
+    "datoTom": "31.12.2003",
+    "belopBoutgift": "2,631",
+    "belopUnderhold": "5,287",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818857"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.01.2004",
+    "datoTom": "30.06.2004",
+    "belopBoutgift": "2,631",
+    "belopUnderhold": "5,558",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818858"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2004",
+    "datoTom": "30.06.2005",
+    "belopBoutgift": "2,826",
+    "belopUnderhold": "5,558",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818859"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2005",
+    "datoTom": "30.06.2006",
+    "belopBoutgift": "2,806",
+    "belopUnderhold": "5,619",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818860"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2006",
+    "datoTom": "30.06.2007",
+    "belopBoutgift": "3,04",
+    "belopUnderhold": "5,72",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818861"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2007",
+    "datoTom": "30.06.2008",
+    "belopBoutgift": "3,364",
+    "belopUnderhold": "5,789",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818862"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2008",
+    "datoTom": "30.06.2009",
+    "belopBoutgift": "3,906",
+    "belopUnderhold": "6,003",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818863"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2009",
+    "datoTom": "30.06.2010",
+    "belopBoutgift": "4,323",
+    "belopUnderhold": "6,135",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818864"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2010",
+    "datoTom": "30.06.2011",
+    "belopBoutgift": "4,488",
+    "belopUnderhold": "6,288",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818865"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2011",
+    "datoTom": "30.06.2012",
+    "belopBoutgift": "4,776",
+    "belopUnderhold": "6,414",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818866"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2012",
+    "datoTom": "30.06.2013",
+    "belopBoutgift": "4,8",
+    "belopUnderhold": "6,446",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818867"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2013",
+    "datoTom": "30.06.2014",
+    "belopBoutgift": "4,862",
+    "belopUnderhold": "6,53",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818868"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2014",
+    "datoTom": "30.06.2015",
+    "belopBoutgift": "4,974",
+    "belopUnderhold": "6,68",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818869"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2015",
+    "datoTom": "30.06.2016",
+    "belopBoutgift": "5,073",
+    "belopUnderhold": "6,814",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818870"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2016",
+    "datoTom": "30.06.2017",
+    "belopBoutgift": "8,907",
+    "belopUnderhold": "8,289",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818871"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2016",
+    "datoTom": "30.06.2017",
+    "belopBoutgift": "5,456",
+    "belopUnderhold": "7,018",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818872"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2017",
+    "datoTom": "30.06.2018",
+    "belopBoutgift": "9,156",
+    "belopUnderhold": "8,521",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818873"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2017",
+    "datoTom": "30.06.2018",
+    "belopBoutgift": "5,609",
+    "belopUnderhold": "7,215",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818874"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2018",
+    "datoTom": "30.06.2019",
+    "belopBoutgift": "9,303",
+    "belopUnderhold": "8,657",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818875"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2018",
+    "datoTom": "30.06.2019",
+    "belopBoutgift": "5,698",
+    "belopUnderhold": "7,33",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818876"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2019",
+    "datoTom": "30.06.2020",
+    "belopBoutgift": "9,591",
+    "belopUnderhold": "8,925",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818877"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2019",
+    "datoTom": "30.06.2020",
+    "belopBoutgift": "5,875",
+    "belopUnderhold": "7,557",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818878"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2020",
+    "datoTom": "30.06.2021",
+    "belopBoutgift": "9,764",
+    "belopUnderhold": "9,818",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818879"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2020",
+    "datoTom": "30.06.2021",
+    "belopBoutgift": "5,981",
+    "belopUnderhold": "8,313",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818880"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2021",
+    "datoTom": "30.06.2022",
+    "belopBoutgift": "10,008",
+    "belopUnderhold": "10,063",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818881"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2021",
+    "datoTom": "30.06.2022",
+    "belopBoutgift": "6,131",
+    "belopUnderhold": "8,521",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818882"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2022",
+    "datoTom": "30.06.2023",
+    "belopBoutgift": "10,328",
+    "belopUnderhold": "10,385",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818883"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2022",
+    "datoTom": "30.06.2023",
+    "belopBoutgift": "6,327",
+    "belopUnderhold": "8,794",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818884"
+  },
+  {
+    "boStatus": "EN",
+    "datoFom": "01.07.2023",
+    "datoTom": "31.12.9999",
+    "belopBoutgift": "11,051",
+    "belopUnderhold": "11,112",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818885"
+  },
+  {
+    "boStatus": "GS",
+    "datoFom": "01.07.2023",
+    "datoTom": "31.12.9999",
+    "belopBoutgift": "6,77",
+    "belopUnderhold": "9,41",
+    "brukerid": "MASTER",
+    "tidspktEndret": "2023-06-29 13:10:12.818886"
+  }
+]
