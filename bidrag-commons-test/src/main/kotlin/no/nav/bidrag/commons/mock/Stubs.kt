@@ -9,8 +9,11 @@ import no.nav.bidrag.commons.service.finnVisningsnavn
 import no.nav.bidrag.commons.service.finnVisningsnavnForKode
 import no.nav.bidrag.commons.service.finnVisningsnavnLønnsbeskrivelse
 import no.nav.bidrag.commons.service.finnVisningsnavnSkattegrunnlag
+import no.nav.bidrag.commons.service.sjablon.Bidragsevne
+import no.nav.bidrag.commons.service.sjablon.Samværsfradrag
 import no.nav.bidrag.commons.service.sjablon.SjablonProvider
 import no.nav.bidrag.commons.service.sjablon.Sjablontall
+import no.nav.bidrag.commons.service.sjablon.TrinnvisSkattesats
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
 class Stubs
@@ -33,11 +36,38 @@ fun stubSjablonProvider() {
     mockkObject(SjablonProvider)
     every {
         SjablonProvider.hentSjablontall()
-    } returns sjablonResponse()
+    } returns sjablonTallResponse()
+
+    every {
+        SjablonProvider.hentSjablonSamværsfradrag()
+    } returns sjablonSamværsfradragResponse()
+
+    every {
+        SjablonProvider.hentSjablonBidragsevne()
+    } returns sjablonBidragsevneResponse()
+
+    every {
+        SjablonProvider.hentSjablonTrinnvisSkattesats()
+    } returns sjablonTrinnvisSkattesatsResponse()
 }
 
-fun sjablonResponse(): List<Sjablontall> {
-    val fil = hentFil("/__files/sjablon.json")
+fun sjablonTallResponse(): List<Sjablontall> {
+    val fil = hentFil("/__files/sjablontall.json")
+    return commonObjectmapper.readValue(fil)
+}
+
+fun sjablonSamværsfradragResponse(): List<Samværsfradrag> {
+    val fil = hentFil("/__files/sjablonSamværsfradrag.json")
+    return commonObjectmapper.readValue(fil)
+}
+
+fun sjablonBidragsevneResponse(): List<Bidragsevne> {
+    val fil = hentFil("/__files/sjablonBidragsevne.json")
+    return commonObjectmapper.readValue(fil)
+}
+
+fun sjablonTrinnvisSkattesatsResponse(): List<TrinnvisSkattesats> {
+    val fil = hentFil("/__files/sjablonTrinnvisSkattesats.json")
     return commonObjectmapper.readValue(fil)
 }
 
