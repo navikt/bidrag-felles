@@ -12,6 +12,12 @@ data class SluttberegningForskudd(
     val aldersgruppe: AldersgruppeForskudd,
 ) : Sluttberegning
 
+data class SluttberegningSørtilskudd(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
+    val resultatKode: Resultatkode,
+) : Sluttberegning
+
 @Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))
 data class DelberegningInntekt(
     override val periode: ÅrMånedsperiode,
@@ -31,6 +37,26 @@ data class DelberegningSumInntekt(
 data class DelberegningBarnIHusstand(
     override val periode: ÅrMånedsperiode,
     val antallBarn: Int,
+) : Delberegning
+
+data class DelberegningBidragsevne(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
+) : Delberegning
+
+data class DelberegningVoksneIHustanden(
+    override val periode: ÅrMånedsperiode,
+    val borMedAndre: Boolean,
+) : Delberegning
+
+data class DelberegningBidragspliktigesAndel(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
+) : Delberegning
+
+data class DelberegningGodkjentBeløp(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
 ) : Delberegning
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
