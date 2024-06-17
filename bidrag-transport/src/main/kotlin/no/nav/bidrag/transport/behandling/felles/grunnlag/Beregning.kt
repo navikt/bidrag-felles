@@ -12,7 +12,7 @@ data class SluttberegningForskudd(
     val aldersgruppe: AldersgruppeForskudd,
 ) : Sluttberegning
 
-data class SluttberegningSørtilskudd(
+data class SluttberegningSærtilskudd(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
     val resultatKode: Resultatkode,
@@ -44,17 +44,24 @@ data class DelberegningBidragsevne(
     val beløp: BigDecimal,
 ) : Delberegning
 
-data class DelberegningVoksneIHustanden(
+data class DelberegningVoksneIHustand(
     override val periode: ÅrMånedsperiode,
-    val borMedAndre: Boolean,
+    val borMedAndreVoksne: Boolean,
 ) : Delberegning
 
-data class DelberegningBidragspliktigesAndel(
+data class DelberegningBidragspliktigesAndelSærtilskudd(
+    override val periode: ÅrMånedsperiode,
+    val resultatAndelProsent: BigDecimal,
+    val resultatAndelBeløp: BigDecimal,
+    val barnetErSelvforsørget: Boolean,
+) : Delberegning
+
+data class DelberegningGodkjentBeløp(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
 ) : Delberegning
 
-data class DelberegningGodkjentBeløp(
+data class DelberegningSamværsfrdragSærtilskudd(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
 ) : Delberegning
