@@ -16,7 +16,12 @@ import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragsevne
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærtilskudd
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningGodkjentBeløp
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSamværsfrdragSærtilskudd
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningVoksneIHustand
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetHusstandsmedlem
@@ -27,6 +32,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.Person
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SivilstandPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SjablonGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningForskudd
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningSærtilskudd
 import no.nav.bidrag.transport.behandling.felles.grunnlag.erPerson
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåFremmedReferanse
@@ -143,25 +149,21 @@ data class MermaidResponse(
     val grunnlagListe: List<BaseGrunnlag>,
 )
 
-fun OpprettVedtakRequestDto.toMermaid(): MermaidResponse {
-    return tilVedtakDto().toMermaid()
-}
+fun OpprettVedtakRequestDto.toMermaid(): MermaidResponse = tilVedtakDto().toMermaid()
 
-fun OpprettVedtakRequestDto.toTree(): TreeChild {
-    return tilVedtakDto().toTree()
-}
+fun OpprettVedtakRequestDto.toTree(): TreeChild = tilVedtakDto().toTree()
 
 fun Map<String, List<String>>.toMermaid(): List<String> {
     val printList = mutableListOf<String>()
     val order = listOf("Delberegning", "Stønadsendring_", "ACTION")
-    entries.sortedWith { a, b ->
-        when {
-            order.indexOf(a.key) < order.indexOf(b.key) -> -1
-            order.indexOf(a.key) > order.indexOf(b.key) -> 1
-            else -> 0
-        }
-    }
-        .forEach {
+    entries
+        .sortedWith { a, b ->
+            when {
+                order.indexOf(a.key) < order.indexOf(b.key) -> -1
+                order.indexOf(a.key) > order.indexOf(b.key) -> 1
+                else -> 0
+            }
+        }.forEach {
             if (it.key != MermaidSubgraph.INGEN.name && it.key != MermaidSubgraph.ACTION.name) {
                 printList.add("\tsubgraph ${it.key}\n")
                 if (it.key == MermaidSubgraph.SJABLON.name || it.key == MermaidSubgraph.NOTAT.name) {
@@ -248,7 +250,8 @@ fun TreeChild.toMermaidSubgraphMap(parent: TreeChild? = null): Map<String, Mutab
                     tilSubgraph()!!,
                     "${parent.id}[\"${parent.name}\"] -->$id{\"${name}\"}",
                 )
-            } else if (parent.grunnlagstype == Grunnlagstype.SLUTTBEREGNING_FORSKUDD && (
+            } else if (parent.grunnlagstype == Grunnlagstype.SLUTTBEREGNING_FORSKUDD &&
+                (
                     grunnlagstype == Grunnlagstype.DELBEREGNING_SUM_INNTEKT ||
                         grunnlagstype == Grunnlagstype.DELBEREGNING_BARN_I_HUSSTAND
                 )
@@ -317,16 +320,16 @@ fun VedtakDto.toTree(): TreeChild {
         )
     vedtakParent.children.add(grunnlagSomIkkeErReferert)
     grunnlagSomIkkeErReferert.children.addAll(
-        grunnlagListe.filter {
-            grunnlagListe.filtrerBasertPåFremmedReferanse(referanse = it.referanse).isEmpty()
-        }.filter {
-            !stønadsendringListe.flatMap { it.grunnlagReferanseListe }.contains(it.referanse)
-        }
+        grunnlagListe
             .filter {
-                !stønadsendringListe.flatMap { it.periodeListe.flatMap { it.grunnlagReferanseListe } }
+                grunnlagListe.filtrerBasertPåFremmedReferanse(referanse = it.referanse).isEmpty()
+            }.filter {
+                !stønadsendringListe.flatMap { it.grunnlagReferanseListe }.contains(it.referanse)
+            }.filter {
+                !stønadsendringListe
+                    .flatMap { it.periodeListe.flatMap { it.grunnlagReferanseListe } }
                     .contains(it.referanse)
-            }
-            .map {
+            }.map {
                 it.referanse.toTree(grunnlagListe, vedtakParent)
             }.filterNotNull(),
     )
@@ -364,10 +367,11 @@ fun VedtakDto.toTree(): TreeChild {
                 )
 
             periodeTree.children.addAll(
-                it.grunnlagReferanseListe.toTree(
-                    grunnlagListe,
-                    periodeTree,
-                ).toMutableList(),
+                it.grunnlagReferanseListe
+                    .toTree(
+                        grunnlagListe,
+                        periodeTree,
+                    ).toMutableList(),
             )
             stønadsendringTree.children.add(periodeTree)
         }
@@ -378,11 +382,10 @@ fun VedtakDto.toTree(): TreeChild {
 fun List<Grunnlagsreferanse>.toTree(
     grunnlagsListe: List<BaseGrunnlag>,
     parent: TreeChild?,
-): List<TreeChild> {
-    return map {
+): List<TreeChild> =
+    map {
         it.toTree(grunnlagsListe, parent)
     }.filterNotNull()
-}
 
 fun Grunnlagsreferanse.toTree(
     grunnlagsListe: List<BaseGrunnlag>,
@@ -416,6 +419,10 @@ fun Grunnlagsreferanse.toTree(
                 Grunnlagstype.SLUTTBEREGNING_FORSKUDD ->
                     "Sluttberegning" +
                         "(${grunnlag.innholdTilObjekt<SluttberegningForskudd>().periode.fom.toCompactString()})"
+
+                Grunnlagstype.SLUTTBEREGNING_SÆRTILSKUDD ->
+                    "Sluttberegning" +
+                        "(${grunnlag.innholdTilObjekt<SluttberegningSærtilskudd>().periode.fom.toCompactString()})"
 
                 Grunnlagstype.SJABLON ->
                     "Sjablon(" +
@@ -462,6 +469,32 @@ fun Grunnlagsreferanse.toTree(
                     "Innhentet sivilstand (Alle)"
                 }
 
+                Grunnlagstype.DELBEREGNING_BIDRAGSEVNE -> {
+                    val bidragevne = grunnlag.innholdTilObjekt<DelberegningBidragsevne>()
+                    "Delberegning bidragsevne(${bidragevne.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_GODKJENT_BELØP -> {
+                    val godkjentBeløp = grunnlag.innholdTilObjekt<DelberegningGodkjentBeløp>()
+                    "Delberegning godkjent beløp særtilskudd(${godkjentBeløp.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRTILSKUDD -> {
+                    @Suppress("ktlint:standard:property-naming")
+                    val BPsAndelSærtilskudd = grunnlag.innholdTilObjekt<DelberegningBidragspliktigesAndelSærtilskudd>()
+                    "Delberegning BPs andel særtilskudd(${BPsAndelSærtilskudd.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_SAMVÆRSFRADRAG_SÆRTILSKUDD -> {
+                    val samværsfradragSærtilskudd = grunnlag.innholdTilObjekt<DelberegningSamværsfrdragSærtilskudd>()
+                    "Delberegning samværsfradrag særtilskudd(${samværsfradragSærtilskudd.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_VOKSNE_I_HUSSTAND -> {
+                    val voksneIHusstand = grunnlag.innholdTilObjekt<DelberegningVoksneIHustand>()
+                    "Delberegning voksne i husstand(${voksneIHusstand.periode.fom.toCompactString()})"
+                }
+
                 else ->
                     if (grunnlag.erPerson()) {
                         "${grunnlag.type}(${grunnlag.innholdTilObjekt<Person>().fødselsdato.toCompactString()})"
@@ -490,8 +523,8 @@ fun Grunnlagsreferanse.toTree(
     )
 }
 
-fun OpprettVedtakRequestDto.tilVedtakDto(): VedtakDto {
-    return VedtakDto(
+fun OpprettVedtakRequestDto.tilVedtakDto(): VedtakDto =
+    VedtakDto(
         type = type,
         opprettetAv = opprettetAv ?: "",
         opprettetAvNavn = opprettetAv,
@@ -567,7 +600,6 @@ fun OpprettVedtakRequestDto.tilVedtakDto(): VedtakDto {
                 )
             },
     )
-}
 
 fun VedtakDto.nodeId() = "Vedtak"
 
