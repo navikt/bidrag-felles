@@ -1,12 +1,14 @@
 package no.nav.bidrag.domene.enums.særligeutgifter
 
-enum class Utgiftstype {
-    KONFIRMASJONSAVGIFT,
-    KONFIRMASJONSLEIR,
-    SELSKAP,
-    KLÆR,
-    REISEUTGIFT,
+import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 
-    TANNREGULERING,
-    OPTIKK,
+enum class Utgiftstype(val kategori: Engangsbeløptype) {
+    KONFIRMASJONSAVGIFT(Engangsbeløptype.SÆRTILSKUDD_KONFIRMASJON),
+    KONFIRMASJONSLEIR(Engangsbeløptype.SÆRTILSKUDD_KONFIRMASJON),
+    SELSKAP(Engangsbeløptype.SÆRTILSKUDD_KONFIRMASJON),
+    KLÆR(Engangsbeløptype.SÆRTILSKUDD_KONFIRMASJON),
+    REISEUTGIFT(Engangsbeløptype.SÆRTILSKUDD_KONFIRMASJON),
+
+    TANNREGULERING(Engangsbeløptype.SÆRTILSKUDD_TANNREGULERING),
+    OPTIKK(Engangsbeløptype.SÆRTILSKUDD_OPTIKK),
 }
