@@ -7,4 +7,8 @@ enum class Familierelasjon {
     FAR,
     MEDMOR,
     MOR,
+    INGEN,
+    FORELDER,
+    EKTEFELLE,
+    MOTPART_TIL_FELLES_BARN,
 }
