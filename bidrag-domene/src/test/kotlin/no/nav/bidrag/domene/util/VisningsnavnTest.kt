@@ -14,20 +14,27 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.særligeutgifter.Utgiftstype
+import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class VisningsnavnTest {
-    @Nested
-    internal inner class UtgiftstypeTest {
-        @Test
-        fun `Valider at alle kodeverdier har visningsnavn`() {
-            Utgiftstype.entries.forEach {
-                withClue("${it.name} mangler visningsnavn") {
-                    it.visningsnavn.intern.isNotEmpty() shouldBe true
-                }
+    @Test
+    fun `Valider at alle kodeverdier for Engangsbeløptype har visningsnavn`() {
+        Engangsbeløptype.entries.forEach {
+            withClue("${it.name} mangler visningsnavn") {
+                it.visningsnavn.intern.isNotEmpty() shouldBe true
+            }
+        }
+    }
+
+    @Test
+    fun `Valider at alle kodeverdier for Utgiftstype har visningsnavn`() {
+        Utgiftstype.entries.forEach {
+            withClue("${it.name} mangler visningsnavn") {
+                it.visningsnavn.intern.isNotEmpty() shouldBe true
             }
         }
     }
