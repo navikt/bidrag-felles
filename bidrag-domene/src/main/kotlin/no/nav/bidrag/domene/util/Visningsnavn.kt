@@ -13,6 +13,7 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
+import no.nav.bidrag.domene.enums.særligeutgifter.SærligeutgifterKategori
 import no.nav.bidrag.domene.enums.særligeutgifter.Utgiftstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
@@ -51,6 +52,7 @@ val Inntektstype.visningsnavn get() = lastVisningsnavnFraFil("inntektstype.yaml"
 val Inntektsrapportering.visningsnavn get() = lastVisningsnavnFraFil("inntektsrapportering.yaml")[name] ?: visningsnavnMangler(name)
 val Utgiftstype.visningsnavn get() = lastVisningsnavnFraFil("utgiftstype.yaml")[name] ?: visningsnavnMangler(name)
 val Engangsbeløptype.visningsnavn get() = lastVisningsnavnFraFil("engangsbeløptype.yaml")[name] ?: visningsnavnMangler(name)
+val SærligeutgifterKategori.visningsnavn get() = lastVisningsnavnFraFil("særligeutgifterkategori.yaml")[name] ?: visningsnavnMangler(name)
 
 fun Inntektsrapportering.visningsnavnIntern(årstall: Int?) = "${visningsnavn.intern} $årstall".trim()
 

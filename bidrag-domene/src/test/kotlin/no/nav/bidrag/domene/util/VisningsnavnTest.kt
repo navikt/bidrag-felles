@@ -13,6 +13,7 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
+import no.nav.bidrag.domene.enums.særligeutgifter.SærligeutgifterKategori
 import no.nav.bidrag.domene.enums.særligeutgifter.Utgiftstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
@@ -21,6 +22,15 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class VisningsnavnTest {
+    @Test
+    fun `Valider at alle kodeverdier for SærligeutgifterKategori har visningsnavn`() {
+        SærligeutgifterKategori.entries.forEach {
+            withClue("${it.name} mangler visningsnavn") {
+                it.visningsnavn.intern.isNotEmpty() shouldBe true
+            }
+        }
+    }
+
     @Test
     fun `Valider at alle kodeverdier for Engangsbeløptype har visningsnavn`() {
         Engangsbeløptype.entries.forEach {
