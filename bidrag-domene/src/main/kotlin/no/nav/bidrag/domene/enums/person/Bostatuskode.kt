@@ -12,6 +12,10 @@ enum class Bostatuskode {
     DELT_BOSTED,
     REGNES_IKKE_SOM_BARN, // TODO: Avklar (faglig) om dette skal brukes
 
+    // Følgende verdier brukes for voksne i husstand
+    BOR_MED_ANDRE_VOKSNE,
+    BOR_IKKE_MED_ANDRE_VOKSNE,
+
     // Følgende verdier brukes til unntakskoder i Bisys som påvirker resultatet av beregning
     UNNTAK_HOS_ANDRE,
     UNNTAK_ALENE,
