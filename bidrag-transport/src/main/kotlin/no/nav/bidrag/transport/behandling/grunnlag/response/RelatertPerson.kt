@@ -31,18 +31,14 @@ data class RelatertPersonDto(
 data class RelatertPersonGrunnlagDto(
     @Schema(description = "Personid til BM/BP")
     val partPersonId: String?,
-    @Deprecated("relatertPersonPersonId skal ikke brukes", ReplaceWith("gjelderPerson"))
-    val relatertPersonPersonId: String?,
     @Schema(description = "Personid til relatert person. Dette er husstandsmedlem eller barn av BM/BP")
-    val gjelderPerson: String?,
+    val relatertPersonPersonId: String?,
     @Schema(description = "Navn på den relaterte personen, format <Fornavn, mellomnavn, Etternavn")
     val navn: String?,
     @Schema(description = "Den relaterte personens fødselsdato")
     val fødselsdato: LocalDate?,
-    @Deprecated("erBarnAvBmBp skal ikke brukes", ReplaceWith("relasjon"))
+    @Schema(description = "Angir om den relaterte personen er barn av BM/BP")
     val erBarnAvBmBp: Boolean,
-    @Schema(description = "Angir gjelderPersons relasjon til BM/BP")
-    val relasjon: Familierelasjon,
     @Schema(description = "Liste over perioder personen bor i samme husstand som BM/BP")
     val borISammeHusstandDtoListe: List<BorISammeHusstandDto>,
 )
