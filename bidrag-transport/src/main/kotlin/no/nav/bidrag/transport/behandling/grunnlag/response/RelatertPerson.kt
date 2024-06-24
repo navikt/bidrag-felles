@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.grunnlag.response
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.person.Familierelasjon
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -32,7 +33,7 @@ data class RelatertPersonGrunnlagDto(
     val partPersonId: String?,
     @Schema(description = "Personid til relatert person. Dette er husstandsmedlem eller barn av BM/BP")
     val relatertPersonPersonId: String?,
-    @Schema(description = "Navn på den relaterte personen, format: <Fornavn, mellomnavn, Etternavn")
+    @Schema(description = "Navn på den relaterte personen, format <Fornavn, mellomnavn, Etternavn")
     val navn: String?,
     @Schema(description = "Den relaterte personens fødselsdato")
     val fødselsdato: LocalDate?,
