@@ -4,4 +4,5 @@ enum class SærligeutgifterKategori {
     KONFIRMASJON,
     TANNREGULERING,
     OPTIKK,
+    ANNET,
 }
