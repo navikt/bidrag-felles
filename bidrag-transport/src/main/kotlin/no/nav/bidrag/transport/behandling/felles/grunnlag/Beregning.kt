@@ -56,7 +56,7 @@ data class DelberegningBidragspliktigesAndelSærtilskudd(
     val barnetErSelvforsørget: Boolean,
 ) : Delberegning
 
-data class DelberegningGodkjentBeløp(
+data class DelberegningUtgift(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
 ) : Delberegning

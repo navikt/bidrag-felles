@@ -18,9 +18,9 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragsevne
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærtilskudd
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningGodkjentBeløp
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSamværsfrdragSærtilskudd
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningVoksneIHustand
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
@@ -474,8 +474,8 @@ fun Grunnlagsreferanse.toTree(
                     "Delberegning bidragsevne(${bidragevne.periode.fom.toCompactString()})"
                 }
 
-                Grunnlagstype.DELBEREGNING_GODKJENT_BELØP -> {
-                    val godkjentBeløp = grunnlag.innholdTilObjekt<DelberegningGodkjentBeløp>()
+                Grunnlagstype.DELBEREGNING_UTGIFT -> {
+                    val godkjentBeløp = grunnlag.innholdTilObjekt<DelberegningUtgift>()
                     "Delberegning godkjent beløp særtilskudd(${godkjentBeløp.periode.fom.toCompactString()})"
                 }
 
