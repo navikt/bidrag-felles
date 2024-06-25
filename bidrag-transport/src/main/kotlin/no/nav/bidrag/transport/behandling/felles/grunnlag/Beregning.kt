@@ -58,7 +58,8 @@ data class DelberegningBidragspliktigesAndelSærtilskudd(
 
 data class DelberegningUtgift(
     override val periode: ÅrMånedsperiode,
-    val beløp: BigDecimal,
+    val sumBetaltAvBp: BigDecimal,
+    val sumGodkjent: BigDecimal,
 ) : Delberegning
 
 data class DelberegningSamværsfrdragSærtilskudd(

@@ -476,7 +476,7 @@ fun Grunnlagsreferanse.toTree(
 
                 Grunnlagstype.DELBEREGNING_UTGIFT -> {
                     val godkjentBeløp = grunnlag.innholdTilObjekt<DelberegningUtgift>()
-                    "Delberegning godkjent beløp særtilskudd(${godkjentBeløp.periode.fom.toCompactString()})"
+                    "Delberegning utgift særtilskudd(${godkjentBeløp.periode.fom.toCompactString()})"
                 }
 
                 Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRTILSKUDD -> {
