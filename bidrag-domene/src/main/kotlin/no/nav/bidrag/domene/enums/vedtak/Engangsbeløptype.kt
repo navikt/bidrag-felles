@@ -15,7 +15,10 @@ enum class Engangsbeløptype {
 
     TILBAKEKREVING,
 
-    @Deprecated("SAERTILSKUDD skal ikke brukes", ReplaceWith("SÆRTILSKUDD"))
+    @Deprecated("SAERTILSKUDD skal ikke brukes", ReplaceWith("SÆRBIDRAG"))
     SAERTILSKUDD,
+
+    @Deprecated("SÆRTILSKUDD skal ikke brukes", ReplaceWith("SÆRBIDRAG"))
     SÆRTILSKUDD,
+    SÆRBIDRAG,
 }
