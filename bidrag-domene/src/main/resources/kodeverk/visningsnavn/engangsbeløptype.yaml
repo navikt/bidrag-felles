@@ -18,9 +18,5 @@ TILBAKEKREVING:
   intern: "Tilbakekreving"
 SÆRTILSKUDD:
   intern: "Særtilskudd"
-SÆRTILSKUDD_KONFIRMASJON:
-  intern: "Konfirmasjon"
-SÆRTILSKUDD_TANNREGULERING:
-  intern: "Tannregulering"
-SÆRTILSKUDD_OPTIKK:
-  intern: "Optikk"
+SÆRBIDRAG:
+  intern: "Særbidrag"
