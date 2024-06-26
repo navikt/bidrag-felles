@@ -18,7 +18,4 @@ enum class Engangsbeløptype {
     @Deprecated("SAERTILSKUDD skal ikke brukes", ReplaceWith("SÆRTILSKUDD"))
     SAERTILSKUDD,
     SÆRTILSKUDD,
-    SÆRTILSKUDD_KONFIRMASJON,
-    SÆRTILSKUDD_TANNREGULERING,
-    SÆRTILSKUDD_OPTIKK,
 }
