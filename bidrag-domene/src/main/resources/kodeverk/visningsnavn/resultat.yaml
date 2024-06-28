@@ -157,3 +157,6 @@ PRIVAT_AVTALE_OM_SÆRBIDRAG:
   intern: "Privat avtale om særlige utgifter"
 ALLE_UTGIFTER_ER_FORELDET:
   intern: "Alle utgifter er foreldet"
+
+MANGLENDE_SAMARBEID:
+  intern: "Manglende samarbeid"
