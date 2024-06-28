@@ -17,7 +17,7 @@ data class SærbidragKategoriGrunnlag(
     val beskrivelse: String? = null,
 ) : GrunnlagInnhold
 
-data class SærbidragUtgiftspostGrunnlag(
+data class UtgiftspostGrunnlag(
     val dato: LocalDate,
     val type: Utgiftstype,
     val kravbeløp: BigDecimal,
@@ -27,7 +27,7 @@ data class SærbidragUtgiftspostGrunnlag(
     val betaltAvBp: Boolean = false,
 ) : GrunnlagInnhold
 
-data class SærbidragUtgiftDirekteBetaltGrunnlag(
+data class UtgiftDirekteBetaltGrunnlag(
     @Schema(description = "Beløp som er overført direkte til BM. Kan være 0 eller høyere")
     val beløpDirekteBetalt: BigDecimal,
 ) : GrunnlagInnhold

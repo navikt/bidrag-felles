@@ -35,8 +35,8 @@ data class RelatertPersonGrunnlagDto(
     val partPersonId: String?,
     @Schema(description = "Personid til relatert person. Dette er husstandsmedlem eller barn av BM/BP")
     @Deprecated("relatertPersonPersonId er erstattet av gjelderPerson", ReplaceWith("gjelderPerson"))
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    val relatertPersonPersonId: String? = null,
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    var relatertPersonPersonId: String? = null,
     @Schema(description = "Personid til relatert person. Dette er husstandsmedlem eller barn av BM/BP")
     val gjelderPersonId: String? = relatertPersonPersonId,
     @Schema(description = "Navn på den relaterte personen, format <Fornavn, mellomnavn, Etternavn")
@@ -44,15 +44,20 @@ data class RelatertPersonGrunnlagDto(
     @Schema(description = "Den relaterte personens fødselsdato")
     val fødselsdato: LocalDate?,
     @Deprecated("Erstattet av relasjon == BARN", ReplaceWith("relasjon"))
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    val erBarnAvBmBp: Boolean? = null,
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    var erBarnAvBmBp: Boolean? = null,
     @Schema(description = "Angir gjelderPersons relasjon til BM/BP")
-    val relasjon: Familierelasjon = if (erBarnAvBmBp == true) Familierelasjon.BARN else Familierelasjon.INGEN,
+    val relasjon: Familierelasjon = if (erBarnAvBmBp == true) Familierelasjon.BARN else Familierelasjon.UKJENT,
     @Schema(description = "Liste over perioder personen bor i samme husstand som BM/BP")
     val borISammeHusstandDtoListe: List<BorISammeHusstandDto>,
 ) {
     @get:JsonIgnore
     val erBarn get() = relasjon == Familierelasjon.BARN
+
+    init {
+        erBarnAvBmBp = if (erBarnAvBmBp != null) erBarnAvBmBp else relasjon == Familierelasjon.BARN
+        relatertPersonPersonId = if (relatertPersonPersonId != null) relatertPersonPersonId else gjelderPersonId
+    }
 }
 
 data class BorISammeHusstandDto(
