@@ -118,7 +118,7 @@ class JsonMappingTest {
               "gjelderPersonId" : "666666",
               "navn" : "Testperson2",
               "fødselsdato" : "2023-01-01",
-              "relasjon" : "INGEN",
+              "relasjon" : "UKJENT",
               "borISammeHusstandDtoListe" : [ {
                 "periodeFra" : "2023-01-01",
                 "periodeTil" : "2024-01-01"
@@ -243,7 +243,7 @@ class JsonMappingTest {
               } ]
             }, {
               "gjelderPerson" : "REF2",
-              "relasjon" : "INGEN",
+              "relasjon" : "UKJENT",
               "navn" : "Testperson2",
               "fødselsdato" : "2023-01-01",
               "perioder" : [ {
