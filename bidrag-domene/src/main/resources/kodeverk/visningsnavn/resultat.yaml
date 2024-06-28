@@ -74,11 +74,18 @@ SÆRTILSKUDD_INNVILGET:
   intern: "Særtilskudd innvilget"
   bruker:
     NB: "Særtilskudd innvilget"
+SÆRBIDRAG_INNVILGET:
+  intern: "Særtilskudd innvilget"
+  bruker:
+    NB: "Særtilskudd innvilget"
 SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE:
   intern: "Særtilskudd ikke full bidragsevne"
   bruker:
     NB: "Særtilskudd ikke full bidragsevne"
-
+SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE:
+  intern: "Særtilskudd ikke full bidragsevne"
+  bruker:
+    NB: "Særtilskudd ikke full bidragsevne"
 #Avslagskoder
 AVSLAG:
   intern: "Avslag"
@@ -146,8 +153,7 @@ UTGIFTER_DEKKES_AV_BARNEBIDRAGET:
 IKKE_NØDVENDIGE_UTGIFTER:
   intern: "Ikke nødvendige utgifter"
 
-PRIVAT_AVTALE_OM_SÆRLIGE_UTGIFTER:
-    intern: "Privat avtale om særlige utgifter"
-
+PRIVAT_AVTALE_OM_SÆRBIDRAG:
+  intern: "Privat avtale om særlige utgifter"
 ALLE_UTGIFTER_ER_FORELDET:
   intern: "Alle utgifter er foreldet"

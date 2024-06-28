@@ -7,10 +7,8 @@ enum class Bostatuskode {
     MED_FORELDER,
     DOKUMENTERT_SKOLEGANG, // Hvis barnet er over 18 år, bor med forelder og går på skole
     IKKE_MED_FORELDER,
-    MED_VERGE,
-    ALENE,
     DELT_BOSTED,
-    REGNES_IKKE_SOM_BARN, // TODO: Avklar (faglig) om dette skal brukes
+    REGNES_IKKE_SOM_BARN,
 
     // Følgende verdier brukes for voksne i husstand
     BOR_MED_ANDRE_VOKSNE,
@@ -20,4 +18,7 @@ enum class Bostatuskode {
     UNNTAK_HOS_ANDRE,
     UNNTAK_ALENE,
     UNNTAK_ENSLIG_ASYLSØKER,
+
+    MED_VERGE,
+    ALENE,
 }

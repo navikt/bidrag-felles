@@ -4,7 +4,10 @@ package no.nav.bidrag.domene.enums.regnskap
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 
-enum class Transaksjonskode(val korreksjonskode: String?, val negativtBeløp: Boolean) {
+enum class Transaksjonskode(
+    val korreksjonskode: String?,
+    val negativtBeløp: Boolean,
+) {
     A1("A3", false), // Bidragsforskudd
     A3(null, true),
     B1("B3", false), // Underholdsbidrag (m/u tilleggsbidrag)
@@ -26,8 +29,8 @@ enum class Transaksjonskode(val korreksjonskode: String?, val negativtBeløp: Bo
     ;
 
     companion object {
-        fun hentTransaksjonskodeForType(type: String): Transaksjonskode {
-            return when (type) {
+        fun hentTransaksjonskodeForType(type: String): Transaksjonskode =
+            when (type) {
                 Stønadstype.FORSKUDD.name -> A1
                 Stønadstype.BIDRAG.name -> B1
                 Stønadstype.OPPFOSTRINGSBIDRAG.name -> B1
@@ -36,6 +39,7 @@ enum class Transaksjonskode(val korreksjonskode: String?, val negativtBeløp: Bo
                 Stønadstype.MOTREGNING.name -> I1
                 Engangsbeløptype.SAERTILSKUDD.name -> E1
                 Engangsbeløptype.SÆRTILSKUDD.name -> E1
+                Engangsbeløptype.SÆRBIDRAG.name -> E1
                 Engangsbeløptype.GEBYR_MOTTAKER.name -> G1
                 Engangsbeløptype.GEBYR_SKYLDNER.name -> G1
                 Engangsbeløptype.TILBAKEKREVING.name -> H1
@@ -45,6 +49,5 @@ enum class Transaksjonskode(val korreksjonskode: String?, val negativtBeløp: Bo
                 Engangsbeløptype.ETTERGIVELSE_TILBAKEKREVING.name -> K3
                 else -> throw IllegalStateException("Ugyldig type for transaksjonskode funnet!")
             }
-        }
     }
 }

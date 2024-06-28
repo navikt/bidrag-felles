@@ -11,4 +11,7 @@ enum class Familierelasjon {
     FORELDER,
     EKTEFELLE,
     MOTPART_TIL_FELLES_BARN,
+
+    // Hvis relasjon ikke er BARN og det finnes ingen annen informasjon om relasjonen
+    UKJENT,
 }

@@ -3,8 +3,11 @@ package no.nav.bidrag.domene.enums.beregning
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(enumAsRef = true, name = "Resultatkode")
-enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeType) {
-    BARNET_ER_SELVFORSØRGET("", ResultatkodeType.BARNEBIDRAG, ResultatkodeType.SÆRTILSKUDD),
+enum class Resultatkode(
+    val legacyKode: String,
+    vararg val type: ResultatkodeType,
+) {
+    BARNET_ER_SELVFORSØRGET("", ResultatkodeType.BARNEBIDRAG, ResultatkodeType.SÆRBIDRAG),
 
     // Resultat av beregning av barnebidrag, angir at det må gjøres en forholdsmessig fordeling
     BEGRENSET_EVNE_FLERE_SAKER_UTFØR_FORHOLDSMESSIG_FORDELING("", ResultatkodeType.BARNEBIDRAG),
@@ -51,10 +54,14 @@ enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeTyp
     FORHØYET_FORSKUDD_11_ÅR_125_PROSENT("125", ResultatkodeType.FORSKUDD),
 
     // Resultat av beregning av særtilskudd
-    SÆRTILSKUDD_INNVILGET("VS", ResultatkodeType.SÆRTILSKUDD),
+    @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_INNVILGET"))
+    SÆRTILSKUDD_INNVILGET("VS", ResultatkodeType.SÆRBIDRAG),
+    SÆRBIDRAG_INNVILGET("VS", ResultatkodeType.SÆRBIDRAG),
 
     // Resultat av beregning av særtilskudd
-    SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE("6MB", ResultatkodeType.SÆRTILSKUDD),
+    @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE"))
+    SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE("6MB", ResultatkodeType.SÆRBIDRAG),
+    SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE("6MB", ResultatkodeType.SÆRBIDRAG),
 
     AVSLAG("A", ResultatkodeType.AVSLAG),
     AVSLAG2("AA", ResultatkodeType.AVSLAG),
@@ -82,26 +89,25 @@ enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeTyp
     // Særtilskudd avslag
     UTGIFTER_DEKKES_AV_BARNEBIDRAGET("", ResultatkodeType.AVSLAG),
     IKKE_NØDVENDIGE_UTGIFTER("", ResultatkodeType.AVSLAG),
-    PRIVAT_AVTALE_OM_SÆRLIGE_UTGIFTER("", ResultatkodeType.AVSLAG),
+
+    PRIVAT_AVTALE_OM_SÆRBIDRAG("", ResultatkodeType.AVSLAG),
     ALLE_UTGIFTER_ER_FORELDET("", ResultatkodeType.AVSLAG),
     ;
 
     companion object {
-        fun fraKode(kode: String): Resultatkode? {
-            return try {
+        fun fraKode(kode: String): Resultatkode? =
+            try {
                 enumValues<Resultatkode>().find { it.legacyKode == kode } ?: Resultatkode.valueOf(kode)
             } catch (e: Exception) {
                 null
             }
-        }
 
-        fun alleMedType(type: ResultatkodeType): List<Resultatkode> {
-            return try {
+        fun alleMedType(type: ResultatkodeType): List<Resultatkode> =
+            try {
                 enumValues<Resultatkode>().filter { it.type.contains(type) }
             } catch (e: Exception) {
                 emptyList()
             }
-        }
     }
 
     enum class ResultatkodeType {
@@ -109,6 +115,6 @@ enum class Resultatkode(val legacyKode: String, vararg val type: ResultatkodeTyp
         OPPHØR,
         FORSKUDD,
         BARNEBIDRAG,
-        SÆRTILSKUDD,
+        SÆRBIDRAG,
     }
 }

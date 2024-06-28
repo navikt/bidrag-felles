@@ -7,7 +7,7 @@ import no.nav.bidrag.domene.enums.vedtak.Formål
 
 // Request for å hente grunnlag direkte via eksterne tjenester uten å gå via grunnlagspakke og lagring i bidrag-grunnlag
 data class HentGrunnlagRequestDto(
-    @Schema(description = "Formål (BIDRAG, FORSKUDD eller SAERTILSKUDD). Brukes for å hente Ainntekt")
+    @Schema(description = "Formål (BIDRAG, FORSKUDD eller SÆRBIDRAG). Brukes for å hente Ainntekt")
     val formaal: Formål,
     @Schema(description = "Liste over hvilke typer grunnlag som skal hentes inn. På nivået under er personId og perioder angitt")
     @field:Valid
