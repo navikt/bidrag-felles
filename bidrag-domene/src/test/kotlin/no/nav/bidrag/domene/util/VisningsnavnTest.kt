@@ -13,7 +13,7 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
-import no.nav.bidrag.domene.enums.særbidrag.SærbidragKategori
+import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
@@ -24,7 +24,7 @@ import org.junit.jupiter.api.Test
 class VisningsnavnTest {
     @Test
     fun `Valider at alle kodeverdier for SærbidragKategori har visningsnavn`() {
-        SærbidragKategori.entries.forEach {
+        Særbidragskategori.entries.forEach {
             withClue("${it.name} mangler visningsnavn") {
                 it.visningsnavn.intern.isNotEmpty() shouldBe true
             }

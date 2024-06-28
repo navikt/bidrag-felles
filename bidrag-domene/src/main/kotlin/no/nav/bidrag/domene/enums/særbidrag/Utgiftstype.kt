@@ -1,14 +1,14 @@
 package no.nav.bidrag.domene.enums.særbidrag
 
 enum class Utgiftstype(
-    val kategori: SærbidragKategori,
+    val kategori: Særbidragskategori,
 ) {
-    KONFIRMASJONSAVGIFT(SærbidragKategori.KONFIRMASJON),
-    KONFIRMASJONSLEIR(SærbidragKategori.KONFIRMASJON),
-    SELSKAP(SærbidragKategori.KONFIRMASJON),
-    KLÆR(SærbidragKategori.KONFIRMASJON),
-    REISEUTGIFT(SærbidragKategori.KONFIRMASJON),
+    KONFIRMASJONSAVGIFT(Særbidragskategori.KONFIRMASJON),
+    KONFIRMASJONSLEIR(Særbidragskategori.KONFIRMASJON),
+    SELSKAP(Særbidragskategori.KONFIRMASJON),
+    KLÆR(Særbidragskategori.KONFIRMASJON),
+    REISEUTGIFT(Særbidragskategori.KONFIRMASJON),
 
-    TANNREGULERING(SærbidragKategori.TANNREGULERING),
-    OPTIKK(SærbidragKategori.OPTIKK),
+    TANNREGULERING(Særbidragskategori.TANNREGULERING),
+    OPTIKK(Særbidragskategori.OPTIKK),
 }
