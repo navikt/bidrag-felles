@@ -1,6 +1,9 @@
 package no.nav.bidrag.transport.behandling.grunnlag.response
 
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.person.Familierelasjon
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -31,16 +34,26 @@ data class RelatertPersonGrunnlagDto(
     @Schema(description = "Personid til BM/BP")
     val partPersonId: String?,
     @Schema(description = "Personid til relatert person. Dette er husstandsmedlem eller barn av BM/BP")
-    val relatertPersonPersonId: String?,
+    @Deprecated("relatertPersonPersonId er erstattet av gjelderPerson", ReplaceWith("gjelderPerson"))
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    val relatertPersonPersonId: String? = null,
+    @Schema(description = "Personid til relatert person. Dette er husstandsmedlem eller barn av BM/BP")
+    val gjelderPersonId: String? = relatertPersonPersonId,
     @Schema(description = "Navn på den relaterte personen, format <Fornavn, mellomnavn, Etternavn")
     val navn: String?,
     @Schema(description = "Den relaterte personens fødselsdato")
     val fødselsdato: LocalDate?,
-    @Schema(description = "Angir om den relaterte personen er barn av BM/BP")
-    val erBarnAvBmBp: Boolean,
+    @Deprecated("Erstattet av relasjon == BARN", ReplaceWith("relasjon"))
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    val erBarnAvBmBp: Boolean? = null,
+    @Schema(description = "Angir gjelderPersons relasjon til BM/BP")
+    val relasjon: Familierelasjon = if (erBarnAvBmBp == true) Familierelasjon.BARN else Familierelasjon.INGEN,
     @Schema(description = "Liste over perioder personen bor i samme husstand som BM/BP")
     val borISammeHusstandDtoListe: List<BorISammeHusstandDto>,
-)
+) {
+    @get:JsonIgnore
+    val erBarn get() = relasjon == Familierelasjon.BARN
+}
 
 data class BorISammeHusstandDto(
     @Schema(description = "Personen bor i samme husstand som BM/BP fra- og med måned")
