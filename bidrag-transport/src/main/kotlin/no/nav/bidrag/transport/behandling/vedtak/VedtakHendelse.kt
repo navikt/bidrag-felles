@@ -71,7 +71,7 @@ data class Engangsbeløp(
     val kravhaver: Personident,
     val mottaker: Personident,
     val beløp: BigDecimal?,
-    val betaltBeløp: BigDecimal? = null,
+//    val betaltBeløp: BigDecimal? = null,
     val valutakode: String?,
     val resultatkode: String,
     val innkreving: Innkrevingstype,
