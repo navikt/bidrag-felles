@@ -3,16 +3,16 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.nav.bidrag.domene.enums.særbidrag.SærbidragKategori
+import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
 import java.math.BigDecimal
 import java.time.LocalDate
 
-data class SærbidragKategoriGrunnlag(
-    val kategori: SærbidragKategori,
+data class SærbidragskategoriGrunnlag(
+    val kategori: Særbidragskategori,
     @get:Schema(
         description =
-            "Beskrivelse på kategorien. Er påkrevd hvis ANNET er satt",
+            "Beskrivelse på kategorien. Er påkrevd hvis kategori er ANNET",
     )
     val beskrivelse: String? = null,
 ) : GrunnlagInnhold
