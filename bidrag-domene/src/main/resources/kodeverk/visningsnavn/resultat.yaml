@@ -153,9 +153,6 @@ UTGIFTER_DEKKES_AV_BARNEBIDRAGET:
 IKKE_NØDVENDIGE_UTGIFTER:
   intern: "Ikke nødvendige utgifter"
 
-PRIVAT_AVTALE_OM_SÆRLIGE_UTGIFTER:
-    intern: "Privat avtale om særlige utgifter"
-
 PRIVAT_AVTALE_OM_SÆRBIDRAG:
   intern: "Privat avtale om særlige utgifter"
 ALLE_UTGIFTER_ER_FORELDET:

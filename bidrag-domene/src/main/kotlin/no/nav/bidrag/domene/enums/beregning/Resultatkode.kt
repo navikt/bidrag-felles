@@ -90,8 +90,6 @@ enum class Resultatkode(
     UTGIFTER_DEKKES_AV_BARNEBIDRAGET("", ResultatkodeType.AVSLAG),
     IKKE_NØDVENDIGE_UTGIFTER("", ResultatkodeType.AVSLAG),
 
-    @Deprecated("SÆRLIGE_UTGIFTER er erstattet med SÆRBIDRAG", ReplaceWith("PRIVAT_AVTALE_OM_SÆRLIGE_UTGIFTER"))
-    PRIVAT_AVTALE_OM_SÆRLIGE_UTGIFTER("", ResultatkodeType.AVSLAG),
     PRIVAT_AVTALE_OM_SÆRBIDRAG("", ResultatkodeType.AVSLAG),
     ALLE_UTGIFTER_ER_FORELDET("", ResultatkodeType.AVSLAG),
     ;
