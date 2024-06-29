@@ -11,4 +11,5 @@ enum class Utgiftstype(
 
     TANNREGULERING(Særbidragskategori.TANNREGULERING),
     OPTIKK(Særbidragskategori.OPTIKK),
+    ANNET(Særbidragskategori.ANNET),
 }
