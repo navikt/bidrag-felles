@@ -12,3 +12,5 @@ TANNREGULERING:
   intern: "Tannregulering"
 OPTIKK:
   intern: "Optikk"
+ANNET:
+  intern: "Annet"
