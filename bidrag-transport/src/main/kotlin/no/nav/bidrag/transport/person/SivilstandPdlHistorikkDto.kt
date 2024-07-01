@@ -15,6 +15,8 @@ data class SivilstandPdlHistorikkDto(
 data class SivilstandPdlDto(
     val type: SivilstandskodePDL?,
     val gyldigFom: LocalDate?,
+    // Personid som kun er satt om personen er ektefelle eller separert ektefelle
+    val relatertVedSivilstand: String? = null,
     val bekreftelsesdato: LocalDate?,
     val master: String?,
     val registrert: LocalDateTime?,
