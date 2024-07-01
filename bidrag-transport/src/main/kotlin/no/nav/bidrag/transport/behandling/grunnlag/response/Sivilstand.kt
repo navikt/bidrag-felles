@@ -31,8 +31,6 @@ data class SivilstandGrunnlagDto(
     val type: SivilstandskodePDL?,
     @Schema(description = "Dato sivilstanden er gyldig fra")
     val gyldigFom: LocalDate?,
-    @Schema(description = "Personid som kun er satt om personen er ektefelle eller separert ektefelle")
-    val relatertVedSivilstand: String? = null,
     @Schema(description = "Dato NAV tidligst har fått bekreftet sivilstanden")
     val bekreftelsesdato: LocalDate?,
     @Schema(description = "Master for opplysningen om sivilstand (FREG eller PDL)")
