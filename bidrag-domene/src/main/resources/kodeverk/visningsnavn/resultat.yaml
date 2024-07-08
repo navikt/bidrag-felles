@@ -75,17 +75,17 @@ SÆRTILSKUDD_INNVILGET:
   bruker:
     NB: "Særtilskudd innvilget"
 SÆRBIDRAG_INNVILGET:
-  intern: "Særtilskudd innvilget"
+  intern: "Særbidrag innvilget"
   bruker:
-    NB: "Særtilskudd innvilget"
+    NB: "Særbidrag innvilget"
 SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE:
   intern: "Særtilskudd ikke full bidragsevne"
   bruker:
     NB: "Særtilskudd ikke full bidragsevne"
 SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE:
-  intern: "Særtilskudd ikke full bidragsevne"
+  intern: "Særbidrag ikke full bidragsevne"
   bruker:
-    NB: "Særtilskudd ikke full bidragsevne"
+    NB: "Særbidrag ikke full bidragsevne"
 #Avslagskoder
 AVSLAG:
   intern: "Avslag"

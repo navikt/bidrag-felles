@@ -5,9 +5,6 @@ import io.kotest.assertions.withClue
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
-import no.nav.bidrag.domene.enums.beregning.ResultatkodeBarnebidrag
-import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
-import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
 import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
@@ -211,42 +208,27 @@ class VisningsnavnTest {
                     it.visningsnavn.intern.isNotEmpty() shouldBe true
                 }
             }
-            ResultatkodeForskudd.entries.forEach {
-                withClue("${it.name} mangler visningsnavn") {
-                    it.visningsnavn.intern.isNotEmpty() shouldBe true
-                }
-            }
-            ResultatkodeSærtilskudd.entries.forEach {
-                withClue("${it.name} mangler visningsnavn") {
-                    it.visningsnavn.intern.isNotEmpty() shouldBe true
-                }
-            }
-            ResultatkodeBarnebidrag.entries.forEach {
-                withClue("${it.name} mangler visningsnavn") {
-                    it.visningsnavn.intern.isNotEmpty() shouldBe true
-                }
-            }
         }
 
         @Test
         fun `Skal hente visningsnavn for forskudd resultatkode FORHØYET_FORSKUDD_100_PROSENT`() {
-            val visningsnavn = ResultatkodeForskudd.FORHØYET_FORSKUDD_100_PROSENT.visningsnavn
+            val visningsnavn = Resultatkode.FORHØYET_FORSKUDD_100_PROSENT.visningsnavn
 
             visningsnavn.intern shouldBe "Forhøyet forskudd"
             visningsnavn.bruker[Språk.NB] shouldBe "Forhøyet forskudd"
         }
 
         @Test
-        fun `Skal hente visningsnavn for særtilskudd esultatkode BARNET_ER_SELVFORSØRGET`() {
-            val visningsnavn = ResultatkodeSærtilskudd.BARNET_ER_SELVFORSØRGET.visningsnavn
+        fun `Skal hente visningsnavn for særbidrag resultatkode BARNET_ER_SELVFORSØRGET`() {
+            val visningsnavn = Resultatkode.BARNET_ER_SELVFORSØRGET.visningsnavn
 
             visningsnavn.intern shouldBe "Barnet er selvforsørget"
             visningsnavn.bruker[Språk.NB] shouldBe "Barnet er selvforsørget"
         }
 
         @Test
-        fun `Skal hente visningsnavn for barnebidrag esultatkode KOSTNADSBEREGNET_BIDRAG`() {
-            val visningsnavn = ResultatkodeBarnebidrag.KOSTNADSBEREGNET_BIDRAG.visningsnavn
+        fun `Skal hente visningsnavn for barnebidrag resultatkode KOSTNADSBEREGNET_BIDRAG`() {
+            val visningsnavn = Resultatkode.KOSTNADSBEREGNET_BIDRAG.visningsnavn
 
             visningsnavn.intern shouldBe "Kostnadsberegnet bidrag"
             visningsnavn.bruker[Språk.NB] shouldBe "Kostnadsberegnet bidrag"

@@ -12,7 +12,7 @@ data class SluttberegningForskudd(
     val aldersgruppe: AldersgruppeForskudd,
 ) : Sluttberegning
 
-data class SluttberegningSærtilskudd(
+data class SluttberegningSærbidrag(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
     val resultatKode: Resultatkode,
@@ -49,10 +49,10 @@ data class DelberegningVoksneIHustand(
     val borMedAndreVoksne: Boolean,
 ) : Delberegning
 
-data class DelberegningBidragspliktigesAndelSærtilskudd(
+data class DelberegningBidragspliktigesAndelSærbidrag(
     override val periode: ÅrMånedsperiode,
-    val resultatAndelProsent: BigDecimal,
-    val resultatAndelBeløp: BigDecimal,
+    val andelProsent: BigDecimal,
+    val andelBeløp: BigDecimal,
     val barnetErSelvforsørget: Boolean,
 ) : Delberegning
 
@@ -60,11 +60,6 @@ data class DelberegningUtgift(
     override val periode: ÅrMånedsperiode,
     val sumBetaltAvBp: BigDecimal,
     val sumGodkjent: BigDecimal,
-) : Delberegning
-
-data class DelberegningSamværsfrdragSærtilskudd(
-    override val periode: ÅrMånedsperiode,
-    val beløp: BigDecimal,
 ) : Delberegning
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
