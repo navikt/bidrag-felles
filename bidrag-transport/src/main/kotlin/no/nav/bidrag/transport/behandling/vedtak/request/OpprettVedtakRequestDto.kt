@@ -168,7 +168,7 @@ data class OpprettEngangsbeløpRequestDto(
     @Schema(description = "Liste over alle grunnlag som inngår i engangsbeløpet")
     @NotEmpty
     val grunnlagReferanseListe: List<Grunnlagsreferanse>,
-    @Schema(description = "Beregnet engangsbeløp")
+    @Schema(description = "Beløp BP allerede har betalt. Kan være 0 eller høyere.")
     @Min(0)
     val betaltBeløp: BigDecimal?,
 )
