@@ -9,8 +9,8 @@ enum class SjablonTallNavn(
     val bpAndelUnderholdskostnad: Boolean,
     val barnebidrag: Boolean,
     val forskudd: Boolean,
-    val bpAndelSaertilskudd: Boolean,
-    val saertilskudd: Boolean,
+    val bpAndelSærbidrag: Boolean,
+    val særbidrag: Boolean,
 ) {
     ORDINÆR_BARNETRYGD_BELØP("OrdinærBarnetrygdBeløp", "0001", false, false, true, false, false, false, false, false),
     ORDINÆR_SMÅBARNSTILLEGG_BELØP(
@@ -356,8 +356,8 @@ enum class SjablonTallNavn(
         false,
         false,
     ),
-    ØVRE_GRENSE_SÆRTILSKUDD_BELØP(
-        "ØvreGrenseSærtilskuddBeløp",
+    ØVRE_GRENSE_SÆRBIDRAG_BELØP(
+        "ØvreGrenseSærbidragBeløp",
         "0037",
         false,
         false,

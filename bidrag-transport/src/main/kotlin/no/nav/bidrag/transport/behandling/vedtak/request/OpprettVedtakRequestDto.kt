@@ -127,7 +127,7 @@ data class OpprettPeriodeRequestDto(
 
 @Schema
 data class OpprettEngangsbeløpRequestDto(
-    @Schema(description = "Beløpstype. Saertilskudd, gebyr m.m.")
+    @Schema(description = "Beløpstype. Særbidrag, gebyr m.m.")
     @NotBlank
     val type: Engangsbeløptype,
     @Schema(description = "Referanse til sak")

@@ -17,8 +17,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragsevne
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærtilskudd
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSamværsfrdragSærtilskudd
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningVoksneIHustand
@@ -32,7 +31,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.Person
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SivilstandPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SjablonGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningForskudd
-import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningSærtilskudd
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningSærbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.erPerson
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåFremmedReferanse
@@ -420,9 +419,9 @@ fun Grunnlagsreferanse.toTree(
                     "Sluttberegning" +
                         "(${grunnlag.innholdTilObjekt<SluttberegningForskudd>().periode.fom.toCompactString()})"
 
-                Grunnlagstype.SLUTTBEREGNING_SÆRTILSKUDD ->
+                Grunnlagstype.SLUTTBEREGNING_SÆRBIDRAG ->
                     "Sluttberegning" +
-                        "(${grunnlag.innholdTilObjekt<SluttberegningSærtilskudd>().periode.fom.toCompactString()})"
+                        "(${grunnlag.innholdTilObjekt<SluttberegningSærbidrag>().periode.fom.toCompactString()})"
 
                 Grunnlagstype.SJABLON ->
                     "Sjablon(" +
@@ -476,18 +475,13 @@ fun Grunnlagsreferanse.toTree(
 
                 Grunnlagstype.DELBEREGNING_UTGIFT -> {
                     val godkjentBeløp = grunnlag.innholdTilObjekt<DelberegningUtgift>()
-                    "Delberegning utgift særtilskudd(${godkjentBeløp.periode.fom.toCompactString()})"
+                    "Delberegning utgift særbidrag(${godkjentBeløp.periode.fom.toCompactString()})"
                 }
 
-                Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRTILSKUDD -> {
+                Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRBIDRAG -> {
                     @Suppress("ktlint:standard:property-naming")
-                    val BPsAndelSærtilskudd = grunnlag.innholdTilObjekt<DelberegningBidragspliktigesAndelSærtilskudd>()
-                    "Delberegning BPs andel særtilskudd(${BPsAndelSærtilskudd.periode.fom.toCompactString()})"
-                }
-
-                Grunnlagstype.DELBEREGNING_SAMVÆRSFRADRAG_SÆRTILSKUDD -> {
-                    val samværsfradragSærtilskudd = grunnlag.innholdTilObjekt<DelberegningSamværsfrdragSærtilskudd>()
-                    "Delberegning samværsfradrag særtilskudd(${samværsfradragSærtilskudd.periode.fom.toCompactString()})"
+                    val BPsAndelSærbidrag = grunnlag.innholdTilObjekt<DelberegningBidragspliktigesAndelSærbidrag>()
+                    "Delberegning BPs andel særbidrag(${BPsAndelSærbidrag.periode.fom.toCompactString()})"
                 }
 
                 Grunnlagstype.DELBEREGNING_VOKSNE_I_HUSSTAND -> {

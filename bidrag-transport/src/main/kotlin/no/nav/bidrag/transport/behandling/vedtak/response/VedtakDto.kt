@@ -103,7 +103,7 @@ data class VedtakPeriodeDto(
 
 @Schema
 data class EngangsbeløpDto(
-    @Schema(description = "Type Engangsbeløp. Saertilskudd, gebyr m.m.")
+    @Schema(description = "Type Engangsbeløp. Særbidrag, gebyr m.m.")
     val type: Engangsbeløptype,
     @Schema(description = "Referanse til sak")
     val sak: Saksnummer,

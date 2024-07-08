@@ -53,12 +53,12 @@ enum class Resultatkode(
     FORHØYET_FORSKUDD_100_PROSENT("100", ResultatkodeType.FORSKUDD),
     FORHØYET_FORSKUDD_11_ÅR_125_PROSENT("125", ResultatkodeType.FORSKUDD),
 
-    // Resultat av beregning av særtilskudd
+    // Resultat av beregning av særbidrag
     @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_INNVILGET"))
     SÆRTILSKUDD_INNVILGET("VS", ResultatkodeType.SÆRBIDRAG),
     SÆRBIDRAG_INNVILGET("VS", ResultatkodeType.SÆRBIDRAG),
 
-    // Resultat av beregning av særtilskudd
+    // Resultat av beregning av særbidrag
     @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE"))
     SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE("6MB", ResultatkodeType.SÆRBIDRAG),
     SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE("6MB", ResultatkodeType.SÆRBIDRAG),
@@ -87,7 +87,7 @@ enum class Resultatkode(
     IKKE_SØKT_OM_INNKREVING_AV_BIDRAG("OMS", ResultatkodeType.OPPHØR),
     MANGLENDE_SAMARBEID("", ResultatkodeType.OPPHØR),
 
-    // Særtilskudd avslag
+    // Særbidrag avslag
     UTGIFTER_DEKKES_AV_BARNEBIDRAGET("", ResultatkodeType.AVSLAG),
     IKKE_NØDVENDIGE_UTGIFTER("", ResultatkodeType.AVSLAG),
 

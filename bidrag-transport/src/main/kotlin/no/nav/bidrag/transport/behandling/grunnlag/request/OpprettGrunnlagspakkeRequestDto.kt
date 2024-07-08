@@ -5,7 +5,7 @@ import no.nav.bidrag.domene.enums.vedtak.Formål
 
 @Schema(description = "Request for å opprette ny grunnlagspakke, uten annet innhold")
 data class OpprettGrunnlagspakkeRequestDto(
-    @Schema(description = "Til hvilket formål skal grunnlagspakken benyttes. BIDRAG, FORSKUDD eller SAERTILSKUDD")
+    @Schema(description = "Til hvilket formål skal grunnlagspakken benyttes. BIDRAG, FORSKUDD eller SÆRBIDRAG")
     val formaal: Formål,
     @Schema(
         description = """
