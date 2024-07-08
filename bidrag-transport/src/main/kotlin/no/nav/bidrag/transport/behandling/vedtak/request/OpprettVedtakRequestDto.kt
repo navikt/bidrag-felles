@@ -66,9 +66,7 @@ data class OpprettGrunnlagRequestDto(
     override val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
     override val gjelderReferanse: Grunnlagsreferanse? = null,
 ) : BaseGrunnlag {
-    override fun toString(): String {
-        return super.asString()
-    }
+    override fun toString(): String = super.asString()
 }
 
 @Schema
@@ -170,6 +168,9 @@ data class OpprettEngangsbeløpRequestDto(
     @Schema(description = "Liste over alle grunnlag som inngår i engangsbeløpet")
     @NotEmpty
     val grunnlagReferanseListe: List<Grunnlagsreferanse>,
+    @Schema(description = "Beløp BP allerede har betalt. Kan være 0 eller høyere.")
+    @Min(0)
+    val betaltBeløp: BigDecimal?,
 )
 
 @Schema
