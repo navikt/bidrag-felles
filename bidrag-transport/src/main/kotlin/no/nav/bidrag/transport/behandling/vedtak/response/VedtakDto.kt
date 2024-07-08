@@ -116,9 +116,6 @@ data class EngangsbeløpDto(
     @Schema(description = "Beregnet engangsbeløp")
     @Min(0)
     val beløp: BigDecimal?,
-//    @Schema(description = "Særbidrag - beløp BP allerede har betalt. Kan være 0 eller høyere.")
-//    @Min(0)
-//    val betaltBeløp: BigDecimal? = null,
     @Schema(description = "Valutakoden tilhørende engangsbeløpet")
     @NotBlank
     val valutakode: String?,
@@ -148,6 +145,9 @@ data class EngangsbeløpDto(
     val eksternReferanse: String?,
     @Schema(description = "Liste over alle grunnlag som inngår i beregningen")
     val grunnlagReferanseListe: List<Grunnlagsreferanse>,
+    @Schema(description = "Beløp BP allerede har betalt. Kan være 0 eller høyere.")
+    @Min(0)
+    val betaltBeløp: BigDecimal? = null,
 )
 
 @Schema
