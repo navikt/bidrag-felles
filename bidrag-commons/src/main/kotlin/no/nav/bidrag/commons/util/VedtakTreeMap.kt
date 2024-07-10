@@ -29,7 +29,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.InntektsrapporteringPe
 import no.nav.bidrag.transport.behandling.felles.grunnlag.NotatGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Person
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SivilstandPeriode
-import no.nav.bidrag.transport.behandling.felles.grunnlag.SjablonGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SjablonSjablontallPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningForskudd
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningSærbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.erPerson
@@ -423,9 +423,10 @@ fun Grunnlagsreferanse.toTree(
                     "Sluttberegning" +
                         "(${grunnlag.innholdTilObjekt<SluttberegningSærbidrag>().periode.fom.toCompactString()})"
 
+// TODO SJABLON kan mappes til 3 ulike objekter (SjablonSjablontallPeriode, SjablonTrinnvisSkattesatsPeriode og SjablonBidragsevnePeriode)
                 Grunnlagstype.SJABLON ->
                     "Sjablon(" +
-                        "${grunnlag.innholdTilObjekt<SjablonGrunnlag>().sjablon})"
+                        "${grunnlag.innholdTilObjekt<SjablonSjablontallPeriode>().sjablon})"
 
                 Grunnlagstype.DELBEREGNING_SUM_INNTEKT -> {
                     val delberegning = grunnlag.innholdTilObjekt<DelberegningSumInntekt>()

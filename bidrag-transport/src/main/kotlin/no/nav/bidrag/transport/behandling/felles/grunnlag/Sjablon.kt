@@ -5,7 +5,7 @@ import no.nav.bidrag.domene.enums.sjablon.SjablonTallNavn
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
-data class SjablonGrunnlag(
+data class SjablonSjablontallPeriode(
     override val periode: ÅrMånedsperiode,
     @JsonIgnore
     override val manueltRegistrert: Boolean = false,
@@ -24,3 +24,11 @@ data class SjablonTrinnvisSkattesats(
     val inntekstgrense: Int,
     val sats: BigDecimal,
 )
+
+data class SjablonBidragsevnePeriode(
+    override val periode: ÅrMånedsperiode,
+    @JsonIgnore
+    override val manueltRegistrert: Boolean = false,
+    val boutgiftBeløp: BigDecimal,
+    val underholdBeløp: BigDecimal,
+) : GrunnlagPeriodeInnhold

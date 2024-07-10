@@ -36,7 +36,7 @@ data class DelberegningSumInntekt(
 
 data class DelberegningBarnIHusstand(
     override val periode: ÅrMånedsperiode,
-    val antallBarn: Int,
+    val antallBarn: Double,
 ) : Delberegning
 
 data class DelberegningBidragsevne(
