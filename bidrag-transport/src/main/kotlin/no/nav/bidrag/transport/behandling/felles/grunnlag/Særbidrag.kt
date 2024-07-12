@@ -4,7 +4,6 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
-import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -19,7 +18,7 @@ data class SærbidragskategoriGrunnlag(
 
 data class UtgiftspostGrunnlag(
     val dato: LocalDate,
-    val type: Utgiftstype,
+    val type: String,
     val kravbeløp: BigDecimal,
     val godkjentBeløp: BigDecimal,
     @Schema(description = "Begrunnelse på hvorfor godkjent beløp avviker fra kravbeløp. Er påkrevd hvis kravbeløp er ulik godkjent beløp")
