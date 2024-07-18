@@ -5,11 +5,33 @@ import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
-inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T {
-    return commonObjectmapper.treeToValue(innhold)
-}
+inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T = commonObjectmapper.treeToValue(innhold)
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.innholdTilObjekt(): List<T> = map(BaseGrunnlag::innholdTilObjekt)
+
+fun List<BaseGrunnlag>.finnGrunnlagSomErReferertAv(
+    type: Grunnlagstype,
+    fraGrunnlag: BaseGrunnlag,
+): Set<BaseGrunnlag> {
+    val grunnlag = filtrerBasertPåEgenReferanser(type, fraGrunnlag.grunnlagsreferanseListe)
+    if (grunnlag.isEmpty()) {
+        return fraGrunnlag.grunnlagsreferanseListe
+            .flatMap { referanse ->
+                filtrerBasertPåEgenReferanse(null, referanse)
+                    .flatMap {
+                        finnGrunnlagSomErReferertAv(type, it)
+                    }
+            }.toSet()
+    }
+    return grunnlag.toSet()
+}
+
+fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanser(
+    type: Grunnlagstype,
+    referanser: List<Grunnlagsreferanse>,
+): List<BaseGrunnlag> =
+    filtrerBasertPåEgenReferanse(type)
+        .filter { referanser.contains(it.referanse) }
 
 fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
     grunnlagType: Grunnlagstype? = null,
@@ -30,7 +52,10 @@ fun List<BaseGrunnlag>.hentInntekter(): List<InntektsrapporteringPeriode> =
         Grunnlagstype.INNTEKT_RAPPORTERING_PERIODE,
     ).innholdTilObjekt()
 
-data class InnholdMedReferanse<T>(val referanse: String, val innhold: T)
+data class InnholdMedReferanse<T>(
+    val referanse: String,
+    val innhold: T,
+)
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBasertPåEgenReferanse(
     grunnlagType: Grunnlagstype? = null,
@@ -90,6 +115,7 @@ fun Collection<GrunnlagDto>.hentPerson(ident: String?) = filter { it.erPerson() 
 
 fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferanse?) =
     referanse?.let {
-        toList().filtrerBasertPåEgenReferanse(referanse = referanse)
+        toList()
+            .filtrerBasertPåEgenReferanse(referanse = referanse)
             .firstOrNull()
     }

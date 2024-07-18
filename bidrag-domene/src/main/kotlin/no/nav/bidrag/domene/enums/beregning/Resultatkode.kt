@@ -71,12 +71,18 @@ enum class Resultatkode(
     AVSLAG_HØY_INNTEKT("AHI", ResultatkodeType.AVSLAG),
 
     BARNETS_EKTESKAP("OBE", ResultatkodeType.OPPHØR),
-    BARNETS_INNTEKT("OBI", ResultatkodeType.OPPHØR),
+    BARNETS_INNTEKT("OBI", ResultatkodeType.OPPHØR, ResultatkodeType.SÆRBIDRAG, ResultatkodeType.BARNEBIDRAG),
     PÅ_GRUNN_AV_YTELSE_FRA_FOLKETRYGDEN("OFT", ResultatkodeType.OPPHØR),
     FULLT_UNDERHOLDT_AV_OFFENTLIG("OFU", ResultatkodeType.OPPHØR),
     IKKE_OMSORG("OIO", ResultatkodeType.OPPHØR),
     IKKE_OPPHOLD_I_RIKET("OIR", ResultatkodeType.OPPHØR),
-    MANGLENDE_DOKUMENTASJON("OMD", ResultatkodeType.OPPHØR),
+    MANGLENDE_DOKUMENTASJON(
+        "OMD",
+        ResultatkodeType.OPPHØR,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.SÆRBIDRAG,
+        ResultatkodeType.FORSKUDD,
+    ),
     PÅ_GRUNN_AV_SAMMENFLYTTING("OSA", ResultatkodeType.OPPHØR),
     OPPHOLD_I_UTLANDET("OUT", ResultatkodeType.OPPHØR),
     UTENLANDSK_YTELSE("OUY", ResultatkodeType.OPPHØR),
@@ -89,11 +95,11 @@ enum class Resultatkode(
     IKKE_INNKREVING_AV_BIDRAG("", ResultatkodeType.OPPHØR),
 
     // Særbidrag avslag
-    UTGIFTER_DEKKES_AV_BARNEBIDRAGET("", ResultatkodeType.AVSLAG),
-    IKKE_NØDVENDIGE_UTGIFTER("", ResultatkodeType.AVSLAG),
+    UTGIFTER_DEKKES_AV_BARNEBIDRAGET("", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    IKKE_NØDVENDIGE_UTGIFTER("", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
 
-    PRIVAT_AVTALE_OM_SÆRBIDRAG("", ResultatkodeType.AVSLAG),
-    ALLE_UTGIFTER_ER_FORELDET("", ResultatkodeType.AVSLAG),
+    PRIVAT_AVTALE_OM_SÆRBIDRAG("", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    ALLE_UTGIFTER_ER_FORELDET("", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
     ;
 
     companion object {
@@ -103,6 +109,15 @@ enum class Resultatkode(
             } catch (e: Exception) {
                 null
             }
+
+        fun Resultatkode.erType(type: ResultatkodeType): Boolean = Resultatkode.alleMedType(type).contains(this)
+
+        fun Resultatkode.erDirekteAvslag(): Boolean = erType(ResultatkodeType.DIREKTE_AVSLAG)
+
+        fun Resultatkode.erAvslagEllerOpphør(): Boolean =
+            erType(ResultatkodeType.AVSLAG) ||
+                erType(ResultatkodeType.OPPHØR) ||
+                erType(ResultatkodeType.DIREKTE_AVSLAG)
 
         fun alleMedType(type: ResultatkodeType): List<Resultatkode> =
             try {
@@ -114,6 +129,7 @@ enum class Resultatkode(
 
     enum class ResultatkodeType {
         AVSLAG,
+        DIREKTE_AVSLAG,
         OPPHØR,
         FORSKUDD,
         BARNEBIDRAG,
