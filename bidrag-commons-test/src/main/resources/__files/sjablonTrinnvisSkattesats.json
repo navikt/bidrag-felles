@@ -2,249 +2,249 @@
   {
     "datoFom": "2018-01-01",
     "datoTom": "2018-12-31",
-    "inntektGrense": "169,000",
-    "sats": "",
-    "brukerid": 1.4,
-    "tidspktReg": ""
+    "inntektgrense": 169000,
+    "sats": 1.4,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2018-12-12T20:49:04.444"
   },
   {
     "datoFom": "2018-01-01",
     "datoTom": "2018-12-31",
-    "inntektGrense": "237,900",
-    "sats": "",
-    "brukerid": 3.3,
-    "tidspktReg": ""
+    "inntektgrense": 237900,
+    "sats": 3.3,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2018-12-12T20:49:22.103"
   },
   {
     "datoFom": "2018-01-01",
     "datoTom": "2018-12-31",
-    "inntektGrense": "598,050",
-    "sats": "",
-    "brukerid": 12.4,
-    "tidspktReg": "A100364"
+    "inntektgrense": 598050,
+    "sats": 12.4,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2018-12-12T20:49:35.018"
   },
   {
     "datoFom": "2018-01-01",
     "datoTom": "2018-12-31",
-    "inntektGrense": "962,050",
-    "sats": "",
-    "brukerid": 15.4,
-    "tidspktReg": "A100364"
+    "inntektgrense": 962050,
+    "sats": 15.4,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2018-12-12T20:49:49.537"
   },
   {
     "datoFom": "2019-01-01",
     "datoTom": "2019-12-31",
-    "inntektGrense": "174,500",
-    "sats": "",
-    "brukerid": 1.9,
-    "tidspktReg": ""
+    "inntektgrense": 174500,
+    "sats": 1.9,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2018-12-12T20:45:55.621"
   },
   {
     "datoFom": "2019-01-01",
     "datoTom": "2019-12-31",
-    "inntektGrense": "245,650",
-    "sats": "",
-    "brukerid": 4.2,
-    "tidspktReg": ""
+    "inntektgrense": 245650,
+    "sats": 4.2,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2018-12-12T20:46:47.814"
   },
   {
     "datoFom": "2019-01-01",
     "datoTom": "2019-12-31",
-    "inntektGrense": "617,500",
-    "sats": "",
-    "brukerid": 13.2,
-    "tidspktReg": "A100364"
+    "inntektgrense": 617500,
+    "sats": 13.2,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2018-12-12T20:47:41.398"
   },
   {
     "datoFom": "2019-01-01",
     "datoTom": "2019-12-31",
-    "inntektGrense": "964,800",
-    "sats": "",
-    "brukerid": 16.2,
-    "tidspktReg": "A100364"
-  },
-  {
-    "datoFom": "2020-01-01",
-    "datoTom": "2020-12-31",
-    "inntektGrense": "180,800",
-    "sats": "",
-    "brukerid": 1.9,
-    "tidspktReg": ""
-  },
-  {
-    "datoFom": "2020-01-01",
-    "datoTom": "2020-12-31",
-    "inntektGrense": "254,500",
-    "sats": "",
-    "brukerid": 4.2,
-    "tidspktReg": ""
-  },
-  {
-    "datoFom": "2020-01-01",
-    "datoTom": "2020-12-31",
-    "inntektGrense": "639,750",
-    "sats": "",
-    "brukerid": 13.2,
-    "tidspktReg": "A100364"
-  },
-  {
-    "datoFom": "2020-01-01",
-    "datoTom": "2020-12-31",
-    "inntektGrense": "999,550",
-    "sats": "",
-    "brukerid": 16.2,
-    "tidspktReg": "A100364"
-  },
-  {
-    "datoFom": "2021-01-01",
-    "datoTom": "2021-12-31",
-    "inntektGrense": "184,800",
-    "sats": "",
-    "brukerid": 1.7,
-    "tidspktReg": ""
-  },
-  {
-    "datoFom": "2021-01-01",
-    "datoTom": "2021-12-31",
-    "inntektGrense": "260,100",
-    "sats": "",
-    "brukerid": 4,
-    "tidspktReg": ""
-  },
-  {
-    "datoFom": "2021-01-01",
-    "datoTom": "2021-12-31",
-    "inntektGrense": "651,250",
-    "sats": "",
-    "brukerid": 13.2,
-    "tidspktReg": "A100364"
-  },
-  {
-    "datoFom": "2021-01-01",
-    "datoTom": "2021-12-31",
-    "inntektGrense": "1,021,550",
+    "inntektgrense": 964800,
     "sats": 16.2,
-    "brukerid": "A100364",
-    "tidspktReg": "2020-12-17 13:11:13.384"
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2018-12-12T20:48:26.726"
+  },
+  {
+    "datoFom": "2020-01-01",
+    "datoTom": "2020-12-31",
+    "inntektgrense": 180800,
+    "sats": 1.9,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2019-11-29T16:27:40.733"
+  },
+  {
+    "datoFom": "2020-01-01",
+    "datoTom": "2020-12-31",
+    "inntektgrense": 254500,
+    "sats": 4.2,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2019-11-29T16:28:27.581"
+  },
+  {
+    "datoFom": "2020-01-01",
+    "datoTom": "2020-12-31",
+    "inntektgrense": 639750,
+    "sats": 13.2,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2019-11-29T16:29:12.518"
+  },
+  {
+    "datoFom": "2020-01-01",
+    "datoTom": "2020-12-31",
+    "inntektgrense": 999550,
+    "sats": 16.2,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2019-11-29T16:30:22.148"
+  },
+  {
+    "datoFom": "2021-01-01",
+    "datoTom": "2021-12-31",
+    "inntektgrense": 184800,
+    "sats": 1.7,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2020-12-17T13:08:12.385"
+  },
+  {
+    "datoFom": "2021-01-01",
+    "datoTom": "2021-12-31",
+    "inntektgrense": 260100,
+    "sats": 4,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2020-12-17T13:09:12.814"
+  },
+  {
+    "datoFom": "2021-01-01",
+    "datoTom": "2021-12-31",
+    "inntektgrense": 651250,
+    "sats": 13.2,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2020-12-17T13:10:19.923"
+  },
+  {
+    "datoFom": "2021-01-01",
+    "datoTom": "2021-12-31",
+    "inntektgrense": 1021550,
+    "sats": 16.2,
+    "brukerid": "A100364 ",
+    "tidspktEndret": "2020-12-17T13:11:13.384"
   },
   {
     "datoFom": "2022-01-01",
     "datoTom": "2022-12-31",
-    "inntektGrense": "190,350",
-    "sats": "",
-    "brukerid": 1.7,
-    "tidspktReg": ""
+    "inntektgrense": 190350,
+    "sats": 1.7,
+    "brukerid": "R128631 ",
+    "tidspktEndret": "2021-12-17T10:14:58.524"
   },
   {
     "datoFom": "2022-01-01",
     "datoTom": "2022-12-31",
-    "inntektGrense": "267,900",
-    "sats": "",
-    "brukerid": 4,
-    "tidspktReg": ""
+    "inntektgrense": 267900,
+    "sats": 4,
+    "brukerid": "R128631 ",
+    "tidspktEndret": "2021-12-17T10:17:20.369"
   },
   {
     "datoFom": "2022-01-01",
     "datoTom": "2022-12-31",
-    "inntektGrense": "643,800",
-    "sats": "",
-    "brukerid": 13.4,
-    "tidspktReg": "R128631"
+    "inntektgrense": 643800,
+    "sats": 13.4,
+    "brukerid": "R128631 ",
+    "tidspktEndret": "2021-12-17T10:18:30.106"
   },
   {
     "datoFom": "2022-01-01",
     "datoTom": "2022-12-31",
-    "inntektGrense": "969,200",
-    "sats": "",
-    "brukerid": 16.4,
-    "tidspktReg": "R128631"
+    "inntektgrense": 969200,
+    "sats": 16.4,
+    "brukerid": "R128631 ",
+    "tidspktEndret": "2021-12-17T10:19:32.04"
   },
   {
     "datoFom": "2022-01-01",
     "datoTom": "2022-12-31",
-    "inntektGrense": "2,000,000",
+    "inntektgrense": 2000000,
     "sats": 17.4,
-    "brukerid": "R128631",
-    "tidspktReg": "2021-12-17 10:19:32.0"
+    "brukerid": "R128631 ",
+    "tidspktEndret": "2021-12-17T10:19:32"
   },
   {
     "datoFom": "2023-01-01",
     "datoTom": "2023-12-31",
-    "inntektGrense": "198,350",
-    "sats": "",
-    "brukerid": 1.7,
-    "tidspktReg": ""
+    "inntektgrense": 198350,
+    "sats": 1.7,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2022-12-28T22:30:00"
   },
   {
     "datoFom": "2023-01-01",
     "datoTom": "2023-12-31",
-    "inntektGrense": "279,150",
-    "sats": "",
-    "brukerid": 4,
-    "tidspktReg": ""
+    "inntektgrense": 279150,
+    "sats": 4,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2022-12-28T22:30:00"
   },
   {
     "datoFom": "2023-01-01",
     "datoTom": "2023-12-31",
-    "inntektGrense": "642,950",
-    "sats": "",
-    "brukerid": 13.5,
-    "tidspktReg": "H139831"
+    "inntektgrense": 642950,
+    "sats": 13.5,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2022-12-28T22:30:00"
   },
   {
     "datoFom": "2023-01-01",
     "datoTom": "2023-12-31",
-    "inntektGrense": "926,800",
-    "sats": "",
-    "brukerid": 16.5,
-    "tidspktReg": "H139831"
+    "inntektgrense": 926800,
+    "sats": 16.5,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2022-12-28T22:30:00"
   },
   {
     "datoFom": "2023-01-01",
     "datoTom": "2023-12-31",
-    "inntektGrense": "1,500,000",
+    "inntektgrense": 1500000,
     "sats": 17.5,
-    "brukerid": "H139831",
-    "tidspktReg": "2022-12-28 22:30:00.0"
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2022-12-28T22:30:00"
   },
   {
     "datoFom": "2024-01-01",
     "datoTom": "9999-12-31",
-    "inntektGrense": "208,050",
-    "sats": "",
-    "brukerid": 1.7,
-    "tidspktReg": ""
+    "inntektgrense": 208050,
+    "sats": 1.7,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2023-12-17T19:30:00"
   },
   {
     "datoFom": "2024-01-01",
     "datoTom": "9999-12-31",
-    "inntektGrense": "292,850",
-    "sats": "",
-    "brukerid": 4,
-    "tidspktReg": ""
+    "inntektgrense": 292850,
+    "sats": 4,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2023-12-17T19:30:00"
   },
   {
     "datoFom": "2024-01-01",
     "datoTom": "9999-12-31",
-    "inntektGrense": "670,000",
-    "sats": "",
-    "brukerid": 13.6,
-    "tidspktReg": "H139831"
+    "inntektgrense": 670000,
+    "sats": 13.6,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2023-12-17T19:30:00"
   },
   {
     "datoFom": "2024-01-01",
     "datoTom": "9999-12-31",
-    "inntektGrense": "937,900",
-    "sats": "",
-    "brukerid": 16.6,
-    "tidspktReg": "H139831"
+    "inntektgrense": 937900,
+    "sats": 16.6,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2023-12-17T19:30:00"
   },
   {
     "datoFom": "2024-01-01",
     "datoTom": "9999-12-31",
-    "inntektGrense": "1,350,000",
+    "inntektgrense": 1350000,
     "sats": 17.6,
-    "brukerid": "H139831",
-    "tidspktReg": "2023-12-17 19:30:00.0"
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2023-12-17T19:30:00"
   }
 ]
