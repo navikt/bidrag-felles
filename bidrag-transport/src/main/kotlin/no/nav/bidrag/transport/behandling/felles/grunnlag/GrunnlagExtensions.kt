@@ -1,13 +1,46 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
-inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T = commonObjectmapper.treeToValue(innhold)
+inline fun <reified T : List<GrunnlagInnhold>> BaseGrunnlag.innholdTilObjektListe(): T =
+    try {
+        commonObjectmapper.treeToValue(innhold)
+    } catch (e: Exception) {
+        commonObjectmapper.readValue(commonObjectmapper.writeValueAsString(innhold))
+    }
+
+inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T =
+    try {
+        commonObjectmapper.treeToValue(innhold)
+    } catch (e: Exception) {
+        commonObjectmapper.readValue(commonObjectmapper.writeValueAsString(innhold))
+    }
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.innholdTilObjekt(): List<T> = map(BaseGrunnlag::innholdTilObjekt)
+
+inline fun <reified T : List<GrunnlagInnhold>> List<BaseGrunnlag>.innholdTilObjektListe(): List<T> =
+    map(BaseGrunnlag::innholdTilObjektListe)
+
+fun List<BaseGrunnlag>.finnGrunnlagSomErReferertFraGrunnlagsreferanseListe(
+    type: Grunnlagstype,
+    grunnlagsreferanseListe: List<Grunnlagsreferanse>,
+): Set<BaseGrunnlag> {
+    val grunnlag = filtrerBasertPåEgenReferanser(type, grunnlagsreferanseListe)
+    if (grunnlag.isEmpty()) {
+        return grunnlagsreferanseListe
+            .flatMap { referanse ->
+                filtrerBasertPåEgenReferanse(null, referanse)
+                    .flatMap {
+                        finnGrunnlagSomErReferertAv(type, it)
+                    }
+            }.toSet()
+    }
+    return grunnlag.toSet()
+}
 
 fun List<BaseGrunnlag>.finnGrunnlagSomErReferertAv(
     type: Grunnlagstype,
@@ -119,3 +152,17 @@ fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferans
             .filtrerBasertPåEgenReferanse(referanse = referanse)
             .firstOrNull()
     }
+
+// Særbidrag grunnlag
+val List<BaseGrunnlag>.særbidragskategori get() =
+    filtrerBasertPåEgenReferanse(Grunnlagstype.SÆRBIDRAG_KATEGORI).firstOrNull()?.innholdTilObjekt<SærbidragskategoriGrunnlag>()
+
+val List<BaseGrunnlag>.utgiftDirekteBetalt get() =
+    filtrerBasertPåEgenReferanse(
+        Grunnlagstype.UTGIFT_DIREKTE_BETALT,
+    ).firstOrNull()?.innholdTilObjekt<UtgiftDirekteBetaltGrunnlag>()
+
+val List<BaseGrunnlag>.utgiftsposter get() =
+    filtrerBasertPåEgenReferanse(
+        Grunnlagstype.UTGIFTSPOSTER,
+    ).firstOrNull()?.innholdTilObjektListe<List<UtgiftspostGrunnlag>>() ?: emptyList()
