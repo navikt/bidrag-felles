@@ -9,5 +9,6 @@ data class NotatGrunnlag(
         VIRKNINGSTIDSPUNKT,
         BOFORHOLD,
         INNTEKT,
+        UTGIFTER,
     }
 }
