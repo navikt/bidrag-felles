@@ -152,3 +152,17 @@ fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferans
             .filtrerBasertPåEgenReferanse(referanse = referanse)
             .firstOrNull()
     }
+
+// Særbidrag grunnlag
+val List<BaseGrunnlag>.særbidragskategori get() =
+    filtrerBasertPåEgenReferanse(Grunnlagstype.SÆRBIDRAG_KATEGORI).firstOrNull()?.innholdTilObjekt<SærbidragskategoriGrunnlag>()
+
+val List<BaseGrunnlag>.utgiftDirekteBetalt get() =
+    filtrerBasertPåEgenReferanse(
+        Grunnlagstype.UTGIFT_DIREKTE_BETALT,
+    ).firstOrNull()?.innholdTilObjekt<UtgiftDirekteBetaltGrunnlag>()
+
+val List<BaseGrunnlag>.utgiftsposter get() =
+    filtrerBasertPåEgenReferanse(
+        Grunnlagstype.UTGIFTSPOSTER,
+    ).firstOrNull()?.innholdTilObjektListe<List<UtgiftspostGrunnlag>>() ?: emptyList()
