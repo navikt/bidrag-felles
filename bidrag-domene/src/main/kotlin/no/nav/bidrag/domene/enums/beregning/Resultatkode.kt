@@ -91,8 +91,8 @@ enum class Resultatkode(
     // I tilfeller når BP bor i Lugano-land og BM søker kun om forskudd, så har vi ikke hjemmel til å ta bidragssaken opp av eget tiltak etter forskotteringsloven.
     // Da må BM søke om fastsettelse av bidrag før vi innvilger forskuddet. Hvis hen ikke søker, så avslår vi kravet på grunn av manglende samarbeid (§3 i forskotteringsloven).
     @Deprecated("Bruk IKKE_INNKREVING_AV_BIDRAG istedenfor", ReplaceWith("IKKE_INNKREVING_AV_BIDRAG"))
-    IKKE_SØKT_OM_INNKREVING_AV_BIDRAG("", ResultatkodeType.OPPHØR),
-    IKKE_INNKREVING_AV_BIDRAG("", ResultatkodeType.OPPHØR),
+    IKKE_SØKT_OM_INNKREVING_AV_BIDRAG("OH", ResultatkodeType.OPPHØR),
+    IKKE_INNKREVING_AV_BIDRAG("OH", ResultatkodeType.OPPHØR),
 
     // Særbidrag avslag
     UTGIFTER_DEKKES_AV_BARNEBIDRAGET("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
