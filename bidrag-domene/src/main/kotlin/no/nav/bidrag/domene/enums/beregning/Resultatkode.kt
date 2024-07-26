@@ -86,7 +86,7 @@ enum class Resultatkode(
     PÅ_GRUNN_AV_SAMMENFLYTTING("OSA", ResultatkodeType.OPPHØR),
     OPPHOLD_I_UTLANDET("OUT", ResultatkodeType.OPPHØR),
     UTENLANDSK_YTELSE("OUY", ResultatkodeType.OPPHØR),
-    AVSLAG_PRIVAT_AVTALE_BIDRAG("", ResultatkodeType.OPPHØR),
+    AVSLAG_PRIVAT_AVTALE_BIDRAG("OH", ResultatkodeType.OPPHØR),
 
     // I tilfeller når BP bor i Lugano-land og BM søker kun om forskudd, så har vi ikke hjemmel til å ta bidragssaken opp av eget tiltak etter forskotteringsloven.
     // Da må BM søke om fastsettelse av bidrag før vi innvilger forskuddet. Hvis hen ikke søker, så avslår vi kravet på grunn av manglende samarbeid (§3 i forskotteringsloven).
@@ -95,11 +95,11 @@ enum class Resultatkode(
     IKKE_INNKREVING_AV_BIDRAG("", ResultatkodeType.OPPHØR),
 
     // Særbidrag avslag
-    UTGIFTER_DEKKES_AV_BARNEBIDRAGET("", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
-    IKKE_NØDVENDIGE_UTGIFTER("", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    UTGIFTER_DEKKES_AV_BARNEBIDRAGET("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    IKKE_NØDVENDIGE_UTGIFTER("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
 
-    PRIVAT_AVTALE_OM_SÆRBIDRAG("", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
-    ALLE_UTGIFTER_ER_FORELDET("", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    PRIVAT_AVTALE_OM_SÆRBIDRAG("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    ALLE_UTGIFTER_ER_FORELDET("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
     ;
 
     companion object {
