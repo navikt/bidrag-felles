@@ -260,7 +260,14 @@ data class InntekterPerRolle(
     val småbarnstillegg: List<NotatInntektDto> = emptyList(),
     val kontantstøtte: List<NotatInntektDto> = emptyList(),
     val beregnetInntekter: List<NotatBeregnetInntektDto> = emptyList(),
-)
+) {
+    val harInntekter get() =
+        årsinntekter.isNotEmpty() ||
+            barnetillegg.isNotEmpty() ||
+            utvidetBarnetrygd.isNotEmpty() ||
+            småbarnstillegg.isNotEmpty() ||
+            kontantstøtte.isNotEmpty()
+}
 
 data class NotatBeregnetInntektDto(
     val gjelderBarn: PersonNotatDto,
@@ -303,9 +310,6 @@ data class Vedtak(
     val erFattet: Boolean,
     val fattetAvSaksbehandler: String?,
     val fattetTidspunkt: LocalDateTime?,
-    @Schema(
-        type = "array",
-    )
     val resultat: List<VedtakResultatInnhold>,
 )
 
