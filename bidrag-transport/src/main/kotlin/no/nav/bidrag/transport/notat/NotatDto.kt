@@ -60,6 +60,7 @@ data class NotatBehandlingDetaljer(
     val søktFraDato: YearMonth?,
     val virkningstidspunkt: LocalDate?,
     val avslag: Resultatkode?,
+    val datoNotat: LocalDate? = null,
 ) {
     @get:Schema(name = "avslagVisningsnavn")
     val avslagVisningsnavn
