@@ -25,9 +25,7 @@ data class GrunnlagDto(
     override val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
     override val gjelderReferanse: Grunnlagsreferanse? = null,
 ) : BaseGrunnlag {
-    override fun toString(): String {
-        return super.asString()
-    }
+    override fun toString(): String = super.asString()
 
     override fun hashCode(): Int {
         // +grunnlagsreferanseListe.sorted().hashCode()
@@ -67,11 +65,10 @@ interface BaseGrunnlag {
     @get:Schema(description = "Liste over grunnlagsreferanser")
     val grunnlagsreferanseListe: List<Grunnlagsreferanse>
 
-    fun asString(): String {
-        return "$type - ${::referanse.name}=$referanse, ${::gjelderReferanse.name}=$gjelderReferanse, " +
+    fun asString(): String =
+        "$type - ${::referanse.name}=$referanse, ${::gjelderReferanse.name}=$gjelderReferanse, " +
             "${::grunnlagsreferanseListe.name}=${grunnlagsreferanseListe.ifEmpty { listOf("<tomt>") }.joinToString(",")}, " +
             "${::innhold.name}=${commonObjectmapper.writeValueAsString(innhold)}"
-    }
 
     fun valider() {
         require(innhold.asText() != "null" && !innhold.isNull) { "innhold kan ikke være null" }
