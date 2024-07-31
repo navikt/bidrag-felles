@@ -41,6 +41,7 @@ enum class Grunnlagstype {
     NOTAT,
 
     // Særbidrag
+    SÆRBIDRAGSPERIODE,
     SÆRBIDRAG_KATEGORI,
     UTGIFT_DIREKTE_BETALT,
     UTGIFTSPOSTER,
