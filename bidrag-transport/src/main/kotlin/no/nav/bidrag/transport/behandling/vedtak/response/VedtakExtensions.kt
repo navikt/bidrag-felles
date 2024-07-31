@@ -10,7 +10,7 @@ import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
-import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjektLegacy
 import java.time.YearMonth
 
 val VedtakDto.saksnummer get() = stønadsendringListe.firstOrNull()?.sak?.verdi ?: engangsbeløpListe.firstOrNull()?.sak?.verdi
@@ -39,7 +39,7 @@ val VedtakDto.virkningstidspunkt get() =
         .filtrerBasertPåEgenReferanse(
             Grunnlagstype.VIRKNINGSTIDSPUNKT,
         ).firstOrNull()
-        ?.innholdTilObjekt<VirkningstidspunktGrunnlag>()
+        ?.innholdTilObjektLegacy<VirkningstidspunktGrunnlag>()
         ?.virkningstidspunkt
 
 val VedtakDto.særbidragsperiode get() =
@@ -60,7 +60,7 @@ val VedtakDto.erDirekteAvslag get(): Boolean {
             .filtrerBasertPåEgenReferanse(
                 Grunnlagstype.VIRKNINGSTIDSPUNKT,
             ).firstOrNull()
-            ?.innholdTilObjekt<VirkningstidspunktGrunnlag>()
+            ?.innholdTilObjektLegacy<VirkningstidspunktGrunnlag>()
     return virkningstidspunkt?.avslag != null ||
         engangsbeløpListe
             .firstOrNull()
