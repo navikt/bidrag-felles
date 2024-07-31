@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.transport.felles.commonObjectmapper
+import no.nav.bidrag.transport.felles.commonObjectmapperLegacy
 
 inline fun <reified T : List<GrunnlagInnhold>> BaseGrunnlag.innholdTilObjektListe(): T =
     try {
@@ -18,6 +19,13 @@ inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjekt(): T =
         commonObjectmapper.treeToValue(innhold)
     } catch (e: Exception) {
         commonObjectmapper.readValue(commonObjectmapper.writeValueAsString(innhold))
+    }
+
+inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.innholdTilObjektLegacy(): T =
+    try {
+        commonObjectmapperLegacy.treeToValue(innhold)
+    } catch (e: Exception) {
+        commonObjectmapperLegacy.readValue(commonObjectmapperLegacy.writeValueAsString(innhold))
     }
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.innholdTilObjekt(): List<T> = map(BaseGrunnlag::innholdTilObjekt)
