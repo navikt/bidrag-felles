@@ -10,8 +10,12 @@ data class SøknadGrunnlag(
     val mottattDato: LocalDate,
     val søktFraDato: LocalDate,
     val søktAv: SøktAvType,
-    @Schema(description = "Mottatt dato på originale søknad. Er relevant hvis det klages på vedtaket")
-    val opprinneligMottattDato: LocalDate? = null,
+    @Schema(
+        description =
+            "Dato når klage ble mottatt. Kan være ulik mottattDato hvis behandlingen gjelder særbidrag." +
+                "I særbidrag så er det mottatt dato på originale søknad som gjelder",
+    )
+    val klageMottattDato: LocalDate? = null,
 ) : GrunnlagInnhold
 
 data class VirkningstidspunktGrunnlag(
