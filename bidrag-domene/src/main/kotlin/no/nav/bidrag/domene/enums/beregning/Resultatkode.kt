@@ -7,7 +7,7 @@ enum class Resultatkode(
     val legacyKode: String,
     vararg val type: ResultatkodeType,
 ) {
-    BARNET_ER_SELVFORSØRGET("", ResultatkodeType.BARNEBIDRAG, ResultatkodeType.SÆRBIDRAG),
+    BARNET_ER_SELVFORSØRGET("5SF", ResultatkodeType.BARNEBIDRAG, ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
 
     // Resultat av beregning av barnebidrag, angir at det må gjøres en forholdsmessig fordeling
     BEGRENSET_EVNE_FLERE_SAKER_UTFØR_FORHOLDSMESSIG_FORDELING("", ResultatkodeType.BARNEBIDRAG),
@@ -53,6 +53,8 @@ enum class Resultatkode(
     FORHØYET_FORSKUDD_100_PROSENT("100", ResultatkodeType.FORSKUDD),
     FORHØYET_FORSKUDD_11_ÅR_125_PROSENT("125", ResultatkodeType.FORSKUDD),
 
+    RESULTAT_MINDRE_ENN_FORSKUDD("AMF", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
+
     // Resultat av beregning av særbidrag
     @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_INNVILGET"))
     SÆRTILSKUDD_INNVILGET("VS", ResultatkodeType.SÆRBIDRAG),
@@ -60,8 +62,8 @@ enum class Resultatkode(
 
     // Resultat av beregning av særbidrag
     @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE"))
-    SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE("6MB", ResultatkodeType.SÆRBIDRAG),
-    SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE("6MB", ResultatkodeType.SÆRBIDRAG),
+    SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE("ABB", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
+    SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE("ABB", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
 
     AVSLAG("A", ResultatkodeType.AVSLAG),
     AVSLAG2("AA", ResultatkodeType.AVSLAG),
@@ -95,11 +97,11 @@ enum class Resultatkode(
     IKKE_INNKREVING_AV_BIDRAG("OH", ResultatkodeType.OPPHØR),
 
     // Særbidrag avslag
-    UTGIFTER_DEKKES_AV_BARNEBIDRAGET("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
-    IKKE_NØDVENDIGE_UTGIFTER("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    UTGIFTER_DEKKES_AV_BARNEBIDRAGET("ADB", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    IKKE_NØDVENDIGE_UTGIFTER("AIN", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
 
-    PRIVAT_AVTALE_OM_SÆRBIDRAG("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
-    ALLE_UTGIFTER_ER_FORELDET("A", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    PRIVAT_AVTALE_OM_SÆRBIDRAG("VX", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    ALLE_UTGIFTER_ER_FORELDET("AUF", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
     ;
 
     companion object {
