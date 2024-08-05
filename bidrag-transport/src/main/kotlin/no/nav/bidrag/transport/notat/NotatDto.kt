@@ -339,6 +339,7 @@ data class NotatResultatSærbidragsberegningDto(
     val voksenIHusstanden: Boolean? = null,
     val enesteVoksenIHusstandenErEgetBarn: Boolean? = null,
     val erDirekteAvslag: Boolean = false,
+    val bpHarEvne: Boolean = resultatKode != Resultatkode.SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE,
 ) : VedtakResultatInnhold(NotatMalType.SÆRBIDRAG) {
     val resultatVisningsnavn get() = resultatKode.visningsnavn.intern
     val beløpSomInnkreves: BigDecimal
