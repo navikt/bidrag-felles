@@ -53,7 +53,7 @@ enum class Resultatkode(
     FORHØYET_FORSKUDD_100_PROSENT("100", ResultatkodeType.FORSKUDD),
     FORHØYET_FORSKUDD_11_ÅR_125_PROSENT("125", ResultatkodeType.FORSKUDD),
 
-    RESULTAT_MINDRE_ENN_FORSKUDD("AMF", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
+//    RESULTAT_MINDRE_ENN_FORSKUDD("AMF", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
 
     // Resultat av beregning av særbidrag
     @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_INNVILGET"))
