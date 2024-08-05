@@ -83,9 +83,9 @@ SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE:
   bruker:
     NB: "Særtilskudd ikke full bidragsevne"
 SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE:
-  intern: "Særbidrag ikke full bidragsevne"
+  intern: "Ikke full bidragsevne"
   bruker:
-    NB: "Særbidrag ikke full bidragsevne"
+    NB: "Ikke full bidragsevne"
 #Avslagskoder
 AVSLAG:
   intern: "Avslag"
@@ -158,3 +158,6 @@ PRIVAT_AVTALE_OM_SÆRBIDRAG:
   intern: "Privat avtale om særbidrag"
 ALLE_UTGIFTER_ER_FORELDET:
   intern: "Alle utgifter er foreldet"
+
+RESULTAT_MINDRE_ENN_FORSKUDD:
+  intern: "Resultat mindre enn forskudd"
