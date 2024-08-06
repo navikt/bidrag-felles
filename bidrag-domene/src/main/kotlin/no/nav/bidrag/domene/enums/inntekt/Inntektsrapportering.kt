@@ -405,10 +405,23 @@ enum class Inntektsrapportering(
         legacyKode = "BS",
     ),
 
-    DOKUMENTASJON_MANGLER_SKJØNN(
+    SKJØNN_MANGLENDE_DOKUMENTASJON(
         hentesAutomatisk = false,
         kanLeggesInnManuelt = true,
-        inneholderInntektstypeListe = emptyList(),
+        inneholderInntektstypeListe =
+            listOf(
+                Inntektstype.AAP,
+                Inntektstype.DAGPENGER,
+                Inntektstype.FORELDREPENGER,
+                Inntektstype.INTRODUKSJONSSTØNAD,
+                Inntektstype.KVALIFISERINGSSTØNAD,
+                Inntektstype.OVERGANGSSTØNAD,
+                Inntektstype.LØNNSINNTEKT,
+                Inntektstype.KAPITALINNTEKT,
+                Inntektstype.NÆRINGSINNTEKT,
+                Inntektstype.PENSJON,
+                Inntektstype.SYKEPENGER,
+            ),
         legacyKode = "MDOK",
     ),
 
@@ -461,10 +474,23 @@ enum class Inntektsrapportering(
         legacyKode = "LTRB",
     ),
 
-    MANGLENDE_BRUK_AV_EVNE_SKJØNN(
+    SKJØNN_MANGLENDE_BRUK_AV_EVNE(
         hentesAutomatisk = false,
         kanLeggesInnManuelt = true,
-        inneholderInntektstypeListe = emptyList(),
+        inneholderInntektstypeListe =
+            listOf(
+                Inntektstype.AAP,
+                Inntektstype.DAGPENGER,
+                Inntektstype.FORELDREPENGER,
+                Inntektstype.INTRODUKSJONSSTØNAD,
+                Inntektstype.KVALIFISERINGSSTØNAD,
+                Inntektstype.OVERGANGSSTØNAD,
+                Inntektstype.LØNNSINNTEKT,
+                Inntektstype.KAPITALINNTEKT,
+                Inntektstype.NÆRINGSINNTEKT,
+                Inntektstype.PENSJON,
+                Inntektstype.SYKEPENGER,
+            ),
         legacyKode = "EVNE",
     ),
 
@@ -506,12 +532,11 @@ enum class Inntektsrapportering(
         fun Inntektsrapportering.kanBrukesSammenMed(inntektsrapportering2: Inntektsrapportering) =
             !(this.inneholderInntektstypeListe.any { inntektsrapportering2.inneholderInntektstypeListe.contains(it) })
 
-        fun fraLegacyKode(legacyKode: String): Inntektsrapportering? {
-            return try {
+        fun fraLegacyKode(legacyKode: String): Inntektsrapportering? =
+            try {
                 enumValues<Inntektsrapportering>().find { it.legacyKode == legacyKode } ?: Inntektsrapportering.valueOf(legacyKode)
             } catch (e: Exception) {
                 null
             }
-        }
     }
 }

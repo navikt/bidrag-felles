@@ -141,6 +141,8 @@ class InntektstypeTest {
             listOf(
                 Inntektsrapportering.KAPITALINNTEKT,
                 Inntektsrapportering.KAPITALINNTEKT_EGNE_OPPLYSNINGER,
+                Inntektsrapportering.SKJØNN_MANGLENDE_DOKUMENTASJON,
+                Inntektsrapportering.SKJØNN_MANGLENDE_BRUK_AV_EVNE,
             )
 
         Inntektstype.LØNNSINNTEKT.inngårIInntektRapporteringer() shouldContainAll
@@ -159,6 +161,8 @@ class InntektstypeTest {
         Inntektstype.NÆRINGSINNTEKT.inngårIInntektRapporteringer() shouldBe
             listOf(
                 Inntektsrapportering.NÆRINGSINNTEKT_MANUELT_BEREGNET,
+                Inntektsrapportering.SKJØNN_MANGLENDE_DOKUMENTASJON,
+                Inntektsrapportering.SKJØNN_MANGLENDE_BRUK_AV_EVNE,
             )
     }
 }

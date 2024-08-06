@@ -100,10 +100,10 @@ DAGPENGER:
   intern: "Dagpenger"
   bruker:
     NB: "Ytelse fra det offentlige"
-DOKUMENTASJON_MANGLER_SKJØNN:
-  intern: "Dokumentasjon mangler (skjønn)"
+SKJØNN_MANGLENDE_DOKUMENTASJON:
+  intern: "Skjønn manglende dokumentasjon"
   bruker:
-    NB: "Skjønn - mangler dokumentasjon"
+    NB: "Skjønnsfastsettelse av inntekt"
 FORDEL_SÆRFRADRAG_ENSLIG_FORSØRGER:
   intern: "Fordel særfradrag enslig forsørger"
   bruker:
@@ -132,10 +132,10 @@ LØNNSOPPGAVE_FRA_SKATTEETATEN_KORRIGERT_FOR_BARNETILLEGG:
   intern: "Lønnsoppgave fra Skatteetaten korrigert for barnetillegg"
   bruker:
     NB: "Lønnsoppgave fra Skatteetaten korrigert for barnetillegg"
-MANGLENDE_BRUK_AV_EVNE_SKJØNN:
-  intern: "Manglende bruk av evne (skjønn)"
+SKJØNN_MANGLENDE_BRUK_AV_EVNE:
+  intern: "Skjønn manglende bruk av evne"
   bruker:
-    NB: "Manglende bruk av evne"
+    NB: "Skjønnsfastsettelse av inntekt"
 NETTO_KAPITALINNTEKT:
   intern: "Netto kapitalinntekt"
   bruker:
