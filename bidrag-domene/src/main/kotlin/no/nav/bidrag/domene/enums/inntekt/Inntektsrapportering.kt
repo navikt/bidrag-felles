@@ -405,7 +405,7 @@ enum class Inntektsrapportering(
         legacyKode = "BS",
     ),
 
-    SKJØNN_MANGLENDE_DOKUMENTASJON(
+    SKJØNN_MANGLER_DOKUMENTASJON(
         hentesAutomatisk = false,
         kanLeggesInnManuelt = true,
         inneholderInntektstypeListe =
