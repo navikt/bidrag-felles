@@ -39,7 +39,6 @@ data class NotatDto(
     val virkningstidspunkt: Virkningstidspunkt,
     val utgift: NotatSærbidragUtgifterDto?,
     val boforhold: Boforhold,
-    @Deprecated("Rolle angir rollen notatet gjelder")
     val roller: List<PersonNotatDto>,
     val inntekter: Inntekter,
     val vedtak: Vedtak,
@@ -155,7 +154,7 @@ data class Virkningstidspunkt(
 data class SaksbehandlerNotat(
     val medIVedtaket: String? = null,
     val intern: String?,
-    val gjelder: PersonNotatDto,
+    val gjelder: PersonNotatDto? = null,
 )
 
 data class Boforhold(
