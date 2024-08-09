@@ -155,7 +155,6 @@ data class SaksbehandlerNotat(
     val medIVedtaket: String? = null,
     val intern: String?,
     val gjelder: PersonNotatDto? = null,
-    val gjelder: PersonNotatDto,
 )
 
 data class Boforhold(
