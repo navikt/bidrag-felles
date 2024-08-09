@@ -159,5 +159,5 @@ PRIVAT_AVTALE_OM_SÆRBIDRAG:
 ALLE_UTGIFTER_ER_FORELDET:
   intern: "Alle utgifter er foreldet"
 
-GODKJENT_BELØP_LAVERE_ENN_FORSKUDDSSATS:
-  intern: "Godkjent beløp lavere enn forskuddssats"
+GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS:
+  intern: "Godkjent beløp er lavere enn forskuddssats"
