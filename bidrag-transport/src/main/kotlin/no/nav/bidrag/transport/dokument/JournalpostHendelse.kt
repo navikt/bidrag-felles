@@ -36,14 +36,13 @@ data class JournalpostHendelse(
 
     fun harAktorId() = aktorId != null
 
-    fun hentJournalposttype(): JournalpostType? {
-        return when (journalposttype) {
+    fun hentJournalposttype(): JournalpostType? =
+        when (journalposttype) {
             JournalpostType.UTGÅENDE.name, DokumentType.UTGÅENDE -> JournalpostType.UTGÅENDE
             JournalpostType.NOTAT.name, DokumentType.NOTAT -> JournalpostType.NOTAT
             JournalpostType.INNGÅENDE.name, DokumentType.INNGÅENDE -> JournalpostType.INNGÅENDE
             else -> null
         }
-    }
 
     fun harJournalpostIdPrefix() = journalpostId.contains("-")
 
@@ -89,10 +88,10 @@ data class Sporingsdata(
             "ukjent saksbehandler"
         } else {
             hentBrukeridentMedSaksbehandler(
-                saksbehandlerEnhet ?: enhetsnummer ?: "",
+                saksbehandlerEnhet ?: enhetsnummer ?: "ukjent enhet",
             )
         }
 
     private fun hentBrukeridentMedSaksbehandler(enhetsnummer: String) =
-        "${saksbehandlersNavn ?: "Ukjent"} (${brukerident ?: "Ukjent"}, $enhetsnummer)"
+        "${saksbehandlersNavn ?: "Ukjent"} ${brukerident?.let { "($it, $enhetsnummer)" } ?: "($enhetsnummer)"}"
 }

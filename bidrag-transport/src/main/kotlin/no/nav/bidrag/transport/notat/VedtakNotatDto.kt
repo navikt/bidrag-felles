@@ -31,17 +31,17 @@ import java.time.LocalDateTime
 import java.time.YearMonth
 import java.util.Locale
 
-data class NotatDto(
+data class VedtakNotatDto(
     val type: NotatMalType = NotatMalType.FORSKUDD,
     val saksnummer: String,
-    val behandling: NotatBehandlingDetaljer,
+    val behandling: NotatBehandlingDetaljerDto,
     val saksbehandlerNavn: String?,
-    val virkningstidspunkt: Virkningstidspunkt,
+    val virkningstidspunkt: NotatVirkningstidspunktDto,
     val utgift: NotatSærbidragUtgifterDto?,
-    val boforhold: Boforhold,
-    val roller: List<PersonNotatDto>,
-    val inntekter: Inntekter,
-    val vedtak: Vedtak,
+    val boforhold: NotatBoforholdDto,
+    val roller: List<NotatRolleDto>,
+    val inntekter: NotatInntekterDto,
+    val vedtak: NotatVedtakDetaljerDto,
 )
 
 @Schema(enumAsRef = true)
@@ -51,7 +51,7 @@ enum class NotatMalType {
     BIDRAG,
 }
 
-data class NotatBehandlingDetaljer(
+data class NotatBehandlingDetaljerDto(
     val søknadstype: String?,
     val vedtakstype: Vedtakstype?,
     val kategori: NotatSærbidragKategoriDto? = null,
@@ -78,7 +78,9 @@ data class NotatBehandlingDetaljer(
 
 data class NotatSærbidragUtgifterDto(
     val beregning: NotatUtgiftBeregningDto? = null,
-    val notat: SaksbehandlerNotat,
+    val begrunnelse: NotatBegrunnelseDto,
+    @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
+    val notat: NotatBegrunnelseDto = begrunnelse,
     val utgifter: List<NotatUtgiftspostDto> = emptyList(),
 )
 
@@ -125,7 +127,7 @@ data class NotatSærbidragKategoriDto(
     val beskrivelse: String? = null,
 )
 
-data class Virkningstidspunkt(
+data class NotatVirkningstidspunktDto(
     val søknadstype: String?,
     val vedtakstype: Vedtakstype?,
     val søktAv: SøktAvType?,
@@ -141,7 +143,9 @@ data class Virkningstidspunkt(
     val avslag: Resultatkode?,
     @Schema(name = "årsak", enumAsRef = true)
     val årsak: VirkningstidspunktÅrsakstype?,
-    val notat: SaksbehandlerNotat,
+    val begrunnelse: NotatBegrunnelseDto,
+    @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
+    val notat: NotatBegrunnelseDto = begrunnelse,
 ) {
     @get:Schema(name = "årsakVisningsnavn")
     val årsakVisningsnavn get() = årsak?.visningsnavn?.intern
@@ -151,17 +155,21 @@ data class Virkningstidspunkt(
         get() = vedtakstype?.let { avslag?.visningsnavnIntern(vedtakstype) } ?: avslag?.visningsnavn?.intern
 }
 
-data class SaksbehandlerNotat(
-    val medIVedtaket: String? = null,
-    val intern: String?,
-    val gjelder: PersonNotatDto? = null,
+@Schema(description = "Notat begrunnelse skrevet av saksbehandler")
+data class NotatBegrunnelseDto(
+    val innhold: String?,
+    @Schema(name = "intern", deprecated = true)
+    val intern: String? = innhold,
+    val gjelder: NotatRolleDto? = null,
 )
 
-data class Boforhold(
+data class NotatBoforholdDto(
     val barn: List<BoforholdBarn> = emptyList(),
     val andreVoksneIHusstanden: NotatAndreVoksneIHusstanden? = null,
     val sivilstand: NotatSivilstand,
-    val notat: SaksbehandlerNotat,
+    val begrunnelse: NotatBegrunnelseDto,
+    @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
+    val notat: NotatBegrunnelseDto = begrunnelse,
 )
 
 data class NotatSivilstand(
@@ -190,7 +198,7 @@ data class VoksenIHusstandenDetaljerDto(
 )
 
 data class BoforholdBarn(
-    val gjelder: PersonNotatDto,
+    val gjelder: NotatRolleDto,
     val medIBehandling: Boolean,
     val kilde: Kilde,
     val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret<Bostatuskode>> =
@@ -239,22 +247,23 @@ private fun <T> toVisningsnavn(value: T): String? =
         else -> null
     }
 
-data class PersonNotatDto(
+data class NotatRolleDto(
     val rolle: Rolletype?,
     val navn: String?,
     val fødselsdato: LocalDate?,
     val ident: Personident?,
 )
 
-data class Inntekter(
+data class NotatInntekterDto(
     val inntekterPerRolle: List<InntekterPerRolle>,
     val offentligeInntekterPerRolle: List<InntekterPerRolle> = emptyList(),
-    val notat: SaksbehandlerNotat,
-    val notatPerRolle: Set<SaksbehandlerNotat> = emptySet(),
+    val notat: NotatBegrunnelseDto,
+    val notatPerRolle: Set<NotatBegrunnelseDto> = emptySet(),
+    val begrunnelsePerRolle: Set<NotatBegrunnelseDto> = notatPerRolle,
 )
 
 data class InntekterPerRolle(
-    val gjelder: PersonNotatDto,
+    val gjelder: NotatRolleDto,
     val arbeidsforhold: List<Arbeidsforhold> = emptyList(),
     @Schema(name = "årsinntekter")
     val årsinntekter: List<NotatInntektDto> = emptyList(),
@@ -273,7 +282,7 @@ data class InntekterPerRolle(
 }
 
 data class NotatBeregnetInntektDto(
-    val gjelderBarn: PersonNotatDto,
+    val gjelderBarn: NotatRolleDto,
     val summertInntektListe: List<DelberegningSumInntekt>,
 )
 
@@ -291,7 +300,7 @@ data class NotatInntektDto(
     val kilde: Kilde = Kilde.OFFENTLIG,
     val type: Inntektsrapportering,
     val medIBeregning: Boolean = false,
-    val gjelderBarn: PersonNotatDto?,
+    val gjelderBarn: NotatRolleDto?,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
     val visningsnavn
@@ -309,7 +318,7 @@ data class NotatInntektspostDto(
     val visningsnavn: String? = inntektstype?.visningsnavn?.intern,
 )
 
-data class Vedtak(
+data class NotatVedtakDetaljerDto(
     val erFattet: Boolean,
     val fattetAvSaksbehandler: String?,
     val fattetTidspunkt: LocalDateTime?,
@@ -370,7 +379,7 @@ data class NotatResultatSærbidragsberegningDto(
 }
 
 data class NotatResultatForskuddBeregningBarnDto(
-    val barn: PersonNotatDto,
+    val barn: NotatRolleDto,
     val perioder: List<NotatResultatPeriodeDto>,
 ) : VedtakResultatInnhold(NotatMalType.FORSKUDD) {
     data class NotatResultatPeriodeDto(
