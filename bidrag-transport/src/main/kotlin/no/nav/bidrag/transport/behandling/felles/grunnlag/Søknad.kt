@@ -20,7 +20,8 @@ data class SøknadGrunnlag(
     @Schema(
         description =
             "Opprinnelig vedtakstype hvis behandlingen gjelder klage." +
-                " Dette er relevant for beregning av blant annet særbidrag om hvor resultatet kan være lavere enn forskuddssats hvis vedtakstype er ENDRING",
+                " Dette er relevant for beregning av blant annet for særbidrag" +
+                " hvor resultatet kan være lavere enn forskuddssats hvis vedtakstype er ENDRING",
     )
     val opprinneligVedtakstype: Vedtakstype? = null,
 ) : GrunnlagInnhold
