@@ -2,6 +2,7 @@
 
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import java.math.BigDecimal
@@ -21,8 +22,13 @@ data class UtgiftspostGrunnlag(
     val type: String,
     val kravbeløp: BigDecimal,
     val godkjentBeløp: BigDecimal,
-    @Schema(description = "Begrunnelse på hvorfor godkjent beløp avviker fra kravbeløp. Er påkrevd hvis kravbeløp er ulik godkjent beløp")
-    val begrunnelse: String? = null,
+    @Schema(
+        description =
+            "Kommentar kan brukes til å legge inn nærmere informasjon om utgiften f.eks. fakturanr., butikk det er handlet i," +
+                " informasjon om hvorfor man ikke har godkjent hele kravbeløpet",
+    )
+    @JsonAlias("kommentar", "begrunnelse")
+    val kommentar: String? = null,
     val betaltAvBp: Boolean = false,
 ) : GrunnlagInnhold
 
