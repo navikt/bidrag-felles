@@ -24,7 +24,8 @@ data class UtgiftspostGrunnlag(
     val godkjentBeløp: BigDecimal,
     @Schema(
         description =
-            "Kommentar kan brukes til å legge inn nærmere informasjon om utgiften f.eks. fakturanr., butikk det er handlet i," +
+            "Kommentar kan brukes til å legge inn nærmere informasjon om utgiften " +
+                "f.eks. fakturanr., butikk det er handlet i," +
                 " informasjon om hvorfor man ikke har godkjent hele kravbeløpet",
     )
     @JsonAlias("kommentar", "begrunnelse")
