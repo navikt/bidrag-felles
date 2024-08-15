@@ -53,6 +53,7 @@ val Inntektsrapportering.visningsnavn get() = lastVisningsnavnFraFil("inntektsra
 val Utgiftstype.visningsnavn get() = lastVisningsnavnFraFil("utgiftstype.yaml")[name] ?: visningsnavnMangler(name)
 val Engangsbeløptype.visningsnavn get() = lastVisningsnavnFraFil("engangsbeløptype.yaml")[name] ?: visningsnavnMangler(name)
 val Særbidragskategori.visningsnavn get() = lastVisningsnavnFraFil("særbidragskategori.yaml")[name] ?: visningsnavnMangler(name)
+val Vedtakstype.visningsnavn get() = lastVisningsnavnFraFil("vedtakstype.yaml")[name] ?: visningsnavnMangler(name)
 
 fun Inntektsrapportering.visningsnavnIntern(årstall: Int?) = "${visningsnavn.intern} $årstall".trim()
 
