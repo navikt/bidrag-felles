@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import java.time.LocalDate
 
@@ -16,6 +17,13 @@ data class SøknadGrunnlag(
                 "I særbidrag så er det mottatt dato på originale søknad som gjelder",
     )
     val klageMottattDato: LocalDate? = null,
+    @Schema(
+        description =
+            "Opprinnelig vedtakstype hvis behandlingen gjelder klage." +
+                " Dette er relevant for beregning av blant annet for særbidrag" +
+                " hvor resultatet kan være lavere enn forskuddssats hvis vedtakstype er ENDRING",
+    )
+    val opprinneligVedtakstype: Vedtakstype? = null,
 ) : GrunnlagInnhold
 
 data class VirkningstidspunktGrunnlag(
