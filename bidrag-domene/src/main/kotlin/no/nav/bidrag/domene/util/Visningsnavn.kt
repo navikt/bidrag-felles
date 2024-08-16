@@ -55,6 +55,15 @@ val Engangsbeløptype.visningsnavn get() = lastVisningsnavnFraFil("engangsbeløp
 val Særbidragskategori.visningsnavn get() = lastVisningsnavnFraFil("særbidragskategori.yaml")[name] ?: visningsnavnMangler(name)
 val Vedtakstype.visningsnavn get() = lastVisningsnavnFraFil("vedtakstype.yaml")[name] ?: visningsnavnMangler(name)
 
+fun Vedtakstype.visningsnavnIntern(opprinneligVedtakstype: Vedtakstype? = null) =
+    opprinneligVedtakstype?.let {
+        if (it == Vedtakstype.FASTSETTELSE && this == Vedtakstype.ENDRING) {
+            it.visningsnavn.intern
+        } else {
+            "${it.visningsnavn.intern} (${this.visningsnavn.intern})"
+        }
+    } ?: this.visningsnavn.intern
+
 fun Inntektsrapportering.visningsnavnIntern(årstall: Int?) = "${visningsnavn.intern} $årstall".trim()
 
 fun Inntektsrapportering.visningsnavnPeriode(periode: ÅrMånedsperiode) =

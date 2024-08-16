@@ -20,6 +20,24 @@ import org.junit.jupiter.api.Test
 
 class VisningsnavnTest {
     @Test
+    fun `Valider at alle kodeverdier for Vedtakstype har visningsnavn`() {
+        Vedtakstype.entries.forEach {
+            withClue("${it.name} mangler visningsnavn") {
+                it.visningsnavn.intern.isNotEmpty() shouldBe true
+            }
+        }
+    }
+
+    @Test
+    fun `Valider at vedtakstype visningsnavn intern viser riktig verdi`() {
+        Vedtakstype.FASTSETTELSE.visningsnavnIntern() shouldBe "Fastsettelse"
+        Vedtakstype.FASTSETTELSE.visningsnavnIntern(Vedtakstype.ENDRING) shouldBe "Endring (Fastsettelse)"
+        Vedtakstype.ENDRING.visningsnavnIntern(Vedtakstype.FASTSETTELSE) shouldBe "Fastsettelse"
+        Vedtakstype.KLAGE.visningsnavnIntern(Vedtakstype.ENDRING) shouldBe "Endring (Klage)"
+        Vedtakstype.KLAGE.visningsnavnIntern(Vedtakstype.FASTSETTELSE) shouldBe "Fastsettelse (Klage)"
+    }
+
+    @Test
     fun `Valider at alle kodeverdier for SærbidragKategori har visningsnavn`() {
         Særbidragskategori.entries.forEach {
             withClue("${it.name} mangler visningsnavn") {
