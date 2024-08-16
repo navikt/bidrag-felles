@@ -54,6 +54,7 @@ enum class NotatMalType {
 data class NotatBehandlingDetaljerDto(
     val søknadstype: String?,
     val vedtakstype: Vedtakstype?,
+    val opprinneligVedtakstype: Vedtakstype? = null,
     val kategori: NotatSærbidragKategoriDto? = null,
     val søktAv: SøktAvType?,
     val mottattDato: LocalDate?,
@@ -74,6 +75,9 @@ data class NotatBehandlingDetaljerDto(
             } else {
                 kategori?.kategori?.visningsnavn?.intern
             }
+
+    @get:Schema(name = "vedtakstypeVisningsnavn")
+    val vedtakstypeVisningsnavn get() = vedtakstype?.visningsnavnIntern(opprinneligVedtakstype)
 }
 
 data class NotatSærbidragUtgifterDto(
