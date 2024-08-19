@@ -101,7 +101,7 @@ enum class Resultatkode(
     IKKE_NØDVENDIGE_UTGIFTER("AIN", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
 
     PRIVAT_AVTALE_OM_SÆRBIDRAG("VX", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
-    ALLE_UTGIFTER_ER_FORELDET("AUF", ResultatkodeType.AVSLAG, ResultatkodeType.DIREKTE_AVSLAG, ResultatkodeType.SÆRBIDRAG),
+    ALLE_UTGIFTER_ER_FORELDET("AUF", ResultatkodeType.AVSLAG, ResultatkodeType.SÆRBIDRAG),
     ;
 
     companion object {
