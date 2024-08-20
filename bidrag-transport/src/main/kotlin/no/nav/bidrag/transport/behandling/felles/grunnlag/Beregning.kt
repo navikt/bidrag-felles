@@ -16,7 +16,7 @@ data class SluttberegningSærbidrag(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
     val resultatKode: Resultatkode,
-    val resultatBeløp: BigDecimal,
+    val resultatBeløp: BigDecimal?,
 ) : Sluttberegning
 
 @Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))

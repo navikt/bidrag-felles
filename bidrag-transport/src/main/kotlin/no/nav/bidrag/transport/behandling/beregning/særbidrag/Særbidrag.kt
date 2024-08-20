@@ -22,6 +22,6 @@ data class ResultatPeriode(
 
 @Schema(description = "Resultatet av en beregning")
 data class ResultatBeregning(
-    @Schema(description = "Resultat beløp") var beløp: BigDecimal,
+    @Schema(description = "Resultat beløp. Er null hvis resultatet er avslag") var beløp: BigDecimal?,
     @Schema(description = "Resultat kode") var resultatkode: Resultatkode,
 )
