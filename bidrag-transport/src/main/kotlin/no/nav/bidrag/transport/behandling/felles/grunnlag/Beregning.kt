@@ -1,5 +1,7 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonAlias
+import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -52,10 +54,15 @@ data class DelberegningVoksneIHustand(
 
 data class DelberegningBidragspliktigesAndelSærbidrag(
     override val periode: ÅrMånedsperiode,
-    val andelProsent: BigDecimal,
+    @JsonAlias("andelFaktor", "andelProsent")
+    val andelFaktor: BigDecimal,
     val andelBeløp: BigDecimal,
     val barnetErSelvforsørget: Boolean,
-) : Delberegning
+) : Delberegning {
+    @get:JsonIgnore
+    val andelProsent: BigDecimal
+        get() = if (andelFaktor < BigDecimal.ONE) andelFaktor.multiply(BigDecimal(100)) else andelFaktor
+}
 
 data class DelberegningUtgift(
     override val periode: ÅrMånedsperiode,
