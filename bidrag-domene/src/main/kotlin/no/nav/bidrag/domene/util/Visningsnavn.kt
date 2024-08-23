@@ -5,6 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslagEllerOpphør
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeBarnebidrag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
@@ -98,12 +99,16 @@ val ResultatkodeSærtilskudd.visningsnavn get() =
 val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[name] ?: visningsnavnMangler(name)
 
 fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype) =
-    when (this) {
-        Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG ->
-            when (vedtakstype) {
-                Vedtakstype.OPPHØR -> visningsnavn.intern.replace("Avslag", "Opphør", ignoreCase = true)
-                else -> visningsnavn.intern
-            }
+    when {
+        this.erAvslagEllerOpphør() -> {
+            val prefiks =
+                when (vedtakstype) {
+                    Vedtakstype.OPPHØR -> "Opphør"
+                    else -> "Avslag"
+                }
+            "$prefiks, ${visningsnavn.intern.lowercase().replace("Avslag, ", "", ignoreCase = true)}"
+        }
+
         else -> visningsnavn.intern
     }
 
