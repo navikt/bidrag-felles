@@ -61,7 +61,7 @@ data class DelberegningBidragspliktigesAndelSærbidrag(
 ) : Delberegning {
     @get:JsonIgnore
     val andelProsent: BigDecimal
-        get() = if (andelFaktor < BigDecimal.ONE) andelFaktor.multiply(BigDecimal(100)) else andelFaktor
+        get() = if (andelFaktor < BigDecimal.ONE) andelFaktor.multiply(BigDecimal(100)).setScale(4) else andelFaktor
 }
 
 data class DelberegningUtgift(

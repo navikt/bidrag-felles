@@ -5,15 +5,64 @@ import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
 import no.nav.bidrag.domene.enums.person.Familierelasjon
 import no.nav.bidrag.domene.tid.Datoperiode
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetHusstandsmedlem
 import no.nav.bidrag.transport.behandling.grunnlag.response.BorISammeHusstandDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.RelatertPersonGrunnlagDto
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import org.intellij.lang.annotations.Language
 import org.junit.jupiter.api.Test
+import java.math.BigDecimal
 import java.time.LocalDate
 
 class JsonMappingTest {
+    @Test
+    fun `skal deserialisere DelberegningBidragspliktigesAndelSærbidrag`() {
+        @Language("JSON")
+        val json =
+            """
+            {
+                 "periode": {
+              "fom": "2024-07",
+              "til": "2024-08"
+            },
+            "andelBeløp": 5796,
+            "andelProsent": 64.44,
+            "barnetErSelvforsørget": false
+                }
+            """.trimIndent()
+
+        val delberegning: DelberegningBidragspliktigesAndelSærbidrag = commonObjectmapper.readValue(json)
+
+        delberegning.andelFaktor shouldBe 64.44.toBigDecimal()
+        delberegning.andelProsent shouldBe 64.44.toBigDecimal()
+
+        val delberegningObjekt =
+            DelberegningBidragspliktigesAndelSærbidrag(
+                andelFaktor = 0.4344.toBigDecimal(),
+                andelBeløp = BigDecimal(3993),
+                barnetErSelvforsørget = false,
+                periode = ÅrMånedsperiode(LocalDate.parse("2024-08-01"), LocalDate.parse("2024-08-31")),
+            )
+        val delberegningJson: String = commonObjectmapper.writerWithDefaultPrettyPrinter().writeValueAsString(delberegningObjekt)
+
+        @Language("JSON")
+        val jsonResult =
+            """
+            {
+  "periode" : {
+    "fom" : "2024-08",
+    "til" : "2024-08"
+  },
+  "andelFaktor" : 0.4344,
+  "andelBeløp" : 3993,
+  "barnetErSelvforsørget" : false
+}
+            """.trimIndent().trimStart()
+        delberegningJson shouldBe jsonResult
+    }
+
     @Test
     fun `skal deserialisere RelatertPersonGrunnlagDto med deprekerte verdier`() {
         @Language("JSON")

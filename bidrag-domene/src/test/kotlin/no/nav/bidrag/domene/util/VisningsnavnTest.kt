@@ -213,10 +213,34 @@ class VisningsnavnTest {
         fun `Skal lage visningsnavn for AVSLAG_PRIVAT_AVTALE_BIDRAG`() {
             Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG.visningsnavnIntern(
                 Vedtakstype.OPPHØR,
-            ) shouldBe "Opphør på grunn av privat avtale om bidrag"
+            ) shouldBe "Opphør, på grunn av privat avtale om bidrag"
             Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG.visningsnavnIntern(
                 Vedtakstype.ENDRING,
-            ) shouldBe "Avslag på grunn av privat avtale om bidrag"
+            ) shouldBe "Avslag, på grunn av privat avtale om bidrag"
+        }
+
+        @Test
+        fun `Skal lage visningsnavn for Avslag`() {
+            Resultatkode.GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS.visningsnavnIntern(
+                Vedtakstype.FASTSETTELSE,
+            ) shouldBe "Avslag, godkjent beløp er lavere enn forskuddssats"
+            Resultatkode.GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS.visningsnavnIntern(
+                Vedtakstype.OPPHØR,
+            ) shouldBe "Opphør, godkjent beløp er lavere enn forskuddssats"
+
+            Resultatkode.AVSLAG_OVER_18_ÅR.visningsnavnIntern(
+                Vedtakstype.OPPHØR,
+            ) shouldBe "Opphør, over 18 år"
+            Resultatkode.AVSLAG_OVER_18_ÅR.visningsnavnIntern(
+                Vedtakstype.ENDRING,
+            ) shouldBe "Avslag, over 18 år"
+
+            Resultatkode.IKKE_INNKREVING_AV_BIDRAG.visningsnavnIntern(
+                Vedtakstype.OPPHØR,
+            ) shouldBe "Opphør, ikke innkreving av bidrag"
+            Resultatkode.IKKE_INNKREVING_AV_BIDRAG.visningsnavnIntern(
+                Vedtakstype.ENDRING,
+            ) shouldBe "Avslag, ikke innkreving av bidrag"
         }
 
         @Test
