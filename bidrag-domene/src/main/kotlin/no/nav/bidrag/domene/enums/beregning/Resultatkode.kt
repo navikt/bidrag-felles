@@ -1,6 +1,10 @@
 package no.nav.bidrag.domene.enums.beregning
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
+import no.nav.bidrag.domene.util.fjernAvslagOpphørPrefiks
+import no.nav.bidrag.domene.util.visningsnavn
+import no.nav.bidrag.domene.util.visningsnavnIntern
 
 @Schema(enumAsRef = true, name = "Resultatkode")
 enum class Resultatkode(
@@ -62,8 +66,9 @@ enum class Resultatkode(
 
     // Resultat av beregning av særbidrag
     @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE"))
-    SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE("ABB", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
-    SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE("ABB", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
+    SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE("ABS", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
+    SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE("ABS", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
+    SÆRBIDRAG_MANGLER_BIDRAGSEVNE("ABB", ResultatkodeType.SÆRBIDRAG, ResultatkodeType.AVSLAG),
 
     AVSLAG("A", ResultatkodeType.AVSLAG),
     AVSLAG2("AA", ResultatkodeType.AVSLAG),
@@ -108,6 +113,20 @@ enum class Resultatkode(
         fun fraKode(kode: String): Resultatkode? =
             try {
                 enumValues<Resultatkode>().find { it.legacyKode == kode } ?: Resultatkode.valueOf(kode)
+            } catch (e: Exception) {
+                null
+            }
+
+        fun fraVisningsnavn(
+            visningsnavn: String,
+            vedtakstype: Vedtakstype? = null,
+        ): Resultatkode? =
+            try {
+                enumValues<Resultatkode>().find {
+                    it.visningsnavnIntern(vedtakstype).equals(visningsnavn, ignoreCase = true) ||
+                        it.visningsnavn.intern.equals(visningsnavn, ignoreCase = true) ||
+                        it.visningsnavn.intern.equals(visningsnavn.fjernAvslagOpphørPrefiks(), ignoreCase = true)
+                }
             } catch (e: Exception) {
                 null
             }

@@ -235,12 +235,46 @@ class VisningsnavnTest {
                 Vedtakstype.ENDRING,
             ) shouldBe "Avslag, over 18 år"
 
+            Resultatkode.AVSLAG_HØY_INNTEKT.visningsnavnIntern(
+                Vedtakstype.OPPHØR,
+            ) shouldBe "Opphør, høy inntekt"
+            Resultatkode.AVSLAG_HØY_INNTEKT.visningsnavnIntern(
+                Vedtakstype.ENDRING,
+            ) shouldBe "Avslag, høy inntekt"
+
             Resultatkode.IKKE_INNKREVING_AV_BIDRAG.visningsnavnIntern(
                 Vedtakstype.OPPHØR,
             ) shouldBe "Opphør, ikke innkreving av bidrag"
             Resultatkode.IKKE_INNKREVING_AV_BIDRAG.visningsnavnIntern(
                 Vedtakstype.ENDRING,
             ) shouldBe "Avslag, ikke innkreving av bidrag"
+        }
+
+        @Test
+        fun `skal finne resultatkode fra visningsnavn`() {
+            Resultatkode.fraVisningsnavn("Avslag, høy inntekt") shouldBe Resultatkode.AVSLAG_HØY_INNTEKT
+            Resultatkode.fraVisningsnavn("Opphør, høy inntekt", Vedtakstype.OPPHØR) shouldBe Resultatkode.AVSLAG_HØY_INNTEKT
+            Resultatkode.fraVisningsnavn("Opphør, godkjent beløp er lavere enn forskuddssats", Vedtakstype.OPPHØR) shouldBe
+                Resultatkode.GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS
+            Resultatkode.fraVisningsnavn("Avslag, godkjent beløp er lavere enn forskuddssats", Vedtakstype.ENDRING) shouldBe
+                Resultatkode.GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS
+            Resultatkode.fraVisningsnavn("Godkjent beløp er lavere enn forskuddssats") shouldBe
+                Resultatkode.GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS
+
+            Resultatkode.fraVisningsnavn("Avslag, over 18 år") shouldBe
+                Resultatkode.AVSLAG_OVER_18_ÅR
+
+            Resultatkode.fraVisningsnavn("Ikke full bidragsevne") shouldBe
+                Resultatkode.SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE
+
+            Resultatkode.fraVisningsnavn("På grunn av privat avtale om bidrag") shouldBe
+                Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG
+
+            Resultatkode.fraVisningsnavn("Avslag på grunn av privat avtale om bidrag") shouldBe
+                Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG
+
+            Resultatkode.fraVisningsnavn("Barnets inntekt") shouldBe
+                Resultatkode.BARNETS_INNTEKT
         }
 
         @Test
