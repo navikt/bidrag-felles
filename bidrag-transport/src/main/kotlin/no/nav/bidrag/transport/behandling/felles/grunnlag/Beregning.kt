@@ -6,6 +6,7 @@ import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
+import java.math.MathContext
 
 data class SluttberegningForskudd(
     override val periode: ÅrMånedsperiode,
@@ -61,7 +62,14 @@ data class DelberegningBidragspliktigesAndelSærbidrag(
 ) : Delberegning {
     @get:JsonIgnore
     val andelProsent: BigDecimal
-        get() = if (andelFaktor < BigDecimal.ONE) andelFaktor.multiply(BigDecimal(100)).setScale(4) else andelFaktor
+        get() =
+            if (andelFaktor < BigDecimal.ONE) {
+                andelFaktor
+                    .multiply(BigDecimal(100))
+                    .round(MathContext(4))
+            } else {
+                andelFaktor.round(MathContext(4))
+            }
 }
 
 data class DelberegningUtgift(
