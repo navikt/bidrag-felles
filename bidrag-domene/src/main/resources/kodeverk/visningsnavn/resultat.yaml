@@ -86,6 +86,10 @@ SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE:
   intern: "Ikke full bidragsevne"
   bruker:
     NB: "Ikke full bidragsevne"
+SÆRBIDRAG_MANGLER_BIDRAGSEVNE:
+  intern: "Mangler bidragsevne"
+  bruker:
+    NB: "Mangler bidragsevne"
 #Avslagskoder
 AVSLAG:
   intern: "Avslag"

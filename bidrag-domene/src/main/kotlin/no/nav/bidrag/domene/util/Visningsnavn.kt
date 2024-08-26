@@ -98,7 +98,7 @@ val ResultatkodeSærtilskudd.visningsnavn get() =
         ?: visningsnavnMangler(name)
 val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[name] ?: visningsnavnMangler(name)
 
-fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype) =
+fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype? = null) =
     when {
         this.erAvslagEllerOpphør() -> {
             val prefiks =
@@ -106,11 +106,18 @@ fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype) =
                     Vedtakstype.OPPHØR -> "Opphør"
                     else -> "Avslag"
                 }
-            "$prefiks, ${visningsnavn.intern.lowercase().replace("Avslag, ", "", ignoreCase = true)}"
+            "$prefiks, ${visningsnavn.intern.lowercase().fjernAvslagOpphørPrefiks()}"
         }
 
         else -> visningsnavn.intern
     }
+
+fun String?.fjernAvslagOpphørPrefiks() =
+    this
+        ?.replace("Avslag, ", "", ignoreCase = true)
+        ?.replace("Avslag ", "", ignoreCase = true)
+        ?.replace("Opphør, ", "", ignoreCase = true)
+        ?.replace("Opphør ", "", ignoreCase = true)
 
 private fun lastVisningsnavnFraFil(
     filnavn: String,
