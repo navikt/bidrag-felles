@@ -18,6 +18,28 @@ import java.time.LocalDate
 
 class JsonMappingTest {
     @Test
+    fun `skal returnere andelProsent`() {
+        val delberegningObjekt =
+            DelberegningBidragspliktigesAndelSærbidrag(
+                andelFaktor = 0.833333333333.toBigDecimal(),
+                andelBeløp = BigDecimal(3993),
+                barnetErSelvforsørget = false,
+                periode = ÅrMånedsperiode(LocalDate.parse("2024-08-01"), LocalDate.parse("2024-08-31")),
+            )
+        delberegningObjekt.andelProsent shouldBe 83.33.toBigDecimal()
+
+        delberegningObjekt
+            .copy(
+                andelFaktor = 0.4432.toBigDecimal(),
+            ).andelProsent shouldBe 44.32.toBigDecimal()
+
+        delberegningObjekt
+            .copy(
+                andelFaktor = 83.333333333.toBigDecimal(),
+            ).andelProsent shouldBe 83.33.toBigDecimal()
+    }
+
+    @Test
     fun `skal deserialisere DelberegningBidragspliktigesAndelSærbidrag`() {
         @Language("JSON")
         val json =
@@ -40,11 +62,12 @@ class JsonMappingTest {
 
         val delberegningObjekt =
             DelberegningBidragspliktigesAndelSærbidrag(
-                andelFaktor = 0.4344.toBigDecimal(),
+                andelFaktor = 0.833333333333.toBigDecimal(),
                 andelBeløp = BigDecimal(3993),
                 barnetErSelvforsørget = false,
                 periode = ÅrMånedsperiode(LocalDate.parse("2024-08-01"), LocalDate.parse("2024-08-31")),
             )
+        delberegningObjekt.andelProsent shouldBe 83.33.toBigDecimal()
         val delberegningJson: String = commonObjectmapper.writerWithDefaultPrettyPrinter().writeValueAsString(delberegningObjekt)
 
         @Language("JSON")
@@ -55,7 +78,7 @@ class JsonMappingTest {
     "fom" : "2024-08",
     "til" : "2024-08"
   },
-  "andelFaktor" : 0.4344,
+  "andelFaktor" : 0.833333333333,
   "andelBeløp" : 3993,
   "barnetErSelvforsørget" : false
 }
