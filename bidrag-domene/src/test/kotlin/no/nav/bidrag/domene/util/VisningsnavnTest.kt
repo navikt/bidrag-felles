@@ -254,6 +254,7 @@ class VisningsnavnTest {
         fun `skal finne resultatkode fra visningsnavn`() {
             Resultatkode.fraVisningsnavn("Avslag, høy inntekt") shouldBe Resultatkode.AVSLAG_HØY_INNTEKT
             Resultatkode.fraVisningsnavn("Opphør, høy inntekt", Vedtakstype.OPPHØR) shouldBe Resultatkode.AVSLAG_HØY_INNTEKT
+
             Resultatkode.fraVisningsnavn("Opphør, godkjent beløp er lavere enn forskuddssats", Vedtakstype.OPPHØR) shouldBe
                 Resultatkode.GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS
             Resultatkode.fraVisningsnavn("Avslag, godkjent beløp er lavere enn forskuddssats", Vedtakstype.ENDRING) shouldBe
@@ -270,11 +271,36 @@ class VisningsnavnTest {
             Resultatkode.fraVisningsnavn("På grunn av privat avtale om bidrag") shouldBe
                 Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG
 
+            Resultatkode.fraVisningsnavn("Avslag, på grunn av privat avtale om bidrag") shouldBe
+                Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG
+
+            Resultatkode.fraVisningsnavn("Opphør, på grunn av privat avtale om bidrag") shouldBe
+                Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG
+
             Resultatkode.fraVisningsnavn("Avslag på grunn av privat avtale om bidrag") shouldBe
                 Resultatkode.AVSLAG_PRIVAT_AVTALE_BIDRAG
 
+            Resultatkode.fraVisningsnavn("Avslag, barnets inntekt") shouldBe
+                Resultatkode.BARNETS_INNTEKT
+            Resultatkode.fraVisningsnavn("Opphør, Barnets inntekt") shouldBe
+                Resultatkode.BARNETS_INNTEKT
             Resultatkode.fraVisningsnavn("Barnets inntekt") shouldBe
                 Resultatkode.BARNETS_INNTEKT
+
+            Resultatkode.fraVisningsnavn("Avslag, ikke innkreving av bidrag") shouldBe
+                Resultatkode.IKKE_INNKREVING_AV_BIDRAG
+
+            Resultatkode.fraVisningsnavn("Opphør, ikke innkreving av bidrag") shouldBe
+                Resultatkode.IKKE_INNKREVING_AV_BIDRAG
+
+            Resultatkode.fraVisningsnavn("Ikke innkreving av bidrag") shouldBe
+                Resultatkode.IKKE_INNKREVING_AV_BIDRAG
+
+            Resultatkode.fraVisningsnavn("privat avtale") shouldBe
+                Resultatkode.PRIVAT_AVTALE
+
+            Resultatkode.fraVisningsnavn("Privat avtale") shouldBe
+                Resultatkode.PRIVAT_AVTALE
         }
 
         @Test

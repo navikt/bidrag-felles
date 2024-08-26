@@ -158,8 +158,8 @@ UTGIFTER_DEKKES_AV_BARNEBIDRAGET:
 IKKE_NØDVENDIGE_UTGIFTER:
   intern: "Ikke nødvendige utgifter"
 
-PRIVAT_AVTALE_OM_SÆRBIDRAG:
-  intern: "Privat avtale om særbidrag"
+PRIVAT_AVTALE:
+  intern: "Privat avtale"
 ALLE_UTGIFTER_ER_FORELDET:
   intern: "Alle utgifter er foreldet"
 
