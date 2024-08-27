@@ -114,6 +114,11 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
     ),
     AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE(
+        listOf(BisysResultatkode("ARA", BisysResultatkodeType.AVSLAG), BisysResultatkode("ORA", BisysResultatkodeType.OPPHØR)),
+        ResultatkodeType.AVSLAG,
+    ),
+
+    IKKE_OMSORG(
         listOf(BisysResultatkode("AIO", BisysResultatkodeType.AVSLAG), BisysResultatkode("OIO", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
     ),
@@ -140,10 +145,7 @@ enum class Resultatkode(
         listOf(BisysResultatkode("AFU", BisysResultatkodeType.AVSLAG), BisysResultatkode("OFU", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
     ),
-    IKKE_OMSORG(
-        listOf(BisysResultatkode("AIO", BisysResultatkodeType.AVSLAG), BisysResultatkode("OIO", BisysResultatkodeType.OPPHØR)),
-        ResultatkodeType.AVSLAG,
-    ),
+
     IKKE_OPPHOLD_I_RIKET(
         listOf(BisysResultatkode("AIR", BisysResultatkodeType.AVSLAG), BisysResultatkode("OIR", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
