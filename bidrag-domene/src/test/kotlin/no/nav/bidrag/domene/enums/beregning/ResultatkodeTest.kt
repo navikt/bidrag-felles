@@ -43,8 +43,11 @@ class ResultatkodeTest {
         Resultatkode.AVSLAG_OVER_18_ÅR.tilBisysResultatkode(Vedtakstype.FASTSETTELSE).shouldBe("A18")
         Resultatkode.AVSLAG_OVER_18_ÅR.tilBisysResultatkode(Vedtakstype.OPPHØR).shouldBe("OH2")
 
-        Resultatkode.AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE.tilBisysResultatkode(Vedtakstype.FASTSETTELSE).shouldBe("AIO")
-        Resultatkode.AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE.tilBisysResultatkode(Vedtakstype.OPPHØR).shouldBe("OIO")
+        Resultatkode.AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE.tilBisysResultatkode(Vedtakstype.FASTSETTELSE).shouldBe("ARA")
+        Resultatkode.AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE.tilBisysResultatkode(Vedtakstype.OPPHØR).shouldBe("ORA")
+
+        Resultatkode.IKKE_OMSORG.tilBisysResultatkode(Vedtakstype.FASTSETTELSE).shouldBe("AIO")
+        Resultatkode.IKKE_OMSORG.tilBisysResultatkode(Vedtakstype.OPPHØR).shouldBe("OIO")
 
         Resultatkode.AVSLAG_HØY_INNTEKT.tilBisysResultatkode(Vedtakstype.FASTSETTELSE).shouldBe("AHI")
         Resultatkode.AVSLAG_HØY_INNTEKT.tilBisysResultatkode(Vedtakstype.OPPHØR).shouldBe("OHI")
