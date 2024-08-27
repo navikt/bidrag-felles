@@ -108,6 +108,11 @@ enum class Resultatkode(
     AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE(
         listOf(BisysResultatkode("ARA", BisysResultatkodeType.AVSLAG), BisysResultatkode("ORA", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+    ),
+
+    IKKE_OMSORG(
+        listOf(BisysResultatkode("ARA", BisysResultatkodeType.AVSLAG), BisysResultatkode("ORA", BisysResultatkodeType.OPPHØR)),
+        ResultatkodeType.AVSLAG,
         ResultatkodeType.FORSKUDD,
     ),
     AVSLAG_HØY_INNTEKT(
