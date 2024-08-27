@@ -67,6 +67,10 @@ data class NotatBehandlingDetaljerDto(
     val avslagVisningsnavn
         get() = vedtakstype?.let { avslag?.visningsnavnIntern(vedtakstype) } ?: avslag?.visningsnavn?.intern
 
+    @get:Schema(name = "avslagVisningsnavnUtenPrefiks")
+    val avslagVisningsnavnUtenPrefiks
+        get() = avslag?.visningsnavn?.intern
+
     @get:Schema(name = "kategoriVisningsnavn")
     val kategoriVisningsnavn
         get() =
