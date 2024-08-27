@@ -4,7 +4,7 @@ import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
-import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslagEllerOpphør
+import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslag
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.tilBisysResultatkode
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import org.junit.jupiter.api.Test
@@ -60,8 +60,8 @@ class ResultatkodeTest {
 
     @Test
     fun `Skal hente avslagskoder og opphørskoder`() {
-        Resultatkode.PRIVAT_AVTALE.erAvslagEllerOpphør().shouldBeTrue()
-        Resultatkode.SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE.erAvslagEllerOpphør().shouldBeTrue()
-        Resultatkode.BARNET_ER_SELVFORSØRGET.erAvslagEllerOpphør().shouldBeTrue()
+        Resultatkode.PRIVAT_AVTALE.erAvslag().shouldBeTrue()
+        Resultatkode.SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE.erAvslag().shouldBeTrue()
+        Resultatkode.BARNET_ER_SELVFORSØRGET.erAvslag().shouldBeTrue()
     }
 }

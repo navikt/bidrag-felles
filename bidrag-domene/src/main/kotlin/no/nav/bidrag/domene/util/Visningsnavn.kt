@@ -5,7 +5,7 @@ import com.fasterxml.jackson.dataformat.yaml.YAMLFactory
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
-import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslagEllerOpphør
+import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeBarnebidrag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
@@ -100,7 +100,7 @@ val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[na
 
 fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype? = null) =
     when {
-        this.erAvslagEllerOpphør() -> {
+        this.erAvslag() -> {
             val prefiks =
                 when (vedtakstype) {
                     Vedtakstype.OPPHØR -> "Opphør"
