@@ -110,11 +110,6 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
     ),
 
-    IKKE_OMSORG(
-        listOf(BisysResultatkode("ARA", BisysResultatkodeType.AVSLAG), BisysResultatkode("ORA", BisysResultatkodeType.OPPHØR)),
-        ResultatkodeType.AVSLAG,
-        ResultatkodeType.FORSKUDD,
-    ),
     AVSLAG_HØY_INNTEKT(
         listOf(BisysResultatkode("AHI", BisysResultatkodeType.AVSLAG), BisysResultatkode("OHI", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
