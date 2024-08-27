@@ -74,12 +74,6 @@ enum class Resultatkode(
     FORHØYET_FORSKUDD_100_PROSENT(listOf(BisysResultatkode("100")), ResultatkodeType.FORSKUDD),
     FORHØYET_FORSKUDD_11_ÅR_125_PROSENT(listOf(BisysResultatkode("125")), ResultatkodeType.FORSKUDD),
 
-    GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS(
-        listOf(BisysResultatkode("AMF")),
-        ResultatkodeType.SÆRBIDRAG,
-        ResultatkodeType.AVSLAG,
-    ),
-
     // Resultat av beregning av særbidrag
     @Deprecated("SÆRTILSKUDD er erstattet med SÆRBIDRAG", ReplaceWith("SÆRBIDRAG_INNVILGET"))
     SÆRTILSKUDD_INNVILGET(listOf(BisysResultatkode("VS")), ResultatkodeType.SÆRBIDRAG),
@@ -105,50 +99,65 @@ enum class Resultatkode(
 
     AVSLAG(listOf(BisysResultatkode("A", BisysResultatkodeType.AVSLAG)), ResultatkodeType.AVSLAG),
     AVSLAG2(listOf(BisysResultatkode("AA", BisysResultatkodeType.AVSLAG)), ResultatkodeType.AVSLAG),
-    PÅ_GRUNN_AV_BARNEPENSJON(
-        listOf(BisysResultatkode("ABA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OBA", BisysResultatkodeType.OPPHØR)),
-        ResultatkodeType.AVSLAG,
-    ),
+
     AVSLAG_OVER_18_ÅR(
         listOf(BisysResultatkode("A18", BisysResultatkodeType.AVSLAG), BisysResultatkode("OH2", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE(
         listOf(BisysResultatkode("ARA", BisysResultatkodeType.AVSLAG), BisysResultatkode("ORA", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
-    ),
-
-    IKKE_OMSORG(
-        listOf(BisysResultatkode("AIO", BisysResultatkodeType.AVSLAG), BisysResultatkode("OIO", BisysResultatkodeType.OPPHØR)),
-        ResultatkodeType.AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     AVSLAG_HØY_INNTEKT(
         listOf(BisysResultatkode("AHI", BisysResultatkodeType.AVSLAG), BisysResultatkode("OHI", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
 
+    PÅ_GRUNN_AV_BARNEPENSJON(
+        listOf(BisysResultatkode("ABA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OBA", BisysResultatkodeType.OPPHØR)),
+        ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
+    ),
+    IKKE_OMSORG(
+        listOf(BisysResultatkode("AIO", BisysResultatkodeType.AVSLAG), BisysResultatkode("OIO", BisysResultatkodeType.OPPHØR)),
+        ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
+    ),
     BARNETS_EKTESKAP(
         listOf(BisysResultatkode("ABE", BisysResultatkodeType.AVSLAG), BisysResultatkode("OBE", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     BARNETS_INNTEKT(
         listOf(BisysResultatkode("ABI", BisysResultatkodeType.AVSLAG), BisysResultatkode("OBI", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
-        ResultatkodeType.SÆRBIDRAG,
-        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     PÅ_GRUNN_AV_YTELSE_FRA_FOLKETRYGDEN(
         listOf(BisysResultatkode("AFT", BisysResultatkodeType.AVSLAG), BisysResultatkode("OFT", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     FULLT_UNDERHOLDT_AV_OFFENTLIG(
         listOf(BisysResultatkode("AFU", BisysResultatkodeType.AVSLAG), BisysResultatkode("OFU", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
 
     IKKE_OPPHOLD_I_RIKET(
         listOf(BisysResultatkode("AIR", BisysResultatkodeType.AVSLAG), BisysResultatkode("OIR", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     MANGLENDE_DOKUMENTASJON(
         listOf(BisysResultatkode("AMD", BisysResultatkodeType.AVSLAG), BisysResultatkode("OMD", BisysResultatkodeType.OPPHØR)),
@@ -160,18 +169,26 @@ enum class Resultatkode(
     PÅ_GRUNN_AV_SAMMENFLYTTING(
         listOf(BisysResultatkode("ASA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OSA", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     OPPHOLD_I_UTLANDET(
         listOf(BisysResultatkode("AUT", BisysResultatkodeType.AVSLAG), BisysResultatkode("OUT", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     UTENLANDSK_YTELSE(
         listOf(BisysResultatkode("AUY", BisysResultatkodeType.AVSLAG), BisysResultatkode("OUY", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     AVSLAG_PRIVAT_AVTALE_BIDRAG(
         listOf(BisysResultatkode("APA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OPA", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
 
     // I tilfeller når BP bor i Lugano-land og BM søker kun om forskudd, så har vi ikke hjemmel til å ta bidragssaken opp av eget tiltak etter forskotteringsloven.
@@ -180,10 +197,14 @@ enum class Resultatkode(
     IKKE_SØKT_OM_INNKREVING_AV_BIDRAG(
         listOf(BisysResultatkode("AIB", BisysResultatkodeType.AVSLAG), BisysResultatkode("OIB", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
     IKKE_INNKREVING_AV_BIDRAG(
         listOf(BisysResultatkode("AIB", BisysResultatkodeType.AVSLAG), BisysResultatkode("OIB", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
     ),
 
     // Særbidrag avslag
@@ -210,6 +231,11 @@ enum class Resultatkode(
         listOf(BisysResultatkode("AUF", BisysResultatkodeType.AVSLAG)),
         ResultatkodeType.AVSLAG,
         ResultatkodeType.SÆRBIDRAG,
+    ),
+    GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS(
+        listOf(BisysResultatkode("AMF")),
+        ResultatkodeType.SÆRBIDRAG,
+        ResultatkodeType.AVSLAG,
     ),
 
     ;
@@ -249,7 +275,7 @@ enum class Resultatkode(
 
         fun Resultatkode.erDirekteAvslag(): Boolean = erType(ResultatkodeType.DIREKTE_AVSLAG)
 
-        fun Resultatkode.erAvslagEllerOpphør(): Boolean =
+        fun Resultatkode.erAvslag(): Boolean =
             erType(ResultatkodeType.AVSLAG) ||
                 erType(ResultatkodeType.DIREKTE_AVSLAG)
 

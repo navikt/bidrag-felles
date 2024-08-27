@@ -45,12 +45,12 @@ val VedtakDto.virkningstidspunkt get() =
 val VedtakDto.særbidragsperiode get() =
     virkningstidspunkt?.let {
         Datoperiode(
-            vedtakstidspunkt.withDayOfMonth(1).toLocalDate(),
-            YearMonth.from(vedtakstidspunkt).atEndOfMonth(),
+            it.withDayOfMonth(1),
+            YearMonth.from(it).atEndOfMonth(),
         )
     }
         ?: if (engangsbeløpListe.firstOrNull()?.omgjørVedtakId == null) {
-            Datoperiode(YearMonth.from(vedtakstidspunkt), YearMonth.from(vedtakstidspunkt))
+            Datoperiode(YearMonth.from(vedtakstidspunkt).atDay(1), YearMonth.from(vedtakstidspunkt).atEndOfMonth())
         } else {
             null
         }
