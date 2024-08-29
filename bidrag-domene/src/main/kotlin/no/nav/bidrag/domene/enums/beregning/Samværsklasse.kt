@@ -12,4 +12,9 @@ enum class Samværsklasse(
     SAMVÆRSKLASSE_3("03"),
     SAMVÆRSKLASSE_4("04"),
     DELT_BOSTED("DN"),
+    ;
+
+    companion object {
+        fun fromBisysKode(bisysKode: String) = entries.firstOrNull { it.bisysKode == bisysKode }
+    }
 }
