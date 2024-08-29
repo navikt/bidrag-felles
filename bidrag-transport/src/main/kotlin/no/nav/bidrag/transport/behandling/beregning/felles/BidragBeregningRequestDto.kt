@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.beregning.felles
 
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
+import no.nav.bidrag.domene.ident.Personident
 import java.time.LocalDate
 
 data class BidragBeregningRequestDto(
@@ -8,7 +9,7 @@ data class BidragBeregningRequestDto(
 ) {
     data class HentBidragBeregning(
         val saksnummer: String,
-        val barnId: String,
+        val personidentBarn: Personident,
         val datoSøknad: LocalDate,
         val stønadstype: Stønadstype,
     )
