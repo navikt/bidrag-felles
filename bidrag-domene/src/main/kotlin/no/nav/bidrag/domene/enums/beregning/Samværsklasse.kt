@@ -1,5 +1,8 @@
 package no.nav.bidrag.domene.enums.beregning
 
+import io.swagger.v3.oas.annotations.media.Schema
+
+@Schema(enumAsRef = true, name = "Samværsklasse")
 enum class Samværsklasse(
     val bisysKode: String,
 ) {

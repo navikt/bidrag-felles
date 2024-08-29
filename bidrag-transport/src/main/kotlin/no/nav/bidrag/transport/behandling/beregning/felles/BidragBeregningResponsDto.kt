@@ -14,7 +14,7 @@ data class BidragBeregningResponsDto(
         val periode: Datoperiode,
         val beregnetBeløp: BigDecimal,
         val faktiskBeløp: BigDecimal,
-        val samværBeløp: BigDecimal,
+        val beløpSamvær: BigDecimal,
         val samværsklasse: Samværsklasse,
     )
 }
