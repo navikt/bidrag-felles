@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
@@ -76,6 +77,19 @@ data class DelberegningUtgift(
     override val periode: ÅrMånedsperiode,
     val sumBetaltAvBp: BigDecimal,
     val sumGodkjent: BigDecimal,
+) : Delberegning
+
+data class DelberegningBidragBeløp(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
+) : Delberegning
+
+data class BidragGrunnlag(
+    override val periode: ÅrMånedsperiode,
+    val samværsklasse: Samværsklasse,
+    val løpendeBeløp: BigDecimal,
+    val beregnetBeløp: BigDecimal,
+    val faktiskBeløp: BigDecimal,
 ) : Delberegning
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
