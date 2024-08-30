@@ -2,8 +2,8 @@ package no.nav.bidrag.transport.behandling.beregning.felles
 
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.ident.Personident
-import no.nav.bidrag.domene.tid.Datoperiode
 import java.math.BigDecimal
+import java.time.LocalDate
 
 data class BidragBeregningResponsDto(
     val beregningListe: List<BidragBeregning>,
@@ -11,10 +11,10 @@ data class BidragBeregningResponsDto(
     data class BidragBeregning(
         val saksnummer: String,
         val personidentBarn: Personident,
-        val periode: Datoperiode,
+        val gjelderFom: LocalDate,
         val beregnetBeløp: BigDecimal,
         val faktiskBeløp: BigDecimal,
         val beløpSamvær: BigDecimal,
-        val samværsklasse: Samværsklasse,
+        val samværsklasse: Samværsklasse? = null,
     )
 }
