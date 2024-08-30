@@ -15,8 +15,7 @@ data class BidragBeregningRequestDto(
         @field:NotBlank(message = "Saksnummer kan ikke være blank")
         @field:Size(max = 7, min = 7, message = "Saksnummer skal ha sju tegn")
         val saksnummer: String,
-        @field:NotBlank(message = "personidentBarn kan ikke være blank")
-        @field:Size(max = 11, message = "Personident kan ha maks 11 tegn")
+        @field:GyldigPersonidentLengde
         val personidentBarn: Personident,
         val datoSøknad: LocalDate,
         val stønadstype: Stønadstype,
