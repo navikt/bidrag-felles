@@ -15,6 +15,6 @@ data class BidragBeregningResponsDto(
         val beregnetBeløp: BigDecimal,
         val faktiskBeløp: BigDecimal,
         val beløpSamvær: BigDecimal,
-        val samværsklasse: Samværsklasse,
+        val samværsklasse: Samværsklasse? = null,
     )
 }
