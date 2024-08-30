@@ -8,7 +8,8 @@ import no.nav.bidrag.domene.ident.Personident
 import java.time.LocalDate
 
 data class BidragBeregningRequestDto(
-    @Valid val hentBeregningerFor: List<HentBidragBeregning>,
+    @field:Valid
+    val hentBeregningerFor: List<HentBidragBeregning>,
 ) {
     data class HentBidragBeregning(
         @field:NotBlank(message = "Saksnummer kan ikke være blank")
