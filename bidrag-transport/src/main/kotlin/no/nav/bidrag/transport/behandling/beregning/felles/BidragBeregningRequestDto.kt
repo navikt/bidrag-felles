@@ -13,7 +13,7 @@ data class BidragBeregningRequestDto(
 ) {
     data class HentBidragBeregning(
         @field:NotBlank(message = "Saksnummer kan ikke være blank")
-        @field:Size(max = 7, min = 7, message = "Saksnummer skal ha sju tegn")
+        @field:Size(max = 7, min = 7, message = "Saksnummer må bestå av 7 tegn")
         val saksnummer: String,
         @field:GyldigPersonidentLengde
         val personidentBarn: Personident,
