@@ -10,7 +10,7 @@ import kotlin.reflect.KClass
 @Retention(AnnotationRetention.RUNTIME)
 @Constraint(validatedBy = arrayOf(PersonidentLengdeValidator::class))
 annotation class GyldigPersonidentLengde(
-    val message: String = "Personident må ha 11 tegn",
+    val message: String = "Personident må inneholde 11 tegn",
     val groups: Array<KClass<*>> = [],
     val payload: Array<KClass<out Any>> = [],
 )

@@ -12,6 +12,7 @@ data class BidragBeregningResponsDto(
         val saksnummer: String,
         val personidentBarn: Personident,
         val gjelderFom: LocalDate,
+        val datoSøknad: LocalDate,
         val beregnetBeløp: BigDecimal,
         val faktiskBeløp: BigDecimal,
         val beløpSamvær: BigDecimal,
