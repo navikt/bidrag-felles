@@ -52,6 +52,7 @@ enum class Grunnlagstype {
     // Særbidrag
     SÆRBIDRAG_KATEGORI,
     UTGIFT_DIREKTE_BETALT,
+    UTGIFT_MAKS_GODKJENT_BELØP,
     UTGIFTSPOSTER,
 
     SLUTTBEREGNING_FORSKUDD,

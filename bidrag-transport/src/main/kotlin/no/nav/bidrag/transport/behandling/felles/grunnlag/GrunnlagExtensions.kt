@@ -162,6 +162,11 @@ val List<BaseGrunnlag>.utgiftDirekteBetalt get() =
         Grunnlagstype.UTGIFT_DIREKTE_BETALT,
     ).firstOrNull()?.innholdTilObjekt<UtgiftDirekteBetaltGrunnlag>()
 
+val List<BaseGrunnlag>.utgiftMaksGodkjentBeløp get() =
+    filtrerBasertPåEgenReferanse(
+        Grunnlagstype.UTGIFT_MAKS_GODKJENT_BELØP,
+    ).firstOrNull()?.innholdTilObjekt<UtgiftMaksGodkjentBeløpGrunnlag>()
+
 val List<BaseGrunnlag>.utgiftsposter get() =
     filtrerBasertPåEgenReferanse(
         Grunnlagstype.UTGIFTSPOSTER,

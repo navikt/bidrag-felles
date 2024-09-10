@@ -37,3 +37,14 @@ data class UtgiftDirekteBetaltGrunnlag(
     @Schema(description = "Beløp som er overført direkte til BM. Kan være 0 eller høyere")
     val beløpDirekteBetalt: BigDecimal,
 ) : GrunnlagInnhold
+
+data class UtgiftMaksGodkjentBeløpGrunnlag(
+    @Schema(
+        description =
+            "Maks godkjent beløp som settes manuelt og som legger på maksimalgrense for godkjent beløp." +
+                " Kan være lik eller lavere enn total godkjent beløp",
+    )
+    val beløp: BigDecimal,
+    @Schema(description = "Begrunnelse på hvorfor maks godkjent beløp er satt")
+    val kommentar: String,
+) : GrunnlagInnhold
