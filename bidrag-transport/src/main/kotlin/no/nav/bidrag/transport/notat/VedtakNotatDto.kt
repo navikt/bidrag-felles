@@ -95,6 +95,7 @@ data class NotatSærbidragUtgifterDto(
 )
 
 data class NotatTotalBeregningUtgifterDto(
+    val betaltAvBp: Boolean,
     val utgiftstype: String,
     val totalKravbeløp: BigDecimal,
     val totalGodkjentBeløp: BigDecimal,

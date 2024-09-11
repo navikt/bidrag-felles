@@ -1,5 +1,6 @@
 package no.nav.bidrag.domene.enums.beregning
 
+import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.nulls.shouldNotBeNull
@@ -60,7 +61,8 @@ class ResultatkodeTest {
 
     @Test
     fun `Skal hente avslagskoder og opphørskoder`() {
-        Resultatkode.PRIVAT_AVTALE.erAvslag().shouldBeTrue()
+        Resultatkode.PRIVAT_AVTALE.erAvslag().shouldBeFalse()
+        Resultatkode.AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG.erAvslag().shouldBeTrue()
         Resultatkode.SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE.erAvslag().shouldBeTrue()
         Resultatkode.BARNET_ER_SELVFORSØRGET.erAvslag().shouldBeTrue()
     }
