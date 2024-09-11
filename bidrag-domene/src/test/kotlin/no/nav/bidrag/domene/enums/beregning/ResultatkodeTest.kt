@@ -62,7 +62,7 @@ class ResultatkodeTest {
     @Test
     fun `Skal hente avslagskoder og opphørskoder`() {
         Resultatkode.PRIVAT_AVTALE.erAvslag().shouldBeFalse()
-        Resultatkode.AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG.erAvslag().shouldBeFalse()
+        Resultatkode.AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG.erAvslag().shouldBeTrue()
         Resultatkode.SÆRBIDRAG_IKKE_FULL_BIDRAGSEVNE.erAvslag().shouldBeTrue()
         Resultatkode.BARNET_ER_SELVFORSØRGET.erAvslag().shouldBeTrue()
     }
