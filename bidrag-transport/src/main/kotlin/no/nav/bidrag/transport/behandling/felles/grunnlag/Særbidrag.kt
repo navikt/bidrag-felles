@@ -46,5 +46,5 @@ data class UtgiftMaksGodkjentBeløpGrunnlag(
     )
     val beløp: BigDecimal,
     @Schema(description = "Begrunnelse på hvorfor maks godkjent beløp er satt")
-    val kommentar: String,
+    val begrunnelse: String,
 ) : GrunnlagInnhold

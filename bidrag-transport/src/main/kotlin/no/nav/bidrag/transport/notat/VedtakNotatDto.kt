@@ -86,10 +86,24 @@ data class NotatBehandlingDetaljerDto(
 
 data class NotatSærbidragUtgifterDto(
     val beregning: NotatUtgiftBeregningDto? = null,
+    val maksGodkjentBeløp: NotatMaksGodkjentBeløpDto? = null,
     val begrunnelse: NotatBegrunnelseDto,
     @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
     val notat: NotatBegrunnelseDto = begrunnelse,
     val utgifter: List<NotatUtgiftspostDto> = emptyList(),
+    val totalBeregning: List<NotatTotalBeregningUtgifterDto> = emptyList(),
+)
+
+data class NotatTotalBeregningUtgifterDto(
+    val utgiftstype: String,
+    val totalKravbeløp: BigDecimal,
+    val totalGodkjentBeløp: BigDecimal,
+)
+
+data class NotatMaksGodkjentBeløpDto(
+    val taMed: Boolean = true,
+    val beløp: BigDecimal? = null,
+    val begrunnelse: String? = null,
 )
 
 data class NotatUtgiftspostDto(
