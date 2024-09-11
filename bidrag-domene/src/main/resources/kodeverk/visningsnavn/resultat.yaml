@@ -165,3 +165,6 @@ ALLE_UTGIFTER_ER_FORELDET:
 
 GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS:
   intern: "Godkjent beløp er lavere enn forskuddssats"
+
+AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG:
+  intern: "Privat avtale om særbidrag"

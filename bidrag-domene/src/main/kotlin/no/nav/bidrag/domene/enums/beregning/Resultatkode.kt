@@ -220,9 +220,12 @@ enum class Resultatkode(
         ResultatkodeType.DIREKTE_AVSLAG,
         ResultatkodeType.SÆRBIDRAG,
     ),
-
     PRIVAT_AVTALE(
-        listOf(BisysResultatkode("VX", BisysResultatkodeType.AVSLAG)),
+        listOf(BisysResultatkode("VX")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG(
+        listOf(BisysResultatkode("APS", BisysResultatkodeType.AVSLAG)),
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
         ResultatkodeType.SÆRBIDRAG,
