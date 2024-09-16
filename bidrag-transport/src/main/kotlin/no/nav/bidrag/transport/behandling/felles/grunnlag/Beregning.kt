@@ -2,12 +2,17 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
+import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.math.MathContext
+import java.time.LocalDate
 
 data class SluttberegningForskudd(
     override val periode: ÅrMånedsperiode,
@@ -79,7 +84,7 @@ data class DelberegningUtgift(
     val sumGodkjent: BigDecimal,
 ) : Delberegning
 
-data class DelberegningBidragBeløp(
+data class DelberegningSumLøpendeBidrag(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
 ) : Delberegning
@@ -91,5 +96,25 @@ data class BidragGrunnlag(
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
 ) : Delberegning
+
+@Schema(description = "Informasjon om persons løpende bidragssaker")
+data class LøpendeBidragPeriode(
+    override val periode: ÅrMånedsperiode,
+    @Schema(description = "Referanse til BM eller BP som grunnlaget gjelder for")
+    val relatertTilPart: Grunnlagsreferanse,
+    val løpendeBidragListe: List<LøpendeBidrag>,
+    override val manueltRegistrert: Boolean,
+) : GrunnlagPeriodeInnhold
+
+data class LøpendeBidrag(
+    val saksnummer: Saksnummer,
+    val type: Stønadstype,
+    val kravhaver: Personident,
+    val fødselsdatoKravhaver: LocalDate,
+    val løpendeBeløp: BigDecimal,
+    val samværsklasse: String,
+    val beregnetBeløp: BigDecimal,
+    val faktiskBeløp: BigDecimal,
+)
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
