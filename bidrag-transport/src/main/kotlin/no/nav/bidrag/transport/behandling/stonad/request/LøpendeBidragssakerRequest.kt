@@ -9,5 +9,5 @@ data class LøpendeBidragssakerRequest(
     @Schema(description = "Personen som er skyldner")
     val skyldner: Personident,
     @Schema(description = "Dato som det ønskes å hente gyldige perioder for")
-    val dato: LocalDate,
+    val dato: LocalDate = LocalDate.now(),
 )
