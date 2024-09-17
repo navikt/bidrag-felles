@@ -7,12 +7,10 @@ import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
-import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.math.MathContext
-import java.time.LocalDate
 
 data class SluttberegningForskudd(
     override val periode: ÅrMånedsperiode,
@@ -89,30 +87,16 @@ data class DelberegningSumLøpendeBidrag(
     val beløp: BigDecimal,
 ) : Delberegning
 
-data class BidragGrunnlag(
-    override val periode: ÅrMånedsperiode,
-    val samværsklasse: Samværsklasse,
-    val løpendeBeløp: BigDecimal,
-    val beregnetBeløp: BigDecimal,
-    val faktiskBeløp: BigDecimal,
-) : Delberegning
-
 @Schema(description = "Informasjon om persons løpende bidragssaker")
-data class LøpendeBidragPeriode(
-    override val periode: ÅrMånedsperiode,
-    @Schema(description = "Referanse til BM eller BP som grunnlaget gjelder for")
-    val relatertTilPart: Grunnlagsreferanse,
+data class LøpendeBidragGrunnlag(
     val løpendeBidragListe: List<LøpendeBidrag>,
-    override val manueltRegistrert: Boolean,
-) : GrunnlagPeriodeInnhold
+) : GrunnlagInnhold
 
 data class LøpendeBidrag(
     val saksnummer: Saksnummer,
     val type: Stønadstype,
-    val kravhaver: Personident,
-    val fødselsdatoKravhaver: LocalDate,
     val løpendeBeløp: BigDecimal,
-    val samværsklasse: String,
+    val samværsklasse: Samværsklasse,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
 )

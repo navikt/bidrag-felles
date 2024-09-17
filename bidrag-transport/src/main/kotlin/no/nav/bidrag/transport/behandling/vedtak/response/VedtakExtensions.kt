@@ -21,18 +21,23 @@ val VedtakDto.behandlingId get() =
         }?.referanse
         ?.toLong()
 
+val List<BehandlingsreferanseDto>.søknadsid get() =
+    find {
+        it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
+    }?.referanse
+        ?.toLong()
+
+val List<BehandlingsreferanseDto>.søknadKlageRefId get() =
+    find {
+        it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
+    }?.referanse
+        ?.toLong()
+
 val VedtakDto.søknadId get() =
-    behandlingsreferanseListe
-        .find {
-            it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
-        }?.referanse
-        ?.toLong()
+    behandlingsreferanseListe.søknadsid
+
 val VedtakDto.søknadKlageRefId get() =
-    behandlingsreferanseListe
-        .find {
-            it.kilde == BehandlingsrefKilde.BISYS_KLAGE_REF_SØKNAD
-        }?.referanse
-        ?.toLong()
+    behandlingsreferanseListe.søknadKlageRefId
 
 val VedtakDto.virkningstidspunkt get() =
     grunnlagListe
