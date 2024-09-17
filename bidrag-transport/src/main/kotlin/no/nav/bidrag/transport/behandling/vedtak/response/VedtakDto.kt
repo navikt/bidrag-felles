@@ -28,8 +28,8 @@ data class VedtakForStønad(
     val vedtakstidspunkt: LocalDateTime,
     @Schema(description = "Type vedtak")
     val type: Vedtakstype,
-    @Schema(description = "Stønadsendringer")
-    val stønadsendringer: List<StønadsendringDto>,
+    @Schema(description = "Stønadsendringen for vedtaket")
+    val stønadsendring: StønadsendringDto,
     @Schema(description = "Referanser til alle behandlinger som ligger som grunnlag til vedtaket")
     val behandlingsreferanser: List<BehandlingsreferanseDto>,
 )
