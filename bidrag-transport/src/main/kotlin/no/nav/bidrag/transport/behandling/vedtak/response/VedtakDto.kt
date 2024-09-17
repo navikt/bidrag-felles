@@ -38,6 +38,8 @@ data class VedtakForStønad(
 
 @Schema
 data class VedtakDto(
+    @Schema(description = "Vedtakets unike identifikator")
+    val id: Long = 0L,
     @Schema(description = "Hva er kilden til vedtaket. Automatisk eller manuelt")
     val kilde: Vedtakskilde,
     @Schema(description = "Type vedtak")
