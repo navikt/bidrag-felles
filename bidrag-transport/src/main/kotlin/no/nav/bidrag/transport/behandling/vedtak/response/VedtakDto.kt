@@ -20,10 +20,22 @@ import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 
+@Schema(description = "Objekt med relevant informasjon fra vedtak")
+data class VedtakForStønad(
+    @Schema(description = "Unik id generert for vedtak")
+    val vedtaksid: Long,
+    @Schema(description = "Tidspunkt vedtaket ble fattet")
+    val vedtakstidspunkt: LocalDateTime,
+    @Schema(description = "Type vedtak")
+    val type: Vedtakstype,
+    @Schema(description = "Stønadsendringer")
+    val stønadsendringer: List<StønadsendringDto>,
+    @Schema(description = "Referanser til alle behandlinger som ligger som grunnlag til vedtaket")
+    val behandlingsreferanser: List<BehandlingsreferanseDto>,
+)
+
 @Schema
 data class VedtakDto(
-    @Schema(description = "Vedtakets unike identifikator")
-    val id: Long = 0L,
     @Schema(description = "Hva er kilden til vedtaket. Automatisk eller manuelt")
     val kilde: Vedtakskilde,
     @Schema(description = "Type vedtak")
