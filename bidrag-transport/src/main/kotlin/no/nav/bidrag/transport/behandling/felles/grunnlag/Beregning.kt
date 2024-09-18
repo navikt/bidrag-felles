@@ -99,6 +99,8 @@ data class LøpendeBidrag(
     val samværsklasse: Samværsklasse,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
-)
+    @Schema(description = "Referanse til barnet løpende bidraget gjelder for")
+    val gjelderBarn: Grunnlagsreferanse,
+) : GrunnlagInnhold
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
