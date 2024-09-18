@@ -33,11 +33,11 @@ val List<BehandlingsreferanseDto>.søknadKlageRefId get() =
     }?.referanse
         ?.toLong()
 
-val VedtakDto.søknadId get() =
-    behandlingsreferanseListe.søknadsid
+val VedtakDto.søknadId get() = behandlingsreferanseListe.søknadsid
+val VedtakDto.søknadKlageRefId get() = behandlingsreferanseListe.søknadKlageRefId
 
-val VedtakDto.søknadKlageRefId get() =
-    behandlingsreferanseListe.søknadKlageRefId
+val VedtakForStønad.søknadsid get() = behandlingsreferanser.søknadsid
+val VedtakForStønad.søknadKlageRefId get() = behandlingsreferanser.søknadKlageRefId
 
 val VedtakDto.virkningstidspunkt get() =
     grunnlagListe
