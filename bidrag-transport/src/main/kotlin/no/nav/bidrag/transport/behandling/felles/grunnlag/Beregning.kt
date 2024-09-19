@@ -84,7 +84,7 @@ data class DelberegningUtgift(
 
 data class DelberegningSumLøpendeBidrag(
     override val periode: ÅrMånedsperiode,
-    val beløp: BigDecimal,
+    val sum: BigDecimal,
 ) : Delberegning
 
 @Schema(description = "Informasjon om persons løpende bidragssaker")
