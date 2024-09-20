@@ -4,7 +4,11 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.commons.CorrelationId
 import no.nav.bidrag.commons.service.AppContext
 import no.nav.bidrag.commons.service.retryTemplate
+import no.nav.bidrag.commons.service.sjablon.SjablonProvider.Companion.SJABLONBARNETILSYN_CACHE
 import no.nav.bidrag.commons.service.sjablon.SjablonProvider.Companion.SJABLONBIDRAGSEVNE_CACHE
+import no.nav.bidrag.commons.service.sjablon.SjablonProvider.Companion.SJABLONFORBRUKSUTGIFTER_CACHE
+import no.nav.bidrag.commons.service.sjablon.SjablonProvider.Companion.SJABLONMAKSFRADRAG_CACHE
+import no.nav.bidrag.commons.service.sjablon.SjablonProvider.Companion.SJABLONMAKSTILSYN_CACHE
 import no.nav.bidrag.commons.service.sjablon.SjablonProvider.Companion.SJABLONSAMVÆRSFRADRAG_CACHE
 import no.nav.bidrag.commons.service.sjablon.SjablonProvider.Companion.SJABLONTALL_CACHE
 import no.nav.bidrag.commons.service.sjablon.SjablonProvider.Companion.SJABLONTRINNVISSKATTESATS_CACHE
@@ -44,6 +48,10 @@ internal class SjablonConsumer(
     private val sjablonSamværsfradragUrl = "/samvaersfradrag/all"
     private val sjablonBidragsevneUrl = "/bidragsevner/all"
     private val sjablonTrinnvisSkattesatsUrl = "/trinnvisskattesats/all"
+    private val sjablonBarnetilsynUrl = "/barnetilsyn/all"
+    private val sjablonForbruksutgifterUrl = "/forbruksutgifter/all"
+    private val sjablonMaksFradragUrl = "/maksfradrag/all"
+    private val sjablonMaksTilsynUrl = "/makstilsyn/all"
 
     val restTemplate: RestTemplate =
         RestTemplateBuilder()
@@ -138,6 +146,94 @@ internal class SjablonConsumer(
             throw exception
         }
     }
+
+    @Cacheable(SJABLONBARNETILSYN_CACHE)
+    fun hentSjablonBarnetilsyn(): ResponseEntity<List<Barnetilsyn>> {
+        try {
+            val sjablonResponse =
+                restTemplate.exchange(
+                    sjablonBarnetilsynUrl,
+                    HttpMethod.GET,
+                    null,
+                    object : ParameterizedTypeReference<List<Barnetilsyn>>() {},
+                )
+
+            logger.info { "Hentet sjabloner for barnetilsyn fra bidrag-sjablon" }
+            return sjablonResponse
+        } catch (exception: RestClientResponseException) {
+            logger.error(exception) {
+                "Det skjedde en feil ved henting av sjabloner for barnetilsyn med feil ${exception.statusText} og feilmelding " +
+                    "${exception.message}"
+            }
+            throw exception
+        }
+    }
+
+    @Cacheable(SJABLONFORBRUKSUTGIFTER_CACHE)
+    fun hentSjablonForbruksutgifter(): ResponseEntity<List<Forbruksutgifter>> {
+        try {
+            val sjablonResponse =
+                restTemplate.exchange(
+                    sjablonForbruksutgifterUrl,
+                    HttpMethod.GET,
+                    null,
+                    object : ParameterizedTypeReference<List<Forbruksutgifter>>() {},
+                )
+
+            logger.info { "Hentet sjabloner for forbruksutgifter fra bidrag-sjablon" }
+            return sjablonResponse
+        } catch (exception: RestClientResponseException) {
+            logger.error(exception) {
+                "Det skjedde en feil ved henting av sjabloner for forbruksutgifter med feil ${exception.statusText} og feilmelding " +
+                    "${exception.message}"
+            }
+            throw exception
+        }
+    }
+
+    @Cacheable(SJABLONMAKSFRADRAG_CACHE)
+    fun hentSjablonMaksFradrag(): ResponseEntity<List<MaksFradrag>> {
+        try {
+            val sjablonResponse =
+                restTemplate.exchange(
+                    sjablonMaksFradragUrl,
+                    HttpMethod.GET,
+                    null,
+                    object : ParameterizedTypeReference<List<MaksFradrag>>() {},
+                )
+
+            logger.info { "Hentet sjabloner for maks fradrag fra bidrag-sjablon" }
+            return sjablonResponse
+        } catch (exception: RestClientResponseException) {
+            logger.error(exception) {
+                "Det skjedde en feil ved henting av sjabloner for maks fradrag med feil ${exception.statusText} og feilmelding " +
+                    "${exception.message}"
+            }
+            throw exception
+        }
+    }
+
+    @Cacheable(SJABLONMAKSTILSYN_CACHE)
+    fun hentSjablonMaksTilsyn(): ResponseEntity<List<MaksTilsyn>> {
+        try {
+            val sjablonResponse =
+                restTemplate.exchange(
+                    sjablonMaksTilsynUrl,
+                    HttpMethod.GET,
+                    null,
+                    object : ParameterizedTypeReference<List<MaksTilsyn>>() {},
+                )
+
+            logger.info { "Hentet sjabloner for maks tilsyn fra bidrag-sjablon" }
+            return sjablonResponse
+        } catch (exception: RestClientResponseException) {
+            logger.error(exception) {
+                "Det skjedde en feil ved henting av sjabloner for maks tilsyn med feil ${exception.statusText} og feilmelding " +
+                    "${exception.message}"
+            }
+            throw exception
+        }
+    }
 }
 
 class SjablonProvider {
@@ -146,6 +242,10 @@ class SjablonProvider {
         const val SJABLONSAMVÆRSFRADRAG_CACHE = "SJABLONSAMVÆRSFRADRAG_CACHE"
         const val SJABLONBIDRAGSEVNE_CACHE = "SJABLONBIDRAGSEVNE_CACHE"
         const val SJABLONTRINNVISSKATTESATS_CACHE = "SJABLONTRINNVISSKATTESATS_CACHE"
+        const val SJABLONBARNETILSYN_CACHE = "SJABLONBARNETILSYN_CACHE"
+        const val SJABLONFORBRUKSUTGIFTER_CACHE = "SJABLONFORBRUKSUTGIFTER_CACHE"
+        const val SJABLONMAKSFRADRAG_CACHE = "SJABLONMAKSFRADRAG_CACHE"
+        const val SJABLONMAKSTILSYN_CACHE = "SJABLONMAKSTILSYN_CACHE"
 
         /**
          * Hent liste over alle sjablonverdier
@@ -198,6 +298,58 @@ class SjablonProvider {
                 }
             } catch (e: Exception) {
                 secureLogger.error(e) { "Det skjedde en feil ved henting av sjablon for trinnvis skattesats" }
+                emptyList()
+            }
+        }
+
+        fun hentSjablonBarnetilsyn(): List<Barnetilsyn> {
+            return try {
+                retryTemplate(
+                    "SjablonProvider.hentSjablonBarnetilsyn",
+                ).execute<List<Barnetilsyn>, HttpClientErrorException> {
+                    AppContext.getBean("CommonsSjablonConsumer", SjablonConsumer::class.java).hentSjablonBarnetilsyn().body
+                }
+            } catch (e: Exception) {
+                secureLogger.error(e) { "Det skjedde en feil ved henting av sjablon for barnetilsyn" }
+                emptyList()
+            }
+        }
+
+        fun hentSjablonForbruksutgifter(): List<Forbruksutgifter> {
+            return try {
+                retryTemplate(
+                    "SjablonProvider.hentSjablonForbruksutgifter",
+                ).execute<List<Forbruksutgifter>, HttpClientErrorException> {
+                    AppContext.getBean("CommonsSjablonConsumer", SjablonConsumer::class.java).hentSjablonForbruksutgifter().body
+                }
+            } catch (e: Exception) {
+                secureLogger.error(e) { "Det skjedde en feil ved henting av sjablon for forbruksutgifter" }
+                emptyList()
+            }
+        }
+
+        fun hentSjablonMaksFradrag(): List<MaksFradrag> {
+            return try {
+                retryTemplate(
+                    "SjablonProvider.hentSjablonMaksFradrag",
+                ).execute<List<MaksFradrag>, HttpClientErrorException> {
+                    AppContext.getBean("CommonsSjablonConsumer", SjablonConsumer::class.java).hentSjablonMaksFradrag().body
+                }
+            } catch (e: Exception) {
+                secureLogger.error(e) { "Det skjedde en feil ved henting av sjablon for maks fradrag" }
+                emptyList()
+            }
+        }
+
+        fun hentSjablonMaksTilsyn(): List<MaksTilsyn> {
+            return try {
+                retryTemplate(
+                    "SjablonProvider.hentSjablonMaksTilsyn",
+                ).execute<List<MaksTilsyn>, HttpClientErrorException> {
+                    AppContext.getBean("CommonsSjablonConsumer", SjablonConsumer::class.java).hentSjablonMaksTilsyn().body
+                }
+            } catch (e: Exception) {
+                secureLogger.error(e) { "Det skjedde en feil ved henting av sjablon for maks tilsyn" }
                 emptyList()
             }
         }

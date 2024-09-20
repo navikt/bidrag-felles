@@ -423,7 +423,9 @@ fun Grunnlagsreferanse.toTree(
                     "Sluttberegning" +
                         "(${grunnlag.innholdTilObjekt<SluttberegningSærbidrag>().periode.fom.toCompactString()})"
 
-// TODO SJABLON kan mappes til 3 ulike objekter (SjablonSjablontallPeriode, SjablonTrinnvisSkattesatsPeriode og SjablonBidragsevnePeriode)
+// TODO SJABLON kan mappes til 8 ulike objekter (SjablonSjablontallPeriode, SjablonSamværsfradragPeriode, SjablonTrinnvisSkattesatsPeriode,
+// TODO SjablonBarnetilsynPeriode, SjablonForbruksutgifterPeriode, SjablonMaksFradragPeriode, SjablonMaksTilsynPeriode og
+// TODO SjablonBidragsevnePeriode)
                 Grunnlagstype.SJABLON ->
                     "Sjablon(" +
                         "${grunnlag.innholdTilObjekt<SjablonSjablontallPeriode>().sjablon})"
@@ -495,7 +497,7 @@ fun Grunnlagsreferanse.toTree(
                         "${grunnlag.type}(${grunnlag.innholdTilObjekt<Person>().fødselsdato.toCompactString()})"
                     } else if (grunnlag.type.name.startsWith("INNHENTET")) {
                         val type =
-                            when (grunnlag?.type) {
+                            when (grunnlag.type) {
                                 Grunnlagstype.INNHENTET_ARBEIDSFORHOLD -> "Arbeidforshold"
                                 Grunnlagstype.INNHENTET_INNTEKT_SMÅBARNSTILLEGG -> "Småbarnstillegg"
                                 Grunnlagstype.INNHENTET_INNTEKT_AINNTEKT -> "Ainntekt"
