@@ -13,6 +13,25 @@ data class SjablonSjablontallPeriode(
     val verdi: BigDecimal,
 ) : GrunnlagPeriodeInnhold
 
+data class SjablonSamværsfradragPeriode(
+    override val periode: ÅrMånedsperiode,
+    @JsonIgnore
+    override val manueltRegistrert: Boolean = false,
+    val samværsklasse: String,
+    val alderTom: Int,
+    val antallDagerTom: Int,
+    val antallNetterTom: Int,
+    val beløpFradrag: BigDecimal,
+) : GrunnlagPeriodeInnhold
+
+data class SjablonBidragsevnePeriode(
+    override val periode: ÅrMånedsperiode,
+    @JsonIgnore
+    override val manueltRegistrert: Boolean = false,
+    val boutgiftBeløp: BigDecimal,
+    val underholdBeløp: BigDecimal,
+) : GrunnlagPeriodeInnhold
+
 data class SjablonTrinnvisSkattesatsPeriode(
     override val periode: ÅrMånedsperiode,
     @JsonIgnore
@@ -21,14 +40,39 @@ data class SjablonTrinnvisSkattesatsPeriode(
 ) : GrunnlagPeriodeInnhold
 
 data class SjablonTrinnvisSkattesats(
-    val inntekstgrense: Int,
+    val inntektsgrense: Int,
     val sats: BigDecimal,
 )
 
-data class SjablonBidragsevnePeriode(
+data class SjablonBarnetilsynPeriode(
     override val periode: ÅrMånedsperiode,
     @JsonIgnore
     override val manueltRegistrert: Boolean = false,
-    val boutgiftBeløp: BigDecimal,
-    val underholdBeløp: BigDecimal,
+    val typeStønad: String,
+    val typeTilsyn: String,
+    val beløpBarnetilsyn: BigDecimal,
+) : GrunnlagPeriodeInnhold
+
+data class SjablonForbruksutgifterPeriode(
+    override val periode: ÅrMånedsperiode,
+    @JsonIgnore
+    override val manueltRegistrert: Boolean = false,
+    val alderTom: Int,
+    val beløpForbruk: BigDecimal,
+) : GrunnlagPeriodeInnhold
+
+data class SjablonMaksFradragPeriode(
+    override val periode: ÅrMånedsperiode,
+    @JsonIgnore
+    override val manueltRegistrert: Boolean = false,
+    val antallBarnTom: Int,
+    val maksBeløpFradrag: BigDecimal,
+) : GrunnlagPeriodeInnhold
+
+data class SjablonMaksTilsynPeriode(
+    override val periode: ÅrMånedsperiode,
+    @JsonIgnore
+    override val manueltRegistrert: Boolean = false,
+    val antallBarnTom: Int,
+    val maksBeløpTilsyn: BigDecimal,
 ) : GrunnlagPeriodeInnhold
