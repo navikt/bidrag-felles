@@ -5,7 +5,7 @@ package no.nav.bidrag.commons.service.organisasjon
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.commons.service.AppContext
-import no.nav.bidrag.commons.service.retryTemplate
+import no.nav.bidrag.commons.service.retryTemplateSynchronous
 import no.nav.bidrag.commons.util.secureLogger
 import no.nav.bidrag.commons.web.client.AbstractRestClient
 import org.springframework.beans.factory.annotation.Qualifier
@@ -61,17 +61,22 @@ internal class BidragOrganisasjonConsumer(
     @Qualifier("azure") private val restTemplate: RestOperations,
 ) : AbstractRestClient(restTemplate, "bidrag-organisasjon") {
     private fun createUri(path: String?) =
-        UriComponentsBuilder.fromUri(url)
-            .path(path ?: "").build().toUri()
+        UriComponentsBuilder
+            .fromUri(url)
+            .path(path ?: "")
+            .build()
+            .toUri()
 
     @Cacheable(SaksbehandlernavnProvider.SAKSBEHANDLERINFO_CACHE)
-    fun hentSaksbehandlerInfo(saksbehandlerIdent: String): SaksbehandlerInfoResponse? {
-        return getForEntity(createUri("/saksbehandler/info/$saksbehandlerIdent"))
-    }
+    fun hentSaksbehandlerInfo(saksbehandlerIdent: String): SaksbehandlerInfoResponse? =
+        getForEntity(createUri("/saksbehandler/info/$saksbehandlerIdent"))
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class SaksbehandlerInfoResponse(val ident: String, val navn: String)
+data class SaksbehandlerInfoResponse(
+    val ident: String,
+    val navn: String,
+)
 
 class SaksbehandlernavnProvider {
     companion object {
@@ -80,18 +85,19 @@ class SaksbehandlernavnProvider {
         /**
          * Hent navn på personen som tilhører en NAV-ident (feks Z994977)
          */
-        fun hentSaksbehandlernavn(saksbehandlerIdent: String): String? {
-            return try {
-                retryTemplate(
+        fun hentSaksbehandlernavn(saksbehandlerIdent: String): String? =
+            try {
+                retryTemplateSynchronous(
                     "SaksbehandlernavnProvider.hentSaksbehandlernavn for ident $saksbehandlerIdent",
                 ).execute<String, HttpClientErrorException> {
-                    AppContext.getBean("CommonsBidragOrganisasjonConsumer", BidragOrganisasjonConsumer::class.java)
-                        .hentSaksbehandlerInfo(saksbehandlerIdent)?.navn
+                    AppContext
+                        .getBean("CommonsBidragOrganisasjonConsumer", BidragOrganisasjonConsumer::class.java)
+                        .hentSaksbehandlerInfo(saksbehandlerIdent)
+                        ?.navn
                 }
             } catch (e: Exception) {
                 secureLogger.error(e) { "Det skjedde en feil ved henting av saksbehandlernavn for saksbehandler $saksbehandlerIdent" }
                 null
             }
-        }
     }
 }
