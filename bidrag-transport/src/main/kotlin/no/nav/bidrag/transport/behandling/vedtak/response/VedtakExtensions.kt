@@ -17,7 +17,7 @@ val VedtakDto.saksnummer get() = stønadsendringListe.firstOrNull()?.sak?.verdi 
 val VedtakDto.behandlingId get() =
     behandlingsreferanseListe
         .find {
-            it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
+            it.kilde == BehandlingsrefKilde.BEHANDLING_ID
         }?.referanse
         ?.toLong()
 
