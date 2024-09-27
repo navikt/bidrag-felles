@@ -13,7 +13,6 @@ enum class Grunnlagstype {
     SKATTEKLASSE,
     SAMVÆRSKLASSE,
     BIDRAGSEVNE,
-    SAMVÆRSFRADRAG,
     LØPENDE_BIDRAG,
     FAKTISK_UTGIFT,
     BARNETILSYN_MED_STØNAD,
@@ -65,6 +64,9 @@ enum class Grunnlagstype {
     DELBEREGNING_VOKSNE_I_HUSSTAND,
     DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRBIDRAG,
     DELBEREGNING_UTGIFT,
+
+    // Bidrag
+    DELBEREGNING_SAMVÆRSFRADRAG,
 
     @Deprecated("Bruk de spesifikke grunnlagstypene som starter med PERSON_ i stedet")
     PERSON,
