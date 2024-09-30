@@ -47,7 +47,7 @@
     <token-support.version>3.2.0</token-support.version>
     <jackson.fasterXml.version>2.16.0</jackson.fasterXml.version>
     <aspectj.version>1.9.21</aspectj.version>
-    <micrometer-registry.version>1.12.5</micrometer-registry.version>
+    <micrometer-registry.version>1.13.4</micrometer-registry.version>
     <ktlint.version>1.0.1</ktlint.version>
 
     <!-- language -->
