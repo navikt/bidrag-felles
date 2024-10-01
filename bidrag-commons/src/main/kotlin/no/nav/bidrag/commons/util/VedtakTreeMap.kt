@@ -17,7 +17,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragsevne
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningVoksneIHustand
@@ -483,7 +483,7 @@ fun Grunnlagsreferanse.toTree(
 
                 Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRBIDRAG -> {
                     @Suppress("ktlint:standard:property-naming")
-                    val BPsAndelSærbidrag = grunnlag.innholdTilObjekt<DelberegningBidragspliktigesAndel>()
+                    val BPsAndelSærbidrag = grunnlag.innholdTilObjekt<DelberegningBidragspliktigesAndelSærbidrag>()
                     "Delberegning BPs andel særbidrag(${BPsAndelSærbidrag.periode.fom.toCompactString()})"
                 }
 
