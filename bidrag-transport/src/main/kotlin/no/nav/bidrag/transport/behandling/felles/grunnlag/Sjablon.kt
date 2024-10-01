@@ -17,10 +17,10 @@ data class SjablonSamværsfradragPeriode(
     override val periode: ÅrMånedsperiode,
     @JsonIgnore
     override val manueltRegistrert: Boolean = false,
-//    val samværsklasse: String,
-//    val alderTom: Int,
-//    val antallDagerTom: Int,
-//    val antallNetterTom: Int,
+    val samværsklasse: String,
+    val alderTom: Int,
+    val antallDagerTom: Int,
+    val antallNetterTom: Int,
     val beløpFradrag: BigDecimal,
 ) : GrunnlagPeriodeInnhold
 
