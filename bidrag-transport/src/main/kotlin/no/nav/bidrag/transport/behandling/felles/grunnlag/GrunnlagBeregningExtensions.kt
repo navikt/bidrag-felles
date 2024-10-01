@@ -6,7 +6,7 @@ import java.math.BigDecimal
 
 fun List<GrunnlagDto>.finnDelberegningBidragspliktigesAndelSærbidrag(
     grunnlagsreferanseListe: List<Grunnlagsreferanse>,
-): DelberegningBidragspliktigesAndelSærbidrag? {
+): DelberegningBidragspliktigesAndel? {
     val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return null
     val delberegningBidragspliktigesAndel =
         find {
@@ -15,7 +15,7 @@ fun List<GrunnlagDto>.finnDelberegningBidragspliktigesAndelSærbidrag(
                     it.referanse,
                 )
         } ?: return null
-    return delberegningBidragspliktigesAndel.innholdTilObjekt<DelberegningBidragspliktigesAndelSærbidrag>()
+    return delberegningBidragspliktigesAndel.innholdTilObjekt<DelberegningBidragspliktigesAndel>()
 }
 
 fun List<GrunnlagDto>.finnSluttberegningIReferanser(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =

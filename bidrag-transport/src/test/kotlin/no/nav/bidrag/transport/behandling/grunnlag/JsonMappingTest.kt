@@ -6,7 +6,7 @@ import io.kotest.matchers.shouldBe
 import no.nav.bidrag.domene.enums.person.Familierelasjon
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærbidrag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetHusstandsmedlem
 import no.nav.bidrag.transport.behandling.grunnlag.response.BorISammeHusstandDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.RelatertPersonGrunnlagDto
@@ -20,22 +20,25 @@ class JsonMappingTest {
     @Test
     fun `skal returnere andelProsent`() {
         val delberegningObjekt =
-            DelberegningBidragspliktigesAndelSærbidrag(
-                andelFaktor = 0.833333333333.toBigDecimal(),
+            DelberegningBidragspliktigesAndel(
+                endeligAndelFaktor = 0.833333333333.toBigDecimal(),
                 andelBeløp = BigDecimal(3993),
+                beregnetAndelFaktor = 0.85.toBigDecimal(),
                 barnetErSelvforsørget = false,
+                barnEndeligInntekt = BigDecimal.ZERO,
                 periode = ÅrMånedsperiode(LocalDate.parse("2024-08-01"), LocalDate.parse("2024-08-31")),
             )
         delberegningObjekt.andelProsent shouldBe 83.33.toBigDecimal()
+        delberegningObjekt.erAndelRedusert shouldBe true
 
         delberegningObjekt
             .copy(
-                andelFaktor = 0.4432.toBigDecimal(),
+                endeligAndelFaktor = 0.4432.toBigDecimal(),
             ).andelProsent shouldBe 44.32.toBigDecimal()
 
         delberegningObjekt
             .copy(
-                andelFaktor = 83.333333333.toBigDecimal(),
+                endeligAndelFaktor = 83.333333333.toBigDecimal(),
             ).andelProsent shouldBe 83.33.toBigDecimal()
     }
 
@@ -45,25 +48,30 @@ class JsonMappingTest {
         val json =
             """
             {
-                 "periode": {
+             "periode": {
               "fom": "2024-07",
               "til": "2024-08"
             },
             "andelBeløp": 5796,
             "andelProsent": 64.44,
+            "beregnetAndelFaktor": 0.64,
+            "barnEndeligInntekt": 0,
             "barnetErSelvforsørget": false
                 }
             """.trimIndent()
 
-        val delberegning: DelberegningBidragspliktigesAndelSærbidrag = commonObjectmapper.readValue(json)
+        val delberegning: DelberegningBidragspliktigesAndel = commonObjectmapper.readValue(json)
 
-        delberegning.andelFaktor shouldBe 64.44.toBigDecimal()
+        delberegning.endeligAndelFaktor shouldBe 64.44.toBigDecimal()
         delberegning.andelProsent shouldBe 64.44.toBigDecimal()
+        delberegning.erAndelRedusert shouldBe false
 
         val delberegningObjekt =
-            DelberegningBidragspliktigesAndelSærbidrag(
-                andelFaktor = 0.833333333333.toBigDecimal(),
+            DelberegningBidragspliktigesAndel(
+                endeligAndelFaktor = 0.833333333333.toBigDecimal(),
                 andelBeløp = BigDecimal(3993),
+                beregnetAndelFaktor = 0.85.toBigDecimal(),
+                barnEndeligInntekt = BigDecimal.ZERO,
                 barnetErSelvforsørget = false,
                 periode = ÅrMånedsperiode(LocalDate.parse("2024-08-01"), LocalDate.parse("2024-08-31")),
             )
@@ -78,12 +86,19 @@ class JsonMappingTest {
     "fom" : "2024-08",
     "til" : "2024-08"
   },
-  "andelFaktor" : 0.833333333333,
+  "endeligAndelFaktor" : 0.833333333333,
   "andelBeløp" : 3993,
+  "beregnetAndelFaktor" : 0.85,
+  "barnEndeligInntekt" : 0,
   "barnetErSelvforsørget" : false
 }
             """.trimIndent().trimStart()
-        delberegningJson shouldBe jsonResult
+
+        val jsonResultFormattert =
+            commonObjectmapper.writerWithDefaultPrettyPrinter()
+                .writeValueAsString(commonObjectmapper.readValue(jsonResult, Any::class.java))
+
+        delberegningJson shouldBe jsonResultFormattert
     }
 
     @Test
@@ -197,7 +212,12 @@ class JsonMappingTest {
               } ]
             } ]
             """.trimIndent()
-        jsonString shouldBe expectedJson
+
+        val expectedJsonFormattert =
+            commonObjectmapper.writerWithDefaultPrettyPrinter()
+                .writeValueAsString(commonObjectmapper.readValue(expectedJson, Any::class.java))
+
+        jsonString shouldBe expectedJsonFormattert
 
         val relatertPersonObjekt: List<RelatertPersonGrunnlagDto> = commonObjectmapper.readValue(jsonString)
 
@@ -324,7 +344,12 @@ class JsonMappingTest {
               } ]
             } ]
             """.trimIndent()
-        jsonString shouldBe expectedJson
+
+        val expectedJsonFormattert =
+            commonObjectmapper.writerWithDefaultPrettyPrinter()
+                .writeValueAsString(commonObjectmapper.readValue(expectedJson, Any::class.java))
+
+        jsonString shouldBe expectedJsonFormattert
 
         val husstandsmedlemPDLList: List<InnhentetHusstandsmedlem.HusstandsmedlemPDL> = commonObjectmapper.readValue(jsonString)
 
