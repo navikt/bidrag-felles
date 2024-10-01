@@ -50,8 +50,8 @@ data class DelberegningBarnIHusstand(
 data class DelberegningBidragsevne(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
-    val skatt: Skatt,
-    val underholdBarnEgenHusstand: BigDecimal,
+//    val skatt: Skatt,
+//    val underholdBarnEgenHusstand: BigDecimal,
 ) : Delberegning {
     data class Skatt(
         val minstefradrag: BigDecimal,
@@ -67,29 +67,30 @@ data class DelberegningVoksneIHustand(
     val borMedAndreVoksne: Boolean,
 ) : Delberegning
 
-data class DelberegningBidragspliktigesAndel(
+data class DelberegningBidragspliktigesAndelSærbidrag(
     override val periode: ÅrMånedsperiode,
+    //    val endeligAndelFaktor: BigDecimal,
     @JsonAlias("andelFaktor", "andelProsent")
-    val endeligAndelFaktor: BigDecimal,
+    val andelFaktor: BigDecimal,
     val andelBeløp: BigDecimal,
-    val beregnetAndelFaktor: BigDecimal,
-    val barnEndeligInntekt: BigDecimal,
+//    val beregnetAndelFaktor: BigDecimal,
+//    val barnEndeligInntekt: BigDecimal,
     val barnetErSelvforsørget: Boolean,
 ) : Delberegning {
     @get:JsonIgnore
     val andelProsent: BigDecimal
         get() =
-            if (endeligAndelFaktor < BigDecimal.ONE) {
-                endeligAndelFaktor
+            if (andelFaktor < BigDecimal.ONE) {
+                andelFaktor
                     .multiply(BigDecimal(100))
                     .round(MathContext(4))
             } else {
-                endeligAndelFaktor.round(MathContext(4))
+                andelFaktor.round(MathContext(4))
             }
 
-    @get:JsonIgnore
-    val erAndelRedusert: Boolean
-        get() = endeligAndelFaktor < beregnetAndelFaktor
+//    @get:JsonIgnore
+//    val erAndelRedusert: Boolean
+//        get() = endeligAndelFaktor < beregnetAndelFaktor
 }
 
 data class DelberegningUtgift(

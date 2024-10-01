@@ -22,7 +22,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import java.math.BigDecimal
@@ -214,20 +214,22 @@ data class NotatSivilstand(
 )
 
 data class NotatAndreVoksneIHusstanden(
-    val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteretMedDetaljer<Bostatuskode, AndreVoksneIHusstandenDetaljerDto>> =
+    val opplysningerFraFolkeregisteret:
+        List<OpplysningerFraFolkeregisteretMedDetaljer<Bostatuskode, NotatAndreVoksneIHusstandenDetaljerDto>> =
         emptyList(),
     val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning<Bostatuskode>> =
         emptyList(),
 )
 
-data class AndreVoksneIHusstandenDetaljerDto(
+data class NotatAndreVoksneIHusstandenDetaljerDto(
     val totalAntallHusstandsmedlemmer: Int,
-    val husstandsmedlemmer: List<VoksenIHusstandenDetaljerDto>,
+    val husstandsmedlemmer: List<NotatVoksenIHusstandenDetaljerDto>,
 )
 
-data class VoksenIHusstandenDetaljerDto(
+data class NotatVoksenIHusstandenDetaljerDto(
     val navn: String,
     val fødselsdato: LocalDate?,
+    val erBeskyttet: Boolean = false,
     val harRelasjonTilBp: Boolean,
 )
 
@@ -286,6 +288,7 @@ data class NotatRolleDto(
     val navn: String?,
     val fødselsdato: LocalDate?,
     val ident: Personident?,
+    val erBeskyttet: Boolean = false,
 )
 
 data class NotatInntekterDto(
@@ -374,7 +377,7 @@ abstract class VedtakResultatInnhold(
 
 data class NotatResultatSærbidragsberegningDto(
     val periode: ÅrMånedsperiode,
-    val bpsAndel: DelberegningBidragspliktigesAndel? = null,
+    val bpsAndel: DelberegningBidragspliktigesAndelSærbidrag? = null,
     val beregning: UtgiftBeregningDto? = null,
     val inntekter: ResultatSærbidragsberegningInntekterDto? = null,
     val delberegningUtgift: DelberegningUtgift? = null,
