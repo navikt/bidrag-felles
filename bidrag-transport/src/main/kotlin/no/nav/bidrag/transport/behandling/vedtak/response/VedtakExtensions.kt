@@ -29,7 +29,7 @@ val List<BehandlingsreferanseDto>.søknadsid get() =
 
 val List<BehandlingsreferanseDto>.søknadKlageRefId get() =
     find {
-        it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
+        it.kilde == BehandlingsrefKilde.BISYS_KLAGE_REF_SØKNAD
     }?.referanse
         ?.toLong()
 
