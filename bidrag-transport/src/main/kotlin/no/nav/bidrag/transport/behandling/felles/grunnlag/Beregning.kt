@@ -55,7 +55,7 @@ data class DelberegningBidragsevne(
 ) : Delberegning {
     data class Skatt(
         val minstefradrag: BigDecimal,
-        val skattAlminnelgInntekt: BigDecimal,
+        val skattAlminneligInntekt: BigDecimal,
         val trinnskatt: BigDecimal,
         val trygdeavgift: BigDecimal,
         val sumSkatt: BigDecimal,
