@@ -338,6 +338,7 @@ data class NotatInntektDto(
     val type: Inntektsrapportering,
     val medIBeregning: Boolean = false,
     val gjelderBarn: NotatRolleDto?,
+    val historisk: Boolean = false,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
     val visningsnavn
