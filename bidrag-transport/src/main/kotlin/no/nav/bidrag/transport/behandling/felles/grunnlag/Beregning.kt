@@ -101,8 +101,9 @@ data class DelberegningUtgift(
 
 data class DelberegningSumLøpendeBidrag(
     override val periode: ÅrMånedsperiode,
+    @JsonAlias("sum")
     val sumLøpendeBidrag: BigDecimal,
-    val beregningPerBarn: List<DelberegningSumLøpendeBidragPerBarn>,
+    val beregningPerBarn: List<DelberegningSumLøpendeBidragPerBarn> = emptyList(),
 ) : Delberegning
 
 data class DelberegningSumLøpendeBidragPerBarn(
