@@ -42,13 +42,13 @@ enum class SjablonTallNavn(
     INNSLAG_KAPITALINNTEKT_BELØP(
         "InnslagKapitalInntektBeløp",
         "0006",
+        true,
         false,
         false,
+        true,
         false,
         false,
-        false,
-        false,
-        false,
+        true,
         false,
     ),
     INNTEKTSINTERVALL_TILLEGGSBIDRAG_BELØP(
