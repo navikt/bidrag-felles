@@ -7,6 +7,7 @@ import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
+import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
@@ -100,8 +101,20 @@ data class DelberegningUtgift(
 
 data class DelberegningSumLøpendeBidrag(
     override val periode: ÅrMånedsperiode,
-    val sum: BigDecimal,
+    @JsonAlias("sum")
+    val sumLøpendeBidrag: BigDecimal,
+    val beregningPerBarn: List<DelberegningSumLøpendeBidragPerBarn> = emptyList(),
 ) : Delberegning
+
+data class DelberegningSumLøpendeBidragPerBarn(
+    val personidentBarn: Personident,
+    val saksnummer: Saksnummer,
+    val løpendeBeløp: BigDecimal,
+    val samværsfradrag: BigDecimal,
+    val beregnetBeløp: BigDecimal,
+    val faktiskBeløp: BigDecimal,
+    val resultat: BigDecimal,
+)
 
 data class DelberegningSamværsfradrag(
     override val periode: ÅrMånedsperiode,
