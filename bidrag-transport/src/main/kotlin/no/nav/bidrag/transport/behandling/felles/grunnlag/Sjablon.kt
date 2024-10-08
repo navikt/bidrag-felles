@@ -28,6 +28,7 @@ data class SjablonBidragsevnePeriode(
     override val periode: ÅrMånedsperiode,
     @JsonIgnore
     override val manueltRegistrert: Boolean = false,
+    val bostatus: String = "",
     val boutgiftBeløp: BigDecimal,
     val underholdBeløp: BigDecimal,
 ) : GrunnlagPeriodeInnhold
