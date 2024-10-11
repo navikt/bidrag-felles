@@ -24,8 +24,11 @@ import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumLøpendeBidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
@@ -380,7 +383,10 @@ data class NotatResultatSærbidragsberegningDto(
     val periode: ÅrMånedsperiode,
     val bpsAndel: DelberegningBidragspliktigesAndel? = null,
     val beregning: UtgiftBeregningDto? = null,
+    val forskuddssats: BigDecimal? = null,
     val inntekter: ResultatSærbidragsberegningInntekterDto? = null,
+    val delberegningSumLøpendeBidrag: DelberegningSumLøpendeBidrag? = null,
+    val delberegningBidragsevne: NotatDelberegningBidragsevneDto? = null,
     val delberegningUtgift: DelberegningUtgift? = null,
     val resultat: BigDecimal,
     val resultatKode: Resultatkode,
@@ -402,7 +408,16 @@ data class NotatResultatSærbidragsberegningDto(
         val inntektBM: BigDecimal? = null,
         val inntektBP: BigDecimal? = null,
         val inntektBarn: BigDecimal? = null,
-    )
+        val barnEndeligInntekt: BigDecimal? = null,
+    ) {
+        val totalEndeligInntekt get() =
+            (inntektBM ?: BigDecimal.ZERO) + (inntektBP ?: BigDecimal.ZERO) +
+                (barnEndeligInntekt ?: BigDecimal.ZERO)
+
+        val inntektBPMånedlig get() = inntektBP?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+        val inntektBMMånedlig get() = inntektBM?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+        val inntektBarnMånedlig get() = inntektBarn?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+    }
 
     data class UtgiftBeregningDto(
         @Schema(description = "Beløp som er direkte betalt av BP")
@@ -415,6 +430,37 @@ data class NotatResultatSærbidragsberegningDto(
         val totalGodkjentBeløpBp: BigDecimal? = null,
         @Schema(description = "Summen av godkjent beløp for utgifter BP har betalt plus beløp som er direkte betalt av BP")
         val totalBeløpBetaltAvBp: BigDecimal = (totalGodkjentBeløpBp ?: BigDecimal.ZERO) + beløpDirekteBetaltAvBp,
+    )
+}
+
+data class NotatDelberegningBidragsevneDto(
+    val bidragsevne: BigDecimal,
+    val skatt: NotatSkattBeregning,
+    val underholdEgneBarnIHusstand: NotatUnderholdEgneBarnIHusstand,
+    val utgifter: NotatBidragsevneUtgifterBolig,
+) {
+    data class NotatUnderholdEgneBarnIHusstand(
+        val resultat: BigDecimal,
+        val sjablon: BigDecimal,
+        val antallBarnIHusstanden: Double,
+    )
+
+    data class NotatSkattBeregning(
+        val sumSkatt: BigDecimal,
+        val skattAlminneligInntekt: BigDecimal,
+        val trinnskatt: BigDecimal,
+        val trygdeavgift: BigDecimal,
+    ) {
+        val skattResultat get() = sumSkatt.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+        val trinnskattResultat get() = trinnskatt.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+        val skattAlminneligInntektResultat get() = skattAlminneligInntekt.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+        val trygdeavgiftResultat get() = trygdeavgift.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+    }
+
+    data class NotatBidragsevneUtgifterBolig(
+        val borMedAndreVoksne: Boolean,
+        val boutgiftBeløp: BigDecimal,
+        val underholdBeløp: BigDecimal,
     )
 }
 
