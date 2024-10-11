@@ -24,5 +24,7 @@ enum class GrunnlagDatakilde {
     // Ainntekt
     INNTEKSKOMPONENTEN,
 
+    TILLEGGSSTØNAD_SAK,
+
     PDL,
 }
