@@ -384,6 +384,7 @@ data class NotatResultatSærbidragsberegningDto(
     val bpsAndel: DelberegningBidragspliktigesAndel? = null,
     val beregning: UtgiftBeregningDto? = null,
     val forskuddssats: BigDecimal? = null,
+    val maksGodkjentBeløp: BigDecimal? = null,
     val inntekter: ResultatSærbidragsberegningInntekterDto? = null,
     val delberegningSumLøpendeBidrag: DelberegningSumLøpendeBidrag? = null,
     val delberegningBidragsevne: NotatDelberegningBidragsevneDto? = null,
