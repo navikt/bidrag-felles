@@ -442,11 +442,11 @@ data class NotatDelberegningBidragsevneDto(
     val utgifter: NotatBidragsevneUtgifterBolig,
 ) {
     data class NotatUnderholdEgneBarnIHusstand(
-        val underholdEgneBarnIHusstand: BigDecimal,
+        val årsbeløp: BigDecimal,
         val sjablon: BigDecimal,
         val antallBarnIHusstanden: Double,
     ) {
-        val underholdEgneBarnIHusstandMånedsbeløp get() = underholdEgneBarnIHusstand.årsbeløpTilMåndesbeløp()
+        val måndesbeløp get() = årsbeløp.årsbeløpTilMåndesbeløp()
     }
 
     data class NotatSkattBeregning(
