@@ -22,6 +22,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
+import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumLøpendeBidrag
@@ -441,10 +442,12 @@ data class NotatDelberegningBidragsevneDto(
     val utgifter: NotatBidragsevneUtgifterBolig,
 ) {
     data class NotatUnderholdEgneBarnIHusstand(
-        val resultat: BigDecimal,
+        val underholdEgneBarnIHusstand: BigDecimal,
         val sjablon: BigDecimal,
         val antallBarnIHusstanden: Double,
-    )
+    ) {
+        val underholdEgneBarnIHusstandMånedsbeløp get() = underholdEgneBarnIHusstand.årsbeløpTilMåndesbeløp()
+    }
 
     data class NotatSkattBeregning(
         val sumSkatt: BigDecimal,
@@ -452,10 +455,10 @@ data class NotatDelberegningBidragsevneDto(
         val trinnskatt: BigDecimal,
         val trygdeavgift: BigDecimal,
     ) {
-        val skattResultat get() = sumSkatt.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
-        val trinnskattResultat get() = trinnskatt.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
-        val skattAlminneligInntektResultat get() = skattAlminneligInntekt.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
-        val trygdeavgiftResultat get() = trygdeavgift.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+        val skattMånedsbeløp get() = sumSkatt.årsbeløpTilMåndesbeløp()
+        val trinnskattMånedsbeløp get() = trinnskatt.årsbeløpTilMåndesbeløp()
+        val skattAlminneligInntektMånedsbeløp get() = skattAlminneligInntekt.årsbeløpTilMåndesbeløp()
+        val trygdeavgiftMånedsbeløp get() = trygdeavgift.årsbeløpTilMåndesbeløp()
     }
 
     data class NotatBidragsevneUtgifterBolig(
