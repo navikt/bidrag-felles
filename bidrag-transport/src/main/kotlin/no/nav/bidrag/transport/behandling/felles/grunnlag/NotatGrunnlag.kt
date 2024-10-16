@@ -10,5 +10,7 @@ data class NotatGrunnlag(
         BOFORHOLD,
         INNTEKT,
         UTGIFTER,
+        SAMVÆR,
+        UNDERHOLDSKOSTNAD,
     }
 }

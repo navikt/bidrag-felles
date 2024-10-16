@@ -29,6 +29,7 @@ enum class Grunnlagstype {
     INNBETALT_BELØP,
     FORHOLDSMESSIG_FORDELING,
     KLAGE_STATISTIKK,
+    SAMVÆRSPERIODE,
 
     // Sjablon
     SJABLON,
