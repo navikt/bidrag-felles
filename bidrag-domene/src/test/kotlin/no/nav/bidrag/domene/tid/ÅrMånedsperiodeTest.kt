@@ -24,8 +24,7 @@ internal class ÅrMånedsperiodeTest {
                         // Denne trengs for å parse år over 9999 riktig.
                         YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")),
                     ),
-            )
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            ).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
     @Test
     fun `Månedsperiode serialiserer og deserialiserer riktig ved tidenes morgen`() {
@@ -74,6 +73,15 @@ internal class ÅrMånedsperiodeTest {
         val periode = ÅrMånedsperiode(YearMonth.of(2019, 2), YearMonth.of(2019, 5))
 
         val inneholder = periode.inneholder(YearMonth.of(2019, 1))
+
+        inneholder shouldBe false
+    }
+
+    @Test
+    fun `inneholder returnerer false hvis dato er på til dato da denne er til og ikke med`()  {
+        val periode = ÅrMånedsperiode(YearMonth.of(2019, 2), YearMonth.of(2019, 5))
+
+        val inneholder = periode.inneholder(YearMonth.of(2019, 5))
 
         inneholder shouldBe false
     }
