@@ -52,7 +52,7 @@ data class UtgiftMaksGodkjentBeløpGrunnlag(
     val begrunnelse: String,
 ) : GrunnlagInnhold
 
-@Schema(description = "Informasjon om BPs løpende bidragssaker og nyeste manuelle beregning")
+@Schema(description = "Informasjon om BPs løpende bidragssaker")
 data class LøpendeBidragGrunnlag(
     val løpendeBidragListe: List<LøpendeBidrag>,
 ) : GrunnlagInnhold
@@ -65,6 +65,6 @@ data class LøpendeBidrag(
     val samværsklasse: Samværsklasse,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
-    @Schema(description = "Referanse til barnet det løpende bidraget gjelder for")
+    @Schema(description = "Referanse til barnet løpende bidraget gjelder for")
     val gjelderBarn: Grunnlagsreferanse,
 ) : GrunnlagInnhold

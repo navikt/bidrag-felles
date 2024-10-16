@@ -2,11 +2,8 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
-import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
-import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
-import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -99,14 +96,14 @@ data class DelberegningUtgift(
     val sumGodkjent: BigDecimal,
 ) : Delberegning
 
-data class DelberegningSumLøpendeBidrag(
+data class DelberegningBPsBeregnedeTotalbidrag(
     override val periode: ÅrMånedsperiode,
     @JsonAlias("sum")
-    val sumLøpendeBidrag: BigDecimal,
-    val beregningPerBarn: List<BeregningSumLøpendeBidragPerBarn> = emptyList(),
+    val bBPsBeregnedeTotalbidrag: BigDecimal,
+    val beregnetBidragPerBarnListe: List<BeregnetBidragPerBarn> = emptyList(),
 ) : Delberegning
 
-data class BeregningSumLøpendeBidragPerBarn(
+data class BeregnetBidragPerBarn(
     val personidentBarn: Personident,
     val saksnummer: Saksnummer,
     val løpendeBeløp: BigDecimal,
@@ -114,29 +111,13 @@ data class BeregningSumLøpendeBidragPerBarn(
     val samværsfradrag: BigDecimal,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
-    val resultat: BigDecimal,
+    val reduksjonUnderholdskostnad: BigDecimal,
+    val beregnetBidrag: BigDecimal,
 )
 
 data class DelberegningSamværsfradrag(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
 ) : Delberegning
-
-@Schema(description = "Informasjon om persons løpende bidragssaker")
-data class LøpendeBidragGrunnlag(
-    val løpendeBidragListe: List<LøpendeBidrag>,
-) : GrunnlagInnhold
-
-data class LøpendeBidrag(
-    val saksnummer: Saksnummer,
-    val type: Stønadstype,
-    val løpendeBeløp: BigDecimal,
-    val valutakode: String = "NOK",
-    val samværsklasse: Samværsklasse,
-    val beregnetBeløp: BigDecimal,
-    val faktiskBeløp: BigDecimal,
-    @Schema(description = "Referanse til barnet løpende bidraget gjelder for")
-    val gjelderBarn: Grunnlagsreferanse,
-) : GrunnlagInnhold
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
