@@ -23,8 +23,8 @@ import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
+import no.nav.bidrag.transport.behandling.felles.grunnlag.BeregnetBidragPerBarn
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesBeregnedeTotalbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import java.math.BigDecimal
@@ -387,7 +387,7 @@ data class NotatResultatSærbidragsberegningDto(
     val forskuddssats: BigDecimal? = null,
     val maksGodkjentBeløp: BigDecimal? = null,
     val inntekter: ResultatSærbidragsberegningInntekterDto? = null,
-    val delberegningBidragspliktigesBeregnedeTotalbidrag: DelberegningBidragspliktigesBeregnedeTotalbidrag? = null,
+    val delberegningBidragspliktigesBeregnedeTotalbidrag: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto? = null,
     val delberegningBidragsevne: NotatDelberegningBidragsevneDto? = null,
     val delberegningUtgift: DelberegningUtgift? = null,
     val resultat: BigDecimal,
@@ -432,6 +432,17 @@ data class NotatResultatSærbidragsberegningDto(
         val totalGodkjentBeløpBp: BigDecimal? = null,
         @Schema(description = "Summen av godkjent beløp for utgifter BP har betalt plus beløp som er direkte betalt av BP")
         val totalBeløpBetaltAvBp: BigDecimal = (totalGodkjentBeløpBp ?: BigDecimal.ZERO) + beløpDirekteBetaltAvBp,
+    )
+}
+
+data class NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto(
+    val beregnetBidragPerBarnListe: List<NotatBeregnetBidragPerBarnDto>,
+    val bidragspliktigesBeregnedeTotalbidrag: BigDecimal,
+    val periode: ÅrMånedsperiode,
+) {
+    data class NotatBeregnetBidragPerBarnDto(
+        val beregnetBidragPerBarn: BeregnetBidragPerBarn,
+        val personidentBarn: String,
     )
 }
 

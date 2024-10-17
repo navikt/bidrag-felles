@@ -9,6 +9,7 @@ import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeBarnebidrag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
@@ -55,6 +56,7 @@ val Utgiftstype.visningsnavn get() = lastVisningsnavnFraFil("utgiftstype.yaml")[
 val Engangsbeløptype.visningsnavn get() = lastVisningsnavnFraFil("engangsbeløptype.yaml")[name] ?: visningsnavnMangler(name)
 val Særbidragskategori.visningsnavn get() = lastVisningsnavnFraFil("særbidragskategori.yaml")[name] ?: visningsnavnMangler(name)
 val Vedtakstype.visningsnavn get() = lastVisningsnavnFraFil("vedtakstype.yaml")[name] ?: visningsnavnMangler(name)
+val Samværsklasse.visningsnavn get() = lastVisningsnavnFraFil("samværsklasse.yaml")[name] ?: visningsnavnMangler(name)
 
 fun Vedtakstype.visningsnavnIntern(opprinneligVedtakstype: Vedtakstype? = null) =
     opprinneligVedtakstype?.let {

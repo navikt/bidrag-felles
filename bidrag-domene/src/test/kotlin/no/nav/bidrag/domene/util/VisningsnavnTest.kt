@@ -5,6 +5,7 @@ import io.kotest.assertions.withClue
 import io.kotest.matchers.collections.shouldContainAll
 import io.kotest.matchers.shouldBe
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
@@ -22,6 +23,15 @@ class VisningsnavnTest {
     @Test
     fun `Valider at alle kodeverdier for Vedtakstype har visningsnavn`() {
         Vedtakstype.entries.forEach {
+            withClue("${it.name} mangler visningsnavn") {
+                it.visningsnavn.intern.isNotEmpty() shouldBe true
+            }
+        }
+    }
+
+    @Test
+    fun `Valider at alle kodeverdier for Samværsklasse har visningsnavn`() {
+        Samværsklasse.entries.forEach {
             withClue("${it.name} mangler visningsnavn") {
                 it.visningsnavn.intern.isNotEmpty() shouldBe true
             }
