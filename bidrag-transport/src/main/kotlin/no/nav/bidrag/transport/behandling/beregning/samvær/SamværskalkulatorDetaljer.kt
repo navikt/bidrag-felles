@@ -16,7 +16,9 @@ data class SamværskalkulatorDetaljer(
     data class SamværskalkulatorFerieNetter(
         val antallNetter: Int = 0,
         val frekvens: SamværskalkulatorNetterFrekvens,
-    )
+    ) {
+        val totalAntallNetterOverToÅr get() = antallNetter * if (frekvens == SamværskalkulatorNetterFrekvens.HVERT_ÅR) 2 else 1
+    }
 
     enum class SamværskalkulatorNetterFrekvens {
         HVERT_ÅR,
