@@ -23,8 +23,8 @@ import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBPsBeregnedeTotalbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesBeregnedeTotalbidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import java.math.BigDecimal
@@ -387,7 +387,7 @@ data class NotatResultatSærbidragsberegningDto(
     val forskuddssats: BigDecimal? = null,
     val maksGodkjentBeløp: BigDecimal? = null,
     val inntekter: ResultatSærbidragsberegningInntekterDto? = null,
-    val delberegningBPsBeregnedeTotalbidrag: DelberegningBPsBeregnedeTotalbidrag? = null,
+    val delberegningBidragspliktigesBeregnedeTotalbidrag: DelberegningBidragspliktigesBeregnedeTotalbidrag? = null,
     val delberegningBidragsevne: NotatDelberegningBidragsevneDto? = null,
     val delberegningUtgift: DelberegningUtgift? = null,
     val resultat: BigDecimal,
