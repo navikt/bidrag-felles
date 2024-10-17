@@ -3,8 +3,8 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
-import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
@@ -96,18 +96,19 @@ data class DelberegningUtgift(
     val sumGodkjent: BigDecimal,
 ) : Delberegning
 
-data class DelberegningBPsBeregnedeTotalbidrag(
+data class DelberegningBidragspliktigesBeregnedeTotalbidrag(
     override val periode: ÅrMånedsperiode,
     @JsonAlias("sum")
-    val bBPsBeregnedeTotalbidrag: BigDecimal,
+    val bidragspliktigesBeregnedeTotalbidrag: BigDecimal,
     val beregnetBidragPerBarnListe: List<BeregnetBidragPerBarn> = emptyList(),
 ) : Delberegning
 
 data class BeregnetBidragPerBarn(
-    val personidentBarn: Personident,
+    val gjelderBarn: Grunnlagsreferanse,
     val saksnummer: Saksnummer,
     val løpendeBeløp: BigDecimal,
     val valutakode: String = "NOK",
+    val samværsklasse: Samværsklasse,
     val samværsfradrag: BigDecimal,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
