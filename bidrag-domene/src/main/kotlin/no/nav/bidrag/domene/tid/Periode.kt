@@ -15,7 +15,7 @@ sealed class Periode<T> : Comparable<Periode<T>> where T : Comparable<T>, T : Te
     abstract fun tilEllerMax(): T
 
     infix fun inneholder(dato: T): Boolean {
-        return dato in fom..tilEllerMax()
+        return dato >= fom && dato < tilEllerMax()
     }
 
     infix fun inneholder(annen: Periode<T>): Boolean {
