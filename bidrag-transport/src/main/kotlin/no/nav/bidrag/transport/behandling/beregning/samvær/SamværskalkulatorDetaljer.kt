@@ -1,36 +1,27 @@
 package no.nav.bidrag.transport.behandling.beregning.samvær
 
-import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import com.fasterxml.jackson.annotation.JsonIgnore
+import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
+import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 
 data class SamværskalkulatorDetaljer(
     val ferier: List<SamværskalkulatorFerie> = emptyList(),
     val regelmessigSamværNetter: Int,
-    val samværsklasse: Samværsklasse,
 ) {
     data class SamværskalkulatorFerie(
         val type: SamværskalkulatorFerietype,
-        val bidragsmottaker: SamværskalkulatorFerieNetter,
-        val bidragspliktig: SamværskalkulatorFerieNetter,
-    )
-
-    data class SamværskalkulatorFerieNetter(
-        val antallNetter: Int = 0,
+        val bidragsmottakerNetter: Int = 0,
+        val bidragspliktigNetter: Int = 0,
         val frekvens: SamværskalkulatorNetterFrekvens,
     ) {
-        val totalAntallNetterOverToÅr get() = antallNetter * if (frekvens == SamværskalkulatorNetterFrekvens.HVERT_ÅR) 2 else 1
-    }
+        @get:JsonIgnore
+        val bidragsmottakerTotalAntallNetterOverToÅr get() =
+            bidragsmottakerNetter *
+                if (frekvens == SamværskalkulatorNetterFrekvens.HVERT_ÅR) 2 else 1
 
-    enum class SamværskalkulatorNetterFrekvens {
-        HVERT_ÅR,
-        ANNEN_HVERT_ÅR,
-    }
-
-    enum class SamværskalkulatorFerietype {
-        JUL_NYTTÅR,
-        VINTERFERIE,
-        PÅSKE,
-        SOMMERFERIE,
-        HØSTFERIE,
-        ANNET,
+        @get:JsonIgnore
+        val bidragspliktigTotalAntallNetterOverToÅr get() =
+            bidragspliktigNetter *
+                if (frekvens == SamværskalkulatorNetterFrekvens.HVERT_ÅR) 2 else 1
     }
 }
