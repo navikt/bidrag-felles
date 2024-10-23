@@ -121,4 +121,9 @@ data class DelberegningSamværsfradrag(
     val beløp: BigDecimal,
 ) : Delberegning
 
+data class DelberegningNettoTilsynsutgift(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
+) : Delberegning
+
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
