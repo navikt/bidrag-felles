@@ -65,6 +65,12 @@ data class DelberegningVoksneIHustand(
     val borMedAndreVoksne: Boolean,
 ) : Delberegning
 
+data class DelberegningBoforhold(
+    override val periode: ÅrMånedsperiode,
+    val antallBarn: Double,
+    val borMedAndreVoksne: Boolean,
+) : Delberegning
+
 data class DelberegningBidragspliktigesAndel(
     override val periode: ÅrMånedsperiode,
     @JsonAlias("andelFaktor", "andelProsent")
