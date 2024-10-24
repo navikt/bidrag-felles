@@ -8,17 +8,17 @@ class NumberUtilKtTest {
     @Test
     fun `Skal avrunde tall til desimaler for tall med flere desimaler`() {
         val tallSomSkalAvrundes = BigDecimal("10.123456789101112")
-        tallSomSkalAvrundes.avrundetTilToDesimaler shouldBe BigDecimal("10.12")
-        tallSomSkalAvrundes.avrundetTilNullDesimaler shouldBe BigDecimal("10")
-        tallSomSkalAvrundes.avrundetTilTiDesimaler shouldBe BigDecimal("10.1234567891")
+        tallSomSkalAvrundes.avrundetMedToDesimaler shouldBe BigDecimal("10.12")
+        tallSomSkalAvrundes.avrundetMedNullDesimaler shouldBe BigDecimal("10")
+        tallSomSkalAvrundes.avrundetMedTiDesimaler shouldBe BigDecimal("10.1234567891")
     }
 
     @Test
     fun `Skal avrunde tall til desimaler for tall med få desimaler`() {
         val tallSomSkalAvrundes = BigDecimal("10.1")
-        tallSomSkalAvrundes.avrundetTilToDesimaler shouldBe BigDecimal("10.10")
-        tallSomSkalAvrundes.avrundetTilNullDesimaler shouldBe BigDecimal("10")
-        tallSomSkalAvrundes.avrundetTilTiDesimaler shouldBe BigDecimal("10.1000000000")
+        tallSomSkalAvrundes.avrundetMedToDesimaler shouldBe BigDecimal("10.10")
+        tallSomSkalAvrundes.avrundetMedNullDesimaler shouldBe BigDecimal("10")
+        tallSomSkalAvrundes.avrundetMedTiDesimaler shouldBe BigDecimal("10.1000000000")
     }
 
     @Test
