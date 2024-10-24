@@ -18,6 +18,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragsevne
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningVoksneIHustand
@@ -489,6 +490,11 @@ fun Grunnlagsreferanse.toTree(
 
                 Grunnlagstype.DELBEREGNING_VOKSNE_I_HUSSTAND -> {
                     val voksneIHusstand = grunnlag.innholdTilObjekt<DelberegningVoksneIHustand>()
+                    "Delberegning voksne i husstand(${voksneIHusstand.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_BOFORHOLD -> {
+                    val voksneIHusstand = grunnlag.innholdTilObjekt<DelberegningBoforhold>()
                     "Delberegning voksne i husstand(${voksneIHusstand.periode.fom.toCompactString()})"
                 }
 
