@@ -20,6 +20,11 @@ enum class Grunnlagstype {
     FORPLEINING_UTGIFT,
     BARN,
     DELT_BOSTED,
+
+    @Deprecated(
+        "Bruk NETTO_TILSYNSUTGIFT i stedet",
+        replaceWith = ReplaceWith("NETTO_TILSYNSUTGIFT"),
+    )
     NETTO_BARNETILSYN,
     UNDERHOLDSKOSTNAD,
     BPS_ANDEL_UNDERHOLDSKOSTNAD,
@@ -31,6 +36,7 @@ enum class Grunnlagstype {
     FORHOLDSMESSIG_FORDELING,
     KLAGE_STATISTIKK,
     SAMVÆRSPERIODE,
+    NETTO_TILSYNSUTGIFT,
 
     // Sjablon
     SJABLON,
