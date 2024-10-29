@@ -138,6 +138,7 @@ data class TilsynsutgiftBarn(
     val endeligBruttoTilsynsutgift: BigDecimal,
     val tilleggstønad: BigDecimal,
     val skattefradragsbeløpPerBarn: BigDecimal,
+    val bruttoTilsynsutgift: BigDecimal,
     val nettoTilsynsutgift: BigDecimal,
 )
 
