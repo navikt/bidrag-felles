@@ -98,6 +98,9 @@ enum class Grunnlagstype {
     @Schema(description = "Barn til BP som ikke er husstandsmedlem eller søknadsbarn")
     PERSON_BARN_BIDRAGSPLIKTIG,
 
+    @Schema(description = "Barn til BM som ikke er husstandsmedlem eller søknadsbarn")
+    PERSON_BARN_BIDRAGSMOTTAKER,
+
     // Inntekt som er beregnet av bidrag-inntekt
     BEREGNET_INNTEKT,
 
