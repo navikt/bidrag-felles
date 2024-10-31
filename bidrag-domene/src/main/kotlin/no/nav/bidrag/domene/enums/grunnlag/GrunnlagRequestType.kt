@@ -17,6 +17,7 @@ enum class GrunnlagRequestType {
     KONTANTSTØTTE,
     BARNETILSYN,
     ARBEIDSFORHOLD,
+    TILLEGGSSTØNAD,
 
     @Deprecated("OVERGANGSSTONAD skal utgå som egen type. Må koordineres med Bisys")
     OVERGANGSSTONAD,

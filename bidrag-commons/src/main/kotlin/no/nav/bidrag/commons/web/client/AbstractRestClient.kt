@@ -33,134 +33,119 @@ abstract class AbstractRestClient(
     protected val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
     protected val log: Logger = LoggerFactory.getLogger(this::class.java)
 
-    protected inline fun <reified T : Any> getForEntity(uri: URI): T? {
-        return getForEntity(uri, null)
-    }
+    protected inline fun <reified T : Any> getForEntity(uri: URI): T? = getForEntity(uri, null)
 
-    protected inline fun <reified T : Any> getForNonNullEntity(uri: URI): T {
-        return getForEntity(uri, null) ?: throw HttpServerErrorException(HttpStatus.NOT_FOUND, uri.toString())
-    }
+    protected inline fun <reified T : Any> getForNonNullEntity(uri: URI): T =
+        getForEntity(uri, null) ?: throw HttpServerErrorException(HttpStatus.NOT_FOUND, uri.toString())
 
     protected inline fun <reified T : Any> getForEntity(
         uri: URI,
         httpHeaders: HttpHeaders?,
-    ): T? {
-        return executeMedMetrics(uri) {
+    ): T? =
+        executeMedMetrics(uri) {
             operations.exchange(
                 uri,
                 HttpMethod.GET,
                 HttpEntity(null, httpHeaders),
             )
         }
-    }
 
-    protected inline fun <reified T : Any> optionsForEntity(uri: URI): T? {
-        return optionsForEntity(uri, null)
-    }
+    protected inline fun <reified T : Any> optionsForEntity(uri: URI): T? = optionsForEntity(uri, null)
 
     protected inline fun <reified T : Any> optionsForEntity(
         uri: URI,
         httpHeaders: HttpHeaders?,
-    ): T? {
-        return executeMedMetrics(uri) {
+    ): T? =
+        executeMedMetrics(uri) {
             operations.exchange(
                 uri,
                 HttpMethod.OPTIONS,
                 HttpEntity(null, httpHeaders),
             )
         }
-    }
 
     protected inline fun <reified T : Any> postForNonNullEntity(
         uri: URI,
         payload: Any?,
-    ): T {
-        return postForEntity(uri, payload, null) ?: throw HttpServerErrorException(HttpStatus.NOT_FOUND, uri.toString())
-    }
+    ): T = postForEntity(uri, payload, null) ?: throw HttpServerErrorException(HttpStatus.NOT_FOUND, uri.toString())
+
+    protected inline fun <reified T : Any> postForNonNullEntity(
+        uri: URI,
+        payload: Any?,
+        httpHeaders: HttpHeaders?,
+    ): T = postForEntity(uri, payload, httpHeaders) ?: throw HttpServerErrorException(HttpStatus.NOT_FOUND, uri.toString())
 
     protected inline fun <reified T : Any> postForEntity(
         uri: URI,
         payload: Any?,
-    ): T? {
-        return postForEntity(uri, payload, null)
-    }
+    ): T? = postForEntity(uri, payload, null)
 
     protected inline fun <reified T : Any> postForEntity(
         uri: URI,
         payload: Any?,
         httpHeaders: HttpHeaders?,
-    ): T? {
-        return executeMedMetrics(uri) {
+    ): T? =
+        executeMedMetrics(uri) {
             operations.exchange(
                 uri,
                 HttpMethod.POST,
                 HttpEntity(payload, httpHeaders),
             )
         }
-    }
 
     protected inline fun <reified T : Any> putForEntity(
         uri: URI,
         payload: Any,
-    ): T? {
-        return putForEntity(uri, payload, null)
-    }
+    ): T? = putForEntity(uri, payload, null)
 
     protected inline fun <reified T : Any> putForEntity(
         uri: URI,
         payload: Any,
         httpHeaders: HttpHeaders?,
-    ): T? {
-        return executeMedMetrics(uri) {
+    ): T? =
+        executeMedMetrics(uri) {
             operations.exchange(
                 uri,
                 HttpMethod.PUT,
                 HttpEntity(payload, httpHeaders),
             )
         }
-    }
 
     protected inline fun <reified T : Any> patchForEntity(
         uri: URI,
         payload: Any,
-    ): T? {
-        return patchForEntity(uri, payload, null)
-    }
+    ): T? = patchForEntity(uri, payload, null)
 
     protected inline fun <reified T : Any> patchForEntity(
         uri: URI,
         payload: Any,
         httpHeaders: HttpHeaders?,
-    ): T? {
-        return executeMedMetrics(uri) {
+    ): T? =
+        executeMedMetrics(uri) {
             operations.exchange(
                 uri,
                 HttpMethod.PATCH,
                 HttpEntity(payload, httpHeaders),
             )
         }
-    }
 
     protected inline fun <reified T : Any> deleteForEntity(
         uri: URI,
         payload: Any? = null,
-    ): T? {
-        return deleteForEntity(uri, payload, null)
-    }
+    ): T? = deleteForEntity(uri, payload, null)
 
     protected inline fun <reified T : Any> deleteForEntity(
         uri: URI,
         payload: Any?,
         httpHeaders: HttpHeaders?,
-    ): T? {
-        return executeMedMetrics(uri) {
+    ): T? =
+        executeMedMetrics(uri) {
             operations.exchange(
                 uri,
                 HttpMethod.DELETE,
                 HttpEntity(payload, httpHeaders),
             )
         }
-    }
 
     private fun <T> validerOgPakkUt(
         respons: ResponseEntity<T>,
@@ -200,9 +185,10 @@ abstract class AbstractRestClient(
         }
     }
 
-    private fun hentFeilmeldingFraWarningHeader(exception: RestClientResponseException): String {
-        return exception.responseHeaders?.get("Warning")?.let { "Detaljer: ${it.joinToString(", ")}" } ?: ""
-    }
+    private fun hentFeilmeldingFraWarningHeader(exception: RestClientResponseException): String =
+        exception.responseHeaders?.get("Warning")?.let {
+            "Detaljer: ${it.joinToString(", ")}"
+        } ?: ""
 
     override fun toString(): String = this::class.simpleName + " [operations=" + operations + "]"
 }

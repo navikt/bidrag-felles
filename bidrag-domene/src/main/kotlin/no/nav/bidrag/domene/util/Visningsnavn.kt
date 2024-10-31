@@ -9,11 +9,14 @@ import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeBarnebidrag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeSærtilskudd
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
+import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
+import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
@@ -55,6 +58,13 @@ val Utgiftstype.visningsnavn get() = lastVisningsnavnFraFil("utgiftstype.yaml")[
 val Engangsbeløptype.visningsnavn get() = lastVisningsnavnFraFil("engangsbeløptype.yaml")[name] ?: visningsnavnMangler(name)
 val Særbidragskategori.visningsnavn get() = lastVisningsnavnFraFil("særbidragskategori.yaml")[name] ?: visningsnavnMangler(name)
 val Vedtakstype.visningsnavn get() = lastVisningsnavnFraFil("vedtakstype.yaml")[name] ?: visningsnavnMangler(name)
+val Samværsklasse.visningsnavn get() = lastVisningsnavnFraFil("samværsklasse.yaml")[name] ?: visningsnavnMangler(name)
+val SamværskalkulatorFerietype.visningsnavn get() =
+    lastVisningsnavnFraFil("samværskalkulatorferietype.yaml")[name]
+        ?: visningsnavnMangler(name)
+val SamværskalkulatorNetterFrekvens.visningsnavn get() =
+    lastVisningsnavnFraFil("samværskalkulatornetterfrekvens.yaml")[name]
+        ?: visningsnavnMangler(name)
 
 fun Vedtakstype.visningsnavnIntern(opprinneligVedtakstype: Vedtakstype? = null) =
     opprinneligVedtakstype?.let {

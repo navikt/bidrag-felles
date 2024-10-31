@@ -17,7 +17,9 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragsevne
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærbidrag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningNettoTilsynsutgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningVoksneIHustand
@@ -483,13 +485,23 @@ fun Grunnlagsreferanse.toTree(
 
                 Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRBIDRAG -> {
                     @Suppress("ktlint:standard:property-naming")
-                    val BPsAndelSærbidrag = grunnlag.innholdTilObjekt<DelberegningBidragspliktigesAndelSærbidrag>()
+                    val BPsAndelSærbidrag = grunnlag.innholdTilObjekt<DelberegningBidragspliktigesAndel>()
                     "Delberegning BPs andel særbidrag(${BPsAndelSærbidrag.periode.fom.toCompactString()})"
                 }
 
                 Grunnlagstype.DELBEREGNING_VOKSNE_I_HUSSTAND -> {
                     val voksneIHusstand = grunnlag.innholdTilObjekt<DelberegningVoksneIHustand>()
                     "Delberegning voksne i husstand(${voksneIHusstand.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_BOFORHOLD -> {
+                    val voksneIHusstand = grunnlag.innholdTilObjekt<DelberegningBoforhold>()
+                    "Delberegning voksne i husstand(${voksneIHusstand.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_NETTO_TILSYNSUTGIFT -> {
+                    val nettoTilsynsutgift = grunnlag.innholdTilObjekt<DelberegningNettoTilsynsutgift>()
+                    "Delberegning netto tilsynsutgift(${nettoTilsynsutgift.periode.fom.toCompactString()})"
                 }
 
                 else ->

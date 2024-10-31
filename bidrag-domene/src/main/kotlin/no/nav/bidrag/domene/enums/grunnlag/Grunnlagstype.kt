@@ -13,13 +13,18 @@ enum class Grunnlagstype {
     SKATTEKLASSE,
     SAMVÆRSKLASSE,
     BIDRAGSEVNE,
-    SAMVÆRSFRADRAG,
     LØPENDE_BIDRAG,
     FAKTISK_UTGIFT,
+    TILLEGGSSTØNAD,
     BARNETILSYN_MED_STØNAD,
     FORPLEINING_UTGIFT,
     BARN,
     DELT_BOSTED,
+
+    @Deprecated(
+        "Bruk NETTO_TILSYNSUTGIFT i stedet",
+        replaceWith = ReplaceWith("NETTO_TILSYNSUTGIFT"),
+    )
     NETTO_BARNETILSYN,
     UNDERHOLDSKOSTNAD,
     BPS_ANDEL_UNDERHOLDSKOSTNAD,
@@ -30,6 +35,8 @@ enum class Grunnlagstype {
     INNBETALT_BELØP,
     FORHOLDSMESSIG_FORDELING,
     KLAGE_STATISTIKK,
+    SAMVÆRSPERIODE,
+    NETTO_TILSYNSUTGIFT,
 
     // Sjablon
     SJABLON,
@@ -61,10 +68,24 @@ enum class Grunnlagstype {
 
     SLUTTBEREGNING_SÆRBIDRAG,
     DELBEREGNING_BIDRAGSEVNE,
-    DELBEREGNING_SUM_LØPENDE_BIDRAG,
+    DELBEREGNING_BIDRAGSPLIKTIGES_BEREGNEDE_TOTALBIDRAG,
     DELBEREGNING_VOKSNE_I_HUSSTAND,
+    DELBEREGNING_FAKTISK_UTGIFT,
+    DELBEREGNING_TILLEGGSSTØNAD,
+    DELBEREGNING_NETTO_TILSYNSUTGIFT,
+
+    DELBEREGNING_BOFORHOLD,
+
+    @Deprecated(
+        "Bruk DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL i stedet",
+        replaceWith = ReplaceWith("DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL"),
+    )
     DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRBIDRAG,
+    DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL,
     DELBEREGNING_UTGIFT,
+
+    // Bidrag
+    DELBEREGNING_SAMVÆRSFRADRAG,
 
     @Deprecated("Bruk de spesifikke grunnlagstypene som starter med PERSON_ i stedet")
     PERSON,
@@ -77,6 +98,9 @@ enum class Grunnlagstype {
     @Schema(description = "Barn til BP som ikke er husstandsmedlem eller søknadsbarn")
     PERSON_BARN_BIDRAGSPLIKTIG,
 
+    @Schema(description = "Barn til BM som ikke er husstandsmedlem eller søknadsbarn")
+    PERSON_BARN_BIDRAGSMOTTAKER,
+
     // Inntekt som er beregnet av bidrag-inntekt
     BEREGNET_INNTEKT,
 
@@ -84,6 +108,7 @@ enum class Grunnlagstype {
     INNHENTET_ANDRE_VOKSNE_I_HUSSTANDEN,
     INNHENTET_SIVILSTAND,
     INNHENTET_ARBEIDSFORHOLD,
+    INNHENTET_TILLEGGSTØNAD,
 
     INNHENTET_INNTEKT_SKATTEGRUNNLAG_PERIODE,
     INNHENTET_INNTEKT_AORDNING,

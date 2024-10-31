@@ -29,6 +29,12 @@ data class HentGrunnlagDto(
     val barnetilsynListe: List<BarnetilsynGrunnlagDto>,
     @Schema(description = "Periodisert liste over arbeidsforhold")
     val arbeidsforholdListe: List<ArbeidsforholdGrunnlagDto>,
+    @Schema(
+        description =
+            "Indikator på om person mottar eller har mottatt tilleggsstønad til barnetilsyn i " +
+                "enten Arena eller tilleggsstonader-sak. Responsen skal utvides med periode og beløp senere",
+    )
+    val tilleggsstønadBarnetilsynListe: List<TilleggsstønadGrunnlagDto> = emptyList(),
     @Schema(description = "Liste over evt. feil rapportert under henting av grunnlag")
     val feilrapporteringListe: List<FeilrapporteringDto>,
     val hentetTidspunkt: LocalDateTime,

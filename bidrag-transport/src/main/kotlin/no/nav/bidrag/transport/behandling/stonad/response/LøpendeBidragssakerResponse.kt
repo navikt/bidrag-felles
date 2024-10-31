@@ -22,4 +22,6 @@ data class LøpendeBidragssak(
     val kravhaver: Personident,
     @Schema(description = "Løpende beløp i stønaden på dato angitt i requesten")
     val løpendeBeløp: BigDecimal,
+    @Schema(description = "Valutakoden tilhørende stønadsbeløpet")
+    val valutakode: String = "NOK",
 )

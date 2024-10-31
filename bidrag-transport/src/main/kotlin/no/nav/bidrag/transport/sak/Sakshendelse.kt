@@ -8,7 +8,7 @@ import no.nav.bidrag.domene.sak.Saksnummer
 
 data class Sakshendelse(
     val saksnummer: Saksnummer,
-    val hendelsestype: Sakshendelsestype,
+    val hendelsestype: SakKafkaHendelsestype,
     val roller: List<Saksrolle> = emptyList(),
     val sporingId: String,
 )
@@ -21,7 +21,7 @@ data class Saksrolle(
     val ukjent: Boolean = false,
 )
 
-enum class Sakshendelsestype {
+enum class SakKafkaHendelsestype {
     ENDRING,
     OPPRETTELSE,
 }

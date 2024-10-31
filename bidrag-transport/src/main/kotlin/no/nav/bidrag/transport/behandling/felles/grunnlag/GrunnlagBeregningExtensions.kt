@@ -6,16 +6,16 @@ import java.math.BigDecimal
 
 fun List<GrunnlagDto>.finnDelberegningBidragspliktigesAndelSærbidrag(
     grunnlagsreferanseListe: List<Grunnlagsreferanse>,
-): DelberegningBidragspliktigesAndelSærbidrag? {
+): DelberegningBidragspliktigesAndel? {
     val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return null
     val delberegningBidragspliktigesAndel =
         find {
-            it.type == Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_SÆRBIDRAG &&
+            it.type == Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL &&
                 sluttberegning.grunnlagsreferanseListe.contains(
                     it.referanse,
                 )
         } ?: return null
-    return delberegningBidragspliktigesAndel.innholdTilObjekt<DelberegningBidragspliktigesAndelSærbidrag>()
+    return delberegningBidragspliktigesAndel.innholdTilObjekt<DelberegningBidragspliktigesAndel>()
 }
 
 fun List<GrunnlagDto>.finnSluttberegningIReferanser(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =

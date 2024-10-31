@@ -2,11 +2,9 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
-import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
-import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
@@ -50,30 +48,52 @@ data class DelberegningBarnIHusstand(
 data class DelberegningBidragsevne(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
-) : Delberegning
+    val skatt: Skatt,
+    val underholdBarnEgenHusstand: BigDecimal,
+) : Delberegning {
+    data class Skatt(
+        val minstefradrag: BigDecimal,
+        val skattAlminneligInntekt: BigDecimal,
+        val trinnskatt: BigDecimal,
+        val trygdeavgift: BigDecimal,
+        val sumSkatt: BigDecimal,
+    )
+}
 
 data class DelberegningVoksneIHustand(
     override val periode: ÅrMånedsperiode,
     val borMedAndreVoksne: Boolean,
 ) : Delberegning
 
-data class DelberegningBidragspliktigesAndelSærbidrag(
+data class DelberegningBoforhold(
+    override val periode: ÅrMånedsperiode,
+    val antallBarn: Double,
+    val borMedAndreVoksne: Boolean,
+) : Delberegning
+
+data class DelberegningBidragspliktigesAndel(
     override val periode: ÅrMånedsperiode,
     @JsonAlias("andelFaktor", "andelProsent")
-    val andelFaktor: BigDecimal,
+    val endeligAndelFaktor: BigDecimal,
     val andelBeløp: BigDecimal,
+    val beregnetAndelFaktor: BigDecimal,
+    val barnEndeligInntekt: BigDecimal,
     val barnetErSelvforsørget: Boolean,
 ) : Delberegning {
     @get:JsonIgnore
     val andelProsent: BigDecimal
         get() =
-            if (andelFaktor < BigDecimal.ONE) {
-                andelFaktor
+            if (endeligAndelFaktor < BigDecimal.ONE) {
+                endeligAndelFaktor
                     .multiply(BigDecimal(100))
                     .round(MathContext(4))
             } else {
-                andelFaktor.round(MathContext(4))
+                endeligAndelFaktor.round(MathContext(4))
             }
+
+    @get:JsonIgnore
+    val erAndelRedusert: Boolean
+        get() = endeligAndelFaktor < beregnetAndelFaktor
 }
 
 data class DelberegningUtgift(
@@ -82,25 +102,43 @@ data class DelberegningUtgift(
     val sumGodkjent: BigDecimal,
 ) : Delberegning
 
-data class DelberegningSumLøpendeBidrag(
+data class DelberegningBidragspliktigesBeregnedeTotalbidrag(
     override val periode: ÅrMånedsperiode,
-    val sum: BigDecimal,
+    @JsonAlias("sum")
+    val bidragspliktigesBeregnedeTotalbidrag: BigDecimal,
+    val beregnetBidragPerBarnListe: List<BeregnetBidragPerBarn> = emptyList(),
 ) : Delberegning
 
-@Schema(description = "Informasjon om persons løpende bidragssaker")
-data class LøpendeBidragGrunnlag(
-    val løpendeBidragListe: List<LøpendeBidrag>,
-) : GrunnlagInnhold
-
-data class LøpendeBidrag(
+data class BeregnetBidragPerBarn(
+    val gjelderBarn: Grunnlagsreferanse,
     val saksnummer: Saksnummer,
-    val type: Stønadstype,
     val løpendeBeløp: BigDecimal,
+    val valutakode: String = "NOK",
     val samværsklasse: Samværsklasse,
+    val samværsfradrag: BigDecimal,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
-    @Schema(description = "Referanse til barnet løpende bidraget gjelder for")
+    val reduksjonUnderholdskostnad: BigDecimal,
+    val beregnetBidrag: BigDecimal,
+)
+
+data class DelberegningSamværsfradrag(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
+) : Delberegning
+
+data class DelberegningNettoTilsynsutgift(
+    override val periode: ÅrMånedsperiode,
+    val totaltFaktiskUtgiftBeløp: BigDecimal,
+    val tilsynsutgiftBarnListe: List<TilsynsutgiftBarn>,
+) : Delberegning
+
+data class TilsynsutgiftBarn(
     val gjelderBarn: Grunnlagsreferanse,
-) : GrunnlagInnhold
+    val endeligBruttoTilsynsutgift: BigDecimal,
+    val skattefradragsbeløpPerBarn: BigDecimal,
+    val tilleggsstønad: BigDecimal,
+    val nettoTilsynsutgift: BigDecimal,
+)
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()

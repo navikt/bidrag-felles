@@ -22,10 +22,14 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndelSærbidrag
+import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
+import no.nav.bidrag.transport.behandling.felles.grunnlag.BeregnetBidragPerBarn
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import java.math.BigDecimal
+import java.math.MathContext
+import java.math.RoundingMode
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
@@ -214,20 +218,22 @@ data class NotatSivilstand(
 )
 
 data class NotatAndreVoksneIHusstanden(
-    val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteretMedDetaljer<Bostatuskode, AndreVoksneIHusstandenDetaljerDto>> =
+    val opplysningerFraFolkeregisteret:
+        List<OpplysningerFraFolkeregisteretMedDetaljer<Bostatuskode, NotatAndreVoksneIHusstandenDetaljerDto>> =
         emptyList(),
     val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning<Bostatuskode>> =
         emptyList(),
 )
 
-data class AndreVoksneIHusstandenDetaljerDto(
+data class NotatAndreVoksneIHusstandenDetaljerDto(
     val totalAntallHusstandsmedlemmer: Int,
-    val husstandsmedlemmer: List<VoksenIHusstandenDetaljerDto>,
+    val husstandsmedlemmer: List<NotatVoksenIHusstandenDetaljerDto>,
 )
 
-data class VoksenIHusstandenDetaljerDto(
+data class NotatVoksenIHusstandenDetaljerDto(
     val navn: String,
     val fødselsdato: LocalDate?,
+    val erBeskyttet: Boolean = false,
     val harRelasjonTilBp: Boolean,
 )
 
@@ -286,6 +292,7 @@ data class NotatRolleDto(
     val navn: String?,
     val fødselsdato: LocalDate?,
     val ident: Personident?,
+    val erBeskyttet: Boolean = false,
 )
 
 data class NotatInntekterDto(
@@ -335,6 +342,7 @@ data class NotatInntektDto(
     val type: Inntektsrapportering,
     val medIBeregning: Boolean = false,
     val gjelderBarn: NotatRolleDto?,
+    val historisk: Boolean = false,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
     val visningsnavn
@@ -374,9 +382,13 @@ abstract class VedtakResultatInnhold(
 
 data class NotatResultatSærbidragsberegningDto(
     val periode: ÅrMånedsperiode,
-    val bpsAndel: DelberegningBidragspliktigesAndelSærbidrag? = null,
+    val bpsAndel: DelberegningBidragspliktigesAndel? = null,
     val beregning: UtgiftBeregningDto? = null,
+    val forskuddssats: BigDecimal? = null,
+    val maksGodkjentBeløp: BigDecimal? = null,
     val inntekter: ResultatSærbidragsberegningInntekterDto? = null,
+    val delberegningBidragspliktigesBeregnedeTotalbidrag: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto? = null,
+    val delberegningBidragsevne: NotatDelberegningBidragsevneDto? = null,
     val delberegningUtgift: DelberegningUtgift? = null,
     val resultat: BigDecimal,
     val resultatKode: Resultatkode,
@@ -398,7 +410,16 @@ data class NotatResultatSærbidragsberegningDto(
         val inntektBM: BigDecimal? = null,
         val inntektBP: BigDecimal? = null,
         val inntektBarn: BigDecimal? = null,
-    )
+        val barnEndeligInntekt: BigDecimal? = null,
+    ) {
+        val totalEndeligInntekt get() =
+            (inntektBM ?: BigDecimal.ZERO) + (inntektBP ?: BigDecimal.ZERO) +
+                (barnEndeligInntekt ?: BigDecimal.ZERO)
+
+        val inntektBPMånedlig get() = inntektBP?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+        val inntektBMMånedlig get() = inntektBM?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+        val inntektBarnMånedlig get() = inntektBarn?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+    }
 
     data class UtgiftBeregningDto(
         @Schema(description = "Beløp som er direkte betalt av BP")
@@ -411,6 +432,50 @@ data class NotatResultatSærbidragsberegningDto(
         val totalGodkjentBeløpBp: BigDecimal? = null,
         @Schema(description = "Summen av godkjent beløp for utgifter BP har betalt plus beløp som er direkte betalt av BP")
         val totalBeløpBetaltAvBp: BigDecimal = (totalGodkjentBeløpBp ?: BigDecimal.ZERO) + beløpDirekteBetaltAvBp,
+    )
+}
+
+data class NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto(
+    val beregnetBidragPerBarnListe: List<NotatBeregnetBidragPerBarnDto>,
+    val bidragspliktigesBeregnedeTotalbidrag: BigDecimal,
+    val periode: ÅrMånedsperiode,
+) {
+    data class NotatBeregnetBidragPerBarnDto(
+        val beregnetBidragPerBarn: BeregnetBidragPerBarn,
+        val personidentBarn: String,
+    )
+}
+
+data class NotatDelberegningBidragsevneDto(
+    val bidragsevne: BigDecimal,
+    val skatt: NotatSkattBeregning,
+    val underholdEgneBarnIHusstand: NotatUnderholdEgneBarnIHusstand,
+    val utgifter: NotatBidragsevneUtgifterBolig,
+) {
+    data class NotatUnderholdEgneBarnIHusstand(
+        val årsbeløp: BigDecimal,
+        val sjablon: BigDecimal,
+        val antallBarnIHusstanden: Double,
+    ) {
+        val måndesbeløp get() = årsbeløp.årsbeløpTilMåndesbeløp()
+    }
+
+    data class NotatSkattBeregning(
+        val sumSkatt: BigDecimal,
+        val skattAlminneligInntekt: BigDecimal,
+        val trinnskatt: BigDecimal,
+        val trygdeavgift: BigDecimal,
+    ) {
+        val skattMånedsbeløp get() = sumSkatt.årsbeløpTilMåndesbeløp()
+        val trinnskattMånedsbeløp get() = trinnskatt.årsbeløpTilMåndesbeløp()
+        val skattAlminneligInntektMånedsbeløp get() = skattAlminneligInntekt.årsbeløpTilMåndesbeløp()
+        val trygdeavgiftMånedsbeløp get() = trygdeavgift.årsbeløpTilMåndesbeløp()
+    }
+
+    data class NotatBidragsevneUtgifterBolig(
+        val borMedAndreVoksne: Boolean,
+        val boutgiftBeløp: BigDecimal,
+        val underholdBeløp: BigDecimal,
     )
 }
 
