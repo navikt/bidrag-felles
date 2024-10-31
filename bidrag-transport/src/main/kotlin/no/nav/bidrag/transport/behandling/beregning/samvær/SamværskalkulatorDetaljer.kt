@@ -3,7 +3,6 @@ package no.nav.bidrag.transport.behandling.beregning.samvær
 import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
-import no.nav.bidrag.domene.util.avrundetMedToDesimaler
 import java.math.BigDecimal
 
 data class SamværskalkulatorDetaljer(
@@ -27,12 +26,10 @@ data class SamværskalkulatorDetaljer(
         val bidragsmottakerTotalAntallNetterOverToÅr get() =
             bidragsmottakerNetter
                 .multiply(frekvensSomAntallNetter)
-                .avrundetMedToDesimaler
 
         @get:JsonIgnore
         val bidragspliktigTotalAntallNetterOverToÅr get() =
             bidragspliktigNetter
                 .multiply(frekvensSomAntallNetter)
-                .avrundetMedToDesimaler
     }
 }

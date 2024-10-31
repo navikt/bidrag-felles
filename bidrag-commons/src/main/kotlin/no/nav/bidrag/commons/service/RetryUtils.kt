@@ -13,7 +13,7 @@ fun retryTemplateSynchronous(details: String? = null): RetryTemplate {
     val exponentialBackOffPolicy = ExponentialBackOffPolicy()
     exponentialBackOffPolicy.multiplier = 2.0
     exponentialBackOffPolicy.maxInterval = 1000 // 1 sekund
-    exponentialBackOffPolicy.initialInterval = 200 // 1 sekund
+    exponentialBackOffPolicy.initialInterval = 200
     retryTemplate.setBackOffPolicy(exponentialBackOffPolicy)
     val retryPolicy = SimpleRetryPolicy()
     retryPolicy.maxAttempts = 3

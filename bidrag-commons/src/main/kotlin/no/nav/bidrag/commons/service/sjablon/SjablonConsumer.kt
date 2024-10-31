@@ -239,7 +239,6 @@ class SjablonConsumer(
     }
 }
 
-@Deprecated("Bruk heller SjablonService")
 class SjablonProvider {
     companion object {
         /**
