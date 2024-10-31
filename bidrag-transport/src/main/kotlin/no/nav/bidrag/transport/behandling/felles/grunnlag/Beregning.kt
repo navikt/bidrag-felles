@@ -135,7 +135,8 @@ data class DelberegningNettoTilsynsutgift(
 
 data class TilsynsutgiftBarn(
     val gjelderBarn: Grunnlagsreferanse,
-    val endeligBruttoTilsynsutgift: BigDecimal,
+    val sumFaktiskeUtgifter: BigDecimal,
+    val endeligSumFaktiskeUtgifter: BigDecimal,
     val skattefradragsbeløpPerBarn: BigDecimal,
     val tilleggsstønad: BigDecimal,
     val nettoTilsynsutgift: BigDecimal,
