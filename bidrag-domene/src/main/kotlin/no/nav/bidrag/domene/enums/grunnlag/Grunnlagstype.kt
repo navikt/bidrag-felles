@@ -13,6 +13,8 @@ enum class Grunnlagstype {
     @JsonEnumDefaultValue
     UKJENT,
 
+    TEST_IKKE_BRUK,
+
     SÆRFRADRAG,
     SKATTEKLASSE,
     SAMVÆRSKLASSE,
