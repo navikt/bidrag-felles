@@ -14,7 +14,7 @@ class SjablonService(
     fun hentSjablontall(): List<Sjablontall> =
         try {
             retryTemplateSynchronous(
-                "SjablonProvider.hentSjablontall",
+                "SjablonService.hentSjablontall",
             ).execute<List<Sjablontall>, HttpClientErrorException> {
                 sjablonConsumer.hentSjablontall().body
             }
@@ -26,7 +26,7 @@ class SjablonService(
     fun hentSjablonSamværsfradrag(): List<Samværsfradrag> =
         try {
             retryTemplateSynchronous(
-                "SjablonProvider.hentSjablonSamværsfradrag",
+                "SjablonService.hentSjablonSamværsfradrag",
             ).execute<List<Samværsfradrag>, HttpClientErrorException> {
                 sjablonConsumer.hentSjablonSamværsfradrag().body
             }
@@ -38,7 +38,7 @@ class SjablonService(
     fun hentSjablonBidragsevne(): List<Bidragsevne> =
         try {
             retryTemplateSynchronous(
-                "SjablonProvider.hentSjablonBidragsevne",
+                "SjablonService.hentSjablonBidragsevne",
             ).execute<List<Bidragsevne>, HttpClientErrorException> {
                 sjablonConsumer.hentSjablonBidragsevne().body
             }
@@ -50,7 +50,7 @@ class SjablonService(
     fun hentSjablonTrinnvisSkattesats(): List<TrinnvisSkattesats> =
         try {
             retryTemplateSynchronous(
-                "SjablonProvider.hentSjablonTrinnvisSkattesats",
+                "SjablonService.hentSjablonTrinnvisSkattesats",
             ).execute<List<TrinnvisSkattesats>, HttpClientErrorException> {
                 sjablonConsumer.hentSjablonTrinnvisSkattesats().body
             }
