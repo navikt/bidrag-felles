@@ -8,5 +8,5 @@ import java.lang.annotation.Inherited
 @Inherited
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
-@Import(value = [SjablonConsumer::class, AppContext::class])
+@Import(value = [SjablonConsumer::class, SjablonService::class, AppContext::class])
 annotation class EnableSjablonProvider

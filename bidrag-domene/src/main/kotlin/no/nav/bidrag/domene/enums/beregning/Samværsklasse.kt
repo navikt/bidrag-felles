@@ -6,7 +6,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 enum class Samværsklasse(
     val bisysKode: String,
 ) {
-    INGEN_SAMVÆR("00"),
+    SAMVÆRSKLASSE_0("00"),
     SAMVÆRSKLASSE_1("01"),
     SAMVÆRSKLASSE_2("02"),
     SAMVÆRSKLASSE_3("03"),

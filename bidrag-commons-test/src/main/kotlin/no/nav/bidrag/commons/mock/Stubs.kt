@@ -2,6 +2,7 @@ package no.nav.bidrag.commons.web.mock
 
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.mockk.every
+import io.mockk.mockkClass
 import io.mockk.mockkObject
 import io.mockk.mockkStatic
 import no.nav.bidrag.commons.service.KodeverkProvider
@@ -16,6 +17,7 @@ import no.nav.bidrag.commons.service.sjablon.MaksFradrag
 import no.nav.bidrag.commons.service.sjablon.MaksTilsyn
 import no.nav.bidrag.commons.service.sjablon.Samværsfradrag
 import no.nav.bidrag.commons.service.sjablon.SjablonProvider
+import no.nav.bidrag.commons.service.sjablon.SjablonService
 import no.nav.bidrag.commons.service.sjablon.Sjablontall
 import no.nav.bidrag.commons.service.sjablon.TrinnvisSkattesats
 import no.nav.bidrag.transport.felles.commonObjectmapper
@@ -36,7 +38,44 @@ fun stubKodeverkProvider() {
     every { finnVisningsnavnSkattegrunnlag(any()) } returns "Visningsnavn skattegrunnlag"
 }
 
+fun stubSjablonService(): SjablonService {
+    val sjablonService = mockkClass(SjablonService::class)
+    every {
+        sjablonService.hentSjablontall()
+    } returns sjablonTallResponse()
+
+    every {
+        sjablonService.hentSjablonSamværsfradrag()
+    } returns sjablonSamværsfradragResponse()
+
+    every {
+        sjablonService.hentSjablonBidragsevne()
+    } returns sjablonBidragsevneResponse()
+
+    every {
+        sjablonService.hentSjablonTrinnvisSkattesats()
+    } returns sjablonTrinnvisSkattesatsResponse()
+
+    every {
+        sjablonService.hentSjablonBarnetilsyn()
+    } returns sjablonBarnetilsynResponse()
+
+    every {
+        sjablonService.hentSjablonForbruksutgifter()
+    } returns sjablonForbruksutgifterResponse()
+
+    every {
+        sjablonService.hentSjablonMaksFradrag()
+    } returns sjablonMaksFradragResponse()
+
+    every {
+        sjablonService.hentSjablonMaksTilsyn()
+    } returns sjablonMaksTilsynResponse()
+    return sjablonService
+}
+
 fun stubSjablonProvider() {
+    stubSjablonService()
     mockkObject(SjablonProvider)
     every {
         SjablonProvider.hentSjablontall()
