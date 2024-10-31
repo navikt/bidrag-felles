@@ -1,13 +1,17 @@
 package no.nav.bidrag.transport.behandling.grunnlag
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.module.kotlin.readValue
 import io.kotest.assertions.assertSoftly
 import io.kotest.matchers.shouldBe
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.person.Familierelasjon
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnhentetHusstandsmedlem
+import no.nav.bidrag.transport.behandling.felles.grunnlag.LøpendeBidrag
 import no.nav.bidrag.transport.behandling.grunnlag.response.BorISammeHusstandDto
 import no.nav.bidrag.transport.behandling.grunnlag.response.RelatertPersonGrunnlagDto
 import no.nav.bidrag.transport.felles.commonObjectmapper
@@ -370,5 +374,63 @@ class JsonMappingTest {
             gjelderPerson shouldBe "REF2"
             relatertPerson shouldBe "REF2"
         }
+    }
+
+    @Test
+    fun `Skal deserialisere Samværsklasse INGEN_SAMVÆR i LøpendeBidrag`() {
+        assertSoftly("Med INGEN_SAMVÆR") {
+            @Language("JSON")
+            val json =
+                """
+                {
+                    "type": "BIDRAG",
+                    "samværsklasse": "INGEN_SAMVÆR",
+                    "saksnummer": "123",
+                    "løpendeBeløp": 0,
+                    "beregnetBeløp": 0,
+                    "faktiskBeløp": 0,
+                    "valutakode": "NOK",
+                    "gjelderBarn": ""
+                }
+                """.trimIndent()
+
+            val samværsklasseAntallDager: LøpendeBidrag = commonObjectmapper.readValue(json)
+            assertSoftly(samværsklasseAntallDager) {
+                samværsklasse shouldBe Samværsklasse.SAMVÆRSKLASSE_0
+            }
+        }
+
+        assertSoftly("Med SAMVÆRSKLASSE_0") {
+            @Language("JSON")
+            val json =
+                """
+                {
+                    "type": "BIDRAG",
+                    "samværsklasse": "SAMVÆRSKLASSE_0",
+                    "saksnummer": "123",
+                    "løpendeBeløp": 0,
+                    "beregnetBeløp": 0,
+                    "faktiskBeløp": 0,
+                    "valutakode": "NOK",
+                    "gjelderBarn": ""
+                }
+                """.trimIndent()
+
+            val samværsklasseAntallDager: LøpendeBidrag = commonObjectmapper.readValue(json)
+            assertSoftly(samværsklasseAntallDager) {
+                samværsklasse shouldBe Samværsklasse.SAMVÆRSKLASSE_0
+            }
+        }
+    }
+
+    @Test
+    fun `Skal Grunnalgstype til default verdi hvis ukjent`() {
+        val grunnlagstype: Grunnlagstype =
+            commonObjectmapper
+                .configure(
+                    DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE,
+                    true,
+                ).readValue("\"TESTTEST\"")
+        grunnlagstype shouldBe Grunnlagstype.UKJENT
     }
 }
