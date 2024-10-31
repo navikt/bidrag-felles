@@ -2,6 +2,7 @@
 
 package no.nav.bidrag.domene.enums.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue
 import io.swagger.v3.oas.annotations.media.Schema
 
 /**
@@ -9,6 +10,9 @@ import io.swagger.v3.oas.annotations.media.Schema
  */
 @Schema(enumAsRef = true)
 enum class Grunnlagstype {
+    @JsonEnumDefaultValue
+    UKJENT,
+
     SÆRFRADRAG,
     SKATTEKLASSE,
     SAMVÆRSKLASSE,
