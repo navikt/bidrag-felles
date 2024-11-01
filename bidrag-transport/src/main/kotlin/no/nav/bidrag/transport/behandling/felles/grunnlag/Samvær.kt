@@ -14,3 +14,9 @@ data class DelberegningSamværsklasse(
     val samværsklasse: Samværsklasse,
     val gjennomsnittligSamværPerMåned: BigDecimal = BigDecimal.ZERO,
 ) : GrunnlagInnhold
+
+data class DelberegningSamværsklasserNetter(
+    val samværsklasse: Samværsklasse,
+    val antallNetterFra: BigDecimal = BigDecimal.ZERO,
+    val antallNetterTil: BigDecimal = BigDecimal.ZERO,
+) : GrunnlagInnhold
