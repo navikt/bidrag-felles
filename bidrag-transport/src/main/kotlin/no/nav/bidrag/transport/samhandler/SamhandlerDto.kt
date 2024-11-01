@@ -34,4 +34,6 @@ data class SamhandlerDto(
     val kontaktTelefon: String? = null,
     @Schema(description = "Fritekstfelt for notater.")
     val notat: String? = null,
+    @Schema(description = "Er samhandleren opphørt?")
+    val erOpphørt: Boolean = false,
 )
