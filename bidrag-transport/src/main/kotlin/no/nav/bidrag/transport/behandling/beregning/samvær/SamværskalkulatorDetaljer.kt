@@ -1,6 +1,5 @@
 package no.nav.bidrag.transport.behandling.beregning.samvær
 
-import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import java.math.BigDecimal
@@ -14,22 +13,5 @@ data class SamværskalkulatorDetaljer(
         val bidragsmottakerNetter: BigDecimal = BigDecimal.ZERO,
         val bidragspliktigNetter: BigDecimal = BigDecimal.ZERO,
         val frekvens: SamværskalkulatorNetterFrekvens,
-    ) {
-        private val frekvensSomAntallNetter =
-            if (frekvens == SamværskalkulatorNetterFrekvens.HVERT_ÅR) {
-                BigDecimal.TWO
-            } else {
-                BigDecimal.ONE
-            }
-
-        @get:JsonIgnore
-        val bidragsmottakerTotalAntallNetterOverToÅr get() =
-            bidragsmottakerNetter
-                .multiply(frekvensSomAntallNetter)
-
-        @get:JsonIgnore
-        val bidragspliktigTotalAntallNetterOverToÅr get() =
-            bidragspliktigNetter
-                .multiply(frekvensSomAntallNetter)
-    }
+    )
 }
