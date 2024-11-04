@@ -16,7 +16,11 @@ data class DelberegningSamværsklasse(
 ) : GrunnlagInnhold
 
 data class DelberegningSamværsklasserNetter(
-    val samværsklasse: Samværsklasse,
-    val antallNetterFra: BigDecimal = BigDecimal.ZERO,
-    val antallNetterTil: BigDecimal = BigDecimal.ZERO,
-) : GrunnlagInnhold
+    val samværsklasserNetter: List<SamværsklasseNetter>,
+) : GrunnlagInnhold {
+    data class SamværsklasseNetter(
+        val samværsklasse: Samværsklasse,
+        val antallNetterFra: BigDecimal = BigDecimal.ZERO,
+        val antallNetterTil: BigDecimal = BigDecimal.ZERO,
+    ) : GrunnlagInnhold
+}
