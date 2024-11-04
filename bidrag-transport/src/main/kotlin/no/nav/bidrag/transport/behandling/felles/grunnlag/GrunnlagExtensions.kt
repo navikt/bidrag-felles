@@ -171,3 +171,9 @@ val List<BaseGrunnlag>.utgiftsposter get() =
     filtrerBasertPåEgenReferanse(
         Grunnlagstype.UTGIFTSPOSTER,
     ).firstOrNull()?.innholdTilObjektListe<List<UtgiftspostGrunnlag>>() ?: emptyList()
+
+val List<BaseGrunnlag>.delberegningSamværsklasse get() =
+    find {
+        it.type == Grunnlagstype.DELBEREGNING_SAMVÆRSKLASSE
+    }!!
+        .innholdTilObjekt<DelberegningSamværsklasse>()
