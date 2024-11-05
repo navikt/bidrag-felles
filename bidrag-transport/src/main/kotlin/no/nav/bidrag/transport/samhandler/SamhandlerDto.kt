@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.samhandler
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.ident.SamhandlerId
+import no.nav.bidrag.transport.felles.AuditLogDto
 
 data class SamhandlerDto(
     @Schema(description = "Identen til samhandler")
@@ -36,4 +37,6 @@ data class SamhandlerDto(
     val notat: String? = null,
     @Schema(description = "Er samhandleren opphørt?")
     val erOpphørt: Boolean = false,
+    @Schema(description = "Liste over endringer på samhandleren.")
+    val auditLog: List<AuditLogDto> = emptyList(),
 )
