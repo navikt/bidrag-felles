@@ -13,6 +13,7 @@ import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
+import no.nav.bidrag.transport.behandling.felles.grunnlag.BarnetilsynMedStønadPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BostatusPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusstand
@@ -502,6 +503,11 @@ fun Grunnlagsreferanse.toTree(
                 Grunnlagstype.DELBEREGNING_NETTO_TILSYNSUTGIFT -> {
                     val nettoTilsynsutgift = grunnlag.innholdTilObjekt<DelberegningNettoTilsynsutgift>()
                     "Delberegning netto tilsynsutgift(${nettoTilsynsutgift.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.BARNETILSYN_MED_STØNAD -> {
+                    val barnetilsynMedStønad = grunnlag.innholdTilObjekt<BarnetilsynMedStønadPeriode>()
+                    "Barnetilsyn med stønad(${barnetilsynMedStønad.periode.fom.toCompactString()})"
                 }
 
                 else ->
