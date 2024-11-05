@@ -13,4 +13,4 @@ data class MaksTilsyn(
     val datoTom: LocalDate? = null,
     @JsonProperty("maksBelopTilsyn")
     val maksBeløpTilsyn: BigDecimal? = null,
-)
+) : SjablonDto

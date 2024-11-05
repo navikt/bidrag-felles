@@ -10,4 +10,4 @@ data class Sjablontall(
     var datoFom: LocalDate? = null,
     var datoTom: LocalDate? = null,
     var verdi: BigDecimal? = null,
-)
+) : SjablonDto

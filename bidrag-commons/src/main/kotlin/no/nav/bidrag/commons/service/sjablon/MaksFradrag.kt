@@ -13,4 +13,4 @@ data class MaksFradrag(
     val datoTom: LocalDate? = null,
     @JsonProperty("maksBelopFradrag")
     val maksBeløpFradrag: BigDecimal? = null,
-)
+) : SjablonDto

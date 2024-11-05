@@ -13,4 +13,4 @@ data class Samværsfradrag(
     val antDagerTom: Int? = null,
     val antNetterTom: Int? = null,
     val belopFradrag: BigDecimal? = null,
-)
+) : SjablonDto

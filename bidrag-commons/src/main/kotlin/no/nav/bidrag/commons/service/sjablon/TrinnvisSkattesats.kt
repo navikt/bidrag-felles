@@ -10,4 +10,4 @@ data class TrinnvisSkattesats(
     val datoTom: LocalDate? = null,
     val inntektgrense: BigDecimal? = null,
     val sats: BigDecimal? = null,
-)
+) : SjablonDto
