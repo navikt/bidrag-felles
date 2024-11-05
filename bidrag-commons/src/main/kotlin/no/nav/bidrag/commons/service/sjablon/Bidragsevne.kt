@@ -11,4 +11,4 @@ data class Bidragsevne(
     val datoTom: LocalDate? = null,
     val belopBoutgift: BigDecimal? = null,
     val belopUnderhold: BigDecimal? = null,
-)
+) : SjablonDto

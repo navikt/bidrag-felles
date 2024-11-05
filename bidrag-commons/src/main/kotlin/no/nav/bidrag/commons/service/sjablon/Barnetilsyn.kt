@@ -14,4 +14,4 @@ data class Barnetilsyn(
     val datoTom: LocalDate? = null,
     @JsonProperty("belopBarneTilsyn")
     val beløpBarneTilsyn: BigDecimal? = null,
-)
+) : SjablonDto

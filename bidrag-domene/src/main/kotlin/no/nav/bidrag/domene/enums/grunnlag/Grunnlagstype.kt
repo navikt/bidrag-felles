@@ -2,6 +2,7 @@
 
 package no.nav.bidrag.domene.enums.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonEnumDefaultValue
 import io.swagger.v3.oas.annotations.media.Schema
 
@@ -45,9 +46,13 @@ enum class Grunnlagstype {
     SAMVÆRSPERIODE,
     SAMVÆRSKALKULATOR,
     DELBEREGNING_SAMVÆRSKLASSE,
-    DELBEREGNING_SAMVÆRSKLASSER_NETTER,
+    DELBEREGNING_SAMVÆRSKLASSE_NETTER,
 
     // Sjablon
+    @JsonAlias("SJABLON")
+    SJABLON_SJABLONTALL,
+
+    @Deprecated("Bruk heller SJABLON_SJABLONTALL")
     SJABLON,
     SJABLON_BIDRAGSEVNE,
     SJABLON_TRINNVIS_SKATTESATS,

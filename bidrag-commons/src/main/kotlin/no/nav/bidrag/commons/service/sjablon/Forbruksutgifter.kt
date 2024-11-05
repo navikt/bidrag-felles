@@ -12,4 +12,4 @@ data class Forbruksutgifter(
     val datoTom: LocalDate? = null,
     @JsonProperty("belopForbrukTot")
     val beløpForbruk: BigDecimal? = null,
-)
+) : SjablonDto

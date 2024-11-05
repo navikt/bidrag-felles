@@ -15,7 +15,7 @@ data class DelberegningSamværsklasse(
     val gjennomsnittligSamværPerMåned: BigDecimal = BigDecimal.ZERO,
 ) : GrunnlagInnhold
 
-data class DelberegningSamværsklasserNetter(
+data class DelberegningSamværsklasseNetter(
     val samværsklasserNetter: List<SamværsklasseNetter>,
 ) : GrunnlagInnhold {
     data class SamværsklasseNetter(
