@@ -5,14 +5,14 @@ import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 
-@Schema(description = "Respons med alle bidragstønader for angitt skyldner")
-data class SkyldnerBidragstønaderResponse(
-    @Schema(description = "Liste med info om skyldnerens bidragstønader")
-    val bidragssakerListe: List<SkyldnerBidragstønader> = emptyList(),
+@Schema(description = "Respons med alle stønader for angitt skyldner")
+data class SkyldnerStønaderResponse(
+    @Schema(description = "Liste med info om skyldnerens stønader")
+    val stønader: List<SkyldnerStønad> = emptyList(),
 )
 
-@Schema(description = "Objekt med relevant informasjon om skyldners bidragstønader")
-data class SkyldnerBidragstønader(
+@Schema(description = "Objekt med relevant informasjon om skyldners stønader")
+data class SkyldnerStønad(
     @Schema(description = "Saksnummer")
     val sak: Saksnummer,
     @Schema(description = "Hvilken type stønad det er snakk om")
