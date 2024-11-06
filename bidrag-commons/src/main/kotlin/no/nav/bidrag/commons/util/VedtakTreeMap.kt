@@ -20,8 +20,10 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnIHusst
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragsevne
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndeligBidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningNettoTilsynsutgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUnderholdskostnad
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningVoksneIHustand
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
@@ -508,6 +510,16 @@ fun Grunnlagsreferanse.toTree(
                 Grunnlagstype.BARNETILSYN_MED_STØNAD -> {
                     val barnetilsynMedStønad = grunnlag.innholdTilObjekt<BarnetilsynMedStønadPeriode>()
                     "Barnetilsyn med stønad(${barnetilsynMedStønad.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_UNDERHOLDSKOSTNAD -> {
+                    val underholdskostnad = grunnlag.innholdTilObjekt<DelberegningUnderholdskostnad>()
+                    "Delberegning underholdskostnad(${underholdskostnad.periode.fom.toCompactString()})"
+                }
+
+                Grunnlagstype.DELBEREGNING_ENDELIG_BIDRAG -> {
+                    val endeligBidrag = grunnlag.innholdTilObjekt<DelberegningEndeligBidrag>()
+                    "Delberegning endelig bidrag(${endeligBidrag.periode.fom.toCompactString()})"
                 }
 
                 else ->

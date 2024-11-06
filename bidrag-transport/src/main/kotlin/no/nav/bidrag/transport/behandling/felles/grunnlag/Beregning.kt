@@ -50,6 +50,7 @@ data class DelberegningBidragsevne(
     val beløp: BigDecimal,
     val skatt: Skatt,
     val underholdBarnEgenHusstand: BigDecimal,
+    val tjufemProsentInntekt: BigDecimal = BigDecimal.ZERO,
 ) : Delberegning {
     data class Skatt(
         val minstefradrag: BigDecimal,
@@ -57,13 +58,16 @@ data class DelberegningBidragsevne(
         val trinnskatt: BigDecimal,
         val trygdeavgift: BigDecimal,
         val sumSkatt: BigDecimal,
+        val sumSkattFaktor: BigDecimal = BigDecimal.ZERO,
     )
 }
 
-data class DelberegningVoksneIHustand(
+data class DelberegningVoksneIHusstand(
     override val periode: ÅrMånedsperiode,
     val borMedAndreVoksne: Boolean,
 ) : Delberegning
+
+typealias DelberegningVoksneIHustand = DelberegningVoksneIHusstand
 
 data class DelberegningBoforhold(
     override val periode: ÅrMånedsperiode,
@@ -143,3 +147,22 @@ data class TilsynsutgiftBarn(
 )
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
+
+data class DelberegningUnderholdskostnad(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
+) : Delberegning
+
+data class DelberegningEndeligBidrag(
+    override val periode: ÅrMånedsperiode,
+    val beregnetBeløp: BigDecimal,
+    val resultatKode: Resultatkode,
+    val resultatBeløp: BigDecimal,
+    val kostnadsberegnetBidrag: BigDecimal,
+    val nettoBarnetilleggBP: BigDecimal,
+    val nettoBarnetilleggBM: BigDecimal,
+    val justertNedTilEvne: Boolean,
+    val justertNedTil25ProsentAvInntekt: Boolean,
+    val justertForNettoBarnetilleggBP: Boolean,
+    val justertForNettoBarnetilleggBM: Boolean,
+) : Delberegning
