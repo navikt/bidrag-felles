@@ -148,6 +148,11 @@ data class TilsynsutgiftBarn(
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
 
+data class DelberegningBarnetilsynMedStønad(
+    override val periode: ÅrMånedsperiode,
+    val beløp: BigDecimal,
+) : Delberegning
+
 data class DelberegningUnderholdskostnad(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
