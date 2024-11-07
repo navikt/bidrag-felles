@@ -433,4 +433,11 @@ class JsonMappingTest {
                 ).readValue("\"TESTTEST\"")
         grunnlagstype shouldBe Grunnlagstype.UKJENT
     }
+
+    @Test
+    fun `Skal Grunnalgstype konvertering til SJABLON_SJABLONTALL`() {
+        val grunnlagstype: Grunnlagstype =
+            commonObjectmapper.readValue("\"SJABLON\"")
+        grunnlagstype shouldBe Grunnlagstype.SJABLON_SJABLONTALL
+    }
 }
