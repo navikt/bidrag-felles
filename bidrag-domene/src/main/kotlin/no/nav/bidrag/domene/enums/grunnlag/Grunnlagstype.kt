@@ -52,8 +52,6 @@ enum class Grunnlagstype {
     @JsonAlias("SJABLON")
     SJABLON_SJABLONTALL,
 
-    @Deprecated("Bruk heller SJABLON_SJABLONTALL")
-    SJABLON,
     SJABLON_BIDRAGSEVNE,
     SJABLON_TRINNVIS_SKATTESATS,
     SJABLON_BARNETILSYN,
