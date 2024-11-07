@@ -168,3 +168,12 @@ GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS:
 
 AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG:
   intern: "Privat avtale om særbidrag"
+
+IKKE_OMSORG_FOR_BARNET:
+  intern: "Ikke omsorg for barnet"
+
+BIDRAGSPLIKTIG_ER_UKJENT:
+  intern: "Bidragsplktig er ukjent"
+
+BIDRAGSPLIKTIG_ER_DØD:
+  intern: "Bidragsplktig er død"
