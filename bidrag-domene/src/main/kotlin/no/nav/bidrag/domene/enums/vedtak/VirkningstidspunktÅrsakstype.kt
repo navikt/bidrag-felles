@@ -5,7 +5,9 @@ package no.nav.bidrag.domene.enums.vedtak
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(enumAsRef = true, name = "Årsakstype")
-enum class VirkningstidspunktÅrsakstype(val legacyKode: String) {
+enum class VirkningstidspunktÅrsakstype(
+    val legacyKode: String,
+) {
     ANNET("SF"),
     ENDRING_3_MÅNEDER_TILBAKE("NF"),
     ENDRING_3_ÅRS_REGELEN("OF"),
@@ -24,17 +26,18 @@ enum class VirkningstidspunktÅrsakstype(val legacyKode: String) {
     TRE_MÅNEDER_TILBAKE("EF"),
     TRE_ÅRS_REGELEN("FF"),
     FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK("LF"),
+    FRA_MÅNEDEN_ETTER_PRIVAT_AVTALE("PM"),
+    BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE("PM"),
     ;
 
     companion object {
-        fun fraLegacyKode(legacyKode: String): VirkningstidspunktÅrsakstype? {
-            return try {
+        fun fraLegacyKode(legacyKode: String): VirkningstidspunktÅrsakstype? =
+            try {
                 enumValues<VirkningstidspunktÅrsakstype>().find { it.legacyKode == legacyKode } ?: VirkningstidspunktÅrsakstype.valueOf(
                     legacyKode,
                 )
             } catch (e: Exception) {
                 null
             }
-        }
     }
 }

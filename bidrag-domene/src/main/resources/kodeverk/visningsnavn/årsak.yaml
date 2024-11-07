@@ -51,3 +51,9 @@ TRE_ÅRS_REGELEN:
 
 FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK:
   intern: "Fra måneden etter i påvente av bidragssak"
+
+FRA_MÅNEDEN_ETTER_PRIVAT_AVTALE:
+  intern: "Fra etter privat avtale"
+
+BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE:
+  intern: "Bidragspliktig har ikke bidratt til forsørgelse"

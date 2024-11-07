@@ -69,6 +69,23 @@ enum class Resultatkode(
     // Kostnadsberegnet bidrag
     KOSTNADSBEREGNET_BIDRAG(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
 
+    // Avslag barnebidrag
+    IKKE_OMSORG_FOR_BARNET(
+        listOf(BisysResultatkode("IOB")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.AVSLAG,
+    ),
+    BIDRAGSPLIKTIG_ER_UKJENT(
+        listOf(BisysResultatkode("BPU")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.AVSLAG,
+    ),
+    BIDRAGSPLIKTIG_ER_DØD(
+        listOf(BisysResultatkode("BPD")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.AVSLAG,
+    ),
+
     REDUSERT_FORSKUDD_50_PROSENT(listOf(BisysResultatkode("50")), ResultatkodeType.FORSKUDD),
     ORDINÆRT_FORSKUDD_75_PROSENT(listOf(BisysResultatkode("75")), ResultatkodeType.FORSKUDD),
     FORHØYET_FORSKUDD_100_PROSENT(listOf(BisysResultatkode("100")), ResultatkodeType.FORSKUDD),
