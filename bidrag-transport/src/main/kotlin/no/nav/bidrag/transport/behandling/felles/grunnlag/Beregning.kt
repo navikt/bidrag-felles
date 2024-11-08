@@ -24,6 +24,20 @@ data class SluttberegningSærbidrag(
     val resultatBeløp: BigDecimal?,
 ) : Sluttberegning
 
+data class SluttberegningBarnebidrag(
+    override val periode: ÅrMånedsperiode,
+    val beregnetBeløp: BigDecimal,
+    val resultatKode: Resultatkode,
+    val resultatBeløp: BigDecimal,
+    val kostnadsberegnetBidrag: BigDecimal,
+    val nettoBarnetilleggBP: BigDecimal,
+    val nettoBarnetilleggBM: BigDecimal,
+    val justertNedTilEvne: Boolean,
+    val justertNedTil25ProsentAvInntekt: Boolean,
+    val justertForNettoBarnetilleggBP: Boolean,
+    val justertForNettoBarnetilleggBM: Boolean,
+) : Sluttberegning
+
 @Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))
 data class DelberegningInntekt(
     override val periode: ÅrMånedsperiode,
@@ -156,18 +170,4 @@ data class DelberegningBarnetilsynMedStønad(
 data class DelberegningUnderholdskostnad(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
-) : Delberegning
-
-data class DelberegningEndeligBidrag(
-    override val periode: ÅrMånedsperiode,
-    val beregnetBeløp: BigDecimal,
-    val resultatKode: Resultatkode,
-    val resultatBeløp: BigDecimal,
-    val kostnadsberegnetBidrag: BigDecimal,
-    val nettoBarnetilleggBP: BigDecimal,
-    val nettoBarnetilleggBM: BigDecimal,
-    val justertNedTilEvne: Boolean,
-    val justertNedTil25ProsentAvInntekt: Boolean,
-    val justertForNettoBarnetilleggBP: Boolean,
-    val justertForNettoBarnetilleggBM: Boolean,
 ) : Delberegning

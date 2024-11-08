@@ -23,6 +23,7 @@ fun List<GrunnlagDto>.finnSluttberegningIReferanser(grunnlagsreferanseListe: Lis
         listOf(
             Grunnlagstype.SLUTTBEREGNING_FORSKUDD,
             Grunnlagstype.SLUTTBEREGNING_SÆRBIDRAG,
+            Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG,
         ).contains(it.type) &&
             grunnlagsreferanseListe.contains(it.referanse)
     }
