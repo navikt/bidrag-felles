@@ -99,7 +99,8 @@ enum class Grunnlagstype {
     // Bidrag
     DELBEREGNING_SAMVÆRSFRADRAG,
     DELBEREGNING_UNDERHOLDSKOSTNAD,
-    DELBEREGNING_ENDELIG_BIDRAG,
+    SLUTTBEREGNING_BARNEBIDRAG,
+    BARNETILLEGG_PERIODE,
 
     @Deprecated("Bruk de spesifikke grunnlagstypene som starter med PERSON_ i stedet")
     PERSON,

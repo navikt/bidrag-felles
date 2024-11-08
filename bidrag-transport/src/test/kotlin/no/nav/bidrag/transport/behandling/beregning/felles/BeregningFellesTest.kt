@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test
 import java.math.BigDecimal
 import java.time.LocalDate
 
-class BeregninFellesTest {
+class BeregningFellesTest {
     @Test
     fun `skal konvertere grunnlag`() {
         val personreferanse = "person_bm_1"
