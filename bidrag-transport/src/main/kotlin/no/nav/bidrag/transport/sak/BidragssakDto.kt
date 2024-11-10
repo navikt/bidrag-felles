@@ -25,6 +25,8 @@ data class BidragssakDto(
     val levdeAdskilt: Boolean,
     @Schema(description = "Hvor vidt en av partene i saken er ukjent")
     val ukjentPart: Boolean,
+    val vedtakssperre: Boolean = false,
+    val avsluttet: Boolean = false,
     @Schema(description = "Rollene som saken inneholder")
     val roller: List<RolleDto> = emptyList(),
 )
