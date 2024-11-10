@@ -26,7 +26,7 @@ class DefaultCorsFilter :
                             "tracestate",
                             "traceparent",
                         )
-                    this.exposedHeaders = listOf("Warning", "X-Enhet", "X-Correlation-Id")
+                    this.exposedHeaders = listOf("Warning", "X-Enhet", "X-Correlation-Id", "tracestate", "traceparent")
                     this.allowedMethods = listOf("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH")
                 },
             )
