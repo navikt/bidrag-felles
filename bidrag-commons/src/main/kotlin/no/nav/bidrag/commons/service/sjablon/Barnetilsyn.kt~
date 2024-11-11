@@ -12,6 +12,6 @@ data class Barnetilsyn(
     val typeTilsyn: String? = null,
     val datoFom: LocalDate? = null,
     val datoTom: LocalDate? = null,
-    @JsonProperty("belopBarnetilsyn")
-    val beløpBarnetilsyn: BigDecimal? = null,
+    @JsonProperty("belopBarneTilsyn")
+    val beløpBarneTilsyn: BigDecimal? = null,
 ) : SjablonDto
