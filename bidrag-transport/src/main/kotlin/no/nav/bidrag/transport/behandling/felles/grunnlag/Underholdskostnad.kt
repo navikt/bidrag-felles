@@ -17,7 +17,7 @@ data class UnderholdskostnadPeriode(
 data class BarnetilsynMedStønadPeriode(
     override val periode: ÅrMånedsperiode,
     val gjelderBarn: Grunnlagsreferanse,
-    val tilsynstype: Tilsynstype?,
-    val skolealder: Skolealder?,
+    val tilsynstype: Tilsynstype,
+    val skolealder: Skolealder,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold

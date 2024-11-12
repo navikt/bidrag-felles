@@ -166,8 +166,8 @@ data class DelberegningUnderholdskostnad(
     override val periode: ÅrMånedsperiode,
     val forbruksutgift: BigDecimal,
     val boutgift: BigDecimal,
-    val barnetilsynMedStønad: BigDecimal,
-    val nettoTilsynsutgift: BigDecimal,
+    val barnetilsynMedStønad: BigDecimal?,
+    val nettoTilsynsutgift: BigDecimal?,
     val barnetrygd: BigDecimal,
     val underholdskostnad: BigDecimal,
 ) : Delberegning
