@@ -136,7 +136,7 @@ class SluttberegningBarnebidragTest {
                 justertForNettoBarnetilleggBP = true,
                 ingenEndringUnderGrense = false,
             ).resultatVisningsnavn
-            ?.intern shouldBe "Justert for netto barnetillegg BP"
+            ?.intern shouldBe "Bidrag satt til barnetillegg fra BP"
 
         sluttberegning
             .copy(
@@ -146,7 +146,7 @@ class SluttberegningBarnebidragTest {
                 justertForNettoBarnetilleggBP = false,
                 ingenEndringUnderGrense = false,
             ).resultatVisningsnavn
-            ?.intern shouldBe "Justert for netto barnetillegg BM"
+            ?.intern shouldBe "Bidrag satt til underholdskostnad minus barnetillegg BM"
 
         sluttberegning
             .copy(
@@ -156,7 +156,7 @@ class SluttberegningBarnebidragTest {
                 justertForNettoBarnetilleggBP = false,
                 ingenEndringUnderGrense = false,
             ).resultatVisningsnavn
-            ?.intern shouldBe "Justert ned til 25 prosent av inntekt"
+            ?.intern shouldBe "Redusert til 25 prosent av inntekt"
 
         sluttberegning
             .copy(
@@ -166,7 +166,7 @@ class SluttberegningBarnebidragTest {
                 justertForNettoBarnetilleggBP = false,
                 ingenEndringUnderGrense = false,
             ).resultatVisningsnavn
-            ?.intern shouldBe "Justert ned til evne"
+            ?.intern shouldBe "Redusert av evne"
 
         sluttberegning
             .copy(
