@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.kotest.matchers.shouldBe
+import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -10,6 +11,7 @@ class SluttberegningBarnebidragTest {
     private val sluttberegning =
         SluttberegningBarnebidrag(
             periode = ÅrMånedsperiode(LocalDate.now(), null),
+            resultatKode = Resultatkode.BEREGNET_BIDRAG,
             beregnetBeløp = BigDecimal.ONE,
             resultatBeløp = BigDecimal.ONE,
             kostnadsberegnetBidrag = BigDecimal.ONE,
