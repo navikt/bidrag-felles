@@ -129,7 +129,7 @@ fun String?.fjernAvslagOpphørPrefiks() =
         ?.replace("Opphør, ", "", ignoreCase = true)
         ?.replace("Opphør ", "", ignoreCase = true)
 
-private fun lastVisningsnavnFraFil(
+fun lastVisningsnavnFraFil(
     filnavn: String,
     category: String? = null,
 ): VisningsnavnKodeMap {

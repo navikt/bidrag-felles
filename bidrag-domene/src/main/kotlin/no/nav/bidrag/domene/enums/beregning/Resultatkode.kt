@@ -85,6 +85,10 @@ enum class Resultatkode(
         ResultatkodeType.BARNEBIDRAG,
         ResultatkodeType.AVSLAG,
     ),
+    BEREGNET_BIDRAG(
+        listOf(),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
 
     REDUSERT_FORSKUDD_50_PROSENT(listOf(BisysResultatkode("50")), ResultatkodeType.FORSKUDD),
     ORDINÆRT_FORSKUDD_75_PROSENT(listOf(BisysResultatkode("75")), ResultatkodeType.FORSKUDD),
