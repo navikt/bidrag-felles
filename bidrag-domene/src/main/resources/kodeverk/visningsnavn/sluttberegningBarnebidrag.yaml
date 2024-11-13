@@ -1,0 +1,12 @@
+justertNedTil25ProsentAvInntekt:
+  intern: "Justert ned til 25 prosent av inntekt"
+justertForNettoBarnetilleggBP:
+  intern: "Justert for netto barnetillegg BP"
+justertForNettoBarnetilleggBM:
+  intern: "Justert for netto barnetillegg BM"
+justertNedTilEvne:
+  intern: "Justert ned til evne"
+ingenEndringUnderGrense:
+    intern: "Ingen endring under grense"
+kostnadsberegnet:
+  intern: "Kostnadsberegnet bidrag"

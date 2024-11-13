@@ -7,6 +7,7 @@ import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.domene.util.lastVisningsnavnFraFil
 import java.math.BigDecimal
 import java.math.MathContext
 
@@ -24,19 +25,50 @@ data class SluttberegningSærbidrag(
     val resultatBeløp: BigDecimal?,
 ) : Sluttberegning
 
+private val sluttberegningBisyskodeMap =
+    mapOf(
+        SluttberegningBarnebidrag::ingenEndringUnderGrense.name to "VO",
+        SluttberegningBarnebidrag::justertForNettoBarnetilleggBP.name to "101",
+        SluttberegningBarnebidrag::justertForNettoBarnetilleggBM.name to "102",
+        SluttberegningBarnebidrag::justertNedTilEvne.name to "6MB",
+        SluttberegningBarnebidrag::justertNedTil25ProsentAvInntekt.name to "7M",
+        "kostnadsberegnet" to "BB",
+    )
+
 data class SluttberegningBarnebidrag(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
+    @Deprecated("Ikke sett resultatkode")
     val resultatKode: Resultatkode,
     val resultatBeløp: BigDecimal,
     val kostnadsberegnetBidrag: BigDecimal,
     val nettoBarnetilleggBP: BigDecimal,
     val nettoBarnetilleggBM: BigDecimal,
+    val ingenEndringUnderGrense: Boolean,
     val justertNedTilEvne: Boolean,
     val justertNedTil25ProsentAvInntekt: Boolean,
     val justertForNettoBarnetilleggBP: Boolean,
     val justertForNettoBarnetilleggBM: Boolean,
-) : Sluttberegning
+) : Sluttberegning {
+    @get:JsonIgnore
+    private val resultat
+        get() =
+            when {
+                ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name
+                justertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBP.name
+                justertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBM.name
+                justertNedTilEvne -> SluttberegningBarnebidrag::justertNedTilEvne.name
+                justertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::justertNedTil25ProsentAvInntekt.name
+                else -> "kostnadsberegnet"
+            }
+
+    @get:JsonIgnore
+    val bisysResultatkode
+        get() = sluttberegningBisyskodeMap[resultat] ?: "BB"
+
+    @get:JsonIgnore
+    val resultatVisningsnavn get() = lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[resultat]
+}
 
 @Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))
 data class DelberegningInntekt(
