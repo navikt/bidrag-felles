@@ -25,6 +25,7 @@ data class SluttberegningSærbidrag(
     val resultatBeløp: BigDecimal?,
 ) : Sluttberegning
 
+// Rekkefølge har ikke noe å si her. Dette er bare konvertering av resultatet til bisyskode.
 private val sluttberegningBisyskodeMap =
     mapOf(
         SluttberegningBarnebidrag::ingenEndringUnderGrense.name to "VO",
@@ -53,6 +54,7 @@ data class SluttberegningBarnebidrag(
     @get:JsonIgnore
     private val resultat
         get() =
+            // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
                 ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name
                 justertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBP.name
