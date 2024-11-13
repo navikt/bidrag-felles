@@ -177,3 +177,6 @@ BIDRAGSPLIKTIG_ER_UKJENT:
 
 BIDRAGSPLIKTIG_ER_DØD:
   intern: "Bidragspliktig er død"
+
+BEREGNET_BIDRAG:
+    intern: "Beregnet bidrag"
