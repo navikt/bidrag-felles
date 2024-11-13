@@ -1,11 +1,11 @@
 justertNedTil25ProsentAvInntekt:
-  intern: "Justert ned til 25 prosent av inntekt"
+  intern: "Redusert til 25 prosent av inntekt"
 justertForNettoBarnetilleggBP:
-  intern: "Justert for netto barnetillegg BP"
+  intern: "Bidrag satt til barnetillegg fra BP"
 justertForNettoBarnetilleggBM:
-  intern: "Justert for netto barnetillegg BM"
+  intern: "Bidrag satt til underholdskostnad minus barnetillegg BM"
 justertNedTilEvne:
-  intern: "Justert ned til evne"
+  intern: "Redusert av evne"
 ingenEndringUnderGrense:
     intern: "Ingen endring under grense"
 kostnadsberegnet:
