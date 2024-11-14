@@ -393,7 +393,7 @@ enum class SjablonTallNavn(
         false,
         false,
     ),
-    FORHØYET_BARNETRYGD_BELØP("ForhøyetBarnetrygdBeløp", "0041", false, false, true, false, false, false, false, false),
+    FORHØYET_BARNETRYGD_BELØP("ForhøyetBarnetrygdBeløp", "0041", false, false, false, false, false, false, false, false),
     FASTSETTELSESGEBYR_BELØP("FastsettelsesgebyrBeløp", "0100", false, false, false, false, false, false, false, false),
     DUMMY("Dummy", "9999", false, false, false, false, false, false, false, false),
     ;
