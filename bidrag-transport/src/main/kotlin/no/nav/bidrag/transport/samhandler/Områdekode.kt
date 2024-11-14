@@ -6,7 +6,7 @@ enum class Områdekode(val tssOmrådekode: String) {
     ARBEIDSGIVER("0070"),
     REELL_MOTTAKER("0080"),
     UTENLANDSK_PERSON("0260"),
-    UTENLANDSK_FOGD("2070"),
+    UTENLANDSK_FOGD("0270"),
     SOSIALKONTO("0280"),
     BARNEVERNSINSTITUSJON("0290"),
     ;
