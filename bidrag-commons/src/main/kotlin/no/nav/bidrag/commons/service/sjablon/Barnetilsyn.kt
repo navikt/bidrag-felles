@@ -1,5 +1,6 @@
 package no.nav.bidrag.commons.service.sjablon
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.math.BigDecimal
@@ -12,6 +13,6 @@ data class Barnetilsyn(
     val typeTilsyn: String? = null,
     val datoFom: LocalDate? = null,
     val datoTom: LocalDate? = null,
-    @JsonProperty("belopBarnetilsyn")
+    @JsonAlias("belopBarneTilsyn", "belopBarnetilsyn")
     val beløpBarnetilsyn: BigDecimal? = null,
 ) : SjablonDto
