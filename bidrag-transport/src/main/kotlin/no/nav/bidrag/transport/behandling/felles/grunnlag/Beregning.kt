@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
@@ -10,6 +11,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.lastVisningsnavnFraFil
 import java.math.BigDecimal
 import java.math.MathContext
+import java.time.LocalDate
 
 data class SluttberegningForskudd(
     override val periode: ÅrMånedsperiode,
@@ -205,3 +207,23 @@ data class DelberegningUnderholdskostnad(
     val barnetrygd: BigDecimal,
     val underholdskostnad: BigDecimal,
 ) : Delberegning
+
+
+data class FaktiskUtgiftPeriode(
+    override val periode: ÅrMånedsperiode,
+    @Schema(description = "Referanse til barnet utgiften gjelder")
+    val gjelderBarn: Grunnlagsreferanse,
+    val fødselsdatoBarn: LocalDate,
+    val faktiskUtgiftBeløp: BigDecimal,
+    val kostpengerBeløp: BigDecimal,
+    val kommentar: String? = null,
+    override val manueltRegistrert: Boolean,
+) : GrunnlagPeriodeInnhold
+
+data class TilleggsstønadPeriode(
+    override val periode: ÅrMånedsperiode,
+    @Schema(description = "Referanse til barnet stønaden mottas for")
+    val gjelderBarn: Grunnlagsreferanse,
+    val beløpDagsats: BigDecimal,
+    override val manueltRegistrert: Boolean,
+) : GrunnlagPeriodeInnhold

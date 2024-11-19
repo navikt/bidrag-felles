@@ -180,3 +180,6 @@ BIDRAGSPLIKTIG_ER_DØD:
 
 BEREGNET_BIDRAG:
     intern: "Beregnet bidrag"
+
+DIREKTE_OPPJØR:
+  intern: "Direkte oppjør"
