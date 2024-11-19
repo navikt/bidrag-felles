@@ -208,7 +208,6 @@ data class DelberegningUnderholdskostnad(
     val underholdskostnad: BigDecimal,
 ) : Delberegning
 
-
 data class FaktiskUtgiftPeriode(
     override val periode: ÅrMånedsperiode,
     @Schema(description = "Referanse til barnet utgiften gjelder")
@@ -227,3 +226,13 @@ data class TilleggsstønadPeriode(
     val beløpDagsats: BigDecimal,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold
+
+data class DelberegningFaktiskTilsynsutgift(
+    override val periode: ÅrMånedsperiode,
+    val beregnetBeløp: BigDecimal,
+) : Delberegning
+
+data class DelberegningTilleggsstønad(
+    override val periode: ÅrMånedsperiode,
+    val beregnetBeløp: BigDecimal,
+) : Delberegning
