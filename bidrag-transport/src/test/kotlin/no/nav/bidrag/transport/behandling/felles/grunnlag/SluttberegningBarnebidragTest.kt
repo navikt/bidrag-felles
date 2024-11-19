@@ -85,7 +85,7 @@ class SluttberegningBarnebidragTest {
     fun `skal oversette til riktig bisys resultat hvis justert ned til BMs barnetillegg`() {
         sluttberegning
             .copy(
-                justertNedTilEvne = true,
+                justertNedTilEvne = false,
                 justertForNettoBarnetilleggBM = true,
             ).bisysResultatkode shouldBe "102"
 
@@ -93,7 +93,7 @@ class SluttberegningBarnebidragTest {
             .copy(
                 justertNedTil25ProsentAvInntekt = true,
                 justertForNettoBarnetilleggBM = true,
-            ).bisysResultatkode shouldBe "102"
+            ).bisysResultatkode shouldBe "7M"
 
         sluttberegning
             .copy(
@@ -101,7 +101,7 @@ class SluttberegningBarnebidragTest {
                 justertNedTil25ProsentAvInntekt = true,
                 justertForNettoBarnetilleggBM = true,
                 justertForNettoBarnetilleggBP = false,
-            ).bisysResultatkode shouldBe "102"
+            ).bisysResultatkode shouldBe "6MB"
     }
 
     @Test
@@ -146,7 +146,7 @@ class SluttberegningBarnebidragTest {
                 justertForNettoBarnetilleggBP = false,
                 ingenEndringUnderGrense = false,
             ).resultatVisningsnavn
-            ?.intern shouldBe "Bidrag satt til underholdskostnad minus barnetillegg BM"
+            ?.intern shouldBe "Redusert av evne"
 
         sluttberegning
             .copy(
@@ -177,5 +177,15 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
             ).resultatVisningsnavn
             ?.intern shouldBe "Kostnadsberegnet bidrag"
+
+        sluttberegning
+            .copy(
+                justertNedTilEvne = false,
+                justertNedTil25ProsentAvInntekt = false,
+                justertForNettoBarnetilleggBM = true,
+                justertForNettoBarnetilleggBP = false,
+                ingenEndringUnderGrense = false,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Bidrag satt til underholdskostnad minus barnetillegg BM"
     }
 }
