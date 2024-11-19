@@ -12,8 +12,20 @@ enum class Resultatkode(
     vararg val type: ResultatkodeType,
 ) {
     // Gebyr
-    GEBYR_FRITTATT(listOf(BisysResultatkode("GIFR")), ResultatkodeType.BARNEBIDRAG),
-    GEBYR_ILAGT(listOf(BisysResultatkode("GIGI")), ResultatkodeType.BARNEBIDRAG),
+    GEBYR_FRITTATT(
+        listOf(
+            BisysResultatkode("GIFR", type = BisysResultatkodeType.INNVILGELSE),
+            BisysResultatkode("GKFI", type = BisysResultatkodeType.KLAGE),
+        ),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    GEBYR_ILAGT(
+        listOf(
+            BisysResultatkode("GIGI", type = BisysResultatkodeType.INNVILGELSE),
+            BisysResultatkode("GKIF", type = BisysResultatkodeType.KLAGE),
+        ),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
 
     BARNET_ER_SELVFORSØRGET(
         listOf(BisysResultatkode("5SF", BisysResultatkodeType.AVSLAG)),
@@ -304,6 +316,7 @@ enum class Resultatkode(
     enum class BisysResultatkodeType {
         AVSLAG,
         OPPHØR,
+        KLAGE,
         INNVILGELSE,
     }
 
