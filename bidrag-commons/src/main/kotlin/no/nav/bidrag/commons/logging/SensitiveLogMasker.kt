@@ -7,7 +7,7 @@ import java.util.regex.Pattern
 
 class SensitiveLogMasker : ValueMasker {
     companion object {
-        private val FNR_PATTERN: Pattern = "(?<!\\bcorrelationId\":\")(\\b\\d{11}\\b)(?!\\d)".toPattern()
+        private val FNR_PATTERN: Pattern = "(?<!\\bcorrelationId\":\")(\\b[0-7]\\d{10}\\b)(?!\\d)".toPattern()
         private val AKTOER_PATTERN: Pattern = "(?<!\\bcorrelationId\":\")(\\b\\d{13}\\b)(?!\\d)".toPattern()
     }
 
