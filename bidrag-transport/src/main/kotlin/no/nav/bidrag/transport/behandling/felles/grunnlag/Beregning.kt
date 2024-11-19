@@ -60,9 +60,9 @@ data class SluttberegningBarnebidrag(
             when {
                 ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name
                 justertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBP.name
-                justertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBM.name
                 justertNedTilEvne -> SluttberegningBarnebidrag::justertNedTilEvne.name
                 justertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::justertNedTil25ProsentAvInntekt.name
+                justertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBM.name
                 else -> "kostnadsberegnet"
             }
 

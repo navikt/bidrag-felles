@@ -11,6 +11,10 @@ enum class Resultatkode(
     val bisysKode: List<BisysResultatkode>,
     vararg val type: ResultatkodeType,
 ) {
+    // Gebyr
+    GEBYR_FRITTATT(listOf(BisysResultatkode("GIFR")), ResultatkodeType.BARNEBIDRAG),
+    GEBYR_ILAGT(listOf(BisysResultatkode("GIGI")), ResultatkodeType.BARNEBIDRAG),
+
     BARNET_ER_SELVFORSØRGET(
         listOf(BisysResultatkode("5SF", BisysResultatkodeType.AVSLAG)),
         ResultatkodeType.BARNEBIDRAG,
