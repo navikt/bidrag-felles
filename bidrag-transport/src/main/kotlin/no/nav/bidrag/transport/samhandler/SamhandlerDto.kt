@@ -36,7 +36,7 @@ data class SamhandlerDto(
     @Schema(description = "Fritekstfelt for notater.")
     val notat: String? = null,
     @Schema(description = "Er samhandleren opphørt?")
-    val erOpphørt: Boolean = false,
+    val erOpphørt: Boolean? = null,
     @Schema(description = "Liste over endringer på samhandleren.")
-    val auditLog: List<AuditLogDto> = emptyList(),
+    val auditLog: List<AuditLogDto>? = null,
 )

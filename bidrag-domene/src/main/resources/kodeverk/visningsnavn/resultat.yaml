@@ -179,4 +179,13 @@ BIDRAGSPLIKTIG_ER_DØD:
   intern: "Bidragspliktig er død"
 
 BEREGNET_BIDRAG:
-    intern: "Beregnet bidrag"
+  intern: "Beregnet bidrag"
+
+DIREKTE_OPPJØR:
+  intern: "Direkte oppjør"
+
+GEBYR_FRITTATT:
+  intern: "Gebyr fritatt"
+
+GEBYR_ILAGT:
+  intern: "Gebyr ilagt"
