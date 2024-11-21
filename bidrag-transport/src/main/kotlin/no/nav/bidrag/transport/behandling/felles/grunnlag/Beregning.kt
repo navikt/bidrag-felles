@@ -61,7 +61,7 @@ data class SluttberegningBarnebidrag(
     val bidragJustertNedTil25ProsentAvInntekt: Boolean,
 ) : Sluttberegning {
     @get:JsonIgnore
-    private val resultat
+    val resultat
         get() =
             // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
