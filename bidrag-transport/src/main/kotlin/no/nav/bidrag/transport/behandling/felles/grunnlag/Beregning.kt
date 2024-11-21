@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
+import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
@@ -10,6 +11,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.lastVisningsnavnFraFil
 import java.math.BigDecimal
 import java.math.MathContext
+import java.time.LocalDate
 
 data class SluttberegningForskudd(
     override val periode: ÅrMånedsperiode,
@@ -29,38 +31,51 @@ data class SluttberegningSærbidrag(
 private val sluttberegningBisyskodeMap =
     mapOf(
         SluttberegningBarnebidrag::ingenEndringUnderGrense.name to "VO",
-        SluttberegningBarnebidrag::justertForNettoBarnetilleggBP.name to "101",
-        SluttberegningBarnebidrag::justertForNettoBarnetilleggBM.name to "102",
-        SluttberegningBarnebidrag::justertNedTilEvne.name to "6MB",
-        SluttberegningBarnebidrag::justertNedTil25ProsentAvInntekt.name to "7M",
+        SluttberegningBarnebidrag::barnetErSelvforsørget.name to "5SF",
+        SluttberegningBarnebidrag::bidragJustertForDeltBosted.name to "8DN",
+        SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name to "101",
+        SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name to "102",
+        SluttberegningBarnebidrag::bidragJustertNedTilEvne.name to "6MB",
+        SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name to "7M",
         "kostnadsberegnet" to "BB",
     )
 
 data class SluttberegningBarnebidrag(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
-    @Deprecated("Ikke sett resultatkode")
-    val resultatKode: Resultatkode,
     val resultatBeløp: BigDecimal,
-    val kostnadsberegnetBidrag: BigDecimal,
-    val nettoBarnetilleggBP: BigDecimal,
-    val nettoBarnetilleggBM: BigDecimal,
+    val uMinusNettoBarnetilleggBM: BigDecimal,
+    val bruttoBidragEtterBarnetilleggBM: BigDecimal,
+    val nettoBidragEtterBarnetilleggBM: BigDecimal,
+    val bruttoBidragJustertForEvneOg25Prosent: BigDecimal,
+    val bruttoBidragEtterBarnetilleggBP: BigDecimal,
+    val nettoBidragEtterSamværsfradrag: BigDecimal,
+    val bpAndelAvUVedDeltBostedFaktor: BigDecimal,
+    val bpAndelAvUVedDeltBostedBeløp: BigDecimal,
     val ingenEndringUnderGrense: Boolean,
-    val justertNedTilEvne: Boolean,
-    val justertNedTil25ProsentAvInntekt: Boolean,
-    val justertForNettoBarnetilleggBP: Boolean,
-    val justertForNettoBarnetilleggBM: Boolean,
+    val barnetErSelvforsørget: Boolean,
+    val bidragJustertForDeltBosted: Boolean,
+    val bidragJustertForNettoBarnetilleggBP: Boolean,
+    val bidragJustertForNettoBarnetilleggBM: Boolean,
+    val bidragJustertNedTilEvne: Boolean,
+    val bidragJustertNedTil25ProsentAvInntekt: Boolean,
 ) : Sluttberegning {
     @get:JsonIgnore
-    private val resultat
+    val resultat
         get() =
             // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
                 ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name
-                justertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBP.name
-                justertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBM.name
-                justertNedTilEvne -> SluttberegningBarnebidrag::justertNedTilEvne.name
-                justertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::justertNedTil25ProsentAvInntekt.name
+                barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
+                bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
+                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+
+                bidragJustertForDeltBosted -> SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
+                bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                bidragJustertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                bidragJustertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
                 else -> "kostnadsberegnet"
             }
 
@@ -204,4 +219,33 @@ data class DelberegningUnderholdskostnad(
     val nettoTilsynsutgift: BigDecimal?,
     val barnetrygd: BigDecimal,
     val underholdskostnad: BigDecimal,
+) : Delberegning
+
+data class FaktiskUtgiftPeriode(
+    override val periode: ÅrMånedsperiode,
+    @Schema(description = "Referanse til barnet utgiften gjelder")
+    val gjelderBarn: Grunnlagsreferanse,
+    val fødselsdatoBarn: LocalDate,
+    val faktiskUtgiftBeløp: BigDecimal,
+    val kostpengerBeløp: BigDecimal,
+    val kommentar: String? = null,
+    override val manueltRegistrert: Boolean,
+) : GrunnlagPeriodeInnhold
+
+data class TilleggsstønadPeriode(
+    override val periode: ÅrMånedsperiode,
+    @Schema(description = "Referanse til barnet stønaden mottas for")
+    val gjelderBarn: Grunnlagsreferanse,
+    val beløpDagsats: BigDecimal,
+    override val manueltRegistrert: Boolean,
+) : GrunnlagPeriodeInnhold
+
+data class DelberegningFaktiskTilsynsutgift(
+    override val periode: ÅrMånedsperiode,
+    val beregnetBeløp: BigDecimal,
+) : Delberegning
+
+data class DelberegningTilleggsstønad(
+    override val periode: ÅrMånedsperiode,
+    val beregnetBeløp: BigDecimal,
 ) : Delberegning

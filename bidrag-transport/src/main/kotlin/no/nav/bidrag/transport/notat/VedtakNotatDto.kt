@@ -37,6 +37,7 @@ import java.util.Locale
 
 data class VedtakNotatDto(
     val type: NotatMalType = NotatMalType.FORSKUDD,
+    val medInnkreving: Boolean = true,
     val saksnummer: String,
     val behandling: NotatBehandlingDetaljerDto,
     val saksbehandlerNavn: String?,

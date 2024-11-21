@@ -353,11 +353,11 @@ class VisningsnavnTest {
         }
 
         @Test
-        fun `Skal hente visningsnavn for barnebidrag resultatkode KOSTNADSBEREGNET_BIDRAG`() {
-            val visningsnavn = Resultatkode.KOSTNADSBEREGNET_BIDRAG.visningsnavn
+        fun `Skal hente visningsnavn for barnebidrag resultatkode BEREGNET_BIDRAG`() {
+            val visningsnavn = Resultatkode.BEREGNET_BIDRAG.visningsnavn
 
-            visningsnavn.intern shouldBe "Kostnadsberegnet bidrag"
-            visningsnavn.bruker[Språk.NB] shouldBe "Kostnadsberegnet bidrag"
+            visningsnavn.intern shouldBe "Beregnet bidrag"
+            visningsnavn.bruker[Språk.NB] shouldBe "Beregnet bidrag"
         }
     }
 }

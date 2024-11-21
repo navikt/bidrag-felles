@@ -11,6 +11,22 @@ enum class Resultatkode(
     val bisysKode: List<BisysResultatkode>,
     vararg val type: ResultatkodeType,
 ) {
+    // Gebyr
+    GEBYR_FRITTATT(
+        listOf(
+            BisysResultatkode("GIFR", type = BisysResultatkodeType.INNVILGELSE),
+            BisysResultatkode("GKFI", type = BisysResultatkodeType.KLAGE),
+        ),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    GEBYR_ILAGT(
+        listOf(
+            BisysResultatkode("GIGI", type = BisysResultatkodeType.INNVILGELSE),
+            BisysResultatkode("GKIF", type = BisysResultatkodeType.KLAGE),
+        ),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+
     BARNET_ER_SELVFORSØRGET(
         listOf(BisysResultatkode("5SF", BisysResultatkodeType.AVSLAG)),
         ResultatkodeType.BARNEBIDRAG,
@@ -18,65 +34,11 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
     ),
 
-    // Resultat av beregning av barnebidrag, angir at det må gjøres en forholdsmessig fordeling
-    BEGRENSET_EVNE_FLERE_SAKER_UTFØR_FORHOLDSMESSIG_FORDELING(
-        listOf(BisysResultatkode("")),
-        ResultatkodeType.BARNEBIDRAG,
-    ),
-
-    // Beregnet bidrag er større enn forskuddsats, settes lik forskuddssats
-    BEGRENSET_REVURDERING(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
-
-    // Barnet har delt bosted og BPs andel av U er under 50%, bidrag skal ikke beregnes
-    BIDRAG_IKKE_BEREGNET_DELT_BOSTED(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
-
-    // Bidrag redusert pga ikke full evne
-    BIDRAG_REDUSERT_AV_EVNE(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
-
-    // Maks 25% av inntekt
-    BIDRAG_REDUSERT_TIL_25_PROSENT_AV_INNTEKT(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
-
-    // BarnetilleggBP er høyere enn beregnet bidrag
-    BIDRAG_SATT_TIL_BARNETILLEGG_BP(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
-
-    // Barnebidrag settes likt barnetillegg fra forsvaret
-    BIDRAG_SATT_TIL_BARNETILLEGG_FORSVARET(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
-
-    // Beregnet bidrag er lavere enn underholdskostnad minus barnetilleggBM
-    BIDRAG_SATT_TIL_UNDERHOLDSKOSTNAD_MINUS_BARNETILLEGG_BM(
-        listOf(BisysResultatkode("")),
-        ResultatkodeType.BARNEBIDRAG,
-    ),
-
-    // Barnet bor like mye hos begge foreldre
-    DELT_BOSTED(
-        listOf(BisysResultatkode("")),
-        ResultatkodeType.BARNEBIDRAG,
-    ),
-
-    // Beregning av forholdsmessig fordeling er utført og det er beregnet nytt bidragsbeløp
-    FORHOLDSMESSIG_FORDELING_BIDRAGSBELØP_ENDRET(
-        listOf(BisysResultatkode("")),
-        ResultatkodeType.BARNEBIDRAG,
-    ),
-
-    // Beregning av forholdsmessig fordeling er utført og det er ingen endringer på bidragsbeløp
-    FORHOLDSMESSIG_FORDELING_INGEN_ENDRING(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
-
-    // BP har 0.- i bidragsevne, bidrag satt til 0.-
-    INGEN_EVNE(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
-
-    // Kostnadsberegnet bidrag
-    KOSTNADSBEREGNET_BIDRAG(listOf(BisysResultatkode("")), ResultatkodeType.BARNEBIDRAG),
+    DIREKTE_OPPJØR(listOf(BisysResultatkode("V")), ResultatkodeType.BARNEBIDRAG),
 
     // Avslag barnebidrag
     IKKE_OMSORG_FOR_BARNET(
         listOf(BisysResultatkode("IOB")),
-        ResultatkodeType.BARNEBIDRAG,
-        ResultatkodeType.AVSLAG,
-    ),
-    BIDRAGSPLIKTIG_ER_UKJENT(
-        listOf(BisysResultatkode("BPU")),
         ResultatkodeType.BARNEBIDRAG,
         ResultatkodeType.AVSLAG,
     ),
@@ -319,6 +281,7 @@ enum class Resultatkode(
     enum class BisysResultatkodeType {
         AVSLAG,
         OPPHØR,
+        KLAGE,
         INNVILGELSE,
     }
 
