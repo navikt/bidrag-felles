@@ -31,27 +31,34 @@ data class SluttberegningSærbidrag(
 private val sluttberegningBisyskodeMap =
     mapOf(
         SluttberegningBarnebidrag::ingenEndringUnderGrense.name to "VO",
-        SluttberegningBarnebidrag::justertForNettoBarnetilleggBP.name to "101",
-        SluttberegningBarnebidrag::justertForNettoBarnetilleggBM.name to "102",
-        SluttberegningBarnebidrag::justertNedTilEvne.name to "6MB",
-        SluttberegningBarnebidrag::justertNedTil25ProsentAvInntekt.name to "7M",
+        SluttberegningBarnebidrag::barnetErSelvforsørget.name to "5SF",
+        SluttberegningBarnebidrag::bidragJustertForDeltBosted.name to "8DN",
+        SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name to "101",
+        SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name to "102",
+        SluttberegningBarnebidrag::bidragJustertNedTilEvne.name to "6MB",
+        SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name to "7M",
         "kostnadsberegnet" to "BB",
     )
 
 data class SluttberegningBarnebidrag(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
-    @Deprecated("Ikke sett resultatkode")
-    val resultatKode: Resultatkode,
     val resultatBeløp: BigDecimal,
-    val kostnadsberegnetBidrag: BigDecimal,
-    val nettoBarnetilleggBP: BigDecimal,
-    val nettoBarnetilleggBM: BigDecimal,
+    val uMinusNettoBarnetilleggBM: BigDecimal,
+    val bruttoBidragEtterBarnetilleggBM: BigDecimal,
+    val nettoBidragEtterBarnetilleggBM: BigDecimal,
+    val bruttoBidragJustertForEvneOg25Prosent: BigDecimal,
+    val bruttoBidragEtterBarnetilleggBP: BigDecimal,
+    val nettoBidragEtterSamværsfradrag: BigDecimal,
+    val bpAndelAvUVedDeltBostedFaktor: BigDecimal,
+    val bpAndelAvUVedDeltBostedBeløp: BigDecimal,
     val ingenEndringUnderGrense: Boolean,
-    val justertNedTilEvne: Boolean,
-    val justertNedTil25ProsentAvInntekt: Boolean,
-    val justertForNettoBarnetilleggBP: Boolean,
-    val justertForNettoBarnetilleggBM: Boolean,
+    val barnetErSelvforsørget: Boolean,
+    val bidragJustertForDeltBosted: Boolean,
+    val bidragJustertForNettoBarnetilleggBP: Boolean,
+    val bidragJustertForNettoBarnetilleggBM: Boolean,
+    val bidragJustertNedTilEvne: Boolean,
+    val bidragJustertNedTil25ProsentAvInntekt: Boolean,
 ) : Sluttberegning {
     @get:JsonIgnore
     private val resultat
@@ -59,10 +66,16 @@ data class SluttberegningBarnebidrag(
             // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
                 ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name
-                justertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBP.name
-                justertNedTilEvne -> SluttberegningBarnebidrag::justertNedTilEvne.name
-                justertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::justertNedTil25ProsentAvInntekt.name
-                justertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::justertForNettoBarnetilleggBM.name
+                barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
+                bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
+                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+
+                bidragJustertForDeltBosted -> SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
+                bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                bidragJustertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                bidragJustertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
                 else -> "kostnadsberegnet"
             }
 

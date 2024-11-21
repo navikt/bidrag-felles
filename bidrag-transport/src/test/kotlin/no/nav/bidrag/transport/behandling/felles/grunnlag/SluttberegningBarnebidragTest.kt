@@ -1,7 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.kotest.matchers.shouldBe
-import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import org.junit.jupiter.api.Test
 import java.math.BigDecimal
@@ -11,181 +10,262 @@ class SluttberegningBarnebidragTest {
     private val sluttberegning =
         SluttberegningBarnebidrag(
             periode = ÅrMånedsperiode(LocalDate.now(), null),
-            resultatKode = Resultatkode.BEREGNET_BIDRAG,
             beregnetBeløp = BigDecimal.ONE,
             resultatBeløp = BigDecimal.ONE,
-            kostnadsberegnetBidrag = BigDecimal.ONE,
-            nettoBarnetilleggBP = BigDecimal.ONE,
-            nettoBarnetilleggBM = BigDecimal.ONE,
+            uMinusNettoBarnetilleggBM = BigDecimal.ONE,
+            bruttoBidragEtterBarnetilleggBM = BigDecimal.ONE,
+            nettoBidragEtterBarnetilleggBM = BigDecimal.ONE,
+            bruttoBidragJustertForEvneOg25Prosent = BigDecimal.ONE,
+            bruttoBidragEtterBarnetilleggBP = BigDecimal.ONE,
+            nettoBidragEtterSamværsfradrag = BigDecimal.ONE,
+            bpAndelAvUVedDeltBostedFaktor = BigDecimal.ONE,
+            bpAndelAvUVedDeltBostedBeløp = BigDecimal.ONE,
             ingenEndringUnderGrense = false,
-            justertNedTilEvne = false,
-            justertNedTil25ProsentAvInntekt = false,
-            justertForNettoBarnetilleggBP = false,
-            justertForNettoBarnetilleggBM = false,
+            barnetErSelvforsørget = false,
+            bidragJustertForDeltBosted = false,
+            bidragJustertForNettoBarnetilleggBP = false,
+            bidragJustertForNettoBarnetilleggBM = false,
+            bidragJustertNedTilEvne = false,
+            bidragJustertNedTil25ProsentAvInntekt = false,
         )
 
     @Test
     fun `skal oversette til riktig bisys resultatkode`() {
         sluttberegning.bisysResultatkode shouldBe "BB"
+
         sluttberegning
             .copy(
                 ingenEndringUnderGrense = true,
+                barnetErSelvforsørget = true,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).bisysResultatkode shouldBe "VO"
+
         sluttberegning
             .copy(
-                justertNedTilEvne = true,
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = true,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
+            ).bisysResultatkode shouldBe "5SF"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).bisysResultatkode shouldBe "6MB"
 
         sluttberegning
             .copy(
-                justertNedTil25ProsentAvInntekt = true,
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).bisysResultatkode shouldBe "7M"
 
         sluttberegning
             .copy(
-                justertForNettoBarnetilleggBP = true,
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = true,
+            ).bisysResultatkode shouldBe "8DN"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).bisysResultatkode shouldBe "101"
 
         sluttberegning
             .copy(
-                justertForNettoBarnetilleggBM = true,
-            ).bisysResultatkode shouldBe "102"
-    }
-
-    @Test
-    fun `skal oversette til riktig bisys resultat hvis justert ned til BPs barnetillegg`() {
-        sluttberegning
-            .copy(
-                justertNedTilEvne = true,
-                justertForNettoBarnetilleggBP = true,
-            ).bisysResultatkode shouldBe "101"
-
-        sluttberegning
-            .copy(
-                justertNedTil25ProsentAvInntekt = true,
-                justertForNettoBarnetilleggBP = true,
-            ).bisysResultatkode shouldBe "101"
-
-        sluttberegning
-            .copy(
-                justertForNettoBarnetilleggBM = true,
-                justertForNettoBarnetilleggBP = true,
-            ).bisysResultatkode shouldBe "101"
-
-        sluttberegning
-            .copy(
-                justertNedTilEvne = true,
-                justertNedTil25ProsentAvInntekt = true,
-                justertForNettoBarnetilleggBM = true,
-                justertForNettoBarnetilleggBP = true,
-            ).bisysResultatkode shouldBe "101"
-    }
-
-    @Test
-    fun `skal oversette til riktig bisys resultat hvis justert ned til BMs barnetillegg`() {
-        sluttberegning
-            .copy(
-                justertNedTilEvne = false,
-                justertForNettoBarnetilleggBM = true,
-            ).bisysResultatkode shouldBe "102"
-
-        sluttberegning
-            .copy(
-                justertNedTil25ProsentAvInntekt = true,
-                justertForNettoBarnetilleggBM = true,
-            ).bisysResultatkode shouldBe "7M"
-
-        sluttberegning
-            .copy(
-                justertNedTilEvne = true,
-                justertNedTil25ProsentAvInntekt = true,
-                justertForNettoBarnetilleggBM = true,
-                justertForNettoBarnetilleggBP = false,
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).bisysResultatkode shouldBe "6MB"
-    }
 
-    @Test
-    fun `skal oversette til riktig bisys resultat hvis ingen endring under grense`() {
         sluttberegning
             .copy(
-                justertNedTilEvne = true,
-                justertNedTil25ProsentAvInntekt = true,
-                justertForNettoBarnetilleggBM = true,
-                justertForNettoBarnetilleggBP = true,
-                ingenEndringUnderGrense = true,
-            ).bisysResultatkode shouldBe "VO"
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
+            ).bisysResultatkode shouldBe "7M"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = true,
+            ).bisysResultatkode shouldBe "102"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = false,
+            ).bisysResultatkode shouldBe "BB"
     }
 
     @Test
     fun `skal oversette til riktig visningsnavn`() {
+        sluttberegning.resultatVisningsnavn?.intern shouldBe "Kostnadsberegnet bidrag"
+
         sluttberegning
             .copy(
-                justertNedTilEvne = true,
-                justertNedTil25ProsentAvInntekt = true,
-                justertForNettoBarnetilleggBM = true,
-                justertForNettoBarnetilleggBP = true,
                 ingenEndringUnderGrense = true,
+                barnetErSelvforsørget = true,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).resultatVisningsnavn
             ?.intern shouldBe "Ingen endring under grense"
 
         sluttberegning
             .copy(
-                justertNedTilEvne = true,
-                justertNedTil25ProsentAvInntekt = true,
-                justertForNettoBarnetilleggBM = true,
-                justertForNettoBarnetilleggBP = true,
                 ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = true,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Barnet er selvforsørget"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Bidrag redusert til evne"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Bidrag redusert til 25 prosent av inntekt"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = true,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = true,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Bidrag justert for delt bosted"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).resultatVisningsnavn
             ?.intern shouldBe "Bidrag satt til barnetillegg fra BP"
 
         sluttberegning
             .copy(
-                justertNedTilEvne = true,
-                justertNedTil25ProsentAvInntekt = true,
-                justertForNettoBarnetilleggBM = true,
-                justertForNettoBarnetilleggBP = false,
                 ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = true,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).resultatVisningsnavn
-            ?.intern shouldBe "Redusert av evne"
+            ?.intern shouldBe "Bidrag redusert til evne"
 
         sluttberegning
             .copy(
-                justertNedTil25ProsentAvInntekt = true,
-                justertNedTilEvne = false,
-                justertForNettoBarnetilleggBM = false,
-                justertForNettoBarnetilleggBP = false,
                 ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = true,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).resultatVisningsnavn
-            ?.intern shouldBe "Redusert til 25 prosent av inntekt"
+            ?.intern shouldBe "Bidrag redusert til 25 prosent av inntekt"
 
         sluttberegning
             .copy(
-                justertNedTilEvne = true,
-                justertNedTil25ProsentAvInntekt = false,
-                justertForNettoBarnetilleggBM = false,
-                justertForNettoBarnetilleggBP = false,
                 ingenEndringUnderGrense = false,
-            ).resultatVisningsnavn
-            ?.intern shouldBe "Redusert av evne"
-
-        sluttberegning
-            .copy(
-                justertNedTilEvne = false,
-                justertNedTil25ProsentAvInntekt = false,
-                justertForNettoBarnetilleggBM = false,
-                justertForNettoBarnetilleggBP = false,
-                ingenEndringUnderGrense = false,
-            ).resultatVisningsnavn
-            ?.intern shouldBe "Kostnadsberegnet bidrag"
-
-        sluttberegning
-            .copy(
-                justertNedTilEvne = false,
-                justertNedTil25ProsentAvInntekt = false,
-                justertForNettoBarnetilleggBM = true,
-                justertForNettoBarnetilleggBP = false,
-                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = true,
             ).resultatVisningsnavn
             ?.intern shouldBe "Bidrag satt til underholdskostnad minus barnetillegg BM"
+
+        sluttberegning
+            .copy(
+                ingenEndringUnderGrense = false,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = false,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Kostnadsberegnet bidrag"
     }
 }
