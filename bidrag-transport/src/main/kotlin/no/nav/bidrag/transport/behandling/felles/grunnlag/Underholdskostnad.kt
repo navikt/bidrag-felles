@@ -16,7 +16,6 @@ data class UnderholdskostnadPeriode(
 @Schema(description = "Barnetilsyn med stønad fra Enslig Forsørger")
 data class BarnetilsynMedStønadPeriode(
     override val periode: ÅrMånedsperiode,
-    val gjelderBarn: Grunnlagsreferanse,
     val tilsynstype: Tilsynstype,
     val skolealder: Skolealder,
     override val manueltRegistrert: Boolean,
