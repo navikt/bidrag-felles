@@ -65,6 +65,7 @@ data class OpprettGrunnlagRequestDto(
     override val innhold: JsonNode,
     override val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
     override val gjelderReferanse: Grunnlagsreferanse? = null,
+    override val gjelderBarnReferanse: Grunnlagsreferanse? = null,
 ) : BaseGrunnlag {
     override fun toString(): String = super.asString()
 }
