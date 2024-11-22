@@ -43,6 +43,7 @@ data class SluttberegningBarnebidrag(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
     val resultatBeløp: BigDecimal,
+    @JsonAlias("uminusNettoBarnetilleggBM")
     val uMinusNettoBarnetilleggBM: BigDecimal,
     val bruttoBidragEtterBarnetilleggBM: BigDecimal,
     val nettoBidragEtterBarnetilleggBM: BigDecimal,
