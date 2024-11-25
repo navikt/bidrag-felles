@@ -41,11 +41,13 @@ enum class Resultatkode(
         listOf(BisysResultatkode("IOB")),
         ResultatkodeType.BARNEBIDRAG,
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
     ),
     BIDRAGSPLIKTIG_ER_DØD(
         listOf(BisysResultatkode("BPD")),
         ResultatkodeType.BARNEBIDRAG,
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
     ),
     BEREGNET_BIDRAG(
         listOf(),
