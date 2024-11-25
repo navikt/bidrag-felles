@@ -639,7 +639,8 @@ data class NotatResultatBidragsberegningBarnDto(
 data class NotatDelberegningBarnetilleggDto(
     val barnetillegg: List<NotatBarnetilleggDetaljerDto> = emptyList(),
     val skattFaktor: BigDecimal = BigDecimal.ZERO,
-    val nettoBeløp: BigDecimal = BigDecimal.ZERO,
+    val sumBruttoBeløp: BigDecimal = BigDecimal.ZERO,
+    val sumNettoBeløp: BigDecimal = BigDecimal.ZERO,
 ) {
     data class NotatBarnetilleggDetaljerDto(
         val bruttoBeløp: BigDecimal,
