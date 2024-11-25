@@ -22,10 +22,10 @@ data class DelberegningNettoBarnetillegg(
     override val periode: ÅrMånedsperiode,
     val summertBruttoBarnetillegg: BigDecimal,
     val summertNettoBarnetillegg: BigDecimal,
-    val barnetilleggTypeListe: List<BarnetilleggType>,
+    val barnetilleggTypeListe: List<Barnetillegg>,
 ) : Delberegning
 
-data class BarnetilleggType(
+data class Barnetillegg(
     val barnetilleggType: Barnetilleggstype,
     val bruttoBarnetillegg: BigDecimal,
     val nettoBarnetillegg: BigDecimal,
