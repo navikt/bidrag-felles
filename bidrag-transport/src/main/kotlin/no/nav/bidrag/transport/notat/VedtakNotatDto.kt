@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonFormat
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.barnetilsyn.Skolealder
+import no.nav.bidrag.domene.enums.barnetilsyn.Tilsynstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erDirekteAvslag
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.diverse.Kilde
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
@@ -13,20 +17,26 @@ import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.person.SivilstandskodePDL
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
+import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.domene.tid.DatoperiodeDto
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
+import no.nav.bidrag.transport.behandling.beregning.samvær.SamværskalkulatorDetaljer
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BeregnetBidragPerBarn
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUnderholdskostnad
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidrag
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -44,7 +54,10 @@ data class VedtakNotatDto(
     val virkningstidspunkt: NotatVirkningstidspunktDto,
     val utgift: NotatSærbidragUtgifterDto?,
     val boforhold: NotatBoforholdDto,
-    val roller: List<NotatRolleDto>,
+    val samvær: List<NotatSamværDto> = emptyList(),
+    var underholdskostnader: NotatUnderholdDto? = null,
+    val personer: List<NotatPersonDto>,
+    val roller: List<NotatPersonDto> = personer,
     val inntekter: NotatInntekterDto,
     val vedtak: NotatVedtakDetaljerDto,
 )
@@ -87,6 +100,84 @@ data class NotatBehandlingDetaljerDto(
 
     @get:Schema(name = "vedtakstypeVisningsnavn")
     val vedtakstypeVisningsnavn get() = vedtakstype?.visningsnavnIntern(opprinneligVedtakstype)
+}
+
+data class NotatUnderholdDto(
+    val underholdskostnaderBarn: List<NotatUnderholdBarnDto> = emptyList(),
+    val offentligeOpplysninger: List<NotatOffentligeOpplysningerUnderhold> = emptyList(),
+)
+
+data class NotatOffentligeOpplysningerUnderhold(
+    val gjelder: NotatPersonDto,
+    val gjelderBarn: NotatPersonDto? = null,
+    val barnetilsyn: List<NotatBarnetilsynOffentligeOpplysninger> = emptyList(),
+    val harTilleggsstønad: Boolean,
+) {
+    data class NotatBarnetilsynOffentligeOpplysninger(
+        val periode: ÅrMånedsperiode,
+    )
+}
+
+data class NotatUnderholdBarnDto(
+    val gjelderBarn: NotatPersonDto,
+    val harTilsynsordning: Boolean? = null,
+    val stønadTilBarnetilsyn: List<NotatStønadTilBarnetilsynDto> = emptyList(),
+    val faktiskTilsynsutgift: List<NotatFaktiskTilsynsutgiftDto>,
+    val tilleggsstønad: List<NotatTilleggsstønadDto> = emptyList(),
+    val underholdskostnad: List<NotatUnderholdskostnadBeregningDto>,
+    val begrunnelse: NotatBegrunnelseDto? = null,
+) {
+    data class NotatFaktiskTilsynsutgiftDto(
+        val periode: DatoperiodeDto,
+        val utgift: BigDecimal,
+        val kostpenger: BigDecimal? = null,
+        val kommentar: String? = null,
+        val total: BigDecimal,
+    )
+
+    data class NotatStønadTilBarnetilsynDto(
+        val periode: DatoperiodeDto,
+        val skolealder: Skolealder,
+        val tilsynstype: Tilsynstype,
+        val kilde: Kilde = Kilde.MANUELL,
+    ) {
+        val skoleaderVisningsnavn = skolealder.visningsnavn.intern
+        val tilsynstypeVisningsnavn = tilsynstype.visningsnavn.intern
+    }
+
+    data class NotatTilleggsstønadDto(
+        val periode: DatoperiodeDto,
+        val dagsats: BigDecimal,
+        val total: BigDecimal,
+    )
+
+    data class NotatUnderholdskostnadBeregningDto(
+        val periode: DatoperiodeDto,
+        val forbruk: BigDecimal = BigDecimal.ZERO,
+        val boutgifter: BigDecimal = BigDecimal.ZERO,
+        val stønadTilBarnetilsyn: BigDecimal = BigDecimal.ZERO,
+        val tilsynsutgifter: BigDecimal = BigDecimal.ZERO,
+        val barnetrygd: BigDecimal = BigDecimal.ZERO,
+        val total: BigDecimal,
+    )
+}
+
+data class NotatSamværDto(
+    val gjelderBarn: NotatPersonDto,
+    val begrunnelse: NotatBegrunnelseDto?,
+    val perioder: List<NotatSamværsperiodeDto> = emptyList(),
+) {
+    data class NotatSamværsperiodeDto(
+        val periode: DatoperiodeDto,
+        val samværsklasse: Samværsklasse,
+        val gjennomsnittligSamværPerMåned: BigDecimal,
+        val beregning: SamværskalkulatorDetaljer? = null,
+    ) {
+        val samværsklasseVisningsnavn: String = samværsklasse.visningsnavn.intern
+
+        val ferieVisningsnavnMap = SamværskalkulatorFerietype.entries.associateWith { it.visningsnavn.intern }
+        val frekvensVisningsnavnMap = SamværskalkulatorNetterFrekvens.entries.associateWith { it.visningsnavn.intern }
+    }
 }
 
 data class NotatSærbidragUtgifterDto(
@@ -199,7 +290,7 @@ data class NotatBegrunnelseDto(
     val innhold: String?,
     @Schema(name = "intern", deprecated = true)
     val intern: String? = innhold,
-    val gjelder: NotatRolleDto? = null,
+    val gjelder: NotatPersonDto? = null,
 )
 
 data class NotatBoforholdDto(
@@ -239,7 +330,7 @@ data class NotatVoksenIHusstandenDetaljerDto(
 )
 
 data class BoforholdBarn(
-    val gjelder: NotatRolleDto,
+    val gjelder: NotatPersonDto,
     val medIBehandling: Boolean,
     val kilde: Kilde,
     val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret<Bostatuskode>> =
@@ -288,8 +379,8 @@ private fun <T> toVisningsnavn(value: T): String? =
         else -> null
     }
 
-data class NotatRolleDto(
-    val rolle: Rolletype?,
+data class NotatPersonDto(
+    val rolle: Rolletype? = null,
     val navn: String?,
     val fødselsdato: LocalDate?,
     val ident: Personident?,
@@ -305,7 +396,7 @@ data class NotatInntekterDto(
 )
 
 data class InntekterPerRolle(
-    val gjelder: NotatRolleDto,
+    val gjelder: NotatPersonDto,
     val arbeidsforhold: List<Arbeidsforhold> = emptyList(),
     @Schema(name = "årsinntekter")
     val årsinntekter: List<NotatInntektDto> = emptyList(),
@@ -324,7 +415,7 @@ data class InntekterPerRolle(
 }
 
 data class NotatBeregnetInntektDto(
-    val gjelderBarn: NotatRolleDto,
+    val gjelderBarn: NotatPersonDto,
     val summertInntektListe: List<DelberegningSumInntekt>,
 )
 
@@ -342,7 +433,7 @@ data class NotatInntektDto(
     val kilde: Kilde = Kilde.OFFENTLIG,
     val type: Inntektsrapportering,
     val medIBeregning: Boolean = false,
-    val gjelderBarn: NotatRolleDto?,
+    val gjelderBarn: NotatPersonDto?,
     val historisk: Boolean = false,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
@@ -376,6 +467,7 @@ data class NotatVedtakDetaljerDto(
 @JsonSubTypes(
     JsonSubTypes.Type(value = NotatResultatSærbidragsberegningDto::class, name = "SÆRBIDRAG"),
     JsonSubTypes.Type(value = NotatResultatForskuddBeregningBarnDto::class, name = "FORSKUDD"),
+    JsonSubTypes.Type(value = NotatResultatBidragsberegningBarnDto::class, name = "BIDRAG"),
 )
 abstract class VedtakResultatInnhold(
     val type: NotatMalType,
@@ -387,7 +479,7 @@ data class NotatResultatSærbidragsberegningDto(
     val beregning: UtgiftBeregningDto? = null,
     val forskuddssats: BigDecimal? = null,
     val maksGodkjentBeløp: BigDecimal? = null,
-    val inntekter: ResultatSærbidragsberegningInntekterDto? = null,
+    val inntekter: NotatResultatBeregningInntekterDto? = null,
     val delberegningBidragspliktigesBeregnedeTotalbidrag: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto? = null,
     val delberegningBidragsevne: NotatDelberegningBidragsevneDto? = null,
     val delberegningUtgift: DelberegningUtgift? = null,
@@ -406,21 +498,6 @@ data class NotatResultatSærbidragsberegningDto(
                 resultat - (beregning?.totalBeløpBetaltAvBp ?: BigDecimal.ZERO),
                 BigDecimal.ZERO,
             )
-
-    data class ResultatSærbidragsberegningInntekterDto(
-        val inntektBM: BigDecimal? = null,
-        val inntektBP: BigDecimal? = null,
-        val inntektBarn: BigDecimal? = null,
-        val barnEndeligInntekt: BigDecimal? = null,
-    ) {
-        val totalEndeligInntekt get() =
-            (inntektBM ?: BigDecimal.ZERO) + (inntektBP ?: BigDecimal.ZERO) +
-                (barnEndeligInntekt ?: BigDecimal.ZERO)
-
-        val inntektBPMånedlig get() = inntektBP?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
-        val inntektBMMånedlig get() = inntektBM?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
-        val inntektBarnMånedlig get() = inntektBarn?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
-    }
 
     data class UtgiftBeregningDto(
         @Schema(description = "Beløp som er direkte betalt av BP")
@@ -448,6 +525,7 @@ data class NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto(
 }
 
 data class NotatDelberegningBidragsevneDto(
+    val sumInntekt25Prosent: BigDecimal,
     val bidragsevne: BigDecimal,
     val skatt: NotatSkattBeregning,
     val underholdEgneBarnIHusstand: NotatUnderholdEgneBarnIHusstand,
@@ -481,7 +559,7 @@ data class NotatDelberegningBidragsevneDto(
 }
 
 data class NotatResultatForskuddBeregningBarnDto(
-    val barn: NotatRolleDto,
+    val barn: NotatPersonDto,
     val perioder: List<NotatResultatPeriodeDto>,
 ) : VedtakResultatInnhold(NotatMalType.FORSKUDD) {
     data class NotatResultatPeriodeDto(
@@ -499,4 +577,90 @@ data class NotatResultatForskuddBeregningBarnDto(
         val sivilstandVisningsnavn get() = sivilstand?.visningsnavn?.intern
     }
 }
+
+data class NotatResultatBidragsberegningBarnDto(
+    val barn: NotatPersonDto,
+    val perioder: List<ResultatBarnebidragsberegningPeriodeDto>,
+) : VedtakResultatInnhold(NotatMalType.BIDRAG) {
+    data class ResultatBarnebidragsberegningPeriodeDto(
+        val periode: ÅrMånedsperiode,
+        val underholdskostnad: BigDecimal,
+        val bpsAndelU: BigDecimal,
+        val bpsAndelBeløp: BigDecimal,
+        val samværsfradrag: BigDecimal,
+        val beregnetBidrag: BigDecimal,
+        val faktiskBidrag: BigDecimal,
+        val resultatKode: Resultatkode?,
+        val erDirekteAvslag: Boolean = false,
+        val beregningsdetaljer: BidragPeriodeBeregningsdetaljer? = null,
+    ) {
+        @Suppress("unused")
+        val resultatkodeVisningsnavn get() =
+            if (resultatKode?.erDirekteAvslag() == true) {
+                resultatKode.visningsnavnIntern()
+            } else {
+                beregningsdetaljer
+                    ?.sluttberegning
+                    ?.resultatVisningsnavn
+                    ?.intern
+            }
+
+        data class BidragPeriodeBeregningsdetaljer(
+            val bpHarEvne: Boolean,
+            val antallBarnIHusstanden: Double? = null,
+            val forskuddssats: BigDecimal,
+            val barnetilleggBM: NotatDelberegningBarnetilleggDto,
+            val barnetilleggBP: NotatDelberegningBarnetilleggDto,
+            val voksenIHusstanden: Boolean? = null,
+            val enesteVoksenIHusstandenErEgetBarn: Boolean? = null,
+            val bpsAndel: DelberegningBidragspliktigesAndel? = null,
+            val inntekter: NotatResultatBeregningInntekterDto? = null,
+            val delberegningBidragsevne: NotatDelberegningBidragsevneDto? = null,
+            val samværsfradrag: NotatBeregningsdetaljerSamværsfradrag? = null,
+            val sluttberegning: SluttberegningBarnebidrag? = null,
+            val delberegningUnderholdskostnad: DelberegningUnderholdskostnad? = null,
+            val delberegningBidragspliktigesBeregnedeTotalBidrag: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto? = null,
+        ) {
+            data class NotatBeregningsdetaljerSamværsfradrag(
+                val samværsfradrag: BigDecimal,
+                val samværsklasse: Samværsklasse,
+                val gjennomsnittligSamværPerMåned: BigDecimal,
+            ) {
+                val samværsklasseVisningsnavn: String = samværsklasse.visningsnavn.intern
+            }
+
+            val deltBosted get() =
+                sluttberegning!!.bidragJustertForDeltBosted ||
+                    sluttberegning.resultat == SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+        }
+    }
+}
+
+data class NotatDelberegningBarnetilleggDto(
+    val barnetillegg: List<NotatBarnetilleggDetaljerDto> = emptyList(),
+    val skattFaktor: BigDecimal = BigDecimal.ZERO,
+    val sumBruttoBeløp: BigDecimal = BigDecimal.ZERO,
+    val sumNettoBeløp: BigDecimal = BigDecimal.ZERO,
+) {
+    data class NotatBarnetilleggDetaljerDto(
+        val bruttoBeløp: BigDecimal,
+        val nettoBeløp: BigDecimal,
+        val visningsnavn: String,
+    )
+}
+
+data class NotatResultatBeregningInntekterDto(
+    val inntektBM: BigDecimal? = null,
+    val inntektBP: BigDecimal? = null,
+    val inntektBarn: BigDecimal? = null,
+    val barnEndeligInntekt: BigDecimal? = null,
+) {
+    val totalEndeligInntekt get() =
+        (inntektBM ?: BigDecimal.ZERO) + (inntektBP ?: BigDecimal.ZERO) +
+            (barnEndeligInntekt ?: BigDecimal.ZERO)
+    val inntektBPMånedlig get() = inntektBP?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+    val inntektBMMånedlig get() = inntektBM?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+    val inntektBarnMånedlig get() = inntektBarn?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
+}
+
 typealias NotatResultatForskuddBeregningBarnListe = List<NotatResultatForskuddBeregningBarnDto>

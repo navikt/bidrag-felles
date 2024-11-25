@@ -2,7 +2,6 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
-import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
@@ -44,6 +43,7 @@ data class SluttberegningBarnebidrag(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
     val resultatBeløp: BigDecimal,
+    @JsonAlias("uminusNettoBarnetilleggBM")
     val uMinusNettoBarnetilleggBM: BigDecimal,
     val bruttoBidragEtterBarnetilleggBM: BigDecimal,
     val nettoBidragEtterBarnetilleggBM: BigDecimal,
@@ -223,8 +223,6 @@ data class DelberegningUnderholdskostnad(
 
 data class FaktiskUtgiftPeriode(
     override val periode: ÅrMånedsperiode,
-    @Schema(description = "Referanse til barnet utgiften gjelder")
-    val gjelderBarn: Grunnlagsreferanse,
     val fødselsdatoBarn: LocalDate,
     val faktiskUtgiftBeløp: BigDecimal,
     val kostpengerBeløp: BigDecimal,
@@ -234,8 +232,6 @@ data class FaktiskUtgiftPeriode(
 
 data class TilleggsstønadPeriode(
     override val periode: ÅrMånedsperiode,
-    @Schema(description = "Referanse til barnet stønaden mottas for")
-    val gjelderBarn: Grunnlagsreferanse,
     val beløpDagsats: BigDecimal,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold

@@ -87,6 +87,8 @@ fun List<BaseGrunnlag>.hentInntekter(): List<InntektsrapporteringPeriode> =
 
 data class InnholdMedReferanse<T>(
     val referanse: String,
+    val gjelderBarnReferanse: String? = null,
+    val gjelderReferanse: String? = null,
     val innhold: T,
 )
 
@@ -96,7 +98,7 @@ inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBa
 ): List<InnholdMedReferanse<T>> =
     filtrerBasertPåEgenReferanse(grunnlagType, referanse)
         .map {
-            InnholdMedReferanse(it.referanse, it.innholdTilObjekt<T>())
+            InnholdMedReferanse(it.referanse, it.gjelderBarnReferanse, it.gjelderReferanse, it.innholdTilObjekt<T>())
         }
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBasertPåFremmedReferanse(
@@ -105,7 +107,7 @@ inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBa
 ): List<InnholdMedReferanse<T>> =
     filtrerBasertPåFremmedReferanse(grunnlagType, referanse)
         .map {
-            InnholdMedReferanse(it.referanse, it.innholdTilObjekt<T>())
+            InnholdMedReferanse(it.referanse, it.gjelderBarnReferanse, it.gjelderReferanse, it.innholdTilObjekt<T>())
         }
 
 fun Rolletype.tilGrunnlagstype() =

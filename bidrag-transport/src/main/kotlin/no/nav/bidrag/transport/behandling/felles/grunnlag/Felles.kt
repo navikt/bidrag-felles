@@ -24,6 +24,7 @@ data class GrunnlagDto(
     override val innhold: JsonNode,
     override val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
     override val gjelderReferanse: Grunnlagsreferanse? = null,
+    override val gjelderBarnReferanse: Grunnlagsreferanse? = null,
 ) : BaseGrunnlag {
     override fun toString(): String = super.asString()
 
@@ -61,6 +62,9 @@ interface BaseGrunnlag {
 
     @get:Schema(description = "Referanse til personobjektet grunnlaget gjelder")
     val gjelderReferanse: Grunnlagsreferanse?
+
+    @get:Schema(description = "Referanse til barn personobjektet grunnlaget gjelder")
+    val gjelderBarnReferanse: Grunnlagsreferanse?
 
     @get:Schema(description = "Liste over grunnlagsreferanser")
     val grunnlagsreferanseListe: List<Grunnlagsreferanse>
