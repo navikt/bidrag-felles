@@ -206,6 +206,7 @@ enum class SjablonTallNavn(
     FORHØYET_BARNETRYGD_BELØP(
         navn = "ForhøyetBarnetrygdBeløp",
         id = "0041",
+        underholdskostnad = true,
     ),
     FASTSETTELSESGEBYR_BELØP(
         navn = "FastsettelsesgebyrBeløp",
