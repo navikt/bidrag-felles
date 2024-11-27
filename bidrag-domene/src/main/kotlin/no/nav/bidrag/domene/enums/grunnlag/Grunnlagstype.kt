@@ -103,6 +103,11 @@ enum class Grunnlagstype {
     SLUTTBEREGNING_BARNEBIDRAG,
     BARNETILLEGG_PERIODE,
 
+    // Gebyr
+    MANUELT_OVERSTYRT_GEBYR,
+    DELBEREGNING_INNTEKTSBASERT_GEBYR,
+    SLUTTBEREGNING_GEBYR,
+
     @Deprecated("Bruk de spesifikke grunnlagstypene som starter med PERSON_ i stedet")
     PERSON,
     PERSON_BIDRAGSMOTTAKER,
