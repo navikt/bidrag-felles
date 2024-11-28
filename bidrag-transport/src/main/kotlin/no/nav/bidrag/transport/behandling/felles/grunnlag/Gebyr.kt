@@ -30,7 +30,7 @@ val List<BaseGrunnlag>.gebyrDelberegningSumInntekt get() =
 val List<BaseGrunnlag>.sluttberegningGebyr get() =
     find {
         it.type == Grunnlagstype.SLUTTBEREGNING_GEBYR
-    }?.innholdTilObjekt<SluttberegningGebyr>()
+    }?.tilInnholdMedReferanse<SluttberegningGebyr>()
 
 val List<BaseGrunnlag>.gebyrBeløp get() =
     filter {
