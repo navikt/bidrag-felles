@@ -25,7 +25,7 @@ val List<BaseGrunnlag>.gebyrDelberegningSumInntekt get() =
         finnGrunnlagSomErReferertAv(Grunnlagstype.DELBEREGNING_SUM_INNTEKT, it)
     }?.toList()
         ?.innholdTilObjekt<DelberegningSumInntekt>()
-        ?.maxBy { it.barnetillegg ?: BigDecimal.ZERO }
+        ?.maxByOrNull { it.barnetillegg ?: BigDecimal.ZERO }
 
 val List<BaseGrunnlag>.sluttberegningGebyr get() =
     find {
