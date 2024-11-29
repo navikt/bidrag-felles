@@ -40,6 +40,15 @@ internal class DatoperiodeTest {
     }
 
     @Test
+    fun `inneholder returnere false hvis dato er på til dato da denne er til og ikke med`() {
+        val periode = Datoperiode(LocalDate.of(2019, 1, 1), LocalDate.of(2019, 5, 1))
+
+        val inneholder = periode inneholder LocalDate.of(2019, 5, 1)
+
+        inneholder shouldBe false
+    }
+
+    @Test
     fun `snitt returnerer lik periode for like perioder`() {
         val periode1 = Datoperiode(LocalDate.of(2019, 1, 1), LocalDate.of(2019, 5, 1))
         val periode2 = Datoperiode(LocalDate.of(2019, 1, 1), LocalDate.of(2019, 5, 1))
