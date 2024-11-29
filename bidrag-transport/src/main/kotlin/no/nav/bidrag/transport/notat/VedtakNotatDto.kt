@@ -33,6 +33,7 @@ import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
 import no.nav.bidrag.transport.behandling.beregning.samvær.SamværskalkulatorDetaljer
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BeregnetBidragPerBarn
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUnderholdskostnad
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
@@ -55,6 +56,7 @@ data class VedtakNotatDto(
     val utgift: NotatSærbidragUtgifterDto?,
     val boforhold: NotatBoforholdDto,
     val samvær: List<NotatSamværDto> = emptyList(),
+    val gebyr: List<NotatGebyrRolleDto>? = null,
     var underholdskostnader: NotatUnderholdDto? = null,
     val personer: List<NotatPersonDto>,
     val roller: List<NotatPersonDto> = personer,
@@ -300,7 +302,37 @@ data class NotatBoforholdDto(
     val begrunnelse: NotatBegrunnelseDto,
     @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
     val notat: NotatBegrunnelseDto = begrunnelse,
+    val beregnetBoforhold: List<DelberegningBoforhold> = emptyList(),
 )
+
+data class NotatGebyrRolleDto(
+    val inntekt: NotatGebyrInntektDto,
+    val manueltOverstyrtGebyr: NotatManueltOverstyrGebyrDto? = null,
+    val beregnetIlagtGebyr: Boolean,
+    val beløpGebyrsats: BigDecimal,
+    val rolle: NotatPersonDto,
+) {
+    val ilagtGebyr get() = if (manueltOverstyrtGebyr != null) manueltOverstyrtGebyr.ilagtGebyr else beregnetIlagtGebyr
+    val gebyrResultatVisningsnavn get() =
+        when (ilagtGebyr) {
+            true -> "Ilagt"
+            false -> "Fritatt"
+            else -> "Ikke valgt"
+        }
+
+    data class NotatGebyrInntektDto(
+        val skattepliktigInntekt: BigDecimal,
+        val maksBarnetillegg: BigDecimal? = null,
+    ) {
+        val totalInntekt get() = skattepliktigInntekt + (maksBarnetillegg ?: BigDecimal.ZERO)
+    }
+
+    data class NotatManueltOverstyrGebyrDto(
+        val begrunnelse: String? = null,
+        @Schema(description = "Skal bare settes hvis det er avslag")
+        val ilagtGebyr: Boolean? = null,
+    )
+}
 
 data class NotatSivilstand(
     val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret<SivilstandskodePDL>> =
