@@ -13,6 +13,8 @@ data class BidragssakPipDto(
     val saksnummer: Saksnummer,
     @Schema(description = "Om saken omhandler paragraf 19")
     val erParagraf19: Boolean = false,
+    @Schema(description = "Om saken er avsluttet")
+    val avsluttet: Boolean = false,
     @Schema(description = "Fødselsnummer til personer innvolvert i bidragssaken")
     val roller: List<String> = emptyList(),
 )
