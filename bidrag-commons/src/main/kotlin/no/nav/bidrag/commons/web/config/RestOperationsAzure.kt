@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
 import org.springframework.web.client.RestTemplate
 
 @Suppress("SpringFacetCodeInspection")
@@ -24,6 +25,7 @@ class RestOperationsAzure {
         val restTemplate =
             restTemplateBuilder
                 .additionalInterceptors(bearerTokenClientInterceptor)
+                .additionalMessageConverters()
                 .build()
         configureJackson(restTemplate)
         return restTemplate
@@ -52,5 +54,10 @@ class RestOperationsAzure {
             .ifPresent { converter: MappingJackson2HttpMessageConverter ->
                 converter.objectMapper = commonObjectmapper
             }
+
+        restTemplate.messageConverters =
+            restTemplate.messageConverters
+                .filter { obj -> !MappingJackson2XmlHttpMessageConverter::class.java.isInstance(obj) }
+                .toMutableList()
     }
 }
