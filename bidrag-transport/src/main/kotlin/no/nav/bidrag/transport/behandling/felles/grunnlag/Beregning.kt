@@ -36,7 +36,7 @@ private val sluttberegningBisyskodeMap =
         SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name to "102",
         SluttberegningBarnebidrag::bidragJustertNedTilEvne.name to "6MB",
         SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name to "7M",
-        "kostnadsberegnet" to "BB",
+        "kostnadsberegnet" to "KBB",
     )
 
 data class SluttberegningBarnebidrag(
@@ -81,7 +81,7 @@ data class SluttberegningBarnebidrag(
 
     @get:JsonIgnore
     val bisysResultatkode
-        get() = sluttberegningBisyskodeMap[resultat] ?: "BB"
+        get() = sluttberegningBisyskodeMap[resultat] ?: "KBB"
 
     @get:JsonIgnore
     val resultatVisningsnavn get() = lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[resultat]
