@@ -10,6 +10,7 @@ import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
+import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragIReferanser
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
 import java.time.YearMonth
 
@@ -72,6 +73,11 @@ val VedtakDto.erDirekteAvslag get(): Boolean {
             ?.resultatkode
             ?.let { Resultatkode.fraKode(it)?.erDirekteAvslag() } ?: false
 }
+
+fun StønadsendringDto.finnSistePeriode() = periodeListe.maxBy { it.periode.fom }
+
+fun VedtakDto.finnSluttberegningBarnebidragIPeriode(periode: VedtakPeriodeDto) =
+    grunnlagListe.finnSluttberegningBarnebidragIReferanser(periode.grunnlagReferanseListe)
 
 val VedtakDto.typeBehandling get() =
     when {
