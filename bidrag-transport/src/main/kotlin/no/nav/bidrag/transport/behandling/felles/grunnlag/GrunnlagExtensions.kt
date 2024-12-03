@@ -71,7 +71,11 @@ fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
     referanse: String = "",
 ): List<BaseGrunnlag> =
     filter { grunnlagType == null || it.type == grunnlagType }
-        .filter { referanse.isEmpty() || it.grunnlagsreferanseListe.contains(referanse) || referanse == it.gjelderReferanse }
+        .filter {
+            referanse.isEmpty() ||
+                it.grunnlagsreferanseListe.contains(referanse) ||
+                referanse == it.gjelderReferanse
+        }
 
 fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanse(
     grunnlagType: Grunnlagstype? = null,
@@ -90,7 +94,24 @@ data class InnholdMedReferanse<T>(
     val gjelderBarnReferanse: String? = null,
     val gjelderReferanse: String? = null,
     val innhold: T,
+    val grunnlag: BaseGrunnlag,
 )
+
+inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe(
+    type: Grunnlagstype,
+    grunnlagsreferanseListe: List<Grunnlagsreferanse>,
+): List<InnholdMedReferanse<T>> =
+    finnGrunnlagSomErReferertFraGrunnlagsreferanseListe(type, grunnlagsreferanseListe).map {
+        it.tilInnholdMedReferanse<T>()
+    }
+
+inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.finnOgKonverterGrunnlagSomErReferertAv(
+    type: Grunnlagstype,
+    fraGrunnlag: BaseGrunnlag,
+): List<InnholdMedReferanse<T>> =
+    finnGrunnlagSomErReferertAv(type, fraGrunnlag).map {
+        it.tilInnholdMedReferanse<T>()
+    }
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBasertPåEgenReferanse(
     grunnlagType: Grunnlagstype? = null,
@@ -98,7 +119,7 @@ inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBa
 ): List<InnholdMedReferanse<T>> =
     filtrerBasertPåEgenReferanse(grunnlagType, referanse)
         .map {
-            InnholdMedReferanse(it.referanse, it.gjelderBarnReferanse, it.gjelderReferanse, it.innholdTilObjekt<T>())
+            it.tilInnholdMedReferanse<T>()
         }
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBasertPåFremmedReferanse(
@@ -107,7 +128,7 @@ inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBa
 ): List<InnholdMedReferanse<T>> =
     filtrerBasertPåFremmedReferanse(grunnlagType, referanse)
         .map {
-            InnholdMedReferanse(it.referanse, it.gjelderBarnReferanse, it.gjelderReferanse, it.innholdTilObjekt<T>())
+            it.tilInnholdMedReferanse<T>()
         }
 
 fun Rolletype.tilGrunnlagstype() =
@@ -179,3 +200,18 @@ val List<BaseGrunnlag>.delberegningSamværsklasse get() =
         it.type == Grunnlagstype.DELBEREGNING_SAMVÆRSKLASSE
     }!!
         .innholdTilObjekt<DelberegningSamværsklasse>()
+
+fun List<BaseGrunnlag>.finnSluttberegningBarnebidragIReferanser(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =
+    finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SluttberegningBarnebidrag>(
+        Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG,
+        grunnlagsreferanseListe,
+    ).firstOrNull()?.innhold
+
+inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.tilInnholdMedReferanse() =
+    InnholdMedReferanse(
+        referanse,
+        gjelderBarnReferanse,
+        gjelderReferanse,
+        innholdTilObjekt<T>(),
+        this,
+    )

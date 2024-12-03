@@ -8,9 +8,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
-import org.springframework.http.converter.ByteArrayHttpMessageConverter
-import org.springframework.http.converter.StringHttpMessageConverter
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
+import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
+import org.springframework.web.client.RestTemplate
 
 @Suppress("SpringFacetCodeInspection")
 @Configuration
@@ -21,20 +21,43 @@ class RestOperationsAzure {
     fun restOperationsJwtBearer(
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: BearerTokenClientInterceptor,
-    ) = restTemplateBuilder.additionalInterceptors(bearerTokenClientInterceptor)
-        .additionalMessageConverters(MappingJackson2HttpMessageConverter(commonObjectmapper))
-        .additionalMessageConverters(ByteArrayHttpMessageConverter())
-        .additionalMessageConverters(StringHttpMessageConverter())
-        .build()
+    ): RestTemplate {
+        val restTemplate =
+            restTemplateBuilder
+                .additionalInterceptors(bearerTokenClientInterceptor)
+                .additionalMessageConverters()
+                .build()
+        configureJackson(restTemplate)
+        return restTemplate
+    }
 
     @Bean("azureService")
     @Scope("prototype")
     fun restOperationsServiceJwtBearer(
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: ServiceUserAuthTokenInterceptor,
-    ) = restTemplateBuilder.additionalInterceptors(bearerTokenClientInterceptor)
-        .additionalMessageConverters(MappingJackson2HttpMessageConverter(commonObjectmapper))
-        .additionalMessageConverters(ByteArrayHttpMessageConverter())
-        .additionalMessageConverters(StringHttpMessageConverter())
-        .build()
+    ): RestTemplate {
+        val restTemplate =
+            restTemplateBuilder
+                .additionalInterceptors(bearerTokenClientInterceptor)
+                .build()
+        configureJackson(restTemplate)
+        return restTemplate
+    }
+
+    private fun configureJackson(restTemplate: RestTemplate) {
+        restTemplate.messageConverters
+            .stream()
+            .filter { obj -> MappingJackson2HttpMessageConverter::class.java.isInstance(obj) }
+            .map { obj -> MappingJackson2HttpMessageConverter::class.java.cast(obj) }
+            .findFirst()
+            .ifPresent { converter: MappingJackson2HttpMessageConverter ->
+                converter.objectMapper = commonObjectmapper
+            }
+
+        restTemplate.messageConverters =
+            restTemplate.messageConverters
+                .filter { obj -> !MappingJackson2XmlHttpMessageConverter::class.java.isInstance(obj) }
+                .toMutableList()
+    }
 }

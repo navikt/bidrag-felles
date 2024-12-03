@@ -31,7 +31,7 @@ class SluttberegningBarnebidragTest {
 
     @Test
     fun `skal oversette til riktig bisys resultatkode`() {
-        sluttberegning.bisysResultatkode shouldBe "BB"
+        sluttberegning.bisysResultatkode shouldBe "KBB"
 
         sluttberegning
             .copy(
@@ -141,7 +141,7 @@ class SluttberegningBarnebidragTest {
                 bidragJustertNedTilEvne = false,
                 bidragJustertNedTil25ProsentAvInntekt = false,
                 bidragJustertForNettoBarnetilleggBM = false,
-            ).bisysResultatkode shouldBe "BB"
+            ).bisysResultatkode shouldBe "KBB"
     }
 
     @Test
