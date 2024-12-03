@@ -196,17 +196,17 @@ data class DelberegningSamværsfradrag(
 
 data class DelberegningNettoTilsynsutgift(
     override val periode: ÅrMånedsperiode,
-    val totaltFaktiskUtgiftBeløp: BigDecimal,
+    val totalBruttoTilsynsutgift: BigDecimal,
+    val skattefradragsbeløpPerBarn: BigDecimal,
+    val tilleggsstønad: BigDecimal,
+    val nettoTilsynsutgift: BigDecimal,
     val tilsynsutgiftBarnListe: List<TilsynsutgiftBarn>,
 ) : Delberegning
 
 data class TilsynsutgiftBarn(
     val gjelderBarn: Grunnlagsreferanse,
-    val sumFaktiskeUtgifter: BigDecimal,
-    val endeligSumFaktiskeUtgifter: BigDecimal,
-    val skattefradragsbeløpPerBarn: BigDecimal,
-    val tilleggsstønad: BigDecimal,
-    val nettoTilsynsutgift: BigDecimal,
+    val sumBruttoTilsynsutgifter: BigDecimal,
+    val endeligSumBruttoTilsynsutgifter: BigDecimal,
 )
 
 fun List<GrunnlagInnhold>.filtrerDelberegninger() = filterIsInstance<Delberegning>()
