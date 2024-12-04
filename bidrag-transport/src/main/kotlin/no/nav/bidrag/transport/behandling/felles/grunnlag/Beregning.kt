@@ -199,7 +199,7 @@ data class DelberegningNettoTilsynsutgift(
     val totalTilsynsutgift: BigDecimal,
     val sjablonMaksTilsynsutgift: BigDecimal,
     val andelTilsynsutgiftBeløp: BigDecimal,
-    val andelTilsynsutgiftProsent: BigDecimal,
+    val andelTilsynsutgiftFaktor: BigDecimal,
     val skattefradrag: BigDecimal,
     val nettoTilsynsutgift: BigDecimal,
     val tilsynsutgiftBarnListe: List<TilsynsutgiftBarn>,
