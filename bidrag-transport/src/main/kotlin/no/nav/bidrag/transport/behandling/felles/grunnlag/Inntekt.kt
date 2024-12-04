@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
@@ -19,20 +20,25 @@ data class InntektsrapporteringPeriode(
                 "Versjon bidrag-inntekt beregner inntekt basert på offentlig informasjon",
     )
     val versjon: String? = null,
-    @Schema(description = "Type inntektsrapportering") val inntektsrapportering: Inntektsrapportering,
-    @Schema(description = "Referanse til barnet inntekten gjelder for") val gjelderBarn: Grunnlagsreferanse? = null,
-    @Schema(description = "Inntekt beløp") val beløp: BigDecimal,
-    @Schema(description = "Om inntekt er tatt med i beregningen") val valgt: Boolean,
-    @Schema(
-        description = "Liste med inntekstposter som inntekten består av. Vil være tom hvis det er manuelt registrert",
-    ) val inntekstpostListe: List<Inntektspost> = emptyList(),
+    @Schema(description = "Type inntektsrapportering")
+    val inntektsrapportering: Inntektsrapportering,
+    @Schema(description = "Referanse til barnet inntekten gjelder for")
+    val gjelderBarn: Grunnlagsreferanse? = null,
+    @Schema(description = "Inntekt beløp")
+    val beløp: BigDecimal,
+    @Schema(description = "Om inntekt er tatt med i beregningen")
+    val valgt: Boolean,
+    @Schema(description = "Liste med inntektsposter som inntekten består av. Vil være tom hvis det er manuelt registrert")
+    @JsonAlias("inntekstpostListe")
+    val inntektspostListe: List<Inntektspost> = emptyList(),
 ) : GrunnlagPeriodeInnhold {
     data class Inntektspost(
         @Schema(description = "Kode for inntektspost", example = "bonus")
         val kode: String,
-        @Schema(description = "Inntekstype inntekstposten er knyttet til", example = "PENSJON")
-        val inntekstype: Inntektstype? = null,
-        @Schema(description = "Beløp som utgør inntektsposten", example = "60000")
+        @Schema(description = "Inntektstype inntektsposten er knyttet til", example = "PENSJON")
+        @JsonAlias("inntekstype")
+        val inntektstype: Inntektstype? = null,
+        @Schema(description = "Beløp som utgjør inntektsposten", example = "60000")
         val beløp: BigDecimal,
     )
 }
@@ -55,8 +61,9 @@ data class BeregnetInntekt(
     data class InntektPost(
         @Schema(description = "Kode for inntektspost", example = "bonus")
         val kode: String,
-        @Schema(description = "Inntekstype inntekstposten er knyttet til", example = "PENSJON")
-        val inntekstype: Inntektstype? = null,
+        @Schema(description = "Inntektstype inntektstposten er knyttet til", example = "PENSJON")
+        @JsonAlias("inntekstype")
+        val inntektstype: Inntektstype? = null,
         @Schema(description = "Beløp som utgjør inntektsposten", example = "60000")
         val beløp: BigDecimal,
     )
