@@ -110,6 +110,17 @@ data class InnhentetBarnetillegg(
     fun hentBarnetilleggForBarn(barnReferanse: Grunnlagsreferanse) = grunnlag.filter { it.gjelderBarn == barnReferanse }
 }
 
+data class InnhentetTilleggstønad(
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.TILLEGGSSTØNAD_SAK,
+    override val hentetTidspunkt: LocalDateTime,
+    override val grunnlag: List<Tilleggsstønad>,
+) : InnhentetGrunnlagInnhold<List<InnhentetTilleggstønad.Tilleggsstønad>> {
+    data class Tilleggsstønad(
+        val periode: Datoperiode,
+        val harInnvilgetVedtak: Boolean,
+    )
+}
+
 data class InnhentetAinntekt(
     override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.INNTEKSKOMPONENTEN,
     override val hentetTidspunkt: LocalDateTime,

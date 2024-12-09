@@ -309,12 +309,14 @@ data class NotatGebyrRolleDto(
     val inntekt: NotatGebyrInntektDto,
     val manueltOverstyrtGebyr: NotatManueltOverstyrGebyrDto? = null,
     val beregnetIlagtGebyr: Boolean,
+    val endeligIlagtGebyr: Boolean,
+    val begrunnelse: String? = null,
     val beløpGebyrsats: BigDecimal,
     val rolle: NotatPersonDto,
 ) {
-    val ilagtGebyr get() = if (manueltOverstyrtGebyr != null) manueltOverstyrtGebyr.ilagtGebyr else beregnetIlagtGebyr
+    val erManueltOverstyrt get() = beregnetIlagtGebyr != endeligIlagtGebyr
     val gebyrResultatVisningsnavn get() =
-        when (ilagtGebyr) {
+        when (endeligIlagtGebyr) {
             true -> "Ilagt"
             false -> "Fritatt"
             else -> "Ikke valgt"
