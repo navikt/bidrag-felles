@@ -117,6 +117,8 @@ data class NotatOffentligeOpplysningerUnderhold(
 ) {
     data class NotatBarnetilsynOffentligeOpplysninger(
         val periode: ÅrMånedsperiode,
+        val tilsynstype: Tilsynstype? = null,
+        val skolealder: Skolealder? = null,
     )
 }
 
@@ -419,6 +421,7 @@ data class NotatPersonDto(
     val fødselsdato: LocalDate?,
     val ident: Personident?,
     val erBeskyttet: Boolean = false,
+    val innbetaltBeløp: BigDecimal? = null,
 )
 
 data class NotatInntekterDto(
