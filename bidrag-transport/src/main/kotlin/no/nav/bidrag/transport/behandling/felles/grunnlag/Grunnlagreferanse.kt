@@ -17,6 +17,8 @@ fun opprettUtvidetbarnetrygGrunnlagsreferanse(referanseGjelder: Grunnlagsreferan
 
 fun opprettBarnetilsynGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) = "innhentet_barnetilsyn_$referanseGjelder"
 
+fun opprettTilleggsstønadGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) = "innhentet_tilleggsstønad_$referanseGjelder"
+
 fun opprettKontantstøtteGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) = "innhentet_kontantstøtte_$referanseGjelder"
 
 fun opprettBarnetilleggGrunnlagsreferanse(
