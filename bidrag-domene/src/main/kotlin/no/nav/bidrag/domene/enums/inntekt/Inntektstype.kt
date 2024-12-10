@@ -1,5 +1,6 @@
 package no.nav.bidrag.domene.enums.inntekt
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(enumAsRef = true)
@@ -21,6 +22,7 @@ enum class Inntektstype {
     BARNETILSYN, // Ytelse fra offentlig
 
     // BARNETILLEGG
+    @JsonAlias("PENSJON")
     BARNETILLEGG_PENSJON,
     BARNETILLEGG_UFØRETRYGD,
     BARNETILLEGG_DAGPENGER,
