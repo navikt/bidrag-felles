@@ -129,7 +129,7 @@ BEREGNET_BIDRAG:
 DIREKTE_OPPJØR:
   intern: "Direkte oppjør"
 
-GEBYR_FRITTATT:
+GEBYR_FRITATT:
   intern: "Gebyr fritatt"
 
 GEBYR_ILAGT:
