@@ -474,6 +474,15 @@ data class NotatInntektDto(
     val historisk: Boolean = false,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
+    @get:Schema(description = "Avrundet månedsbeløp for barnetillegg")
+    val månedsbeløp: BigDecimal?
+        get() =
+            if (Inntektsrapportering.BARNETILLEGG == type) {
+                beløp.divide(BigDecimal(12), 0, RoundingMode.HALF_UP)
+            } else {
+                null
+            }
+
     val visningsnavn
         get() =
             type.visningsnavnMedÅrstall(
