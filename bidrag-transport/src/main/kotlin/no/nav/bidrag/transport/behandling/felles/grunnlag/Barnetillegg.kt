@@ -16,6 +16,12 @@ data class BarnetilleggPeriode(
 data class DelberegningBarnetilleggSkattesats(
     override val periode: ÅrMånedsperiode,
     val skattFaktor: BigDecimal,
+    val minstefradrag: BigDecimal,
+    val skattAlminneligInntekt: BigDecimal,
+    val trygdeavgift: BigDecimal,
+    val trinnskatt: BigDecimal,
+    val sumSkatt: BigDecimal,
+    val sumInntekt: BigDecimal,
 ) : Delberegning
 
 data class DelberegningNettoBarnetillegg(
