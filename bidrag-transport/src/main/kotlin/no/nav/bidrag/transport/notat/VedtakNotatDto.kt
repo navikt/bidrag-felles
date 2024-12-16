@@ -32,6 +32,7 @@ import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
 import no.nav.bidrag.transport.behandling.beregning.samvær.SamværskalkulatorDetaljer
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BeregnetBidragPerBarn
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnetilleggSkattesats
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
@@ -714,6 +715,7 @@ data class NotatResultatBidragsberegningBarnDto(
 data class NotatDelberegningBarnetilleggDto(
     val barnetillegg: List<NotatBarnetilleggDetaljerDto> = emptyList(),
     val skattFaktor: BigDecimal = BigDecimal.ZERO,
+    val delberegningSkattesats: DelberegningBarnetilleggSkattesats? = null,
     val sumBruttoBeløp: BigDecimal = BigDecimal.ZERO,
     val sumNettoBeløp: BigDecimal = BigDecimal.ZERO,
 ) {
