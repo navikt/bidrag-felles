@@ -131,6 +131,34 @@ data class NotatUnderholdBarnDto(
     val underholdskostnad: List<NotatUnderholdskostnadBeregningDto>,
     val begrunnelse: NotatBegrunnelseDto? = null,
 ) {
+    data class NotatUnderholdskostnadPeriodeBeregningsdetaljer(
+        val tilsynsutgifterBarn: List<NotatTilsynsutgiftBarn> = emptyList(),
+        val sjablonMaksTilsynsutgift: BigDecimal,
+        val sjablonMaksFradrag: BigDecimal,
+        val antallBarn: Int,
+        val skattesatsFaktor: BigDecimal,
+        val totalTilsynsutgift: BigDecimal,
+        val sumTilsynsutgifter: BigDecimal,
+        val faktiskTilsynsutgift: BigDecimal,
+        val bruttoTilsynsutgift: BigDecimal,
+        val nettoTilsynsutgift: BigDecimal,
+        val erBegrensetAvMaksTilsyn: Boolean,
+        val fordelingFaktor: BigDecimal,
+        val skattefradragPerBarn: BigDecimal,
+        val maksfradragAndel: BigDecimal,
+        val skattefradrag: BigDecimal,
+        val skattefradragMaksFradrag: BigDecimal,
+        val skattefradragTotalTilsynsutgift: BigDecimal,
+    )
+
+    data class NotatTilsynsutgiftBarn(
+        val gjelderBarn: NotatPersonDto,
+        val totalTilsynsutgift: BigDecimal,
+        val beløp: BigDecimal,
+        val kostpenger: BigDecimal? = null,
+        val tilleggsstønad: BigDecimal? = null,
+    )
+
     data class NotatFaktiskTilsynsutgiftDto(
         val periode: DatoperiodeDto,
         val utgift: BigDecimal,
@@ -163,6 +191,7 @@ data class NotatUnderholdBarnDto(
         val tilsynsutgifter: BigDecimal = BigDecimal.ZERO,
         val barnetrygd: BigDecimal = BigDecimal.ZERO,
         val total: BigDecimal,
+        val beregningsdetaljer: NotatUnderholdskostnadPeriodeBeregningsdetaljer? = null,
     )
 }
 
