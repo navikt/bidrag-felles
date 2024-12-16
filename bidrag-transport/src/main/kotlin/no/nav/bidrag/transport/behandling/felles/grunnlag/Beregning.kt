@@ -198,13 +198,10 @@ data class DelberegningNettoTilsynsutgift(
     override val periode: ÅrMånedsperiode,
     val totalTilsynsutgift: BigDecimal,
     val erBegrensetAvMaksTilsyn: Boolean,
-    @Deprecated("Dette kan hentes fra grunnlagslisten")
-    val sjablonMaksTilsynsutgift: BigDecimal,
-    val faktiskTilsynsutgift: BigDecimal,
     val bruttoTilsynsutgift: BigDecimal,
-    @Deprecated("Erstattes av bruttoTilsynsutgift")
-    val andelTilsynsutgiftBeløp: BigDecimal,
+    val justertBruttoTilsynsutgift: BigDecimal,
     val andelTilsynsutgiftFaktor: BigDecimal,
+    val antallBarnBMUnderTolvÅr: Int,
     val skattefradrag: BigDecimal,
     val skattefradragPerBarn: BigDecimal,
     val skattefradragTotalTilsynsutgift: BigDecimal,
