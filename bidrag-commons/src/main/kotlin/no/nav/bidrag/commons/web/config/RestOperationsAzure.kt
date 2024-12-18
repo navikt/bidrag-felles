@@ -25,7 +25,6 @@ class RestOperationsAzure {
         val restTemplate =
             restTemplateBuilder
                 .additionalInterceptors(bearerTokenClientInterceptor)
-                .additionalMessageConverters()
                 .build()
         configureJackson(restTemplate)
         return restTemplate
