@@ -22,4 +22,15 @@ enum class BisysSøknadstype(
     OPPJUSTERT_FORSKUDD("OF"),
     OMGJØRING("OM"),
     OMGJØRING_BEGRENSET_SATS("OB"),
+
+    ;
+
+    companion object {
+        fun fraKode(kode: String): BisysSøknadstype? =
+            try {
+                enumValues<BisysSøknadstype>().find { res -> res.bisysKode == kode } ?: BisysSøknadstype.valueOf(kode)
+            } catch (e: Exception) {
+                null
+            }
+    }
 }
