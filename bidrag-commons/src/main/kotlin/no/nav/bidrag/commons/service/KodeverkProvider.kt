@@ -31,8 +31,10 @@ const val YTELSEFRAOFFENTLIGE = "YtelseFraOffentligeBeskrivelse"
 const val PENSJONELLERTRYGDEBESKRIVELSE = "PensjonEllerTrygdeBeskrivelse"
 const val NAERINGSINNTEKTSBESKRIVELSE = "Naeringsinntektsbeskrivelse"
 private val kodeverkCache: Cache<String, KodeverkKoderBetydningerResponse> =
-    Caffeine.newBuilder()
-        .maximumSize(1000).expireAfter(InvaliderCacheFørStartenAvArbeidsdag())
+    Caffeine
+        .newBuilder()
+        .maximumSize(1000)
+        .expireAfter(InvaliderCacheFørStartenAvArbeidsdag())
         .build()
 private val log = LoggerFactory.getLogger(KodeverkProvider::class.java)
 
@@ -53,8 +55,8 @@ fun finnVisningsnavnKodeverk(
     kodeverk: String,
 ): String = finnVisningsnavnForKode(fulltNavnInntektspost, kodeverk) ?: ""
 
-fun finnVisningsnavn(fulltNavnInntektspost: String): String {
-    return finnVisningsnavnFraFil(fulltNavnInntektspost)
+fun finnVisningsnavn(fulltNavnInntektspost: String): String =
+    finnVisningsnavnFraFil(fulltNavnInntektspost)
         ?: finnVisningsnavnForKode(fulltNavnInntektspost, SUMMERT_SKATTEGRUNNLAG)
         ?: finnVisningsnavnForKode(fulltNavnInntektspost, LOENNSBESKRIVELSE)
         ?: finnVisningsnavnForKode(fulltNavnInntektspost, YTELSEFRAOFFENTLIGE)
@@ -62,7 +64,6 @@ fun finnVisningsnavn(fulltNavnInntektspost: String): String {
         ?: finnVisningsnavnForKode(fulltNavnInntektspost, NAERINGSINNTEKTSBESKRIVELSE)
         ?: finnVisningsnavnForKode(fulltNavnInntektspost, SPESIFISERT_SUMMERT_SKATTEGRUNNLAG)
         ?: ""
-}
 
 class KodeverkProvider {
     companion object {
@@ -97,7 +98,8 @@ fun finnVisningsnavnForKode(
     val betydning =
         kodeverkCache
             .get(kodeverk) { hentKodeverk(kodeverk) }
-            .betydninger[kode]?.firstNotNullOf { betydning -> betydning.beskrivelser["nb"] }
+            .betydninger[kode]
+            ?.firstNotNullOf { betydning -> betydning.beskrivelser["nb"] }
     return if (betydning?.tekst.isNullOrEmpty()) betydning?.term else betydning?.tekst
 }
 
@@ -118,7 +120,7 @@ private fun hentKodeverk(kodeverk: String): KodeverkKoderBetydningerResponse {
 }
 
 data class KodeverkKoderBetydningerResponse(
-    val betydninger: Map<String, List<KodeverkBetydning>>,
+    val betydninger: Map<String, List<KodeverkBetydning>> = emptyMap(),
 )
 
 data class KodeverkBetydning(

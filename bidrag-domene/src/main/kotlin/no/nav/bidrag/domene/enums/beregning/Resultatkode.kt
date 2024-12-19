@@ -12,7 +12,7 @@ enum class Resultatkode(
     vararg val type: ResultatkodeType,
 ) {
     // Gebyr
-    GEBYR_FRITTATT(
+    GEBYR_FRITATT(
         listOf(
             BisysResultatkode("GIFR", type = BisysResultatkodeType.INNVILGELSE),
             BisysResultatkode("GKFI", type = BisysResultatkodeType.KLAGE),

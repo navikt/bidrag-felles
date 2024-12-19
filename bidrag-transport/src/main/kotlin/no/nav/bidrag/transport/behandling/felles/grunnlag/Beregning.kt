@@ -197,10 +197,15 @@ data class DelberegningSamværsfradrag(
 data class DelberegningNettoTilsynsutgift(
     override val periode: ÅrMånedsperiode,
     val totalTilsynsutgift: BigDecimal,
-    val sjablonMaksTilsynsutgift: BigDecimal,
-    val andelTilsynsutgiftBeløp: BigDecimal,
+    val erBegrensetAvMaksTilsyn: Boolean,
+    val bruttoTilsynsutgift: BigDecimal,
+    val justertBruttoTilsynsutgift: BigDecimal,
     val andelTilsynsutgiftFaktor: BigDecimal,
+    val antallBarnBMUnderTolvÅr: Int,
     val skattefradrag: BigDecimal,
+    val skattefradragPerBarn: BigDecimal,
+    val skattefradragTotalTilsynsutgift: BigDecimal,
+    val skattefradragMaksfradrag: BigDecimal,
     val nettoTilsynsutgift: BigDecimal,
     val tilsynsutgiftBarnListe: List<TilsynsutgiftBarn>,
 ) : Delberegning

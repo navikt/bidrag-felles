@@ -32,6 +32,7 @@ import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
 import no.nav.bidrag.transport.behandling.beregning.samvær.SamværskalkulatorDetaljer
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BeregnetBidragPerBarn
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnetilleggSkattesats
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
@@ -131,6 +132,34 @@ data class NotatUnderholdBarnDto(
     val underholdskostnad: List<NotatUnderholdskostnadBeregningDto>,
     val begrunnelse: NotatBegrunnelseDto? = null,
 ) {
+    data class NotatUnderholdskostnadPeriodeBeregningsdetaljer(
+        val tilsynsutgifterBarn: List<NotatTilsynsutgiftBarn> = emptyList(),
+        val sjablonMaksTilsynsutgift: BigDecimal,
+        val sjablonMaksFradrag: BigDecimal,
+        val antallBarnBMUnderTolvÅr: Int,
+        val skattesatsFaktor: BigDecimal,
+        val totalTilsynsutgift: BigDecimal,
+        val sumTilsynsutgifter: BigDecimal,
+        val bruttoTilsynsutgift: BigDecimal,
+        val justertBruttoTilsynsutgift: BigDecimal,
+        val nettoTilsynsutgift: BigDecimal,
+        val erBegrensetAvMaksTilsyn: Boolean,
+        val fordelingFaktor: BigDecimal,
+        val skattefradragPerBarn: BigDecimal,
+        val maksfradragAndel: BigDecimal,
+        val skattefradrag: BigDecimal,
+        val skattefradragMaksFradrag: BigDecimal,
+        val skattefradragTotalTilsynsutgift: BigDecimal,
+    )
+
+    data class NotatTilsynsutgiftBarn(
+        val gjelderBarn: NotatPersonDto,
+        val totalTilsynsutgift: BigDecimal,
+        val beløp: BigDecimal,
+        val kostpenger: BigDecimal? = null,
+        val tilleggsstønad: BigDecimal? = null,
+    )
+
     data class NotatFaktiskTilsynsutgiftDto(
         val periode: DatoperiodeDto,
         val utgift: BigDecimal,
@@ -163,6 +192,7 @@ data class NotatUnderholdBarnDto(
         val tilsynsutgifter: BigDecimal = BigDecimal.ZERO,
         val barnetrygd: BigDecimal = BigDecimal.ZERO,
         val total: BigDecimal,
+        val beregningsdetaljer: NotatUnderholdskostnadPeriodeBeregningsdetaljer? = null,
     )
 }
 
@@ -474,6 +504,15 @@ data class NotatInntektDto(
     val historisk: Boolean = false,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
+    @get:Schema(description = "Avrundet månedsbeløp for barnetillegg")
+    val månedsbeløp: BigDecimal?
+        get() =
+            if (Inntektsrapportering.BARNETILLEGG == type) {
+                beløp.divide(BigDecimal(12), 0, RoundingMode.HALF_UP)
+            } else {
+                null
+            }
+
     val visningsnavn
         get() =
             type.visningsnavnMedÅrstall(
@@ -676,6 +715,7 @@ data class NotatResultatBidragsberegningBarnDto(
 data class NotatDelberegningBarnetilleggDto(
     val barnetillegg: List<NotatBarnetilleggDetaljerDto> = emptyList(),
     val skattFaktor: BigDecimal = BigDecimal.ZERO,
+    val delberegningSkattesats: DelberegningBarnetilleggSkattesats? = null,
     val sumBruttoBeløp: BigDecimal = BigDecimal.ZERO,
     val sumNettoBeløp: BigDecimal = BigDecimal.ZERO,
 ) {
