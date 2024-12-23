@@ -109,7 +109,7 @@ private fun finnVisningsnavnFraFil(kode: String): String? {
 }
 
 private fun hentKodeverk(kodeverk: String): KodeverkKoderBetydningerResponse {
-    val kodeverkContext = "${kodeverkUrl.get()}/api/v1/kodeverk/$kodeverk/koder/betydninger?ekskluderUgyldige=false&spraak=nb"
+    val kodeverkContext = "${kodeverkUrl.get()}/kodeverk/$kodeverk"
     val restTemplate: RestTemplate =
         RestTemplateBuilder()
             .defaultHeader("Nav-Call-Id", CorrelationId.fetchCorrelationIdForThread())
