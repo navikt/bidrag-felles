@@ -38,7 +38,7 @@ fun opprettInnhentetHusstandsmedlemGrunnlagsreferanse(
     referanseRelatertTil: Grunnlagsreferanse,
 ) = "innhentet_husstandsmedlem_${referanseGjelder}_$referanseRelatertTil"
 
-fun opprettInnhentetAnderBarnTilBMGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) =
+fun opprettInnhentetAnderBarnTilBidragsmottakerGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) =
     "${Grunnlagstype.INNHENTET_ANDRE_BARN_TIL_BIDRAGSMOTTAKER.name.lowercase()}_$referanseGjelder"
 
 fun opprettArbeidsforholdGrunnlagsreferanse(referanseGjelder: Grunnlagsreferanse) = "innhentet_arbeidsforhold_$referanseGjelder"
