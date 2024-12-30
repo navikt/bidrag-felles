@@ -149,6 +149,7 @@ data class NotatUnderholdBarnDto(
         val sjablonMaksTilsynsutgift: BigDecimal,
         val sjablonMaksFradrag: BigDecimal,
         val antallBarnBMUnderTolvÅr: Int,
+        val antallBarnBMBeregnet: Int = antallBarnBMUnderTolvÅr,
         val skattesatsFaktor: BigDecimal,
         val totalTilsynsutgift: BigDecimal,
         val sumTilsynsutgifter: BigDecimal,
