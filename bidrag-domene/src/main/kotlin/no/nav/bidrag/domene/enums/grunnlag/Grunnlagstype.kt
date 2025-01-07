@@ -37,6 +37,8 @@ enum class Grunnlagstype {
     GEBYRFRITAK,
     INNBETALT_BELØP,
     FORHOLDSMESSIG_FORDELING,
+
+    @Deprecated("Skal ikke brukes lenger")
     KLAGE_STATISTIKK,
     NETTO_TILSYNSUTGIFT,
 
