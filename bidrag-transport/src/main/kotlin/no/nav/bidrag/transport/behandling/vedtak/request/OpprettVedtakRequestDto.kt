@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.vedtak.request
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.Valid
@@ -19,7 +20,9 @@ import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
+import no.nav.bidrag.transport.felles.commonObjectmapper
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -68,6 +71,22 @@ data class OpprettGrunnlagRequestDto(
     override val gjelderBarnReferanse: Grunnlagsreferanse? = null,
 ) : BaseGrunnlag {
     override fun toString(): String = super.asString()
+
+    override fun hashCode(): Int {
+        return referanse.hashCode() + type.hashCode() + innholdString.hashCode()
+    }
+
+    @get:JsonIgnore
+    val innholdString get() = commonObjectmapper.writeValueAsString(innhold)
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is GrunnlagDto) return false
+        if (referanse != other.referanse) return false
+        if (type != other.type) return false
+        if (innholdString != other.innholdString) return false
+        return true
+    }
 }
 
 @Schema
