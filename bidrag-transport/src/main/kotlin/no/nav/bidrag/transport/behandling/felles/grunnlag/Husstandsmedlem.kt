@@ -12,6 +12,26 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.time.LocalDate
 import java.time.LocalDateTime
 
+data class InnhentetAndreBarnTilBidragsmottaker(
+    override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.PDL,
+    override val grunnlag: List<AndreBarnTilBidragsmottakerPDL>,
+    override val hentetTidspunkt: LocalDateTime,
+) : InnhentetGrunnlagInnhold<List<InnhentetAndreBarnTilBidragsmottaker.AndreBarnTilBidragsmottakerPDL>> {
+    data class AndreBarnTilBidragsmottakerPDL(
+        @Schema(description = "Referanse til person som er relatert til BM")
+        val gjelderPerson: Grunnlagsreferanse?,
+        @Schema(description = "Angir gjelderPersons relasjon til BM")
+        val relasjon: Familierelasjon,
+        @Schema(description = "Navn på den relaterte personen, format <Fornavn, mellomnavn, Etternavn")
+        val navn: String? = null,
+        @Schema(description = "Den relaterte personens fødselsdato")
+        val fødselsdato: LocalDate? = null,
+    ) {
+        @get:JsonIgnore
+        val erBarn get() = relasjon == Familierelasjon.BARN
+    }
+}
+
 data class InnhentetHusstandsmedlem(
     override val datakilde: GrunnlagDatakilde = GrunnlagDatakilde.PDL,
     override val grunnlag: HusstandsmedlemPDL,

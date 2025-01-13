@@ -107,10 +107,22 @@ data class NotatBehandlingDetaljerDto(
 
 data class NotatUnderholdDto(
     val underholdskostnaderBarn: List<NotatUnderholdBarnDto> = emptyList(),
-    val offentligeOpplysninger: List<NotatOffentligeOpplysningerUnderhold> = emptyList(),
+    val offentligeOpplysninger: List<NotatOffentligeOpplysningerUnderholdBarn> = emptyList(),
+    val offentligeOpplysningerV2: NotatOffentligeOpplysningerUnderhold =
+        NotatOffentligeOpplysningerUnderhold(
+            offentligeOpplysninger,
+            emptyList(),
+            offentligeOpplysninger.any { it.harTilleggsstønad },
+        ),
 )
 
 data class NotatOffentligeOpplysningerUnderhold(
+    val offentligeOpplysningerBarn: List<NotatOffentligeOpplysningerUnderholdBarn> = emptyList(),
+    val andreBarnTilBidragsmottaker: List<NotatPersonDto> = emptyList(),
+    val bidragsmottakerHarInnvilgetTilleggsstønad: Boolean,
+)
+
+data class NotatOffentligeOpplysningerUnderholdBarn(
     val gjelder: NotatPersonDto,
     val gjelderBarn: NotatPersonDto? = null,
     val barnetilsyn: List<NotatBarnetilsynOffentligeOpplysninger> = emptyList(),
@@ -137,6 +149,7 @@ data class NotatUnderholdBarnDto(
         val sjablonMaksTilsynsutgift: BigDecimal,
         val sjablonMaksFradrag: BigDecimal,
         val antallBarnBMUnderTolvÅr: Int,
+        val antallBarnBMBeregnet: Int = antallBarnBMUnderTolvÅr,
         val skattesatsFaktor: BigDecimal,
         val totalTilsynsutgift: BigDecimal,
         val sumTilsynsutgifter: BigDecimal,

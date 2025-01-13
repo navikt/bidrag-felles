@@ -169,6 +169,8 @@ val Collection<BaseGrunnlag>.søknadsbarn
 
 fun Collection<GrunnlagDto>.hentPerson(ident: String?) = filter { it.erPerson() }.find { it.personIdent == ident }
 
+fun Collection<BaseGrunnlag>.hentPersonMedIdent(ident: String?) = hentAllePersoner().find { it.personIdent == ident }
+
 fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferanse?) =
     referanse?.let {
         toList()

@@ -29,8 +29,6 @@ data class GrunnlagDto(
     override fun toString(): String = super.asString()
 
     override fun hashCode(): Int {
-        // +grunnlagsreferanseListe.sorted().hashCode()
-        // + gjelderReferanse.hashCode()
         return referanse.hashCode() + type.hashCode() + innholdString.hashCode()
     }
 
@@ -42,8 +40,6 @@ data class GrunnlagDto(
         if (other !is GrunnlagDto) return false
         if (referanse != other.referanse) return false
         if (type != other.type) return false
-//        if (gjelderReferanse != other.gjelderReferanse) return false
-//        if (grunnlagsreferanseListe.sorted() != other.grunnlagsreferanseListe.sorted()) return false
         if (innholdString != other.innholdString) return false
         return true
     }

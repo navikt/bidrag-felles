@@ -202,6 +202,7 @@ data class DelberegningNettoTilsynsutgift(
     val justertBruttoTilsynsutgift: BigDecimal,
     val andelTilsynsutgiftFaktor: BigDecimal,
     val antallBarnBMUnderTolvÅr: Int,
+    val antallBarnBMBeregnet: Int = antallBarnBMUnderTolvÅr,
     val skattefradrag: BigDecimal,
     val skattefradragPerBarn: BigDecimal,
     val skattefradragTotalTilsynsutgift: BigDecimal,
