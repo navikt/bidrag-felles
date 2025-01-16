@@ -24,8 +24,7 @@ internal class ÅrMånedsperiodeTest {
                         // Denne trengs for å parse år over 9999 riktig.
                         YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")),
                     ),
-            )
-            .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+            ).configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
 
     @Test
     fun `Månedsperiode serialiserer og deserialiserer riktig ved tidenes morgen`() {

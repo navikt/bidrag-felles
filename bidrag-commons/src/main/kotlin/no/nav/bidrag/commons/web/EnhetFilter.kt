@@ -50,8 +50,6 @@ class EnhetFilter : Filter {
         const val X_ENHET_HEADER = "X-Enhet"
 
         @JvmStatic
-        fun fetchForThread(): String {
-            return ENHETSNUMMER_VALUE.get() ?: ""
-        }
+        fun fetchForThread(): String = ENHETSNUMMER_VALUE.get() ?: ""
     }
 }

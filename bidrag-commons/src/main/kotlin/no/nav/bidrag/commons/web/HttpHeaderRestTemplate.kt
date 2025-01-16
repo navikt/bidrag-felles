@@ -53,13 +53,12 @@ open class HttpHeaderRestTemplate : RestTemplate {
         return HttpEntity(null, combineHeaders(HttpHeaders()))
     }
 
-    private fun <T : Any> mapToHttpEntity(o: Any): HttpEntity<T> {
-        return if (o is HttpEntity<*>) {
+    private fun <T : Any> mapToHttpEntity(o: Any): HttpEntity<T> =
+        if (o is HttpEntity<*>) {
             o as HttpEntity<T>
         } else {
             HttpEntity(o as T)
         }
-    }
 
     private fun combineHeaders(existingHeaders: HttpHeaders): MultiValueMap<String, String> {
         val allHeaders = HttpHeaders()
@@ -81,9 +80,7 @@ open class HttpHeaderRestTemplate : RestTemplate {
     private fun isXEnhetHeaderAndXEnhetHeaderExists(
         key: String,
         allHeaders: HttpHeaders,
-    ): Boolean {
-        return X_ENHET_HEADER == key && allHeaders[X_ENHET_HEADER] != null
-    }
+    ): Boolean = X_ENHET_HEADER == key && allHeaders[X_ENHET_HEADER] != null
 
     fun addHeaderGenerator(
         headerName: String,

@@ -3,7 +3,10 @@ package no.nav.bidrag.commons
 import org.slf4j.LoggerFactory
 import org.springframework.web.client.HttpStatusCodeException
 
-class ExceptionLogger(private val application: String, vararg doNotLogClasses: Class<*>) {
+class ExceptionLogger(
+    private val application: String,
+    vararg doNotLogClasses: Class<*>,
+) {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     private val doNotLogClasses = doNotLogClasses.map { it.name }

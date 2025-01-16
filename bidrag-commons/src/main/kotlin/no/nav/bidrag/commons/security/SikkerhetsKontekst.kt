@@ -12,7 +12,5 @@ object SikkerhetsKontekst {
         }
     }
 
-    fun erIApplikasjonKontekst(): Boolean {
-        return ER_I_APPLIKASJONSKONTEKST.get() ?: false
-    }
+    fun erIApplikasjonKontekst(): Boolean = ER_I_APPLIKASJONSKONTEKST.get() ?: false
 }

@@ -3,7 +3,9 @@ package no.nav.bidrag.commons.security.maskinporten
 import com.nimbusds.jwt.SignedJWT
 import java.util.Date
 
-class MaskinportenTokenCache(maskinportenToken: String) {
+class MaskinportenTokenCache(
+    maskinportenToken: String,
+) {
     internal var maskinportenToken = SignedJWT.parse(maskinportenToken)
         get() = field?.takeUnless { it.isExpired }
 

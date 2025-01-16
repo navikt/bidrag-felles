@@ -26,9 +26,7 @@ open class AzureTokenService(
     override fun fetchToken(
         clientRegistrationId: String,
         token: JwtToken?,
-    ): String {
-        return getAccessToken(clientRegistrationId, token).accessToken
-    }
+    ): String = getAccessToken(clientRegistrationId, token).accessToken
 
     private fun getAccessToken(
         clientRegistrationId: String,

@@ -10,8 +10,9 @@ import org.springframework.stereotype.Component
 
 @Component
 @Import(StsTokenService::class)
-class StsBearerTokenClientInterceptor(private val stsRestClient: StsTokenService) :
-    ClientHttpRequestInterceptor {
+class StsBearerTokenClientInterceptor(
+    private val stsRestClient: StsTokenService,
+) : ClientHttpRequestInterceptor {
     override fun intercept(
         request: HttpRequest,
         body: ByteArray,

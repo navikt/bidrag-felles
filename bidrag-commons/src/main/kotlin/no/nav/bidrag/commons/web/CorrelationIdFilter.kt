@@ -44,9 +44,7 @@ class CorrelationIdFilter : Filter {
     private fun isNotRequestContaining(
         requestURI: String,
         vararg uriParts: String,
-    ): Boolean {
-        return uriParts.none { requestURI.contains(it) }
-    }
+    ): Boolean = uriParts.none { requestURI.contains(it) }
 
     private fun generateCorreleationIdToHttpHeaderOnResponse(
         httpServletResponse: HttpServletResponse,
@@ -56,13 +54,12 @@ class CorrelationIdFilter : Filter {
         return correlationId
     }
 
-    private fun fetchLastPartOfRequestUri(requestUri: String): String {
-        return if (requestUri.contains("/")) {
+    private fun fetchLastPartOfRequestUri(requestUri: String): String =
+        if (requestUri.contains("/")) {
             fetchLastPartOfRequestUriContainingPlainText(requestUri)
         } else {
             requestUri
         }
-    }
 
     private fun fetchLastPartOfRequestUriContainingPlainText(requestUri: String): String {
         val reversedUriParts = reverseUriPartsBySlash(requestUri)
@@ -74,15 +71,16 @@ class CorrelationIdFilter : Filter {
         }
     }
 
-    private fun reverseUriPartsBySlash(requestUri: String): List<String> {
-        return requestUri.split("/".toRegex()).dropLastWhile { it.isEmpty() }.reversed()
-    }
+    private fun reverseUriPartsBySlash(requestUri: String): List<String> =
+        requestUri
+            .split("/".toRegex())
+            .dropLastWhile {
+                it.isEmpty()
+            }.reversed()
 
     companion object {
         @JvmStatic
-        fun fetchCorrelationIdForThread(): String {
-            return CorrelationId.fetchCorrelationIdForThread()
-        }
+        fun fetchCorrelationIdForThread(): String = CorrelationId.fetchCorrelationIdForThread()
 
         const val CORRELATION_ID_MDC = "correlationId"
         const val CORRELATION_ID_HEADER: String = CorrelationId.CORRELATION_ID_HEADER

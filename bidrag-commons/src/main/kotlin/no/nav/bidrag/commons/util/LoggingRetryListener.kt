@@ -7,7 +7,9 @@ import org.springframework.retry.RetryListener
 
 private val log = LoggerFactory.getLogger(LoggingRetryListener::class.java)
 
-class LoggingRetryListener(val details: String? = null) : RetryListener {
+class LoggingRetryListener(
+    val details: String? = null,
+) : RetryListener {
     override fun <T : Any?, E : Throwable?> onError(
         context: RetryContext?,
         callback: RetryCallback<T, E>?,

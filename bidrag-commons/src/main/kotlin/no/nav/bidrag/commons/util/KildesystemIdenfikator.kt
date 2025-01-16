@@ -5,7 +5,9 @@ import org.apache.commons.lang3.builder.ToStringStyle
 import org.slf4j.LoggerFactory
 import java.util.Locale
 
-class KildesystemIdenfikator(prefiksetJournalpostId: String) {
+class KildesystemIdenfikator(
+    prefiksetJournalpostId: String,
+) {
     val logger = LoggerFactory.getLogger(this::class.java)
     val kildesystem: Kildesystem
     val prefiksetJournalpostId: String
@@ -16,9 +18,7 @@ class KildesystemIdenfikator(prefiksetJournalpostId: String) {
         kildesystem = Kildesystem.hentKildesystem(this.prefiksetJournalpostId)
     }
 
-    private fun trimAndUpperCase(string: String): String {
-        return string.trim { it <= ' ' }.uppercase(Locale.getDefault())
-    }
+    private fun trimAndUpperCase(string: String): String = string.trim { it <= ' ' }.uppercase(Locale.getDefault())
 
     fun erUkjentPrefixEllerHarIkkeTallEtterPrefix(): Boolean {
         val ugyldigPefix = kildesystem.erUkjent() || kildesystem.harIkkeJournalpostIdSomTall(prefiksetJournalpostId)
@@ -35,13 +35,9 @@ class KildesystemIdenfikator(prefiksetJournalpostId: String) {
         return journalpostId
     }
 
-    fun hentJournalpostIdLong(): Long? {
-        return hentJournalpostId()?.toLong()
-    }
+    fun hentJournalpostIdLong(): Long? = hentJournalpostId()?.toLong()
 
-    fun erFor(kildesystem: Kildesystem): Boolean {
-        return this.kildesystem.er(kildesystem)
-    }
+    fun erFor(kildesystem: Kildesystem): Boolean = this.kildesystem.er(kildesystem)
 
     fun erKjentKildesystemMedIdMedIdSomOverstigerInteger(): Boolean {
         if (kildesystem.erUkjent()) {
@@ -51,23 +47,22 @@ class KildesystemIdenfikator(prefiksetJournalpostId: String) {
         return kildesystem.idErStorreEnnIntegerMax(prefiksetJournalpostId)
     }
 
-    override fun toString(): String {
-        return ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
+    override fun toString(): String =
+        ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
             .append("prefiksetJournalpostId", prefiksetJournalpostId)
             .append("kildesystem", kildesystem)
             .toString()
-    }
 
-    enum class Kildesystem(private val prefixMedDelimiter: String) {
+    enum class Kildesystem(
+        private val prefixMedDelimiter: String,
+    ) {
         BIDRAG(PREFIX_BIDRAG_COMPLETE),
         JOARK(PREFIX_JOARK_COMPLETE),
         FORSENDELSE(PREFIX_FORSENDELSE_COMPLETE),
         UKJENT(""),
         ;
 
-        fun er(kildesystem: Kildesystem): Boolean {
-            return kildesystem == this
-        }
+        fun er(kildesystem: Kildesystem): Boolean = kildesystem == this
 
         fun harIkkeJournalpostIdSomTall(prefiksetJournalpostId: String): Boolean {
             val utenPrefix = prefiksetJournalpostId.replace(prefixMedDelimiter.toRegex(), "")
@@ -75,9 +70,7 @@ class KildesystemIdenfikator(prefiksetJournalpostId: String) {
             return utenPrefix.length != bareTall.length
         }
 
-        fun erUkjent(): Boolean {
-            return er(UKJENT)
-        }
+        fun erUkjent(): Boolean = er(UKJENT)
 
         fun hentJournalpostId(prefiksetJournalpostId: String): Int? {
             val ident = prefiksetJournalpostId.replace(prefixMedDelimiter.toRegex(), "")
@@ -108,8 +101,8 @@ class KildesystemIdenfikator(prefiksetJournalpostId: String) {
             private const val NON_DIGITS = "\\D+"
             private val LOGGER = LoggerFactory.getLogger(Kildesystem::class.java)
 
-            fun hentKildesystem(prefiksetJournalpostId: String): Kildesystem {
-                return if (prefiksetJournalpostId.startsWith(BIDRAG.prefixMedDelimiter)) {
+            fun hentKildesystem(prefiksetJournalpostId: String): Kildesystem =
+                if (prefiksetJournalpostId.startsWith(BIDRAG.prefixMedDelimiter)) {
                     BIDRAG
                 } else if (prefiksetJournalpostId.startsWith(JOARK.prefixMedDelimiter)) {
                     JOARK
@@ -118,7 +111,6 @@ class KildesystemIdenfikator(prefiksetJournalpostId: String) {
                 } else {
                     UKJENT
                 }
-            }
         }
     }
 

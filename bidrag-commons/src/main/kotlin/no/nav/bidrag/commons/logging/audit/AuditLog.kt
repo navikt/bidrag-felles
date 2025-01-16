@@ -9,7 +9,9 @@ annotation class AuditLog(
     val oppslagsparameter: String = "",
 )
 
-enum class AuditLoggerEvent(val type: String) {
+enum class AuditLoggerEvent(
+    val type: String,
+) {
     CREATE("create"),
     UPDATE("update"),
     DELETE("delete"),

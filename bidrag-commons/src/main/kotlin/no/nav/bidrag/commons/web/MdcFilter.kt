@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component
 
 @Component
 @Import(IdUtils::class)
-class MdcFilter(private val idUtils: IdUtils) : HttpFilter() {
+class MdcFilter(
+    private val idUtils: IdUtils,
+) : HttpFilter() {
     override fun doFilter(
         httpServletRequest: HttpServletRequest,
         httpServletResponse: HttpServletResponse,
@@ -38,12 +40,11 @@ class MdcFilter(private val idUtils: IdUtils) : HttpFilter() {
         }
     }
 
-    private fun resolveCallId(httpServletRequest: HttpServletRequest): String {
-        return NAV_CALL_ID_HEADER_NAMES
+    private fun resolveCallId(httpServletRequest: HttpServletRequest): String =
+        NAV_CALL_ID_HEADER_NAMES
             .mapNotNull { httpServletRequest.getHeader(it) }
             .firstOrNull { it.isNotEmpty() }
             ?: idUtils.generateId()
-    }
 
     companion object {
         // there is no consensus in NAV about header-names for correlation ids, so we support 'em all!

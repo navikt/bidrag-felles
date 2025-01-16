@@ -35,7 +35,8 @@ internal class ExceptionLoggerTest {
     fun `skal logge exception`() {
         Service().simulerServiceSomFeilerMedLoggingAvException()
         verifiserLoggingSamtSamleLoggMeldinger()
-        logMeldinger.joinToString { it.formattedMessage }
+        logMeldinger
+            .joinToString { it.formattedMessage }
             .shouldContain("IllegalStateException: test exception - caught in bidrag-commons within ExceptionLoggerTest")
             .shouldContain("|> no root cause")
     }
@@ -56,7 +57,8 @@ internal class ExceptionLoggerTest {
     fun `skal logge exception uten exception cause`() {
         exceptionLogger.logException(Exception("the service blew up"), "junit test")
         verifiserLoggingSamtSamleLoggMeldinger()
-        logMeldinger.joinToString { it.formattedMessage }
+        logMeldinger
+            .joinToString { it.formattedMessage }
             .shouldContain("Exception: the service blew up - caught in bidrag-commons within junit test.")
             .shouldContain("Details:")
             .shouldContain("|> no root cause")
@@ -69,7 +71,8 @@ internal class ExceptionLoggerTest {
             "junit test",
         )
         verifiserLoggingSamtSamleLoggMeldinger()
-        logMeldinger.joinToString { it.formattedMessage }
+        logMeldinger
+            .joinToString { it.formattedMessage }
             .shouldContain(
                 "|> kode i nav: no.nav.bidrag.commons.ExceptionLoggerTest.skal logge StackTraceElement fra no nav før exception(line:",
             )
@@ -138,7 +141,9 @@ internal class ExceptionLoggerTest {
         }
     }
 
-    private class OtherService internal constructor(private val exceptionLogger: ExceptionLogger) {
+    private class OtherService internal constructor(
+        private val exceptionLogger: ExceptionLogger,
+    ) {
         fun loggExceptionMedExceptionLogger() {
             exceptionLogger.logException(ILLEGAL_STATE_EXCEPTION, "ExceptionLoggerTest")
         }

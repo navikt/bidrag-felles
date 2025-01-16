@@ -16,9 +16,7 @@ open class TokenXTokenService(
 
     override fun isEnabled() = true
 
-    override fun fetchToken(clientRegistrationId: String): String {
-        return getAccessToken(clientRegistrationId).accessToken
-    }
+    override fun fetchToken(clientRegistrationId: String): String = getAccessToken(clientRegistrationId).accessToken
 
     private fun getAccessToken(clientRegistrationId: String): OAuth2AccessTokenResponse {
         logger.debug("TokenX: Creating token for clientRegistrationId $clientRegistrationId")

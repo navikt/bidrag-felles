@@ -7,10 +7,10 @@ import no.nav.bidrag.domene.felles.Verdiobjekt
 import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
-class ReellMottager(override val verdi: String) : Verdiobjekt<String>() {
-    override fun gyldig(): Boolean {
-        return Personident(verdi).gyldig() || SamhandlerId(verdi).gyldig()
-    }
+class ReellMottager(
+    override val verdi: String,
+) : Verdiobjekt<String>() {
+    override fun gyldig(): Boolean = Personident(verdi).gyldig() || SamhandlerId(verdi).gyldig()
 
     fun erPersonIdent() = Personident(verdi).gyldig()
 

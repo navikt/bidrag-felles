@@ -9,5 +9,5 @@ data class BarnInfo(
     val periode: ÅrMånedsperiode,
     val andelForsørget: Double? = null,
     val harSammeAdresse: Boolean? = null,
-    val medIBeregning: Boolean? = null
+    val medIBeregning: Boolean? = null,
 ) : GrunnlagInnhold
