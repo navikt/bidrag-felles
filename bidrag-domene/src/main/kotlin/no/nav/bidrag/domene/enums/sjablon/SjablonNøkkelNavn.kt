@@ -1,6 +1,8 @@
 package no.nav.bidrag.domene.enums.sjablon
 
-enum class SjablonNøkkelNavn(val navn: String) {
+enum class SjablonNøkkelNavn(
+    val navn: String,
+) {
     STØNAD_TYPE("StønadType"),
     TILSYN_TYPE("TilsynType"),
     BOSTATUS("Bostatus"),

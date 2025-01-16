@@ -8,7 +8,9 @@ data class ForskuddHendelse(
     val vedtaksid: Long,
     val vedtakstidspunkt: LocalDateTime,
     val type: String,
+    val saksnr: String,
     val kravhaver: String,
+    val fødselsdatoKravhaver: LocalDate,
     val mottaker: String,
     val forskuddPeriodeListe: List<ForskuddPeriode>,
 )

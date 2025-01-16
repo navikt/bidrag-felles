@@ -11,7 +11,8 @@ class InvaliderCacheFørStartenAvArbeidsdag : Expiry<Any, Any> {
         currentTime: Long,
     ): Long {
         val expireAt =
-            LocalDateTime.now()
+            LocalDateTime
+                .now()
                 .plusDays(1)
                 .withHour(6)
                 .withMinute(0)
@@ -25,16 +26,12 @@ class InvaliderCacheFørStartenAvArbeidsdag : Expiry<Any, Any> {
         o2: Any,
         currentTime: Long,
         currentDuration: Long,
-    ): Long {
-        return currentDuration
-    }
+    ): Long = currentDuration
 
     override fun expireAfterRead(
         p0: Any,
         p1: Any,
         currentTime: Long,
         currentDuration: Long,
-    ): Long {
-        return currentDuration
-    }
+    ): Long = currentDuration
 }

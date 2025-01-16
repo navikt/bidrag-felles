@@ -16,8 +16,7 @@ import java.net.URI
 abstract class AzureTokenClientInterceptor(
     private val oAuth2AccessTokenService: OAuth2AccessTokenService,
     private val clientConfigurationProperties: ClientConfigurationProperties,
-) :
-    ClientHttpRequestInterceptor {
+) : ClientHttpRequestInterceptor {
     protected fun genererAccessToken(
         request: HttpRequest,
         oAuth2GrantType: OAuth2GrantType? = null,

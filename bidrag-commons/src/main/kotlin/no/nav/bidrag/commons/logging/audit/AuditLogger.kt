@@ -40,12 +40,12 @@ class AuditLogger(
         }
     }
 
-    private fun getRequest(): HttpServletRequest? {
-        return RequestContextHolder.getRequestAttributes()
+    private fun getRequest(): HttpServletRequest? =
+        RequestContextHolder
+            .getRequestAttributes()
             ?.takeIf { it is ServletRequestAttributes }
             ?.let { it as ServletRequestAttributes }
             ?.request
-    }
 
     private fun createAuditLogString(
         event: AuditLoggerEvent,
@@ -64,17 +64,15 @@ class AuditLogger(
             "flexStringLabel1=decision flexString1=${if (data.tilgang) "permit" else "deny"}"
     }
 
-    private fun createCustomString(data: Sporingsdata): String {
-        return listOfNotNull(
+    private fun createCustomString(data: Sporingsdata): String =
+        listOfNotNull(
             data.ekstrafelter.getOrNull(0)?.let { "cs3Label=${it.first} cs3=${it.second}" },
             data.ekstrafelter.getOrNull(1)?.let { "cs5Label=${it.first} cs5=${it.second}" },
             data.ekstrafelter.getOrNull(2)?.let { "cs6Label=${it.first} cs6=${it.second}" },
         ).joinToString(" ")
-    }
 
-    private fun getCallId(): String {
-        return MDC.get(CorrelationIdFilter.CORRELATION_ID_MDC)
+    private fun getCallId(): String =
+        MDC.get(CorrelationIdFilter.CORRELATION_ID_MDC)
             ?: MDC.get(MdcConstants.MDC_CALL_ID)
             ?: throw IllegalStateException("Mangler correlationId/callId")
-    }
 }

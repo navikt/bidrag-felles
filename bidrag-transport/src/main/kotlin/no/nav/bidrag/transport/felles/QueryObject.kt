@@ -26,14 +26,14 @@ interface QueryObject {
                             // Denne trengs for å parse år over 9999 riktig.
                             YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")),
                         ),
-                )
-                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                ).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
 
     fun toQueryParams(): LinkedMultiValueMap<String, String> {
         val writeValueAsString = objectMapper.writeValueAsString(this)
         val readValue: LinkedHashMap<String, Any?> = objectMapper.readValue(writeValueAsString)
         val queryParams = LinkedMultiValueMap<String, String>()
-        readValue.filterNot { it.value == null }
+        readValue
+            .filterNot { it.value == null }
             .filterNot { it.value is List<*> && (it.value as List<*>).isEmpty() }
             .forEach {
                 if (it.value is List<*>) {

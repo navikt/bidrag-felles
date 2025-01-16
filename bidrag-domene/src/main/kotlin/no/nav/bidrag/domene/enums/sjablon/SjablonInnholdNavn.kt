@@ -1,6 +1,8 @@
 package no.nav.bidrag.domene.enums.sjablon
 
-enum class SjablonInnholdNavn(val navn: String) {
+enum class SjablonInnholdNavn(
+    val navn: String,
+) {
     BARNETILSYN_BELØP("BarnetilsynBeløp"),
     BOUTGIFT_BELØP("BoutgiftBeløp"),
     UNDERHOLD_BELØP("UnderholdBeløp"),

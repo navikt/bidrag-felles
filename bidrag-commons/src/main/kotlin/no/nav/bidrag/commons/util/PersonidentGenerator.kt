@@ -35,26 +35,21 @@ object PersonidentGenerator {
     private fun opprettIndividnummer(
         fodselsdato: LocalDate,
         kjonn: Kjonn,
-    ): String {
-        return fodselsdato.format(DateTimeFormatter.ofPattern("ddMMyy")) + genererIndividnummer(fodselsdato.year, kjonn)
-    }
+    ): String = fodselsdato.format(DateTimeFormatter.ofPattern("ddMMyy")) + genererIndividnummer(fodselsdato.year, kjonn)
 
-    private fun opprettTilfeldigFodselsdato(): LocalDate {
-        return LocalDate.now().minus(Period.ofDays(Random().nextInt(365 * 120)))
-    }
+    private fun opprettTilfeldigFodselsdato(): LocalDate = LocalDate.now().minus(Period.ofDays(Random().nextInt(365 * 120)))
 
     private fun genererIndividnummer(
         fodselsAr: Int,
         kjonn: Kjonn,
-    ): String {
-        return when (fodselsAr) {
+    ): String =
+        when (fodselsAr) {
             in 1940..1999 -> opprettTilfeldigIndividnummer(kjonn, 900, 999)
             in 1854..1899 -> opprettTilfeldigIndividnummer(kjonn, 500, 749)
             in 1900..1999 -> opprettTilfeldigIndividnummer(kjonn, 0, 499)
             in 2000..2039 -> opprettTilfeldigIndividnummer(kjonn, 500, 999)
             else -> throw IllegalArgumentException("Fant ikke gyldig serie for årstallet $fodselsAr")
         }
-    }
 
     private fun opprettTilfeldigIndividnummer(
         kjonn: Kjonn,

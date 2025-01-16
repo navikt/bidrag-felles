@@ -57,5 +57,10 @@ internal class PersonidentTest {
         Personident("90000000000").erNAVSyntetisk() shouldBe false
     }
 
-    data class SyntetiskBruker(val fnr: String, val dnr: String, val kjønn: String, val fødselsdato: LocalDate)
+    data class SyntetiskBruker(
+        val fnr: String,
+        val dnr: String,
+        val kjønn: String,
+        val fødselsdato: LocalDate,
+    )
 }

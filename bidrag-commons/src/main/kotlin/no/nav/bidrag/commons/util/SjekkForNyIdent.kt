@@ -22,11 +22,15 @@ import org.springframework.web.client.RestOperations
 @MustBeDocumented
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION, AnnotationTarget.VALUE_PARAMETER)
-annotation class SjekkForNyIdent(vararg val parameterNavn: String)
+annotation class SjekkForNyIdent(
+    vararg val parameterNavn: String,
+)
 
 @Aspect
 @Component
-class SjekkForNyIdentAspect(private val identConsumer: IdentConsumer) {
+class SjekkForNyIdentAspect(
+    private val identConsumer: IdentConsumer,
+) {
     /**
      * Denne metoden prosesserer de tilfellene hvor @SjekkForNyIdent brukes på en funksjon.
      * @SjekkForNyIdent benyttes i disse tilfellene med parameter tilhørende navnet på verdien som ønskes å sjekkes.
@@ -113,9 +117,7 @@ class SjekkForNyIdentAspect(private val identConsumer: IdentConsumer) {
         return joinPoint.proceed(parametere)
     }
 
-    private fun harSjekkForNyIdentAnnotation(annotations: Array<Annotation>): Boolean {
-        return annotations.any { it is SjekkForNyIdent }
-    }
+    private fun harSjekkForNyIdentAnnotation(annotations: Array<Annotation>): Boolean = annotations.any { it is SjekkForNyIdent }
 }
 
 @Component
@@ -132,11 +134,14 @@ class IdentConsumer(
     fun sjekkIdent(ident: String): String {
         if (Ident(ident).erPersonIdent()) {
             return try {
-                restTemplate.postForEntity(
-                    "$personUrl$PERSON_PATH",
-                    HentePersonidenterRequest(ident, setOf(Identgruppe.FOLKEREGISTERIDENT), false),
-                    Array<PersonidentDto>::class.java,
-                ).body?.first()?.ident ?: ident
+                restTemplate
+                    .postForEntity(
+                        "$personUrl$PERSON_PATH",
+                        HentePersonidenterRequest(ident, setOf(Identgruppe.FOLKEREGISTERIDENT), false),
+                        Array<PersonidentDto>::class.java,
+                    ).body
+                    ?.first()
+                    ?.ident ?: ident
             } catch (e: NoSuchElementException) {
                 LOGGER.warn(
                     "Bidrag-person fant ingen person på kalt ident. " +

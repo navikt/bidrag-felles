@@ -5,7 +5,10 @@ package no.nav.bidrag.domene.tid
 import java.time.LocalDate
 import java.time.YearMonth
 
-data class Datoperiode(override val fom: LocalDate, override val til: LocalDate?) : Periode<LocalDate>() {
+data class Datoperiode(
+    override val fom: LocalDate,
+    override val til: LocalDate?,
+) : Periode<LocalDate>() {
     init {
         validate()
     }
@@ -17,21 +20,13 @@ data class Datoperiode(override val fom: LocalDate, override val til: LocalDate?
     override fun lagPeriode(
         fom: LocalDate,
         til: LocalDate?,
-    ): Datoperiode {
-        return Datoperiode(fom, til)
-    }
+    ): Datoperiode = Datoperiode(fom, til)
 
-    override infix fun union(annen: Periode<LocalDate>): Datoperiode {
-        return super.union(annen) as Datoperiode
-    }
+    override infix fun union(annen: Periode<LocalDate>): Datoperiode = super.union(annen) as Datoperiode
 
-    override infix fun snitt(annen: Periode<LocalDate>): Datoperiode? {
-        return super.snitt(annen) as Datoperiode?
-    }
+    override infix fun snitt(annen: Periode<LocalDate>): Datoperiode? = super.snitt(annen) as Datoperiode?
 
-    override infix fun påfølgesAv(påfølgende: Periode<LocalDate>): Boolean {
-        return this.til?.plusDays(1) == påfølgende.fom
-    }
+    override infix fun påfølgesAv(påfølgende: Periode<LocalDate>): Boolean = this.til?.plusDays(1) == påfølgende.fom
 
     override fun tilEllerMax() = til ?: LocalDate.MAX
 

@@ -72,9 +72,7 @@ data class OpprettGrunnlagRequestDto(
 ) : BaseGrunnlag {
     override fun toString(): String = super.asString()
 
-    override fun hashCode(): Int {
-        return referanse.hashCode() + type.hashCode() + innholdString.hashCode()
-    }
+    override fun hashCode(): Int = referanse.hashCode() + type.hashCode() + innholdString.hashCode()
 
     @get:JsonIgnore
     val innholdString get() = commonObjectmapper.writeValueAsString(innhold)

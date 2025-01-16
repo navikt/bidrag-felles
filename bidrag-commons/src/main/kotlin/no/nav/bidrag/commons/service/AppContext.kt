@@ -16,15 +16,11 @@ class AppContext : ApplicationContextAware {
         var applicationContext: ApplicationContext? = null
             private set
 
-        fun <T> getBean(clazz: Class<T>): T {
-            return applicationContext!!.getBean(clazz)
-        }
+        fun <T> getBean(clazz: Class<T>): T = applicationContext!!.getBean(clazz)
 
         fun <T> getBean(
             name: String,
             clazz: Class<T>,
-        ): T {
-            return applicationContext!!.getBean(name, clazz)
-        }
+        ): T = applicationContext!!.getBean(name, clazz)
     }
 }

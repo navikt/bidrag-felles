@@ -45,7 +45,11 @@ class BeregningFellesTest {
                 personreferanse,
             )
         person shouldHaveSize 1
-        person.firstOrNull()?.innhold?.ident?.verdi shouldBe "123123123"
+        person
+            .firstOrNull()
+            ?.innhold
+            ?.ident
+            ?.verdi shouldBe "123123123"
     }
 
     @Test

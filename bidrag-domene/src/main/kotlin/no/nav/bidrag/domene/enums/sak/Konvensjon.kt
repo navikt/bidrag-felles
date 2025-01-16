@@ -2,7 +2,9 @@
 
 package no.nav.bidrag.domene.enums.sak
 
-enum class Konvensjon(private val beskrivelse: String) {
+enum class Konvensjon(
+    private val beskrivelse: String,
+) {
     AiS("Annet - iSupport"),
     HiS("Haag 2007 - iSupport"),
     H5("Haag"),
@@ -14,7 +16,5 @@ enum class Konvensjon(private val beskrivelse: String) {
     INGEN("Ingen"),
     ;
 
-    override fun toString(): String {
-        return beskrivelse
-    }
+    override fun toString(): String = beskrivelse
 }

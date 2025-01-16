@@ -14,15 +14,14 @@ class SensitiveLogMasker : ValueMasker {
     override fun mask(
         p0: JsonStreamContext?,
         p1: Any?,
-    ): Any? {
-        return (
+    ): Any? =
+        (
             if (p1 is CharSequence) {
                 maskLogMessage(p1)
             } else {
                 p1
             }
         )
-    }
 
     fun maskLogMessage(logMessage: CharSequence?): String {
         val sb = StringBuilder(logMessage)

@@ -23,29 +23,18 @@ data class ÅrMånedsperiode(
     override fun lagPeriode(
         fom: YearMonth,
         til: YearMonth?,
-    ): ÅrMånedsperiode {
-        return ÅrMånedsperiode(fom, til)
-    }
+    ): ÅrMånedsperiode = ÅrMånedsperiode(fom, til)
 
-    override infix fun union(annen: Periode<YearMonth>): ÅrMånedsperiode {
-        return super.union(annen) as ÅrMånedsperiode
-    }
+    override infix fun union(annen: Periode<YearMonth>): ÅrMånedsperiode = super.union(annen) as ÅrMånedsperiode
 
-    override infix fun snitt(annen: Periode<YearMonth>): ÅrMånedsperiode? {
-        return super.snitt(annen) as ÅrMånedsperiode?
-    }
+    override infix fun snitt(annen: Periode<YearMonth>): ÅrMånedsperiode? = super.snitt(annen) as ÅrMånedsperiode?
 
-    override infix fun påfølgesAv(påfølgende: Periode<YearMonth>): Boolean {
-        return this.til?.plusMonths(1) == påfølgende.fom
-    }
+    override infix fun påfølgesAv(påfølgende: Periode<YearMonth>): Boolean = this.til?.plusMonths(1) == påfølgende.fom
 
-    override fun tilEllerMax(): YearMonth {
-        return til ?: YearMonth.from(LocalDate.MAX)
-    }
+    override fun tilEllerMax(): YearMonth = til ?: YearMonth.from(LocalDate.MAX)
 
-    override fun lengdeIHeleMåneder(): Long {
-        return (tilEllerMax().minusMonths(1).year * 12 + tilEllerMax().monthValue) - (fom.year * 12 + fom.monthValue) + 1L
-    }
+    override fun lengdeIHeleMåneder(): Long =
+        (tilEllerMax().minusMonths(1).year * 12 + tilEllerMax().monthValue) - (fom.year * 12 + fom.monthValue) + 1L
 
     fun toDatoperiode() = Datoperiode(fom, til)
 }

@@ -23,24 +23,26 @@ class NaisProxyCustomizer(
         val requestTimeout = Timeout.ofMilliseconds(requestTimeout)
 
         val client =
-            HttpClients.custom().setDefaultRequestConfig(
-                RequestConfig.custom()
-                    .setConnectionRequestTimeout(requestTimeout)
-                    .build(),
-            ).setRoutePlanner(
-                object : DefaultProxyRoutePlanner(proxy) {
-                    public override fun determineProxy(
-                        target: HttpHost,
-                        context: HttpContext,
-                    ): HttpHost? {
-                        return if (target.hostName.contains("microsoft")) {
-                            super.determineProxy(target, context)
-                        } else {
-                            null
-                        }
-                    }
-                },
-            ).build()
+            HttpClients
+                .custom()
+                .setDefaultRequestConfig(
+                    RequestConfig
+                        .custom()
+                        .setConnectionRequestTimeout(requestTimeout)
+                        .build(),
+                ).setRoutePlanner(
+                    object : DefaultProxyRoutePlanner(proxy) {
+                        public override fun determineProxy(
+                            target: HttpHost,
+                            context: HttpContext,
+                        ): HttpHost? =
+                            if (target.hostName.contains("microsoft")) {
+                                super.determineProxy(target, context)
+                            } else {
+                                null
+                            }
+                    },
+                ).build()
 
         restTemplate.requestFactory = HttpComponentsClientHttpRequestFactory(client)
     }

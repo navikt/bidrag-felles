@@ -7,7 +7,9 @@ object BidragEnhet {
     const val ENHET_UTLAND = "4865"
 }
 
-enum class JournalpostStatus(val kode: String) {
+enum class JournalpostStatus(
+    val kode: String,
+) {
     AVVIK_ENDRE_FAGOMRADE("AF"),
     AVVIK_BESTILL_RESKANNING("AR"),
     AVVIK_BESTILL_SPLITTING("AS"),
@@ -33,12 +35,11 @@ enum class JournalpostStatus(val kode: String) {
     ;
 
     companion object {
-        fun fraKode(kode: String?): JournalpostStatus? {
-            return try {
+        fun fraKode(kode: String?): JournalpostStatus? =
+            try {
                 JournalpostStatus.values().firstOrNull { it.kode == kode } ?: kode?.let { JournalpostStatus.valueOf(it) }
             } catch (e: Exception) {
                 null
             }
-        }
     }
 }

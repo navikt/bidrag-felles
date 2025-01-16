@@ -151,7 +151,9 @@ internal class CorrelationIdFilterTest {
         anotherCorrelationIdThread.correlationId shouldNotBe null shouldNotBe aCorrelationIdThread.correlationId
     }
 
-    internal class CorrelationIdThread(private val filterExecutor: FilterExecutor) : Thread() {
+    internal class CorrelationIdThread(
+        private val filterExecutor: FilterExecutor,
+    ) : Thread() {
         var correlationId: String? = null
 
         override fun run() {

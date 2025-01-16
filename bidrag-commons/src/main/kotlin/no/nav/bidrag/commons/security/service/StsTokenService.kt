@@ -15,13 +15,16 @@ import org.springframework.util.LinkedMultiValueMap
 
 @EnableConfigurationProperties(StsConfigurationProperties::class)
 @Service("stsTokenService")
-class StsTokenService(stsConfigurationProperties: StsConfigurationProperties) : TokenService("STS") {
+class StsTokenService(
+    stsConfigurationProperties: StsConfigurationProperties,
+) : TokenService("STS") {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
     private val stsCache = OAuth2CacheFactory.accessTokenResponseCache<String>(100, 300)
 
     private val restTemplate =
-        RestTemplateBuilder().rootUri(stsConfigurationProperties.properties.url)
+        RestTemplateBuilder()
+            .rootUri(stsConfigurationProperties.properties.url)
             .basicAuthentication(
                 stsConfigurationProperties.properties.username,
                 stsConfigurationProperties.properties.password,
@@ -40,9 +43,7 @@ class StsTokenService(stsConfigurationProperties: StsConfigurationProperties) : 
 
     override fun isEnabled() = true
 
-    override fun fetchToken(): String {
-        return stsCache.get("STS", this::getToken)!!.accessToken
-    }
+    override fun fetchToken(): String = stsCache.get("STS", this::getToken)!!.accessToken
 
     private fun getToken(cacheName: String): OAuth2AccessTokenResponse {
         logger.debug("Fetching STS token")
@@ -55,7 +56,8 @@ class StsTokenService(stsConfigurationProperties: StsConfigurationProperties) : 
             )
         val tokenForBasicAuthentication = tokenForBasicAuthenticationResponse.body
         return tokenForBasicAuthentication?.let {
-            OAuth2AccessTokenResponse.builder()
+            OAuth2AccessTokenResponse
+                .builder()
                 .accessToken(it.access_token)
                 .expiresIn(it.expiresIn)
                 .build()

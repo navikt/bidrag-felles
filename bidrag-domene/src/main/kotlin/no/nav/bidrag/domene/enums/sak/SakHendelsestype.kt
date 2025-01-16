@@ -2,7 +2,10 @@
 
 package no.nav.bidrag.domene.enums.sak
 
-enum class SakHendelsestype(private val beskrivelse: String, val gyldig: Boolean) {
+enum class SakHendelsestype(
+    private val beskrivelse: String,
+    val gyldig: Boolean,
+) {
     ASLU("Avsluttet", true),
     AUAV("Automatisk avslag", true),
     AV("Avvist", true),
@@ -107,7 +110,5 @@ enum class SakHendelsestype(private val beskrivelse: String, val gyldig: Boolean
     VEVE("Vedtak Verge", true),
     ;
 
-    override fun toString(): String {
-        return beskrivelse
-    }
+    override fun toString(): String = beskrivelse
 }

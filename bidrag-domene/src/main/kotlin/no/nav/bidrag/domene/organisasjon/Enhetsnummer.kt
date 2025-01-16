@@ -7,7 +7,9 @@ import no.nav.bidrag.domene.felles.Verdiobjekt
 import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
-class Enhetsnummer(override val verdi: String) : Verdiobjekt<String>() {
+class Enhetsnummer(
+    override val verdi: String,
+) : Verdiobjekt<String>() {
     override fun gyldig() = verdi.matches(ENHET_REGEX)
 
     companion object {

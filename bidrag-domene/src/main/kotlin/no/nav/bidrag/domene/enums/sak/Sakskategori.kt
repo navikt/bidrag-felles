@@ -15,15 +15,12 @@ enum class Sakskategori(
     U("Utland", "ae0106", "ae0108", "ae0110", "ae0106"),
     ;
 
-    override fun toString(): String {
-        return beskrivelse
-    }
+    override fun toString(): String = beskrivelse
 
-    fun finnBehandlingstypekode(behandlingstype: Behandlingstype): String? {
-        return when (behandlingstype) {
+    fun finnBehandlingstypekode(behandlingstype: Behandlingstype): String? =
+        when (behandlingstype) {
             Behandlingstype.FORVALTNING -> this.behandlingstypeForvaltning
             Behandlingstype.KLAGE -> this.behandlingstypeKlage
             Behandlingstype.SØKNAD -> this.behandlingstypeSøknad
         }
-    }
 }

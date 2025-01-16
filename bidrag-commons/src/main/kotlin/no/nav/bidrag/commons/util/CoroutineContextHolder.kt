@@ -53,7 +53,8 @@ class SecurityCoroutineContext(
 }
 
 private fun getServletRequestAttributes(): ServletRequestAttributes? =
-    RequestContextHolder.getRequestAttributes()
+    RequestContextHolder
+        .getRequestAttributes()
         ?.let {
             if (ServletRequestAttributes::class.java.isAssignableFrom(it.javaClass)) {
                 it as ServletRequestAttributes
@@ -65,7 +66,8 @@ private fun getServletRequestAttributes(): ServletRequestAttributes? =
 class RequestContextAsyncContext(
     private val contextMap: Map<String, String> = MDC.getCopyOfContextMap() ?: emptyMap(),
     private val servletRequestAttributes: ServletRequestAttributes? = getServletRequestAttributes(),
-) : ThreadContextElement<Map<String, String>>, AbstractCoroutineContextElement(Key) {
+) : AbstractCoroutineContextElement(Key),
+    ThreadContextElement<Map<String, String>> {
     companion object Key : CoroutineContext.Key<RequestContextAsyncContext>
 
     override fun updateThreadContext(context: CoroutineContext): Map<String, String> {

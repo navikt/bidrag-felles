@@ -12,9 +12,7 @@ abstract class Verdiobjekt<T : Comparable<T>> : Comparable<Verdiobjekt<T>> {
 
     open fun gyldig(): Boolean = true
 
-    override operator fun compareTo(other: Verdiobjekt<T>): Int {
-        return this.verdi.compareTo(other.verdi)
-    }
+    override operator fun compareTo(other: Verdiobjekt<T>): Int = this.verdi.compareTo(other.verdi)
 
     override fun toString(): String = verdi.toString()
 
@@ -27,9 +25,7 @@ abstract class Verdiobjekt<T : Comparable<T>> : Comparable<Verdiobjekt<T>> {
         return true
     }
 
-    override fun hashCode(): Int {
-        return verdi.hashCode()
-    }
+    override fun hashCode(): Int = verdi.hashCode()
 }
 
 @OptIn(ExperimentalContracts::class)
