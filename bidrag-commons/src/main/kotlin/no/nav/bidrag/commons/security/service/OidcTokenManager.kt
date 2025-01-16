@@ -13,54 +13,42 @@ class OidcTokenManager {
         const val STS_ISSUER = "sts"
     }
 
-    fun fetchTokenAsString(): String {
-        return fetchToken().tokenAsString
-    }
+    fun fetchTokenAsString(): String = fetchToken().tokenAsString
 
-    private fun hasIssuers(): Boolean {
-        return SpringTokenValidationContextHolder().tokenValidationContext.issuers.isNotEmpty()
-    }
+    private fun hasIssuers(): Boolean = SpringTokenValidationContextHolder().tokenValidationContext.issuers.isNotEmpty()
 
-    fun isValidTokenIssuedByAzure(): Boolean {
-        return hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(AZURE_ISSUER) != null
-    }
+    fun isValidTokenIssuedByAzure(): Boolean =
+        hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(AZURE_ISSUER) != null
 
-    fun isValidTokenIssuedByTokenX(): Boolean {
-        return hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(TOKENX_ISSUER) != null
-    }
+    fun isValidTokenIssuedByTokenX(): Boolean =
+        hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(TOKENX_ISSUER) != null
 
-    fun isValidTokenIssuedByOpenAm(): Boolean {
-        return hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(ISSO_ISSUER) != null
-    }
+    fun isValidTokenIssuedByOpenAm(): Boolean =
+        hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(ISSO_ISSUER) != null
 
-    fun isValidTokenIssuedBySTS(): Boolean {
-        return hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(STS_ISSUER) != null
-    }
+    fun isValidTokenIssuedBySTS(): Boolean =
+        hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(STS_ISSUER) != null
 
     fun hentToken(): String? {
         if (SikkerhetsKontekst.erIApplikasjonKontekst()) return null
         if (SpringTokenValidationContextHolder().tokenValidationContext.hasValidToken()) {
-            return SpringTokenValidationContextHolder().tokenValidationContext.firstValidToken.get().tokenAsString
+            return SpringTokenValidationContextHolder()
+                .tokenValidationContext.firstValidToken
+                .get()
+                .tokenAsString
         }
         return null
     }
 
     @Deprecated("Bruk TokenUtils istedenfor")
-    fun hentSaksbehandlerIdentFraToken(): String? {
-        return TokenUtils.hentBruker()
-    }
+    fun hentSaksbehandlerIdentFraToken(): String? = TokenUtils.hentBruker()
 
     @Deprecated("Bruk TokenUtils istedenfor")
-    fun erApplikasjonBruker(): Boolean {
-        return SikkerhetsKontekst.erIApplikasjonKontekst() || TokenUtils.erApplikasjonsbruker()
-    }
+    fun erApplikasjonBruker(): Boolean = SikkerhetsKontekst.erIApplikasjonKontekst() || TokenUtils.erApplikasjonsbruker()
 
-    fun getIssuer(): String {
-        return fetchToken().issuer
-    }
+    fun getIssuer(): String = fetchToken().issuer
 
-    fun fetchToken(): JwtToken {
-        return SpringTokenValidationContextHolder().tokenValidationContext.firstValidToken?.orElse(null)
+    fun fetchToken(): JwtToken =
+        SpringTokenValidationContextHolder().tokenValidationContext.firstValidToken?.orElse(null)
             ?: throw IllegalStateException("Fant ingen gyldig token i kontekst")
-    }
 }

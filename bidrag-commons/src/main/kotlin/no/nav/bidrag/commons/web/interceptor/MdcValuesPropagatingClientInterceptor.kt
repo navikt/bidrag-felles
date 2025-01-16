@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component
 
 @Component
 @Import(IdUtils::class)
-class MdcValuesPropagatingClientInterceptor(private val idUtils: IdUtils) : ClientHttpRequestInterceptor {
+class MdcValuesPropagatingClientInterceptor(
+    private val idUtils: IdUtils,
+) : ClientHttpRequestInterceptor {
     override fun intercept(
         request: HttpRequest,
         body: ByteArray,

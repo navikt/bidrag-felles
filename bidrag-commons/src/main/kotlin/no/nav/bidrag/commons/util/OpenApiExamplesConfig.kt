@@ -12,8 +12,8 @@ import org.springframework.http.MediaType
 @Configuration
 class OpenApiExamplesConfig {
     @Bean
-    fun openApiCustomiser(examples: Collection<OpenApiExample>): OpenApiCustomizer {
-        return OpenApiCustomizer { openAPI ->
+    fun openApiCustomiser(examples: Collection<OpenApiExample>): OpenApiCustomizer =
+        OpenApiCustomizer { openAPI ->
             examples.forEach { example ->
                 openAPI.components.addExamples(example.name, example.example)
                 examples.groupBy { Pair(it.path, it.method) }.entries.forEach {
@@ -21,14 +21,14 @@ class OpenApiExamplesConfig {
                 }
             }
         }
-    }
 
     fun OpenAPI.addExamplesToPath(
         operation: Pair<String, HttpMethod>,
         openApiExamples: List<OpenApiExample>,
     ) {
         val requestBody =
-            paths[operation.first]?.getOperation(operation.second)
+            paths[operation.first]
+                ?.getOperation(operation.second)
                 ?.requestBody
 
         val jsonBody = requestBody?.content?.get(MediaType.APPLICATION_JSON_VALUE)

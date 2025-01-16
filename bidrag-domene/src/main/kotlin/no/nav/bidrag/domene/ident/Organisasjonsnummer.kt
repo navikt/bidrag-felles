@@ -7,7 +7,9 @@ import no.nav.bidrag.domene.felles.Verdiobjekt
 import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
-class Organisasjonsnummer(override val verdi: String) : Verdiobjekt<String>() {
+class Organisasjonsnummer(
+    override val verdi: String,
+) : Verdiobjekt<String>() {
     override fun gyldig(): Boolean {
         if (verdi.length != 9 || verdi.toLongOrNull() == null) {
             return false

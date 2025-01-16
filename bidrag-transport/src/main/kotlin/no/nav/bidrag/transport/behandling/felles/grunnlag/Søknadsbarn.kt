@@ -9,5 +9,5 @@ data class Søknadsbarn(
     val periode: ÅrMånedsperiode,
     val andelForsørget: Double,
     val harSammeAdresse: Boolean,
-    val medIBeregning: Boolean
+    val medIBeregning: Boolean,
 ) : GrunnlagInnhold

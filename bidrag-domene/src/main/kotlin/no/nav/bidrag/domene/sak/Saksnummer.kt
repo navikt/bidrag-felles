@@ -7,7 +7,9 @@ import no.nav.bidrag.domene.felles.Verdiobjekt
 import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
-class Saksnummer(override val verdi: String) : Verdiobjekt<String>() {
+class Saksnummer(
+    override val verdi: String,
+) : Verdiobjekt<String>() {
     override fun gyldig() = verdi.matches(SEVEN_DIGITS_REGEX)
 
     companion object {

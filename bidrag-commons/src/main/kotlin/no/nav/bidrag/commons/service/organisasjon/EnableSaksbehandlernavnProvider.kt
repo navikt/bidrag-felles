@@ -9,4 +9,4 @@ import java.lang.annotation.Inherited
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
 @Import(value = [BidragOrganisasjonConsumer::class, AppContext::class])
-annotation class EnableSaksbehandlernavnProvider()
+annotation class EnableSaksbehandlernavnProvider

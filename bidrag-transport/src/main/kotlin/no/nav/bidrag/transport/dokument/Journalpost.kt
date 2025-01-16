@@ -187,11 +187,10 @@ data class DokumentDto(
     @Schema(description = "Metadata om dokumentet")
     val metadata: Map<String, String> = emptyMap(),
 ) {
-    override fun toString(): String {
-        return "(dokumentreferanse=$dokumentreferanse,journalpostId=$journalpostId, dokumentType=$dokumentType, " +
+    override fun toString(): String =
+        "(dokumentreferanse=$dokumentreferanse,journalpostId=$journalpostId, dokumentType=$dokumentType, " +
             "tittel=$tittel, status=$status, arkivSystem=$arkivSystem " +
             "dokumentmal=$dokumentmalId, metadata=$metadata"
-    }
 }
 
 @Schema(description = "Journalposten ble mottatt/sendt ut i kanal")

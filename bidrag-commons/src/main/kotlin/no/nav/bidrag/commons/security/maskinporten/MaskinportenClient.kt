@@ -99,8 +99,12 @@ class MaskinportenClient(
         }
 
     private fun opprettMaskinportenTokenRequest(scope: String): HttpRequest =
-        HttpRequest.newBuilder().uri(URI.create(maskinportenConfig.tokenUrl)).header("Content-Type", CONTENT_TYPE)
-            .POST(ofString(opprettRequestBody(maskinportenTokenGenerator.genererJwtToken(scope)))).build()
+        HttpRequest
+            .newBuilder()
+            .uri(URI.create(maskinportenConfig.tokenUrl))
+            .header("Content-Type", CONTENT_TYPE)
+            .POST(ofString(opprettRequestBody(maskinportenTokenGenerator.genererJwtToken(scope))))
+            .build()
 
     private fun opprettRequestBody(jwt: String) = "grant_type=$GRANT_TYPE&assertion=$jwt"
 }

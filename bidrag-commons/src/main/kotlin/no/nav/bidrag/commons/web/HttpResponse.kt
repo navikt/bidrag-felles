@@ -11,18 +11,14 @@ import java.util.Optional
  *
  * @param <T> type of http payload
 </T> */
-class HttpResponse<T>(val responseEntity: ResponseEntity<T>) {
-    fun fetchBody(): Optional<T & Any> {
-        return Optional.ofNullable(responseEntity.body)
-    }
+class HttpResponse<T>(
+    val responseEntity: ResponseEntity<T>,
+) {
+    fun fetchBody(): Optional<T & Any> = Optional.ofNullable(responseEntity.body)
 
-    fun is2xxSuccessful(): Boolean {
-        return responseEntity.statusCode.is2xxSuccessful
-    }
+    fun is2xxSuccessful(): Boolean = responseEntity.statusCode.is2xxSuccessful
 
-    fun fetchHeaders(): HttpHeaders {
-        return responseEntity.headers
-    }
+    fun fetchHeaders(): HttpHeaders = responseEntity.headers
 
     fun clearContentHeaders(): HttpResponse<T?> {
         val headersMap: Map<String, List<String>> =

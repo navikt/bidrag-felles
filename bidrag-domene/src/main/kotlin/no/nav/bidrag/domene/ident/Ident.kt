@@ -7,12 +7,13 @@ import no.nav.bidrag.domene.felles.Verdiobjekt
 import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
-class Ident(override val verdi: String) : Verdiobjekt<String>() {
-    override fun gyldig(): Boolean {
-        return Organisasjonsnummer(verdi).gyldig() ||
+class Ident(
+    override val verdi: String,
+) : Verdiobjekt<String>() {
+    override fun gyldig(): Boolean =
+        Organisasjonsnummer(verdi).gyldig() ||
             Personident(verdi).gyldig() ||
             SamhandlerId(verdi).gyldig()
-    }
 
     fun erOrganisasjonsnummer() = Organisasjonsnummer(verdi).gyldig()
 
@@ -28,13 +29,12 @@ class Ident(override val verdi: String) : Verdiobjekt<String>() {
             else -> Identtype.Ukjent
         }
 
-    override fun toString(): String {
-        return if (erPersonIdent()) {
+    override fun toString(): String =
+        if (erPersonIdent()) {
             verdi.mapIndexed { index, c -> if (index % 2 == 0) c else '*' }.joinToString("")
         } else {
             super.toString()
         }
-    }
 }
 
 enum class Identtype {

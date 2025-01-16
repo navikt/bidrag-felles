@@ -51,9 +51,7 @@ class TilgangAdvice(
     private fun sjekkTilgangForNavngittFeltIRequestBody(
         requestBody: Any,
         feltnavn: String,
-    ) {
-        return sjekkTilgangForFeltIRequestBody(requestBody, feltnavn)
-    }
+    ) = sjekkTilgangForFeltIRequestBody(requestBody, feltnavn)
 
     private fun sjekkTilgangForFørsteKonstruktørparameterIRequestBody(requestBody: Any) {
         val feltnavn = Feltekstraherer.finnNavnPåFørsteKonstruktørParameter(requestBody)

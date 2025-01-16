@@ -34,9 +34,7 @@ internal class KildesystemIdenfikatorTest {
         UGYLDIG,
         ;
 
-        fun erUgyldig(): Boolean {
-            return this == UGYLDIG
-        }
+        fun erUgyldig(): Boolean = this == UGYLDIG
     }
 
     @Test
@@ -91,8 +89,8 @@ internal class KildesystemIdenfikatorTest {
     companion object {
         @JvmStatic
         @MethodSource
-        private fun initPrefixsetIdForTest(): Stream<Arguments> {
-            return Stream.of(
+        private fun initPrefixsetIdForTest(): Stream<Arguments> =
+            Stream.of(
                 Arguments.of("BID-3757282865", true),
                 Arguments.of("BID-9999999", false),
                 Arguments.of("JOARK-3757282443", true),
@@ -100,6 +98,5 @@ internal class KildesystemIdenfikatorTest {
                 Arguments.of("UKJENT-3757282443", false),
                 Arguments.of("UKJENT-9999999", false),
             )
-        }
     }
 }

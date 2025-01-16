@@ -14,24 +14,16 @@ sealed class Periode<T> : Comparable<Periode<T>> where T : Comparable<T>, T : Te
 
     abstract fun tilEllerMax(): T
 
-    infix fun inneholder(dato: T): Boolean {
-        return dato in fom..tilEllerMax()
-    }
+    infix fun inneholder(dato: T): Boolean = dato in fom..tilEllerMax()
 
-    infix fun inneholder(annen: Periode<T>): Boolean {
-        return annen.fom >= this.fom && annen.tilEllerMax() <= this.tilEllerMax()
-    }
+    infix fun inneholder(annen: Periode<T>): Boolean = annen.fom >= this.fom && annen.tilEllerMax() <= this.tilEllerMax()
 
-    infix fun omsluttesAv(annen: Periode<T>): Boolean {
-        return annen.fom <= fom && annen.tilEllerMax() >= tilEllerMax()
-    }
+    infix fun omsluttesAv(annen: Periode<T>): Boolean = annen.fom <= fom && annen.tilEllerMax() >= tilEllerMax()
 
-    infix fun overlapper(other: Periode<T>): Boolean {
-        return inneholder(other.fom) || inneholder(other.tilEllerMax()) || other.inneholder(fom)
-    }
+    infix fun overlapper(other: Periode<T>): Boolean = inneholder(other.fom) || inneholder(other.tilEllerMax()) || other.inneholder(fom)
 
-    open infix fun snitt(annen: Periode<T>): Periode<T>? {
-        return if (!overlapper(annen)) {
+    open infix fun snitt(annen: Periode<T>): Periode<T>? =
+        if (!overlapper(annen)) {
             null
         } else if (this == annen) {
             this
@@ -41,10 +33,9 @@ sealed class Periode<T> : Comparable<Periode<T>> where T : Comparable<T>, T : Te
                 if (til == null && annen.til == null) null else minOf(tilEllerMax(), annen.tilEllerMax()),
             )
         }
-    }
 
-    open infix fun union(annen: Periode<T>): Periode<T> {
-        return if (overlapper(annen) || this.påfølgesAv(annen) || annen.påfølgesAv(this)) {
+    open infix fun union(annen: Periode<T>): Periode<T> =
+        if (overlapper(annen) || this.påfølgesAv(annen) || annen.påfølgesAv(this)) {
             lagPeriode(
                 minOf(fom, annen.fom),
                 if (til == null || annen.til == null) null else maxOf(tilEllerMax(), annen.tilEllerMax()),
@@ -52,7 +43,6 @@ sealed class Periode<T> : Comparable<Periode<T>> where T : Comparable<T>, T : Te
         } else {
             error("Kan ikke lage union av perioder som $this og $annen som ikke overlapper eller direkte følger hverandre.")
         }
-    }
 
     infix fun overlapperKunIStartenAv(annen: Periode<T>) = annen.fom in fom..tilEllerMax() && tilEllerMax() < annen.tilEllerMax()
 
@@ -62,9 +52,8 @@ sealed class Periode<T> : Comparable<Periode<T>> where T : Comparable<T>, T : Te
 
     abstract fun lengdeIHeleMåneder(): Long
 
-    override fun compareTo(other: Periode<T>): Int {
-        return Comparator.comparing(Periode<T>::fom).thenComparing(Periode<T>::tilEllerMax).compare(this, other)
-    }
+    override fun compareTo(other: Periode<T>): Int =
+        Comparator.comparing(Periode<T>::fom).thenComparing(Periode<T>::tilEllerMax).compare(this, other)
 
     abstract fun lagPeriode(
         fom: T,
@@ -86,6 +75,8 @@ fun <T> List<Periode<T>>.erSammenhengende(): Boolean where T : Comparable<T>, T 
     }
 
 fun <T> List<Periode<T>>.harOverlappende(): Boolean where T : Comparable<T>, T : Temporal =
-    this.sorted().zipWithNext { a, b ->
-        a.overlapper(b)
-    }.any { it }
+    this
+        .sorted()
+        .zipWithNext { a, b ->
+            a.overlapper(b)
+        }.any { it }

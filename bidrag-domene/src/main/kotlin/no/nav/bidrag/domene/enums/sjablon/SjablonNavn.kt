@@ -1,6 +1,8 @@
 package no.nav.bidrag.domene.enums.sjablon
 
-enum class SjablonNavn(val navn: String) {
+enum class SjablonNavn(
+    val navn: String,
+) {
     BARNETILSYN("Barnetilsyn"),
     BIDRAGSEVNE("Bidragsevne"),
     FORBRUKSUTGIFTER("Forbruksutgifter"),

@@ -13,8 +13,8 @@ import java.time.format.DateTimeFormatter
 @Component
 class ObjectmapperBuilder {
     @Bean
-    fun jackson2ObjectMapperBuilder(): Jackson2ObjectMapperBuilder {
-        return Jackson2ObjectMapperBuilder()
+    fun jackson2ObjectMapperBuilder(): Jackson2ObjectMapperBuilder =
+        Jackson2ObjectMapperBuilder()
             .modules(
                 KotlinModule.Builder().build(),
                 JavaTimeModule()
@@ -23,8 +23,6 @@ class ObjectmapperBuilder {
                         // Denne trengs for å parse år over 9999 riktig.
                         YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")),
                     ),
-            )
-            .failOnUnknownProperties(false)
+            ).failOnUnknownProperties(false)
             .serializationInclusion(JsonInclude.Include.NON_NULL)
-    }
 }

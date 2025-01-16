@@ -53,9 +53,7 @@ class AuditAdvice(
     private fun finnSporingsdataForNavngittFeltIRequestBody(
         requestBody: Any,
         feltnavn: String,
-    ): Sporingsdata {
-        return finnSporingsdataForFeltIRequestBody(requestBody, feltnavn)
-    }
+    ): Sporingsdata = finnSporingsdataForFeltIRequestBody(requestBody, feltnavn)
 
     private fun finnSporingsdataForFørsteKonstruktørparameterIRequestBody(requestBody: Any): Sporingsdata {
         val feltnavn = Feltekstraherer.finnNavnPåFørsteKonstruktørParameter(requestBody)
@@ -89,19 +87,15 @@ class AuditAdvice(
         }
     }
 
-    private fun finnSporingsdataForString(s: String): Sporingsdata {
-        return when {
+    private fun finnSporingsdataForString(s: String): Sporingsdata =
+        when {
             Saksnummer(s).gyldig() -> tilgangClient.hentSporingsdataSak(s)
             Personident(s).gyldig() -> tilgangClient.hentSporingsdataPerson(s)
             else -> error("Type på oppslagsfelt ikke støttet av audit-log")
         }
-    }
 
-    private fun finnSporingsdataForPersonIdent(personIdent: Personident): Sporingsdata {
-        return tilgangClient.hentSporingsdataPerson(personIdent.verdi)
-    }
+    private fun finnSporingsdataForPersonIdent(personIdent: Personident): Sporingsdata =
+        tilgangClient.hentSporingsdataPerson(personIdent.verdi)
 
-    private fun finnSporingsdataForSaksnummer(saksnummer: Saksnummer): Sporingsdata {
-        return tilgangClient.hentSporingsdataSak(saksnummer.verdi)
-    }
+    private fun finnSporingsdataForSaksnummer(saksnummer: Saksnummer): Sporingsdata = tilgangClient.hentSporingsdataSak(saksnummer.verdi)
 }
