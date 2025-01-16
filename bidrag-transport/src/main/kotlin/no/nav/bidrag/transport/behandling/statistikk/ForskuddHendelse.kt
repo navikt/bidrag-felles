@@ -10,7 +10,6 @@ data class ForskuddHendelse(
     val type: String,
     val saksnr: String,
     val kravhaver: String,
-    val fødselsdatoKravhaver: LocalDate,
     val mottaker: String,
     val forskuddPeriodeListe: List<ForskuddPeriode>,
 )
