@@ -134,3 +134,6 @@ GEBYR_FRITATT:
 
 GEBYR_ILAGT:
   intern: "Gebyr ilagt"
+
+PARTEN_BER_OM_OPPHØR:
+  intern: "Parten ber om opphør"
