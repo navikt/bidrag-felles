@@ -39,7 +39,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = true,
                 barnetErSelvforsørget = true,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = true,
                 bidragJustertNedTil25ProsentAvInntekt = true,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -50,7 +50,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = true,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = true,
                 bidragJustertNedTil25ProsentAvInntekt = true,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -61,7 +61,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = true,
                 bidragJustertNedTil25ProsentAvInntekt = true,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -72,7 +72,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = false,
                 bidragJustertNedTil25ProsentAvInntekt = true,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -83,7 +83,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = false,
                 bidragJustertNedTil25ProsentAvInntekt = false,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -143,6 +143,28 @@ class SluttberegningBarnebidragTest {
                 bidragJustertNedTil25ProsentAvInntekt = false,
                 bidragJustertForNettoBarnetilleggBM = false,
             ).bisysResultatkode shouldBe "KBB"
+
+        sluttberegning
+            .copy(
+                bidragJustertNedTilForskuddssats = true,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = false,
+            ).bisysResultatkode shouldBe "RFO"
+
+        sluttberegning
+            .copy(
+                bidragJustertNedTilForskuddssats = true,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = false,
+            ).bisysResultatkode shouldBe "101"
     }
 
     @Test
@@ -154,7 +176,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = true,
                 barnetErSelvforsørget = true,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = true,
                 bidragJustertNedTil25ProsentAvInntekt = true,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -166,7 +188,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = true,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = true,
                 bidragJustertNedTil25ProsentAvInntekt = true,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -178,7 +200,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = true,
                 bidragJustertNedTil25ProsentAvInntekt = true,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -190,7 +212,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = false,
                 bidragJustertNedTil25ProsentAvInntekt = true,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -202,7 +224,7 @@ class SluttberegningBarnebidragTest {
                 ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertForNettoBarnetilleggBP = false,
                 bidragJustertNedTilEvne = false,
                 bidragJustertNedTil25ProsentAvInntekt = false,
                 bidragJustertForNettoBarnetilleggBM = true,
@@ -268,5 +290,29 @@ class SluttberegningBarnebidragTest {
                 bidragJustertForNettoBarnetilleggBM = false,
             ).resultatVisningsnavn
             ?.intern shouldBe "Kostnadsberegnet bidrag"
+
+        sluttberegning
+            .copy(
+                bidragJustertNedTilForskuddssats = true,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = false,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = false,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Bidrag vurdert opp til forskuddssats"
+
+        sluttberegning
+            .copy(
+                bidragJustertNedTilForskuddssats = true,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = false,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Bidrag satt til barnetillegg fra BP"
     }
 }
