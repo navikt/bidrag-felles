@@ -14,3 +14,5 @@ ingenEndringUnderGrense:
   intern: "Ingen endring under grense"
 kostnadsberegnet:
   intern: "Kostnadsberegnet bidrag"
+bidragJustertTilForskuddssats:
+  intern: "Bidrag vurdert opp til forskuddssats"
