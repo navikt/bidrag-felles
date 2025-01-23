@@ -85,6 +85,13 @@ enum class Resultatkode(
     AVSLAG(listOf(BisysResultatkode("A", BisysResultatkodeType.AVSLAG)), ResultatkodeType.AVSLAG),
     AVSLAG2(listOf(BisysResultatkode("AA", BisysResultatkodeType.AVSLAG)), ResultatkodeType.AVSLAG),
 
+    PARTEN_BER_OM_OPPHØR(
+        listOf(BisysResultatkode("OPB", BisysResultatkodeType.OPPHØR)),
+        ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.FORSKUDD,
+    ),
+
     AVSLAG_OVER_18_ÅR(
         listOf(BisysResultatkode("A18", BisysResultatkodeType.AVSLAG), BisysResultatkode("OH2", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
