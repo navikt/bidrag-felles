@@ -59,15 +59,12 @@ data class SluttberegningBarnebidrag(
     val bidragJustertForNettoBarnetilleggBM: Boolean,
     val bidragJustertNedTilEvne: Boolean,
     val bidragJustertNedTil25ProsentAvInntekt: Boolean,
-    val bidragJustertTilForskuddssats: Boolean,
 ) : Sluttberegning {
     @get:JsonIgnore
     val resultat
         get() =
             // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
-                bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
-                bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
                 ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name
                 barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
                 bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
@@ -75,6 +72,7 @@ data class SluttberegningBarnebidrag(
                     SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
 
                 bidragJustertForDeltBosted -> SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
                 bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
                 bidragJustertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
                 bidragJustertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
@@ -205,7 +203,7 @@ data class DelberegningNettoTilsynsutgift(
     val andelTilsynsutgiftFaktor: BigDecimal,
     val antallBarnBMUnderTolvÅr: Int,
     val antallBarnBMBeregnet: Int = antallBarnBMUnderTolvÅr,
-    val antallBarnMedTilsynsutgifter: Int = antallBarnBMBeregnet,
+    val antallBarnMedTilsynsutgifter: Int = antallBarnBMUnderTolvÅr,
     val skattefradrag: BigDecimal,
     val skattefradragPerBarn: BigDecimal,
     val skattefradragTotalTilsynsutgift: BigDecimal,
