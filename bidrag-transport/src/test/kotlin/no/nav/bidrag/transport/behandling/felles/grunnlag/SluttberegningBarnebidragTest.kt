@@ -27,6 +27,7 @@ class SluttberegningBarnebidragTest {
             bidragJustertForNettoBarnetilleggBM = false,
             bidragJustertNedTilEvne = false,
             bidragJustertNedTil25ProsentAvInntekt = false,
+            bidragJustertNedTilForskuddssats = false,
         )
 
     @Test
