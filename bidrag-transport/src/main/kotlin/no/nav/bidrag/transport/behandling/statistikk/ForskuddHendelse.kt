@@ -19,10 +19,10 @@ data class ForskuddPeriode(
     val periodeTil: LocalDate?,
     val beløp: BigDecimal?,
     val resultat: String,
-    val barnetsAldersgruppe: String,
-    val antallBarnIEgenHusstand: Double,
-    val sivilstand: String,
-    val barnBorMedBM: Boolean,
+    val barnetsAldersgruppe: String?,
+    val antallBarnIEgenHusstand: Double?,
+    val sivilstand: String?,
+    val barnBorMedBM: Boolean?,
     val inntektListe: List<Inntekt>,
 )
 
