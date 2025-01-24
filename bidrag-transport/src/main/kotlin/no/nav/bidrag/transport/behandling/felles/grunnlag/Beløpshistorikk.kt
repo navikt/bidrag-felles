@@ -1,6 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
-import no.nav.bidrag.domene.tid.Datoperiode
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
 data class BeløpshistorikkGrunnlag(
@@ -8,6 +8,6 @@ data class BeløpshistorikkGrunnlag(
 ) : GrunnlagInnhold
 
 data class BeløpshistorikkPeriode(
-    val periode: Datoperiode,
+    val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
 )
