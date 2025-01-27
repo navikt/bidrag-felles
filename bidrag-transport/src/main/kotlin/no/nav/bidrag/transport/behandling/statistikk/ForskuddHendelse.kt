@@ -11,6 +11,7 @@ data class ForskuddHendelse(
     val saksnr: String,
     val kravhaver: String,
     val mottaker: String,
+    val historiskVedtak: Boolean,
     val forskuddPeriodeListe: List<ForskuddPeriode>,
 )
 
