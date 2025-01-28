@@ -24,6 +24,8 @@ data class SøknadGrunnlag(
                 " hvor resultatet kan være lavere enn forskuddssats hvis vedtakstype er ENDRING",
     )
     val opprinneligVedtakstype: Vedtakstype? = null,
+    val begrensetRevurdering: Boolean = false,
+    val egetTiltak: Boolean = false,
 ) : GrunnlagInnhold
 
 data class VirkningstidspunktGrunnlag(
