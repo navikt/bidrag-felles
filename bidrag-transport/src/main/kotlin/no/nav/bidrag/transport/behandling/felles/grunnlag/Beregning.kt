@@ -36,7 +36,7 @@ private val sluttberegningBisyskodeMap =
         SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name to "102",
         SluttberegningBarnebidrag::bidragJustertNedTilEvne.name to "6MB",
         SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name to "7M",
-        SluttberegningBarnebidrag::bidragJustertNedTilForskuddssats.name to "RFO",
+        SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name to "RFO",
         "kostnadsberegnet" to "KBB",
     )
 
@@ -49,18 +49,22 @@ data class SluttberegningBarnebidrag(
     val bruttoBidragEtterBarnetilleggBM: BigDecimal,
     val nettoBidragEtterBarnetilleggBM: BigDecimal,
     val bruttoBidragJustertForEvneOg25Prosent: BigDecimal,
+    val bruttoBidragEtterBegrensetRevurdering: BigDecimal,
     val bruttoBidragEtterBarnetilleggBP: BigDecimal,
     val nettoBidragEtterSamværsfradrag: BigDecimal,
     val bpAndelAvUVedDeltBostedFaktor: BigDecimal,
     val bpAndelAvUVedDeltBostedBeløp: BigDecimal,
-    val ingenEndringUnderGrense: Boolean,
-    val barnetErSelvforsørget: Boolean,
-    val bidragJustertForDeltBosted: Boolean,
-    val bidragJustertForNettoBarnetilleggBP: Boolean,
-    val bidragJustertForNettoBarnetilleggBM: Boolean,
-    val bidragJustertNedTilEvne: Boolean,
-    val bidragJustertNedTil25ProsentAvInntekt: Boolean,
-    val bidragJustertNedTilForskuddssats: Boolean,
+    val løpendeForskudd: BigDecimal? = null,
+    val løpendeBidrag: BigDecimal? = null,
+    val ingenEndringUnderGrense: Boolean = false,
+    val barnetErSelvforsørget: Boolean = false,
+    val bidragJustertForDeltBosted: Boolean = false,
+    val bidragJustertForNettoBarnetilleggBP: Boolean = false,
+    val bidragJustertForNettoBarnetilleggBM: Boolean = false,
+    val bidragJustertNedTilEvne: Boolean = false,
+    val bidragJustertNedTil25ProsentAvInntekt: Boolean = false,
+    val bidragJustertTilForskuddssats: Boolean = false,
+    val begrensetRevurderingUtført: Boolean = false,
 ) : Sluttberegning {
     @get:JsonIgnore
     val resultat
@@ -68,7 +72,7 @@ data class SluttberegningBarnebidrag(
             // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
                 bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
-                bidragJustertNedTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertNedTilForskuddssats.name
+                bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
                 ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name
                 barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
                 bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
@@ -195,14 +199,6 @@ data class BeregnetBidragPerBarn(
 data class DelberegningSamværsfradrag(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
-) : Delberegning
-
-data class DelberegningBegrensetRevurdering(
-    override val periode: ÅrMånedsperiode,
-    val løpendeForskudd: BigDecimal,
-    val løpendeBidrag: BigDecimal,
-    val beregnetBeløp: BigDecimal,
-    val resultatBeløp: BigDecimal,
 ) : Delberegning
 
 data class DelberegningNettoTilsynsutgift(

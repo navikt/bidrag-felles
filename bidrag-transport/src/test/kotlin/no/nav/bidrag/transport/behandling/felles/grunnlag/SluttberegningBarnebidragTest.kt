@@ -16,6 +16,7 @@ class SluttberegningBarnebidragTest {
             bruttoBidragEtterBarnetilleggBM = BigDecimal.ONE,
             nettoBidragEtterBarnetilleggBM = BigDecimal.ONE,
             bruttoBidragJustertForEvneOg25Prosent = BigDecimal.ONE,
+            bruttoBidragEtterBegrensetRevurdering = BigDecimal.ONE,
             bruttoBidragEtterBarnetilleggBP = BigDecimal.ONE,
             nettoBidragEtterSamværsfradrag = BigDecimal.ONE,
             bpAndelAvUVedDeltBostedFaktor = BigDecimal.ONE,
@@ -27,7 +28,7 @@ class SluttberegningBarnebidragTest {
             bidragJustertForNettoBarnetilleggBM = false,
             bidragJustertNedTilEvne = false,
             bidragJustertNedTil25ProsentAvInntekt = false,
-            bidragJustertNedTilForskuddssats = false,
+            bidragJustertTilForskuddssats = false,
         )
 
     @Test
@@ -146,7 +147,7 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                bidragJustertNedTilForskuddssats = true,
+                bidragJustertTilForskuddssats = true,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -157,7 +158,7 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                bidragJustertNedTilForskuddssats = true,
+                bidragJustertTilForskuddssats = true,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = true,
@@ -293,7 +294,7 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                bidragJustertNedTilForskuddssats = true,
+                bidragJustertTilForskuddssats = true,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -301,11 +302,11 @@ class SluttberegningBarnebidragTest {
                 bidragJustertNedTil25ProsentAvInntekt = false,
                 bidragJustertForNettoBarnetilleggBM = false,
             ).resultatVisningsnavn
-            ?.intern shouldBe "Bidrag vurdert opp til forskuddssats"
+            ?.intern shouldBe "Bidrag justert til forskuddssats"
 
         sluttberegning
             .copy(
-                bidragJustertNedTilForskuddssats = true,
+                bidragJustertTilForskuddssats = true,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = true,
