@@ -17,6 +17,6 @@ data class StønadsperiodeBeløp(
     val periode: ÅrMånedsperiode,
     @Schema(description = "Beregnet stønadsbeløp")
     val beløp: BigDecimal?,
-    @Schema(description = "Valutakoden tilhørende stønadsbeløpet")
+    @Schema(description = "Valutakode for stønadsbeløpet")
     val valutakode: String?,
 )
