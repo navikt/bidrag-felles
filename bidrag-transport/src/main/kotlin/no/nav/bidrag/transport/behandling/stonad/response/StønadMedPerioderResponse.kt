@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.stonad.response
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
@@ -17,6 +18,6 @@ data class StønadsperiodeBeløp(
     val periode: ÅrMånedsperiode,
     @Schema(description = "Beregnet stønadsbeløp")
     val beløp: BigDecimal?,
-    @Schema(description = "Valutakoden tilhørende stønadsbeløpet")
+    @Schema(description = "Valutakode for stønadsbeløpet")
     val valutakode: String?,
 )
