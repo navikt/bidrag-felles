@@ -23,6 +23,7 @@ private val visningsnavnCache: Map<String, Map<String, String>> = emptyMap()
 private val kodeverkUrl = AtomicReference("")
 const val POSTNUMMER = "Postnummer"
 const val LANDKODER = "Landkoder"
+const val NAV_SKJEMA = "NAVSkjema"
 const val LANDKODER_ISO2 = "LandkoderISO2"
 const val SUMMERT_SKATTEGRUNNLAG = "Summert skattegrunnlag"
 const val SPESIFISERT_SUMMERT_SKATTEGRUNNLAG = "SpesifisertSummertSkattegrunnlag"
@@ -50,6 +51,8 @@ fun finnLandkodeForLandkoderIso2(landkode: String): String? = finnVisningsnavnFo
 fun finnVisningsnavnLønnsbeskrivelse(fulltNavnInntektspost: String): String =
     finnVisningsnavnForKode(fulltNavnInntektspost, LOENNSBESKRIVELSE) ?: ""
 
+fun hentNavSkjemaKodeverk() = hentKodeverkKodeBeskrivelseMap(NAV_SKJEMA)
+
 fun finnVisningsnavnKodeverk(
     fulltNavnInntektspost: String,
     kodeverk: String,
@@ -73,6 +76,7 @@ class KodeverkProvider {
 
         fun initialiserKodeverkCache() {
             kodeverkCache.get(SUMMERT_SKATTEGRUNNLAG) { hentKodeverk(SUMMERT_SKATTEGRUNNLAG) }
+            kodeverkCache.get(NAV_SKJEMA) { hentKodeverk(NAV_SKJEMA) }
             kodeverkCache.get(LOENNSBESKRIVELSE) { hentKodeverk(LOENNSBESKRIVELSE) }
             kodeverkCache.get(YTELSEFRAOFFENTLIGE) { hentKodeverk(YTELSEFRAOFFENTLIGE) }
             kodeverkCache.get(PENSJONELLERTRYGDEBESKRIVELSE) { hentKodeverk(PENSJONELLERTRYGDEBESKRIVELSE) }
@@ -81,6 +85,7 @@ class KodeverkProvider {
         }
 
         fun invaliderKodeverkCache() {
+            kodeverkCache.invalidate(NAV_SKJEMA)
             kodeverkCache.invalidate(SUMMERT_SKATTEGRUNNLAG)
             kodeverkCache.invalidate(LOENNSBESKRIVELSE)
             kodeverkCache.invalidate(YTELSEFRAOFFENTLIGE)
@@ -90,6 +95,18 @@ class KodeverkProvider {
         }
     }
 }
+
+fun hentKodeverkKodeBeskrivelseMap(kodeverk: String): Map<String, String> =
+    kodeverkCache
+        .get(kodeverk) { hentKodeverk(kodeverk) }
+        ?.betydninger
+        ?.map {
+            it.key to
+                run {
+                    val betydning = it.value.maxBy { it.gyldigFra }.beskrivelser["nb"]
+                    if (betydning?.tekst.isNullOrEmpty()) betydning?.term ?: "" else betydning.tekst
+                }
+        }?.toMap() ?: emptyMap()
 
 fun finnVisningsnavnForKode(
     kode: String,

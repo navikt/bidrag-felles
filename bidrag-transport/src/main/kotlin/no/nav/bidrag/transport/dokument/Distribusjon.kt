@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.dokument
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.diverse.Språk
 import java.time.LocalDateTime
 
 @Schema(description = "Bestill distribusjon av journalpost")
@@ -11,6 +12,7 @@ data class DistribuerJournalpostRequest(
         description = "Forsendelsen er skrevet ut og distribuert lokalt. Distribusjon registreres men ingen distribusjon bestilles.",
     ) val lokalUtskrift: Boolean = false,
     @Schema(description = "Adresse for hvor brev sendes ved sentral print") val adresse: DistribuerTilAdresse? = null,
+    val ettersendingsoppgave: OpprettEttersendingsppgaveDto? = null,
 )
 
 @Schema(description = "Respons etter bestilt distribusjon")
@@ -19,6 +21,24 @@ data class DistribuerJournalpostResponse(
     @Schema(
         description = "Bestillingid som unikt identifiserer distribusjonsbestillingen. Vil være null hvis ingen distribusjon er bestilt.",
     ) val bestillingsId: String?,
+    val ettersendingsoppgave: OpprettEttersendingsoppgaveResponseDto? = null,
+)
+
+data class OpprettEttersendingsoppgaveResponseDto(
+    val innsendingsId: String,
+)
+
+data class OpprettEttersendingsppgaveDto(
+    val tittel: String,
+    val skjemaId: String,
+    val språk: Språk,
+    val innsendingsFristDager: Int = 14,
+    val vedleggsliste: List<OpprettEttersendingsoppgaveVedleggDto> = emptyList(),
+)
+
+data class OpprettEttersendingsoppgaveVedleggDto(
+    val tittel: String? = null,
+    val vedleggsnr: String,
 )
 
 @Schema(description = "Adresse for hvor brev sendes ved sentral print")

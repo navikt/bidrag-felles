@@ -79,6 +79,62 @@ data class JournalpostDto(
     fun erFarskapUtelukket() = hentTittel()?.startsWith(FARSKAP_UTELUKKET_PREFIKS, ignoreCase = true) == true
 }
 
+data class EttersendingsppgaveDto(
+    val tittel: String,
+    val skjemaId: String,
+    val innsendingsId: String?,
+    val språk: String,
+    val status: EttersendingsoppgaveStatus = EttersendingsoppgaveStatus.UKJENT,
+    val opprettetDato: LocalDate,
+    val fristDato: LocalDate?,
+    val slettesDato: LocalDate?,
+    val vedleggsliste: List<EttersendingsoppgaveVedleggDto> = emptyList(),
+)
+
+data class EttersendingsoppgaveVedleggDto(
+    val tittel: String? = null,
+    val vedleggsnr: String,
+    val status: EttersingdsoppgaveOpplastingsStatus = EttersingdsoppgaveOpplastingsStatus.UKJENT,
+)
+
+enum class EttersingdsoppgaveOpplastingsStatus {
+    IKKE_VALGT,
+
+    LASTET_OPP,
+
+    INNSENDT,
+
+    SEND_SENERE,
+
+    SENDES_AV_ANDRE,
+
+    SENDES_IKKE,
+
+    LASTET_OPP_IKKE_RELEVANT_LENGER,
+
+    LEVERT_DOKUMENTASJON_TIDLIGERE,
+
+    HAR_IKKE_DOKUMENTASJONEN,
+
+    NAV_KAN_HENTE_DOKUMENTASJON,
+
+    UKJENT,
+}
+
+enum class EttersendingsoppgaveStatus {
+    OPPRETTET,
+
+    UTFYLT,
+
+    INNSENDT,
+
+    SLETTET_AV_BRUKER,
+
+    AUTOMATISK_SLETTET,
+
+    UKJENT,
+}
+
 @Schema(
     description = """
 Avsender journalposten ble sendt fra hvis utgående.
