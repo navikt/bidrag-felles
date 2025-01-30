@@ -71,6 +71,7 @@ data class JournalpostDto(
                 "eller bidrag journalpost med prefiks. Feks BID_12323 eller BIF_123213",
     )
     val eksternReferanseId: String? = null,
+    val ettersendingsppgave: EttersendingsppgaveDto? = null,
 ) {
     fun hentHoveddokument() = dokumenter.firstOrNull()
 
