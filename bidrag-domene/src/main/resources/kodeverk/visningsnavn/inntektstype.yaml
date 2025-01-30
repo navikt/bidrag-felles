@@ -49,3 +49,5 @@ BARNETILLEGG_KLP:
   intern: "KLP"
 BARNETILLEGG_SPK:
   intern: "SPK"
+BARNETILLEGG_TILTAKSPENGER:
+  intern: "Tiltakspenger"
