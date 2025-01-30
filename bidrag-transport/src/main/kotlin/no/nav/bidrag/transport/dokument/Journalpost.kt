@@ -86,7 +86,7 @@ data class EttersendingsppgaveDto(
     val innsendingsId: String?,
     val språk: String,
     val status: EttersendingsoppgaveStatus = EttersendingsoppgaveStatus.UKJENT,
-    val opprettetDato: LocalDate,
+    val opprettetDato: LocalDate?,
     val fristDato: LocalDate?,
     val slettesDato: LocalDate?,
     val vedleggsliste: List<EttersendingsoppgaveVedleggDto> = emptyList(),
