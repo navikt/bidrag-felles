@@ -288,6 +288,7 @@ enum class Inntektsrapportering(
                 Inntektstype.BARNETILLEGG_STOREBRAND,
                 Inntektstype.BARNETILLEGG_KLP,
                 Inntektstype.BARNETILLEGG_SPK,
+                Inntektstype.BARNETILLEGG_TILTAKSPENGER,
             ),
     ),
 
