@@ -71,6 +71,7 @@ data class JournalpostDto(
                 "eller bidrag journalpost med prefiks. Feks BID_12323 eller BIF_123213",
     )
     val eksternReferanseId: String? = null,
+    val ettersendingsppgave: EttersendingsppgaveDto? = null,
 ) {
     fun hentHoveddokument() = dokumenter.firstOrNull()
 
@@ -85,7 +86,7 @@ data class EttersendingsppgaveDto(
     val innsendingsId: String?,
     val språk: String,
     val status: EttersendingsoppgaveStatus = EttersendingsoppgaveStatus.UKJENT,
-    val opprettetDato: LocalDate,
+    val opprettetDato: LocalDate?,
     val fristDato: LocalDate?,
     val slettesDato: LocalDate?,
     val vedleggsliste: List<EttersendingsoppgaveVedleggDto> = emptyList(),
