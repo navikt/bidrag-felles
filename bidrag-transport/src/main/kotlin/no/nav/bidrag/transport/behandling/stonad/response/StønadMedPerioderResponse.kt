@@ -5,14 +5,14 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
 @Schema(description = "Respons med stønad og beløpsinformasjon for alle perioder")
-data class StønadMedPerioderResponse(
+data class StønadMedPeriodeBeløpResponse(
     @Schema(description = "Angir første år en stønad skal indeksreguleres")
     val førsteIndeksreguleringsår: Int?,
     @Schema(description = "Liste med perioder med beløpsinformasjon for stønaden")
-    val stønadsperiodeBeløpListe: List<StønadsperiodeBeløp> = emptyList(),
+    val periodeBeløpListe: List<PeriodeBeløp> = emptyList(),
 )
 
-data class StønadsperiodeBeløp(
+data class PeriodeBeløp(
     @Schema(description = "Periode med fra-og-med-dato og til-dato med format ÅÅÅÅ-MM")
     val periode: ÅrMånedsperiode,
     @Schema(description = "Beregnet stønadsbeløp")
