@@ -134,6 +134,8 @@ enum class EttersendingsoppgaveStatus {
     AUTOMATISK_SLETTET,
 
     UKJENT,
+
+    IKKE_OPPRETTET,
 }
 
 @Schema(

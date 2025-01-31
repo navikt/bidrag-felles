@@ -66,4 +66,5 @@ data class OpprettJournalpostRequest(
                 "Dette vil prioriteres over ident som tilhører tokenet til kallet.",
     )
     val saksbehandlerIdent: String? = null,
+    val ettersendingsoppgave: OpprettEttersendingsppgaveDto? = null,
 )
