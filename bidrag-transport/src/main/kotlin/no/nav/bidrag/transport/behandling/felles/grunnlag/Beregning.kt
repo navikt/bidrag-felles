@@ -261,3 +261,12 @@ data class DelberegningTilleggsstønad(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
 ) : Delberegning
+
+data class DelberegningEndringSjekkGrense(
+    override val periode: ÅrMånedsperiode,
+    val endringsgrenseFaktor: BigDecimal,
+    val beregnetBidragBeløp: BigDecimal,
+    val løpendeBidragBeløp: BigDecimal,
+    val faktiskEndringFaktor: BigDecimal,
+    val endringErOverGrense: Boolean,
+) : Delberegning
