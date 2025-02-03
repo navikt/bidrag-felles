@@ -18,7 +18,7 @@ If you work in [@navikt](https://github.com/navikt) you can reach us at the Slac
 channel [#team-bidrag](https://nav-it.slack.com/archives/CAZ7A2074)
 
 <!---------------------------------------------------------------------------->
-
+ 
 [Publish button]: https://img.shields.io/badge/Publiser_siste_release_draft-37a779?style=for-the-badge
 [Release draft]: https://github.com/navikt/bidrag-felles/releases
 [#]: #
