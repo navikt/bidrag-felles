@@ -49,7 +49,7 @@ data class SluttberegningBarnebidrag(
     val bruttoBidragEtterBarnetilleggBM: BigDecimal,
     val nettoBidragEtterBarnetilleggBM: BigDecimal,
     val bruttoBidragJustertForEvneOg25Prosent: BigDecimal,
-    val bruttoBidragEtterBegrensetRevurdering: BigDecimal,
+    val bruttoBidragEtterBegrensetRevurdering: BigDecimal = BigDecimal.ZERO,
     val bruttoBidragEtterBarnetilleggBP: BigDecimal,
     val nettoBidragEtterSamværsfradrag: BigDecimal,
     val bpAndelAvUVedDeltBostedFaktor: BigDecimal,
