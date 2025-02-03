@@ -12,6 +12,7 @@ enum class SjablonTallNavn(
     val forskudd: Boolean = false,
     val bpAndelSærbidrag: Boolean = false,
     val særbidrag: Boolean = false,
+    val endringSjekkGrense: Boolean = false,
 ) {
     ORDINÆR_BARNETRYGD_BELØP(
         navn = "OrdinærBarnetrygdBeløp",
@@ -106,6 +107,7 @@ enum class SjablonTallNavn(
     ENDRING_BIDRAG_GRENSE_PROSENT(
         navn = "EndringBidragGrenseProsent",
         id = "0020",
+        endringSjekkGrense = true,
     ),
     BARNETILLEGG_FORSVARET_FØRSTE_BARN_BELØP(
         navn = "BarnetilleggForsvaretFørsteBarnBeløp",
