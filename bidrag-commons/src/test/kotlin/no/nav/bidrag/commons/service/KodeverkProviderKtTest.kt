@@ -11,7 +11,9 @@ fun stubKodeverkProvider() {
     mockkStatic(::finnVisningsnavnSkattegrunnlag)
     mockkStatic(::finnVisningsnavnLønnsbeskrivelse)
     mockkStatic(::finnVisningsnavnForKode)
+    mockkStatic(::hentNavSkjemaKodeverk)
     every { finnVisningsnavnForKode(any(), any()) } returns "Visningsnavn"
+    every { hentNavSkjemaKodeverk() } returns emptyMap()
     every {
         finnVisningsnavnLønnsbeskrivelse(any())
     } returns "Visningsnavn lønnsbeskrivelse"
