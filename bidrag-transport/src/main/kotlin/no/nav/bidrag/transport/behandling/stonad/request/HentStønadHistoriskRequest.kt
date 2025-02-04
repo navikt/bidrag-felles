@@ -17,5 +17,5 @@ data class HentStønadHistoriskRequest(
     @Schema(description = "Personidenten til den som krever stønadem")
     val kravhaver: Personident,
     @Schema(description = "Tidspunkt som det ønskes å hente gyldige perioder for")
-    val gyldigTidspunkt: LocalDateTime,
+    val gyldigTidspunkt: LocalDateTime = LocalDateTime.now(),
 )
