@@ -14,4 +14,5 @@ data class BeløpshistorikkPeriode(
     val periode: ÅrMånedsperiode,
     val beløp: BigDecimal?,
     val valutakode: String?,
+    val vedtaksid: Int? = null,
 )
