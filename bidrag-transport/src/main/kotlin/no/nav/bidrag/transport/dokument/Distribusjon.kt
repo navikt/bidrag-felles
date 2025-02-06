@@ -38,6 +38,7 @@ data class OpprettEttersendingsppgaveDto(
 
 data class OpprettEttersendingsoppgaveVedleggDto(
     val tittel: String? = null,
+    val url: String? = null,
     val vedleggsnr: String,
 )
 

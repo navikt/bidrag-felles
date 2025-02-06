@@ -94,6 +94,7 @@ data class EttersendingsppgaveDto(
 
 data class EttersendingsoppgaveVedleggDto(
     val tittel: String? = null,
+    val url: String? = null,
     val vedleggsnr: String,
     val status: EttersingdsoppgaveOpplastingsStatus = EttersingdsoppgaveOpplastingsStatus.UKJENT,
 )
