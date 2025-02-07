@@ -210,6 +210,10 @@ enum class SjablonTallNavn(
         id = "0041",
         underholdskostnad = true,
     ),
+    INDEKSREGULRERING_FAKTOR(
+        navn = "IndeksreguleringFaktor",
+        id = "0043",
+    ),
     FASTSETTELSESGEBYR_BELØP(
         navn = "FastsettelsesgebyrBeløp",
         id = "0100",
