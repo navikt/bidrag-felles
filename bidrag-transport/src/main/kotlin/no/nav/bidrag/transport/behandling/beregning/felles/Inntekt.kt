@@ -10,6 +10,7 @@ import java.math.BigDecimal
 @Schema(description = "Grunnlag for kategorisering, gruppering og beregning av inntekter")
 data class BeregnValgteInntekterGrunnlag(
     @Schema(description = "Beregningsperiode") val periode: ÅrMånedsperiode,
+    @Schema(description = "Om beregning skal opphøre siste periode") val opphørSistePeriode: Boolean = false,
     @Schema(description = "Liste over identer til barn som det skal beregnes for") val barnIdentListe: List<Personident>,
     @Schema(description = "Ident til person som inntekter skal beregnes for") val gjelderIdent: Personident,
     @Schema(description = "Periodisert liste over inntekter") val grunnlagListe: List<InntektsgrunnlagPeriode> = emptyList(),

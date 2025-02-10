@@ -7,6 +7,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 @Schema(description = "Grunnlaget for en beregning av barnebidrag, forskudd og særbidrag")
 data class BeregnGrunnlag(
     @Schema(description = "Beregningsperiode") val periode: ÅrMånedsperiode,
+    @Schema(description = "Om beregning skal opphøre siste periode") val opphørSistePeriode: Boolean = false,
     @Schema(description = "Referanse til Person-objekt som tilhører søknadsbarnet") val søknadsbarnReferanse: String,
     @Schema(description = "Periodisert liste over grunnlagselementer") val grunnlagListe: List<GrunnlagDto> = emptyList(),
 )

@@ -137,3 +137,6 @@ GEBYR_ILAGT:
 
 PARTEN_BER_OM_OPPHØR:
   intern: "Parten ber om opphør"
+
+OPPHØR:
+  intern: "Annet opphør"
