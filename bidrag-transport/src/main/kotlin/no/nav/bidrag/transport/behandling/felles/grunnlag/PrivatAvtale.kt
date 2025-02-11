@@ -11,7 +11,7 @@ data class PrivatAvtaleGrunnlag(
     val skalIndeksreguleres: Boolean,
 ) : GrunnlagInnhold
 
-data class PrivatAvtalePeriode(
+data class PrivatAvtalePeriodeGrunnlag(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
     override val manueltRegistrert: Boolean = true,
