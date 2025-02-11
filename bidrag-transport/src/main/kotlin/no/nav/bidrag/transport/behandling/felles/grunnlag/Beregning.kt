@@ -269,5 +269,6 @@ data class DelberegningEndringSjekkGrensePeriode(
 ) : Delberegning
 
 data class DelberegningEndringSjekkGrense(
+    override val periode: ÅrMånedsperiode,
     val endringErOverGrense: Boolean,
-) : GrunnlagInnhold
+) : Delberegning
