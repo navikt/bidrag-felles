@@ -70,7 +70,7 @@ enum class Grunnlagstype {
     NOTAT,
 
     PRIVAT_AVTALE_GRUNNLAG,
-    PRIVAT_AVTALE_PERIODE,
+    PRIVAT_AVTALE_PERIODE_GRUNNLAG,
 
     // Særbidrag
     SÆRBIDRAG_KATEGORI,
