@@ -19,6 +19,6 @@ data class PrivatAvtalePeriode(
 
 data class DelberegningPrivatAvtalePeriode(
     override val periode: ÅrMånedsperiode,
-    val indeksreguleringFaktor: BigDecimal?,
+    val indeksreguleringFaktor: BigDecimal? = null,
     val beløp: BigDecimal,
 ) : Delberegning
