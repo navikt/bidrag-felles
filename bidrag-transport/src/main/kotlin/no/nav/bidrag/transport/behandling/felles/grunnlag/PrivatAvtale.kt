@@ -11,7 +11,7 @@ data class PrivatAvtaleGrunnlag(
     val skalIndeksreguleres: Boolean,
 ) : GrunnlagInnhold
 
-data class PrivatAvtalePeriodeGrunnlag(
+data class PrivatAvtalePeriode(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
     override val manueltRegistrert: Boolean = true,
@@ -19,6 +19,6 @@ data class PrivatAvtalePeriodeGrunnlag(
 
 data class DelberegningPrivatAvtalePeriode(
     override val periode: ÅrMånedsperiode,
-    val indeksreguleringFaktor: BigDecimal? = null,
+    val indeksreguleringFaktor: BigDecimal?,
     val beløp: BigDecimal,
 ) : Delberegning
