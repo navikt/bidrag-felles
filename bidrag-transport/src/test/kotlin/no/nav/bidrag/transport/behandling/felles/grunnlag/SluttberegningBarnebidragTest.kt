@@ -29,6 +29,7 @@ class SluttberegningBarnebidragTest {
             bidragJustertNedTilEvne = false,
             bidragJustertNedTil25ProsentAvInntekt = false,
             bidragJustertTilForskuddssats = false,
+            ikkeOmsorgForBarnet = false,
         )
 
     @Test
@@ -166,6 +167,18 @@ class SluttberegningBarnebidragTest {
                 bidragJustertNedTil25ProsentAvInntekt = false,
                 bidragJustertForNettoBarnetilleggBM = false,
             ).bisysResultatkode shouldBe "101"
+
+        sluttberegning
+            .copy(
+                bidragJustertTilForskuddssats = true,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = false,
+                ikkeOmsorgForBarnet = true,
+            ).bisysResultatkode shouldBe "AIO"
     }
 
     @Test
@@ -315,5 +328,18 @@ class SluttberegningBarnebidragTest {
                 bidragJustertForNettoBarnetilleggBM = false,
             ).resultatVisningsnavn
             ?.intern shouldBe "Bidrag satt til barnetillegg fra BP"
+
+        sluttberegning
+            .copy(
+                bidragJustertTilForskuddssats = true,
+                barnetErSelvforsørget = false,
+                bidragJustertForDeltBosted = false,
+                bidragJustertForNettoBarnetilleggBP = true,
+                bidragJustertNedTilEvne = false,
+                bidragJustertNedTil25ProsentAvInntekt = false,
+                bidragJustertForNettoBarnetilleggBM = false,
+                ikkeOmsorgForBarnet = true,
+            ).resultatVisningsnavn
+            ?.intern shouldBe "Ikke omsorg for barnet"
     }
 }
