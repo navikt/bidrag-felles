@@ -3486,5 +3486,21 @@
     "verdi": 4253,
     "brukerid": "H139831 ",
     "tidspktEndret": "2024-06-22T17:48:52.566635"
+  },
+  {
+    "typeSjablon": "0050",
+    "datoFom": "2020-07-01",
+    "datoTom": "2023-06-31",
+    "verdi": 4.50,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2024-06-22T17:48:52.566635"
+  },
+  {
+    "typeSjablon": "0050",
+    "datoFom": "2023-07-01",
+    "datoTom": "9999-12-31",
+    "verdi": 5.50,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2024-06-22T17:48:52.566635"
   }
 ]
