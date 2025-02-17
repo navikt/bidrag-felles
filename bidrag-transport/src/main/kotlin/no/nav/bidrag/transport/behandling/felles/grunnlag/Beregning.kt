@@ -29,6 +29,7 @@ data class SluttberegningSærbidrag(
 // Rekkefølge har ikke noe å si her. Dette er bare konvertering av resultatet til bisyskode.
 private val sluttberegningBisyskodeMap =
     mapOf(
+        SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name to "AIO",
         SluttberegningBarnebidrag::ingenEndringUnderGrense.name to "VO",
         SluttberegningBarnebidrag::barnetErSelvforsørget.name to "5SF",
         SluttberegningBarnebidrag::bidragJustertForDeltBosted.name to "8DN",
@@ -42,8 +43,8 @@ private val sluttberegningBisyskodeMap =
 
 data class SluttberegningBarnebidrag(
     override val periode: ÅrMånedsperiode,
-    val beregnetBeløp: BigDecimal,
-    val resultatBeløp: BigDecimal,
+    val beregnetBeløp: BigDecimal?,
+    val resultatBeløp: BigDecimal?,
     @JsonAlias("uminusNettoBarnetilleggBM")
     val uMinusNettoBarnetilleggBM: BigDecimal,
     val bruttoBidragEtterBarnetilleggBM: BigDecimal,
@@ -65,12 +66,14 @@ data class SluttberegningBarnebidrag(
     val bidragJustertNedTil25ProsentAvInntekt: Boolean = false,
     val bidragJustertTilForskuddssats: Boolean = false,
     val begrensetRevurderingUtført: Boolean = false,
+    val ikkeOmsorgForBarnet: Boolean = false,
 ) : Sluttberegning {
     @get:JsonIgnore
     val resultat
         get() =
             // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
+                ikkeOmsorgForBarnet -> SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
                 bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
                 bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
                 ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name

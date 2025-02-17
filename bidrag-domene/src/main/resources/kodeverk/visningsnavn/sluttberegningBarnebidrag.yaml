@@ -12,6 +12,8 @@ barnetErSelvforsørget:
   intern: "Barnet er selvforsørget"
 ingenEndringUnderGrense:
   intern: "Ingen endring under grense"
+ikkeOmsorgForBarnet:
+  intern: "Ikke omsorg for barnet"
 kostnadsberegnet:
   intern: "Kostnadsberegnet bidrag"
 bidragJustertTilForskuddssats:
