@@ -466,6 +466,8 @@ data class NotatPersonDto(
     val ident: Personident?,
     val erBeskyttet: Boolean = false,
     val innbetaltBeløp: BigDecimal? = null,
+    val opphørsdato: LocalDate? = null,
+    val virkningstidspunkt: LocalDate? = null,
 )
 
 data class NotatInntekterDto(
