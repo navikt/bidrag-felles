@@ -3517,6 +3517,46 @@
     "datoTom": "9999-12-31",
     "verdi": 1314,
     "brukerid": "H139831 ",
-    "tidspktEndret": "2025-01-01T00:00:00"
+    "tidspktEndret": "2024-06-22T17:48:52.566635"
+  },
+  {
+    "typeSjablon": "0050",
+    "datoFom": "2020-07-01",
+    "datoTom": "2021-06-31",
+    "verdi": 1.80,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2024-06-22T17:48:52.566635"
+  },
+  {
+    "typeSjablon": "0050",
+    "datoFom": "2021-07-01",
+    "datoTom": "2022-06-31",
+    "verdi": 2.50,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2024-06-22T17:48:52.566635"
+  },
+  {
+    "typeSjablon": "0050",
+    "datoFom": "2022-07-01",
+    "datoTom": "2023-06-31",
+    "verdi": 3.20,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2024-06-22T17:48:52.566635"
+  },
+  {
+    "typeSjablon": "0050",
+    "datoFom": "2023-07-01",
+    "datoTom": "2024-06-31",
+    "verdi": 7.00,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2024-06-22T17:48:52.566635"
+  },
+  {
+    "typeSjablon": "0050",
+    "datoFom": "2024-07-01",
+    "datoTom": "9999-12-31",
+    "verdi": 4.70,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2024-06-22T17:48:52.566635"
   }
 ]
