@@ -74,7 +74,8 @@ fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
         .filter {
             referanse.isEmpty() ||
                 it.grunnlagsreferanseListe.contains(referanse) ||
-                referanse == it.gjelderReferanse
+                referanse == it.gjelderReferanse ||
+                referanse == it.gjelderBarnReferanse
         }
 
 fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanse(
