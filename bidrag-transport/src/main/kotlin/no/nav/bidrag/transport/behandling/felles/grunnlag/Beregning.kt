@@ -11,6 +11,7 @@ import no.nav.bidrag.domene.util.lastVisningsnavnFraFil
 import java.math.BigDecimal
 import java.math.MathContext
 import java.time.LocalDate
+import java.util.Collections.emptyList
 
 data class SluttberegningForskudd(
     override val periode: ÅrMånedsperiode,
@@ -30,7 +31,6 @@ data class SluttberegningSærbidrag(
 private val sluttberegningBisyskodeMap =
     mapOf(
         SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name to "AIO",
-        SluttberegningBarnebidrag::ingenEndringUnderGrense.name to "VO",
         SluttberegningBarnebidrag::barnetErSelvforsørget.name to "5SF",
         SluttberegningBarnebidrag::bidragJustertForDeltBosted.name to "8DN",
         SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name to "101",
@@ -57,7 +57,6 @@ data class SluttberegningBarnebidrag(
     val bpAndelAvUVedDeltBostedBeløp: BigDecimal,
     val løpendeForskudd: BigDecimal? = null,
     val løpendeBidrag: BigDecimal? = null,
-    val ingenEndringUnderGrense: Boolean = false,
     val barnetErSelvforsørget: Boolean = false,
     val bidragJustertForDeltBosted: Boolean = false,
     val bidragJustertForNettoBarnetilleggBP: Boolean = false,
@@ -76,7 +75,6 @@ data class SluttberegningBarnebidrag(
                 ikkeOmsorgForBarnet -> SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
                 bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
                 bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
-                ingenEndringUnderGrense -> SluttberegningBarnebidrag::ingenEndringUnderGrense.name
                 barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
                 bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
                 bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->

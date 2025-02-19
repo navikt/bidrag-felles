@@ -21,7 +21,6 @@ class SluttberegningBarnebidragTest {
             nettoBidragEtterSamværsfradrag = BigDecimal.ONE,
             bpAndelAvUVedDeltBostedFaktor = BigDecimal.ONE,
             bpAndelAvUVedDeltBostedBeløp = BigDecimal.ONE,
-            ingenEndringUnderGrense = false,
             barnetErSelvforsørget = false,
             bidragJustertForDeltBosted = false,
             bidragJustertForNettoBarnetilleggBP = false,
@@ -38,18 +37,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = true,
-                barnetErSelvforsørget = true,
-                bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = false,
-                bidragJustertNedTilEvne = true,
-                bidragJustertNedTil25ProsentAvInntekt = true,
-                bidragJustertForNettoBarnetilleggBM = true,
-            ).bisysResultatkode shouldBe "VO"
-
-        sluttberegning
-            .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = true,
                 bidragJustertForDeltBosted = true,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -60,7 +47,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -71,7 +57,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -82,7 +67,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -93,7 +77,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = true,
@@ -104,7 +87,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -115,7 +97,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -126,7 +107,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -137,7 +117,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -187,19 +166,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = true,
-                barnetErSelvforsørget = true,
-                bidragJustertForDeltBosted = true,
-                bidragJustertForNettoBarnetilleggBP = false,
-                bidragJustertNedTilEvne = true,
-                bidragJustertNedTil25ProsentAvInntekt = true,
-                bidragJustertForNettoBarnetilleggBM = true,
-            ).resultatVisningsnavn
-            ?.intern shouldBe "Ingen endring under grense"
-
-        sluttberegning
-            .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = true,
                 bidragJustertForDeltBosted = true,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -211,7 +177,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -223,7 +188,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -235,7 +199,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = true,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -247,7 +210,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = true,
@@ -259,7 +221,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -271,7 +232,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -283,7 +243,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
@@ -295,7 +254,6 @@ class SluttberegningBarnebidragTest {
 
         sluttberegning
             .copy(
-                ingenEndringUnderGrense = false,
                 barnetErSelvforsørget = false,
                 bidragJustertForDeltBosted = false,
                 bidragJustertForNettoBarnetilleggBP = false,
