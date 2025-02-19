@@ -68,14 +68,16 @@ fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanser(
 
 fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
     grunnlagType: Grunnlagstype? = null,
-    referanse: String = "",
+    referanse: String? = null,
+    gjelderBarnReferanse: String? = null,
 ): List<BaseGrunnlag> =
     filter { grunnlagType == null || it.type == grunnlagType }
         .filter {
-            referanse.isEmpty() ||
+            referanse.isNullOrEmpty() &&
+                gjelderBarnReferanse.isNullOrEmpty() ||
                 it.grunnlagsreferanseListe.contains(referanse) ||
-                referanse == it.gjelderReferanse ||
-                referanse == it.gjelderBarnReferanse
+                (referanse.isNullOrEmpty() || referanse == it.gjelderReferanse) &&
+                (gjelderBarnReferanse.isNullOrEmpty() || gjelderBarnReferanse == it.gjelderBarnReferanse)
         }
 
 fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanse(
@@ -125,9 +127,10 @@ inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBa
 
 inline fun <reified T : GrunnlagInnhold> List<BaseGrunnlag>.filtrerOgKonverterBasertPåFremmedReferanse(
     grunnlagType: Grunnlagstype? = null,
-    referanse: String = "",
+    referanse: String? = null,
+    gjelderBarnReferanse: String? = null,
 ): List<InnholdMedReferanse<T>> =
-    filtrerBasertPåFremmedReferanse(grunnlagType, referanse)
+    filtrerBasertPåFremmedReferanse(grunnlagType, referanse, gjelderBarnReferanse)
         .map {
             it.tilInnholdMedReferanse<T>()
         }
