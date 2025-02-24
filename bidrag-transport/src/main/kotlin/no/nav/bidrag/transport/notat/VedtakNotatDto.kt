@@ -60,6 +60,7 @@ data class VedtakNotatDto(
     val gebyr: List<NotatGebyrRolleDto>? = null,
     var underholdskostnader: NotatUnderholdDto? = null,
     val personer: List<NotatPersonDto>,
+    val privatavtale: List<NotatPrivatAvtaleDto>,
     val roller: List<NotatPersonDto> = personer,
     val inntekter: NotatInntekterDto,
     val vedtak: NotatVedtakDetaljerDto,
@@ -755,5 +756,25 @@ data class NotatResultatBeregningInntekterDto(
     val inntektBMMånedlig get() = inntektBM?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
     val inntektBarnMånedlig get() = inntektBarn?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
 }
+
+data class NotatPrivatAvtaleDto(
+    val gjelderBarn: NotatPersonDto,
+    val avtaleDato: LocalDate?,
+    val skalIndeksreguleres: Boolean,
+    val begrunnelse: NotatBegrunnelseDto? = null,
+    val perioder: List<NotatPrivatAvtalePeriodeDto> = emptyList(),
+    val beregnetPrivatAvtalePerioder: List<NotatBeregnetPrivatAvtalePeriodeDto> = emptyList(),
+)
+
+data class NotatPrivatAvtalePeriodeDto(
+    val periode: DatoperiodeDto,
+    val beløp: BigDecimal,
+)
+
+data class NotatBeregnetPrivatAvtalePeriodeDto(
+    val periode: DatoperiodeDto,
+    val indeksfaktor: BigDecimal,
+    val beløp: BigDecimal,
+)
 
 typealias NotatResultatForskuddBeregningBarnListe = List<NotatResultatForskuddBeregningBarnDto>
