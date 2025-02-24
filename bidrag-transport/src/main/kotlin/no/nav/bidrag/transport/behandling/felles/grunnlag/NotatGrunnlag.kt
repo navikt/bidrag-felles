@@ -12,5 +12,6 @@ data class NotatGrunnlag(
         UTGIFTER,
         SAMVÆR,
         UNDERHOLDSKOSTNAD,
+        PRIVAT_AVTALE,
     }
 }
