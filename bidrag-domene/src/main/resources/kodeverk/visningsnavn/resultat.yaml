@@ -120,6 +120,9 @@ AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG:
 IKKE_DOKUMENTERT_SKOLEGANG:
   intern: "Ikke dokumentert skolegang"
 
+AVSLUTTET_SKOLEGANG:
+  intern: "Avsluttet skolegang"
+
 IKKE_OMSORG_FOR_BARNET:
   intern: "Ikke omsorg for barnet"
 
