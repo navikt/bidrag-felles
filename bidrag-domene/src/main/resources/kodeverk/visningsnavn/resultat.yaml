@@ -117,6 +117,9 @@ GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS:
 AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG:
   intern: "Privat avtale om særbidrag"
 
+IKKE_DOKUMENTERT_SKOLEGANG:
+  intern: "Ikke dokumentert skolegang"
+
 IKKE_OMSORG_FOR_BARNET:
   intern: "Ikke omsorg for barnet"
 

@@ -41,6 +41,14 @@ enum class Resultatkode(
 
     DIREKTE_OPPJØR(listOf(BisysResultatkode("V")), ResultatkodeType.BARNEBIDRAG),
 
+    // Avslag barnebidrag 18 år
+    IKKE_DOKUMENTERT_SKOLEGANG(
+        listOf(BisysResultatkode("ADS")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+    ),
+
     // Avslag barnebidrag
     IKKE_OMSORG_FOR_BARNET(
         listOf(BisysResultatkode("IOB")),
