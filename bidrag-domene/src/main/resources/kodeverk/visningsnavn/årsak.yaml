@@ -55,5 +55,8 @@ FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK:
 FRA_MÅNEDEN_ETTER_PRIVAT_AVTALE:
   intern: "Fra etter privat avtale"
 
+FRA_MÅNEDEN_ETTER_FYLTE_18_ÅR:
+  intern: "Fra måneden etter fylte 18 år"
+
 BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE:
   intern: "Bidragspliktig har ikke bidratt til forsørgelse"
