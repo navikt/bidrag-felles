@@ -7,4 +7,5 @@ enum class TypeBehandling {
     FORSKUDD,
     SÆRBIDRAG,
     BIDRAG,
+    BIDRAG_18_ÅR,
 }
