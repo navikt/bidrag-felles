@@ -1,5 +1,6 @@
 package no.nav.bidrag.commons.web.interceptor
 
+import com.nimbusds.oauth2.sdk.GrantType
 import no.nav.bidrag.commons.security.SikkerhetsKontekst
 import no.nav.security.token.support.client.core.ClientProperties
 import no.nav.security.token.support.client.core.OAuth2GrantType
@@ -19,7 +20,7 @@ abstract class AzureTokenClientInterceptor(
 ) : ClientHttpRequestInterceptor {
     protected fun genererAccessToken(
         request: HttpRequest,
-        oAuth2GrantType: OAuth2GrantType? = null,
+        oAuth2GrantType: GrantType? = null,
     ): String {
         val clientProperties =
             clientPropertiesFor(
@@ -27,7 +28,7 @@ abstract class AzureTokenClientInterceptor(
                 clientConfigurationProperties,
                 oAuth2GrantType,
             )
-        return oAuth2AccessTokenService.getAccessToken(clientProperties).accessToken
+        return oAuth2AccessTokenService.getAccessToken(clientProperties).access_token!!
     }
 
     /**
@@ -38,13 +39,13 @@ abstract class AzureTokenClientInterceptor(
     private fun clientPropertiesFor(
         uri: URI,
         clientConfigurationProperties: ClientConfigurationProperties,
-        oAuth2GrantType: OAuth2GrantType? = null,
+        oAuth2GrantType: GrantType? = null,
     ): ClientProperties {
         val clientProperties = filterClientProperties(clientConfigurationProperties, uri)
 
         return ClientProperties(
             clientProperties.tokenEndpointUrl,
-            clientProperties.wellKnownUrl,
+            clientProperties.tokenEndpointUrl,
             oAuth2GrantType ?: clientCredentialOrJwtBearer(),
             clientProperties.scope,
             clientProperties.authentication,
@@ -69,8 +70,9 @@ abstract class AzureTokenClientInterceptor(
             if (SikkerhetsKontekst.erIApplikasjonKontekst()) return true
             val preferredUsername =
                 SpringTokenValidationContextHolder()
-                    .tokenValidationContext
-                    .getClaims("aad")["preferred_username"]
+                    .getTokenValidationContext()
+                    .getClaims("aad")
+                    .getStringClaim("preferred_username")
             return preferredUsername == null
         } catch (e: Throwable) {
             // Ingen request context. Skjer ved kall som har opphav i kjørende applikasjon. Ping etc.
@@ -104,7 +106,7 @@ class ServiceUserAuthTokenInterceptor(
         body: ByteArray,
         execution: ClientHttpRequestExecution,
     ): ClientHttpResponse {
-        request.headers.setBearerAuth(genererAccessToken(request, OAuth2GrantType.CLIENT_CREDENTIALS))
+        request.headers.setBearerAuth(genererAccessToken(request, GrantType.CLIENT_CREDENTIALS))
         return execution.execute(request, body)
     }
 }

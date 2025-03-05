@@ -33,8 +33,8 @@ class RestTemplateBuilderBean {
         .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
         .additionalCustomizers(observationRestTemplateCustomizer)
         .additionalCustomizers(iNaisProxyCustomizer)
-        .setConnectTimeout(Duration.of(15, ChronoUnit.SECONDS))
-        .setReadTimeout(Duration.of(15, ChronoUnit.SECONDS))
+        .connectTimeout(Duration.of(15, ChronoUnit.SECONDS))
+        .readTimeout(Duration.of(15, ChronoUnit.SECONDS))
 
     /**
      * Denne bønnnen initialiseres hvis proxy-url ikke finnes. Hvis proxy-url finnnes vil bønnen over
@@ -56,6 +56,6 @@ class RestTemplateBuilderBean {
         RestTemplateBuilder()
             .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
             .additionalCustomizers(observationRestTemplateCustomizer)
-            .setConnectTimeout(Duration.of(15, ChronoUnit.SECONDS))
-            .setReadTimeout(Duration.of(15, ChronoUnit.SECONDS))
+            .connectTimeout(Duration.of(15, ChronoUnit.SECONDS))
+            .readTimeout(Duration.of(15, ChronoUnit.SECONDS))
 }

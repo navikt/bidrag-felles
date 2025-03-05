@@ -1,8 +1,8 @@
 package no.nav.bidrag.commons.security.service
 
+import com.nimbusds.oauth2.sdk.GrantType
 import no.nav.bidrag.commons.security.model.TokenException
 import no.nav.security.token.support.client.core.ClientProperties
-import no.nav.security.token.support.client.core.OAuth2GrantType
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenResponse
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
@@ -26,7 +26,7 @@ open class AzureTokenService(
     override fun fetchToken(
         clientRegistrationId: String,
         token: JwtToken?,
-    ): String = getAccessToken(clientRegistrationId, token).accessToken
+    ): String = getAccessToken(clientRegistrationId, token).access_token!!
 
     private fun getAccessToken(
         clientRegistrationId: String,
@@ -35,12 +35,12 @@ open class AzureTokenService(
         if (token != null && isOnBehalfOfFlowToken(token)) {
             logger.debug("AZURE: Creating on-behalf-of token")
             return oAuth2AccessTokenService.getAccessToken(
-                createClientPropertiesWithGrantType(clientRegistrationId, OAuth2GrantType.JWT_BEARER),
+                createClientPropertiesWithGrantType(clientRegistrationId, GrantType.JWT_BEARER),
             )
         }
         logger.debug("AZURE: Creating client credentials token")
         return oAuth2AccessTokenService.getAccessToken(
-            createClientPropertiesWithGrantType(clientRegistrationId, OAuth2GrantType.CLIENT_CREDENTIALS),
+            createClientPropertiesWithGrantType(clientRegistrationId, GrantType.CLIENT_CREDENTIALS),
         )
     }
 
@@ -51,14 +51,14 @@ open class AzureTokenService(
 
     private fun createClientPropertiesWithGrantType(
         clientRegistrationId: String,
-        grantType: OAuth2GrantType?,
+        grantType: GrantType?,
     ): ClientProperties {
         val registration =
             clientConfigurationProperties.registration[clientRegistrationId]
                 ?: throw TokenException("Missing registration for client $clientRegistrationId")
         return ClientProperties(
             registration.tokenEndpointUrl,
-            registration.wellKnownUrl,
+            registration.tokenEndpointUrl,
             grantType ?: registration.grantType,
             registration.scope,
             registration.authentication,

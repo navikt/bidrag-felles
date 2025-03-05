@@ -1,8 +1,8 @@
 package no.nav.bidrag.commons.security.service
 
+import com.nimbusds.oauth2.sdk.GrantType
 import no.nav.bidrag.commons.security.model.TokenException
 import no.nav.security.token.support.client.core.ClientProperties
-import no.nav.security.token.support.client.core.OAuth2GrantType
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenResponse
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
@@ -16,7 +16,7 @@ open class TokenXTokenService(
 
     override fun isEnabled() = true
 
-    override fun fetchToken(clientRegistrationId: String): String = getAccessToken(clientRegistrationId).accessToken
+    override fun fetchToken(clientRegistrationId: String): String = getAccessToken(clientRegistrationId).access_token!!
 
     private fun getAccessToken(clientRegistrationId: String): OAuth2AccessTokenResponse {
         logger.debug("TokenX: Creating token for clientRegistrationId $clientRegistrationId")
@@ -29,13 +29,13 @@ open class TokenXTokenService(
                 ?: throw TokenException("Missing registration for client $clientRegistrationId")
         val tokenExchange =
             ClientProperties.TokenExchangeProperties(
-                registration.tokenExchange.audience.replace(".", ":"),
+                registration.tokenExchange!!.audience.replace(".", ":"),
                 "",
             )
         return ClientProperties(
             registration.tokenEndpointUrl,
-            registration.wellKnownUrl,
-            OAuth2GrantType.TOKEN_EXCHANGE,
+            registration.tokenEndpointUrl,
+            GrantType.TOKEN_EXCHANGE,
             registration.scope,
             registration.authentication,
             registration.resourceUrl,
