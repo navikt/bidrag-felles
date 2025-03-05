@@ -6,15 +6,18 @@ import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import java.math.BigDecimal
+import java.time.YearMonth
 
 @Schema(description = "Grunnlag for kategorisering, gruppering og beregning av inntekter")
 data class BeregnValgteInntekterGrunnlag(
     @Schema(description = "Beregningsperiode") val periode: ÅrMånedsperiode,
-    @Schema(description = "Om beregning skal opphøre siste periode") val opphørSistePeriode: Boolean = false,
+    @Schema(description = "Dato hvis siste periode skal opphøres") val opphørsdato: YearMonth? = null,
     @Schema(description = "Liste over identer til barn som det skal beregnes for") val barnIdentListe: List<Personident>,
     @Schema(description = "Ident til person som inntekter skal beregnes for") val gjelderIdent: Personident,
     @Schema(description = "Periodisert liste over inntekter") val grunnlagListe: List<InntektsgrunnlagPeriode> = emptyList(),
-)
+) {
+    val opphørSistePeriode: Boolean get() = opphørsdato != null
+}
 
 data class InntektsgrunnlagPeriode(
     @Schema(description = "Perioden inntekten gjelder for") val periode: ÅrMånedsperiode,
