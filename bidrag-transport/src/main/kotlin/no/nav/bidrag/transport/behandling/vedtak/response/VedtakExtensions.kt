@@ -8,9 +8,14 @@ import no.nav.bidrag.domene.enums.vedtak.BehandlingsrefKilde
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.tid.Datoperiode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrense
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrensePeriode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
-import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragIReferanser
+import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåFremmedReferanse
+import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragGrunnlagIReferanser
+import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
 import java.time.YearMonth
 
@@ -77,7 +82,10 @@ val VedtakDto.erDirekteAvslag get(): Boolean {
 fun StønadsendringDto.finnSistePeriode() = periodeListe.maxBy { it.periode.fom }
 
 fun VedtakDto.finnSluttberegningBarnebidragIPeriode(periode: VedtakPeriodeDto) =
-    grunnlagListe.finnSluttberegningBarnebidragIReferanser(periode.grunnlagReferanseListe)
+    grunnlagListe.finnSluttberegningBarnebidragGrunnlagIReferanser(periode.grunnlagReferanseListe)?.innhold
+
+fun VedtakDto.finnSluttberegningBarnebidragGrunnlagIPeriode(periode: VedtakPeriodeDto) =
+    grunnlagListe.finnSluttberegningBarnebidragGrunnlagIReferanser(periode.grunnlagReferanseListe)
 
 val VedtakDto.typeBehandling get() =
     when {
@@ -85,3 +93,25 @@ val VedtakDto.typeBehandling get() =
         engangsbeløpListe.isNotEmpty() && engangsbeløpListe.first().type == Engangsbeløptype.SÆRBIDRAG -> TypeBehandling.SÆRBIDRAG
         else -> TypeBehandling.BIDRAG
     }
+
+fun StønadsendringDto.finnSøknadsbarnReferanse(grunnlagListe: List<GrunnlagDto>): String {
+    val kravhaverIdent = kravhaver.verdi
+    return grunnlagListe.hentPersonMedIdent(kravhaverIdent)!!.referanse
+}
+
+fun List<GrunnlagDto>.erResultatEndringUnderGrense(sluttberegningReferanse: String): Boolean {
+    val delberegningGrense = finnDelberegningSjekkGrensePeriode(sluttberegningReferanse)
+    return delberegningGrense?.innhold?.endringErOverGrense == false
+}
+
+fun List<GrunnlagDto>.finnDelberegningSjekkGrensePeriode(sluttberegningReferanse: String) =
+    filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrensePeriode>(
+        Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE_PERIODE,
+        referanse = sluttberegningReferanse,
+    ).firstOrNull()
+
+fun List<GrunnlagDto>.finnDelberegningSjekkGrense(sluttberegningReferanse: String) =
+    filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrense>(
+        Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE,
+        referanse = sluttberegningReferanse,
+    ).firstOrNull()

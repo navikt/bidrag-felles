@@ -4,6 +4,8 @@ import no.nav.bidrag.domene.enums.behandling.TypeBehandling
 import no.nav.bidrag.domene.enums.vedtak.BehandlingsrefKilde
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
+import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
+import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
 
 val VedtakHendelse.søknadId
     get() =
@@ -43,3 +45,8 @@ val VedtakHendelse.typeBehandling get() =
             engangsbeløpListe.first().type == Engangsbeløptype.SÆRBIDRAG -> TypeBehandling.SÆRBIDRAG
         else -> TypeBehandling.BIDRAG
     }
+
+fun Stønadsendring.finnSøknadsbarnReferanse(grunnlagListe: List<GrunnlagDto>): String {
+    val kravhaverIdent = kravhaver.verdi
+    return grunnlagListe.hentPersonMedIdent(kravhaverIdent)!!.referanse
+}
