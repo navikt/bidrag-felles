@@ -99,7 +99,12 @@ fun StønadsendringDto.finnSøknadsbarnReferanse(grunnlagListe: List<GrunnlagDto
     return grunnlagListe.hentPersonMedIdent(kravhaverIdent)!!.referanse
 }
 
-fun List<GrunnlagDto>.erResultatEndringUnderGrense(sluttberegningReferanse: String): Boolean {
+fun List<GrunnlagDto>.erResultatEndringUnderGrense(søknadsbarnReferanse: String): Boolean {
+    val delberegningGrense = finnDelberegningSjekkGrense(søknadsbarnReferanse)
+    return delberegningGrense?.innhold?.endringErOverGrense == false
+}
+
+fun List<GrunnlagDto>.erResultatEndringUnderGrenseForPeriode(sluttberegningReferanse: String): Boolean {
     val delberegningGrense = finnDelberegningSjekkGrensePeriode(sluttberegningReferanse)
     return delberegningGrense?.innhold?.endringErOverGrense == false
 }
@@ -110,8 +115,8 @@ fun List<GrunnlagDto>.finnDelberegningSjekkGrensePeriode(sluttberegningReferanse
         referanse = sluttberegningReferanse,
     ).firstOrNull()
 
-fun List<GrunnlagDto>.finnDelberegningSjekkGrense(sluttberegningReferanse: String) =
+fun List<GrunnlagDto>.finnDelberegningSjekkGrense(søknadsbarnReferanse: String) =
     filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrense>(
         Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE,
-        referanse = sluttberegningReferanse,
+        gjelderBarnReferanse = søknadsbarnReferanse,
     ).firstOrNull()
