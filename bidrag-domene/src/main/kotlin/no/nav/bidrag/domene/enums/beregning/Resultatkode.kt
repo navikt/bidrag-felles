@@ -251,7 +251,10 @@ enum class Resultatkode(
         ResultatkodeType.SÆRBIDRAG,
         ResultatkodeType.AVSLAG,
     ),
-
+    INGEN_ENDRING_UNDER_GRENSE(
+        listOf(BisysResultatkode("AMF")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
     ;
 
     val legacyKode get() = bisysKode.firstOrNull()?.resultatKode

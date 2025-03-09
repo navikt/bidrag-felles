@@ -207,11 +207,11 @@ val List<BaseGrunnlag>.delberegningSamværsklasse get() =
     }!!
         .innholdTilObjekt<DelberegningSamværsklasse>()
 
-fun List<BaseGrunnlag>.finnSluttberegningBarnebidragIReferanser(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =
+fun List<BaseGrunnlag>.finnSluttberegningBarnebidragGrunnlagIReferanser(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =
     finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SluttberegningBarnebidrag>(
         Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG,
         grunnlagsreferanseListe,
-    ).firstOrNull()?.innhold
+    ).firstOrNull()
 
 inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.tilInnholdMedReferanse() =
     InnholdMedReferanse(
