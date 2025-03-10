@@ -690,7 +690,7 @@ data class NotatResultatBidragsberegningBarnDto(
     ) {
         @Suppress("unused")
         val resultatkodeVisningsnavn get() =
-            if (resultatKode?.erDirekteAvslag() == true) {
+            if (resultatKode?.erDirekteAvslag() == true || resultatKode == Resultatkode.INGEN_ENDRING_UNDER_GRENSE) {
                 resultatKode.visningsnavnIntern()
             } else {
                 beregningsdetaljer
