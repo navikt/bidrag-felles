@@ -265,6 +265,9 @@ data class DelberegningTilleggsstønad(
 
 data class DelberegningEndringSjekkGrensePeriode(
     override val periode: ÅrMånedsperiode,
+    val løpendeBidragBeløp: BigDecimal?,
+    val løpendeBidragFraPrivatAvtale: Boolean = false,
+    val beregnetBidragBeløp: BigDecimal?,
     val faktiskEndringFaktor: BigDecimal?,
     val endringErOverGrense: Boolean,
 ) : Delberegning
