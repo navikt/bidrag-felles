@@ -252,7 +252,7 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
     ),
     INGEN_ENDRING_UNDER_GRENSE(
-        listOf(BisysResultatkode("AMF")),
+        listOf(BisysResultatkode("VO")),
         ResultatkodeType.BARNEBIDRAG,
     ),
     ;
