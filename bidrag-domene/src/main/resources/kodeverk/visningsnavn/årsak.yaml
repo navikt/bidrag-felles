@@ -60,3 +60,6 @@ FRA_MÅNEDEN_ETTER_FYLTE_18_ÅR:
 
 BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE:
   intern: "Bidragspliktig har ikke bidratt til forsørgelse"
+
+FRA_ENDRINGSTIDSPUNKT:
+  intern: "Fra endringstidspunkt"
