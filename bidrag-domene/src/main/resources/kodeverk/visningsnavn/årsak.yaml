@@ -63,3 +63,6 @@ BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE:
 
 FRA_ENDRINGSTIDSPUNKT:
   intern: "Fra endringstidspunkt"
+
+MÅNED_ETTER_BETALT_FORFALT_BIDRAG:
+  intern: "Måned etter betalt/forfalt bidrag"
