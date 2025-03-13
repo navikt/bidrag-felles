@@ -27,7 +27,7 @@ class ResultatkodeTest {
     fun `Skal hente avslagskoder`() {
         val resultatkoder = Resultatkode.alleMedType(Resultatkode.ResultatkodeType.AVSLAG)
 
-        resultatkoder.shouldHaveSize(33)
+        resultatkoder.shouldHaveSize(35)
     }
 
     @Test
