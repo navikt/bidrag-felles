@@ -35,6 +35,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.BeregnetBidragPerBarn
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBarnetilleggSkattesats
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspliktigesAndel
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrensePeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUnderholdskostnad
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
@@ -689,7 +690,7 @@ data class NotatResultatBidragsberegningBarnDto(
     ) {
         @Suppress("unused")
         val resultatkodeVisningsnavn get() =
-            if (resultatKode?.erDirekteAvslag() == true) {
+            if (resultatKode?.erDirekteAvslag() == true || resultatKode == Resultatkode.INGEN_ENDRING_UNDER_GRENSE) {
                 resultatKode.visningsnavnIntern()
             } else {
                 beregningsdetaljer
@@ -710,6 +711,7 @@ data class NotatResultatBidragsberegningBarnDto(
             val inntekter: NotatResultatBeregningInntekterDto? = null,
             val delberegningBidragsevne: NotatDelberegningBidragsevneDto? = null,
             val samværsfradrag: NotatBeregningsdetaljerSamværsfradrag? = null,
+            val endringUnderGrense: DelberegningEndringSjekkGrensePeriode? = null,
             val sluttberegning: SluttberegningBarnebidrag? = null,
             val delberegningUnderholdskostnad: DelberegningUnderholdskostnad? = null,
             val delberegningBidragspliktigesBeregnedeTotalBidrag: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto? = null,

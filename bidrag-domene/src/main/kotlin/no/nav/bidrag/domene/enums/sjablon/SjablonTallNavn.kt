@@ -14,11 +14,13 @@ enum class SjablonTallNavn(
     val særbidrag: Boolean = false,
     val endringSjekkGrense: Boolean = false,
     val indeksregulering: Boolean = false,
+    val aldersjustering: Boolean = false,
 ) {
     ORDINÆR_BARNETRYGD_BELØP(
         navn = "OrdinærBarnetrygdBeløp",
         id = "0001",
         underholdskostnad = true,
+        aldersjustering = true,
     ),
     ORDINÆR_SMÅBARNSTILLEGG_BELØP(
         navn = "OrdinærSmåbarnstilleggBeløp",
@@ -210,6 +212,7 @@ enum class SjablonTallNavn(
         navn = "ForhøyetBarnetrygdBeløp",
         id = "0041",
         underholdskostnad = true,
+        aldersjustering = true,
     ),
     INDEKSREGULRERING_FAKTOR(
         navn = "IndeksreguleringFaktor",

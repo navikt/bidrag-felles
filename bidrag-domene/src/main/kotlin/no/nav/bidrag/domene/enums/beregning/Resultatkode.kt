@@ -14,6 +14,7 @@ enum class Resultatkode(
     OPPHØR(
         listOf(BisysResultatkode("OH", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.OPPHØR,
     ),
 
     // Gebyr
@@ -56,9 +57,17 @@ enum class Resultatkode(
     ),
 
     // Avslag barnebidrag
+    IKKE_STERK_NOK_GRUNN_OG_BIDRAGET_HAR_OPPHØRT(
+        listOf(BisysResultatkode("OSB")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.OPPHØR,
+        ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+    ),
     IKKE_OMSORG_FOR_BARNET(
         listOf(BisysResultatkode("IOB")),
         ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.OPPHØR,
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
     ),
@@ -251,7 +260,10 @@ enum class Resultatkode(
         ResultatkodeType.SÆRBIDRAG,
         ResultatkodeType.AVSLAG,
     ),
-
+    INGEN_ENDRING_UNDER_GRENSE(
+        listOf(BisysResultatkode("VO")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
     ;
 
     val legacyKode get() = bisysKode.firstOrNull()?.resultatKode
@@ -289,6 +301,8 @@ enum class Resultatkode(
 
         fun Resultatkode.erDirekteAvslag(): Boolean = erType(ResultatkodeType.DIREKTE_AVSLAG)
 
+        fun Resultatkode.erOpphør(): Boolean = erType(ResultatkodeType.OPPHØR)
+
         fun Resultatkode.erAvslag(): Boolean =
             erType(ResultatkodeType.AVSLAG) ||
                 erType(ResultatkodeType.DIREKTE_AVSLAG)
@@ -314,6 +328,7 @@ enum class Resultatkode(
     }
 
     enum class ResultatkodeType {
+        OPPHØR,
         AVSLAG,
         DIREKTE_AVSLAG,
         FORSKUDD,

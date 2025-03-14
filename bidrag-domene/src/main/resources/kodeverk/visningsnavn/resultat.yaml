@@ -146,3 +146,9 @@ PARTEN_BER_OM_OPPHØR:
 
 OPPHØR:
   intern: "Annet opphør"
+
+INGEN_ENDRING_UNDER_GRENSE:
+  intern: "Ingen endring under grense"
+
+IKKE_STERK_NOK_GRUNN_OG_BIDRAGET_HAR_OPPHØRT:
+  intern: "Ikke sterk nok grunn og bidraget har opphørt"
