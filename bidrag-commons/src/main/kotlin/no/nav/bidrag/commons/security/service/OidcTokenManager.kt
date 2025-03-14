@@ -13,29 +13,29 @@ class OidcTokenManager {
         const val STS_ISSUER = "sts"
     }
 
-    fun fetchTokenAsString(): String = fetchToken().tokenAsString
+    fun fetchTokenAsString(): String = fetchToken().encodedToken
 
-    private fun hasIssuers(): Boolean = SpringTokenValidationContextHolder().tokenValidationContext.issuers.isNotEmpty()
+    private fun hasIssuers(): Boolean = SpringTokenValidationContextHolder().getTokenValidationContext().issuers.isNotEmpty()
 
     fun isValidTokenIssuedByAzure(): Boolean =
-        hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(AZURE_ISSUER) != null
+        hasIssuers() && SpringTokenValidationContextHolder().getTokenValidationContext().getJwtToken(AZURE_ISSUER) != null
 
     fun isValidTokenIssuedByTokenX(): Boolean =
-        hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(TOKENX_ISSUER) != null
+        hasIssuers() && SpringTokenValidationContextHolder().getTokenValidationContext().getJwtToken(TOKENX_ISSUER) != null
 
     fun isValidTokenIssuedByOpenAm(): Boolean =
-        hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(ISSO_ISSUER) != null
+        hasIssuers() && SpringTokenValidationContextHolder().getTokenValidationContext().getJwtToken(ISSO_ISSUER) != null
 
     fun isValidTokenIssuedBySTS(): Boolean =
-        hasIssuers() && SpringTokenValidationContextHolder().tokenValidationContext.getJwtToken(STS_ISSUER) != null
+        hasIssuers() && SpringTokenValidationContextHolder().getTokenValidationContext().getJwtToken(STS_ISSUER) != null
 
     fun hentToken(): String? {
         if (SikkerhetsKontekst.erIApplikasjonKontekst()) return null
-        if (SpringTokenValidationContextHolder().tokenValidationContext.hasValidToken()) {
+        if (SpringTokenValidationContextHolder().getTokenValidationContext().hasValidToken()) {
             return SpringTokenValidationContextHolder()
-                .tokenValidationContext.firstValidToken
-                .get()
-                .tokenAsString
+                .getTokenValidationContext()
+                .firstValidToken!!
+                .encodedToken
         }
         return null
     }
@@ -49,6 +49,6 @@ class OidcTokenManager {
     fun getIssuer(): String = fetchToken().issuer
 
     fun fetchToken(): JwtToken =
-        SpringTokenValidationContextHolder().tokenValidationContext.firstValidToken?.orElse(null)
+        SpringTokenValidationContextHolder().getTokenValidationContext().firstValidToken
             ?: throw IllegalStateException("Fant ingen gyldig token i kontekst")
 }

@@ -43,7 +43,7 @@ class StsTokenService(
 
     override fun isEnabled() = true
 
-    override fun fetchToken(): String = stsCache.get("STS", this::getToken)!!.accessToken
+    override fun fetchToken(): String = stsCache.get("STS", this::getToken)!!.access_token!!
 
     private fun getToken(cacheName: String): OAuth2AccessTokenResponse {
         logger.debug("Fetching STS token")
@@ -56,11 +56,7 @@ class StsTokenService(
             )
         val tokenForBasicAuthentication = tokenForBasicAuthenticationResponse.body
         return tokenForBasicAuthentication?.let {
-            OAuth2AccessTokenResponse
-                .builder()
-                .accessToken(it.access_token)
-                .expiresIn(it.expiresIn)
-                .build()
+            OAuth2AccessTokenResponse(it.access_token, expires_in = it.expiresIn)
         } ?: throw TokenException(
             String.format(
                 "Kunne ikke hente token fra '%s', response: %s",

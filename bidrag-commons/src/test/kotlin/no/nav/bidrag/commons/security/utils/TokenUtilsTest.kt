@@ -11,7 +11,6 @@ import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Test
 import org.springframework.web.context.request.RequestAttributes
 import org.springframework.web.context.request.RequestContextHolder
-import java.util.Optional
 
 internal class TokenUtilsTest {
     // Generated using http://jwtbuilder.jamiekurtz.com/
@@ -182,6 +181,6 @@ internal class TokenUtilsTest {
             )
         } returns tokenValidationContext
         every { tokenValidationContext.hasValidToken() } returns true
-        every { tokenValidationContext.firstValidToken } returns Optional.ofNullable(JwtToken(token))
+        every { tokenValidationContext.firstValidToken } returns JwtToken(token)
     }
 }
