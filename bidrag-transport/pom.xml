@@ -19,7 +19,7 @@
     <revision>1.0-SNAPSHOT</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <spring.version>6.2.1</spring.version>
-    <jakarta.version>3.0.2</jakarta.version>
+    <jakarta.version>3.1.1</jakarta.version>
 
     <java.version>1.8</java.version>
     <maven.compiler.source>${java.version}</maven.compiler.source>
