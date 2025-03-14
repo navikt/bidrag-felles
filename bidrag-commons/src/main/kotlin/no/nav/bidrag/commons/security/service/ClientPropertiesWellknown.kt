@@ -15,5 +15,6 @@ data class ClientConfigurationWellknownProperties(
 )
 
 class ClientPropertiesWellknown(
+    val resourceUrl: URI? = null,
     val wellKnownUrl: URI? = null,
 )

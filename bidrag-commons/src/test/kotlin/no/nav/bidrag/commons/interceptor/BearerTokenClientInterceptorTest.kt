@@ -1,11 +1,12 @@
 package no.nav.bidrag.commons.interceptor
 
+import com.nimbusds.oauth2.sdk.GrantType
+import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import no.nav.bidrag.commons.web.interceptor.BearerTokenClientInterceptor
 import no.nav.security.token.support.client.core.ClientProperties
-import no.nav.security.token.support.client.core.OAuth2GrantType
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.core.context.TokenValidationContext
 import no.nav.security.token.support.core.jwt.JwtTokenClaims
@@ -30,6 +31,7 @@ class BearerTokenClientInterceptorTest {
             BearerTokenClientInterceptor(
                 oAuth2AccessTokenService,
                 clientConfigurationProperties,
+                clientConfigurationWellknownProperties,
             )
     }
 
@@ -47,7 +49,17 @@ class BearerTokenClientInterceptorTest {
         bearerTokenClientInterceptor.intercept(req, ByteArray(0), execution)
 
         verify {
-            oAuth2AccessTokenService.getAccessToken(clientConfigurationProperties.registration["1"])
+            oAuth2AccessTokenService.getAccessToken(
+                withArg {
+                    val r = clientConfigurationProperties.registration["1"]!!
+                    it.tokenEndpointUrl shouldBe r.tokenEndpointUrl
+                    it.resourceUrl shouldBe r.resourceUrl
+                    it.scope shouldBe r.scope
+                    it.tokenExchange shouldBe r.tokenExchange
+                    it.authentication shouldBe r.authentication
+                    it.grantType shouldBe r.grantType
+                },
+            )
         }
     }
 
@@ -63,15 +75,24 @@ class BearerTokenClientInterceptorTest {
 
         verify {
             oAuth2AccessTokenService.getAccessToken(
-                ClientProperties(
-                    clientConfigurationProperties.registration["1"]?.tokenEndpointUrl,
-                    clientConfigurationProperties.registration["1"]?.wellKnownUrl,
-                    OAuth2GrantType.JWT_BEARER,
-                    clientConfigurationProperties.registration["1"]?.scope,
-                    clientConfigurationProperties.registration["1"]?.authentication,
-                    clientConfigurationProperties.registration["1"]?.resourceUrl,
-                    clientConfigurationProperties.registration["1"]?.tokenExchange,
-                ),
+                withArg {
+                    val r =
+                        ClientProperties(
+                            clientConfigurationProperties.registration["1"]?.tokenEndpointUrl,
+                            clientConfigurationWellknownProperties.registration["1"]?.wellKnownUrl,
+                            GrantType.JWT_BEARER,
+                            clientConfigurationProperties.registration["1"]?.scope!!,
+                            clientConfigurationProperties.registration["1"]?.authentication!!,
+                            clientConfigurationProperties.registration["1"]?.resourceUrl,
+                            clientConfigurationProperties.registration["1"]?.tokenExchange,
+                        )
+                    it.tokenEndpointUrl shouldBe r.tokenEndpointUrl
+                    it.resourceUrl shouldBe r.resourceUrl
+                    it.scope shouldBe r.scope
+                    it.tokenExchange shouldBe r.tokenExchange
+                    it.authentication shouldBe r.authentication
+                    it.grantType shouldBe r.grantType
+                },
             )
         }
     }
@@ -88,7 +109,7 @@ class BearerTokenClientInterceptorTest {
             )
         } returns tokenValidationContext
         every { tokenValidationContext.getClaims("aad") } returns jwtTokenClaims
-        every { jwtTokenClaims.get("preferred_username") } returns preferredUsername
+        every { jwtTokenClaims.getStringClaim("preferred_username") } returns preferredUsername
         every { jwtTokenClaims.get("NAVident") } returns preferredUsername
     }
 

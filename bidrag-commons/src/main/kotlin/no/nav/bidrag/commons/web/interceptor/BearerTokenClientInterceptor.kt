@@ -2,8 +2,8 @@ package no.nav.bidrag.commons.web.interceptor
 
 import com.nimbusds.oauth2.sdk.GrantType
 import no.nav.bidrag.commons.security.SikkerhetsKontekst
+import no.nav.bidrag.commons.security.service.ClientConfigurationWellknownProperties
 import no.nav.security.token.support.client.core.ClientProperties
-import no.nav.security.token.support.client.core.OAuth2GrantType
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
 import no.nav.security.token.support.spring.SpringTokenValidationContextHolder
@@ -17,6 +17,7 @@ import java.net.URI
 abstract class AzureTokenClientInterceptor(
     private val oAuth2AccessTokenService: OAuth2AccessTokenService,
     private val clientConfigurationProperties: ClientConfigurationProperties,
+    private val clientConfigurationWellknownProperties: ClientConfigurationWellknownProperties,
 ) : ClientHttpRequestInterceptor {
     protected fun genererAccessToken(
         request: HttpRequest,
@@ -26,6 +27,7 @@ abstract class AzureTokenClientInterceptor(
             clientPropertiesFor(
                 request.uri,
                 clientConfigurationProperties,
+                clientConfigurationWellknownProperties,
                 oAuth2GrantType,
             )
         return oAuth2AccessTokenService.getAccessToken(clientProperties).access_token!!
@@ -39,13 +41,15 @@ abstract class AzureTokenClientInterceptor(
     private fun clientPropertiesFor(
         uri: URI,
         clientConfigurationProperties: ClientConfigurationProperties,
+        clientConfigurationWellknownProperties: ClientConfigurationWellknownProperties,
         oAuth2GrantType: GrantType? = null,
     ): ClientProperties {
         val clientProperties = filterClientProperties(clientConfigurationProperties, uri)
+        val clientWellknownProperties = filterClientPropertiesWellKnown(clientConfigurationWellknownProperties, uri)
 
         return ClientProperties(
             clientProperties.tokenEndpointUrl,
-            clientProperties.tokenEndpointUrl,
+            clientWellknownProperties.wellKnownUrl,
             oAuth2GrantType ?: clientCredentialOrJwtBearer(),
             clientProperties.scope,
             clientProperties.authentication,
@@ -53,6 +57,15 @@ abstract class AzureTokenClientInterceptor(
             clientProperties.tokenExchange,
         )
     }
+
+    private fun filterClientPropertiesWellKnown(
+        clientConfigurationProperties: ClientConfigurationWellknownProperties,
+        uri: URI,
+    ) = clientConfigurationProperties
+        .registration
+        .values
+        .firstOrNull { uri.toString().startsWith(it.resourceUrl.toString()) }
+        ?: error("could not find oauth2 client config for uri=$uri")
 
     private fun filterClientProperties(
         clientConfigurationProperties: ClientConfigurationProperties,
@@ -63,7 +76,7 @@ abstract class AzureTokenClientInterceptor(
         .firstOrNull { uri.toString().startsWith(it.resourceUrl.toString()) }
         ?: error("could not find oauth2 client config for uri=$uri")
 
-    private fun clientCredentialOrJwtBearer() = if (erSystembruker()) OAuth2GrantType.CLIENT_CREDENTIALS else OAuth2GrantType.JWT_BEARER
+    private fun clientCredentialOrJwtBearer() = if (erSystembruker()) GrantType.CLIENT_CREDENTIALS else GrantType.JWT_BEARER
 
     private fun erSystembruker(): Boolean {
         return try {
@@ -85,7 +98,8 @@ abstract class AzureTokenClientInterceptor(
 class BearerTokenClientInterceptor(
     oAuth2AccessTokenService: OAuth2AccessTokenService,
     clientConfigurationProperties: ClientConfigurationProperties,
-) : AzureTokenClientInterceptor(oAuth2AccessTokenService, clientConfigurationProperties) {
+    clientConfigurationWellknownProperties: ClientConfigurationWellknownProperties,
+) : AzureTokenClientInterceptor(oAuth2AccessTokenService, clientConfigurationProperties, clientConfigurationWellknownProperties) {
     override fun intercept(
         request: HttpRequest,
         body: ByteArray,
@@ -100,7 +114,8 @@ class BearerTokenClientInterceptor(
 class ServiceUserAuthTokenInterceptor(
     oAuth2AccessTokenService: OAuth2AccessTokenService,
     clientConfigurationProperties: ClientConfigurationProperties,
-) : AzureTokenClientInterceptor(oAuth2AccessTokenService, clientConfigurationProperties) {
+    clientConfigurationWellknownProperties: ClientConfigurationWellknownProperties,
+) : AzureTokenClientInterceptor(oAuth2AccessTokenService, clientConfigurationProperties, clientConfigurationWellknownProperties) {
     override fun intercept(
         request: HttpRequest,
         body: ByteArray,
