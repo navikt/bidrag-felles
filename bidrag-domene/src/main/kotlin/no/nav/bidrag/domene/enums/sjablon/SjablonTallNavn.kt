@@ -30,6 +30,7 @@ enum class SjablonTallNavn(
         navn = "BoutgifterBidragsbarnBeløp",
         id = "0003",
         underholdskostnad = true,
+        aldersjustering = true,
     ),
     FORDEL_SKATTEKLASSE2_BELØP(
         navn = "FordelSkatteklasse2Beløp",
