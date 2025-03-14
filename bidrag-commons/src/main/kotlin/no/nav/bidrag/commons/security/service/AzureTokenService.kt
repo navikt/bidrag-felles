@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory
 
 open class AzureTokenService(
     private val clientConfigurationProperties: ClientConfigurationProperties,
+    private val clientConfigurationWellknownProperties: ClientConfigurationWellknownProperties,
     private val oAuth2AccessTokenService: OAuth2AccessTokenService,
 ) : TokenService("Azure") {
     private val logger = LoggerFactory.getLogger(this::class.java)
@@ -56,9 +57,10 @@ open class AzureTokenService(
         val registration =
             clientConfigurationProperties.registration[clientRegistrationId]
                 ?: throw TokenException("Missing registration for client $clientRegistrationId")
+        val registrationWellknown = clientConfigurationWellknownProperties.registration[clientRegistrationId]
         return ClientProperties(
             registration.tokenEndpointUrl,
-            registration.tokenEndpointUrl,
+            registrationWellknown?.wellKnownUrl,
             grantType ?: registration.grantType,
             registration.scope,
             registration.authentication,

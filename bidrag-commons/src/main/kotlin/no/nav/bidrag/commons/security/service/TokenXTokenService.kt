@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory
 
 open class TokenXTokenService(
     private val clientConfigurationProperties: ClientConfigurationProperties,
+    private val clientConfigurationWellknownProperties: ClientConfigurationWellknownProperties,
     private val oAuth2AccessTokenService: OAuth2AccessTokenService,
 ) : TokenService("Azure") {
     private val logger = LoggerFactory.getLogger(this::class.java)
@@ -32,9 +33,11 @@ open class TokenXTokenService(
                 registration.tokenExchange!!.audience.replace(".", ":"),
                 "",
             )
+        val registrationWellknown = clientConfigurationWellknownProperties.registration["${clientRegistrationId}_tokenx"]
+
         return ClientProperties(
             registration.tokenEndpointUrl,
-            registration.tokenEndpointUrl,
+            registrationWellknown?.wellKnownUrl,
             GrantType.TOKEN_EXCHANGE,
             registration.scope,
             registration.authentication,
