@@ -27,6 +27,12 @@ data class SluttberegningSærbidrag(
     val resultatBeløp: BigDecimal?,
 ) : Sluttberegning
 
+private val sluttberegningAvslagResultater =
+    listOf(
+        SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name,
+        SluttberegningBarnebidrag::barnetErSelvforsørget.name,
+    )
+
 // Rekkefølge har ikke noe å si her. Dette er bare konvertering av resultatet til bisyskode.
 private val sluttberegningBisyskodeMap =
     mapOf(
@@ -86,6 +92,9 @@ data class SluttberegningBarnebidrag(
                 bidragJustertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
                 else -> "kostnadsberegnet"
             }
+
+    @get:JsonIgnore
+    val erResultatAvslag get() = sluttberegningAvslagResultater.contains(resultat)
 
     @get:JsonIgnore
     val bisysResultatkode
