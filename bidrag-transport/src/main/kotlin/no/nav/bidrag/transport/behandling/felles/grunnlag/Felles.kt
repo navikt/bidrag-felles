@@ -95,6 +95,11 @@ interface GrunnlagPeriodeInnhold : GrunnlagInnhold {
     val manueltRegistrert: Boolean
 }
 
+interface GrunnlagPeriodeInnholdKopi : GrunnlagInnhold {
+    val periode: ÅrMånedsperiode
+    val fraVedtakId: Long
+}
+
 interface InnhentetGrunnlagInnhold<out T> : GrunnlagInnhold {
     @get:Schema(description = "Tidspunkt data hentet fra kilden")
     val hentetTidspunkt: LocalDateTime
