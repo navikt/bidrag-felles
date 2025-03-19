@@ -9,7 +9,7 @@ import java.math.BigDecimal
 data class KopiDelberegningUnderholdskostnad(
     override val periode: ÅrMånedsperiode,
     override val fraVedtakId: Long,
-    val nettoTilsynsutgift: BigDecimal,
+    val nettoTilsynsutgift: BigDecimal?,
 ) : GrunnlagPeriodeInnholdKopi
 
 data class KopiDelberegningBidragspliktigesAndel(
