@@ -160,4 +160,10 @@ enum class Grunnlagstype {
 
     // Brukes ifbm Bisys grunnlag
     UNNTAK,
+
+    // Aldersjustering "kopigrunnlag"
+    KOPI_DELBEREGNING_UNDERHOLDSKOSTNAD,
+    KOPI_DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL,
+    KOPI_BARNETILSYN_MED_STØNAD_PERIODE,
+    KOPI_SAMVÆRSPERIODE,
 }
