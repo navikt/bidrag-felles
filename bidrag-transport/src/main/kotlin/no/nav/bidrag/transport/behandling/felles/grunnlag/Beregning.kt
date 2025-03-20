@@ -104,6 +104,13 @@ data class SluttberegningBarnebidrag(
     val resultatVisningsnavn get() = lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[resultat]
 }
 
+data class SluttberegningBarnebidragAldersjustering(
+    override val periode: ÅrMånedsperiode,
+    val beregnetBeløp: BigDecimal,
+    val resultatBeløp: BigDecimal,
+    val bpAndelBeløp: BigDecimal,
+) : Sluttberegning
+
 @Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))
 data class DelberegningInntekt(
     override val periode: ÅrMånedsperiode,
