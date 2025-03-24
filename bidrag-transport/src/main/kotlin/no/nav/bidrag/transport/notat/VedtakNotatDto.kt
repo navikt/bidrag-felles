@@ -346,11 +346,17 @@ data class NotatBegrunnelseDto(
 data class NotatBoforholdDto(
     val barn: List<BoforholdBarn> = emptyList(),
     val andreVoksneIHusstanden: NotatAndreVoksneIHusstanden? = null,
+    val boforholdBMSøknadsbarn: List<NotatBoforholdTilBMMedSøknadsbarn> = emptyList(),
     val sivilstand: NotatSivilstand,
     val begrunnelse: NotatBegrunnelseDto,
     @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
     val notat: NotatBegrunnelseDto = begrunnelse,
     val beregnetBoforhold: List<DelberegningBoforhold> = emptyList(),
+)
+
+data class NotatBoforholdTilBMMedSøknadsbarn(
+    val gjelderBarn: NotatPersonDto,
+    val perioder: List<OpplysningerFraFolkeregisteret<Bostatuskode>> = emptyList(),
 )
 
 data class NotatGebyrRolleDto(
