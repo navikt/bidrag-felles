@@ -30,7 +30,7 @@ enum class VirkningstidspunktÅrsakstype(
     FRA_MÅNEDEN_ETTER_FYLTE_18_ÅR("DB"),
     FRA_ENDRINGSTIDSPUNKT("FE"),
     BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE("PM"),
-    MÅNED_ETTER_BETALT_FORFALT_BIDRAG("PM"),
+    MÅNED_ETTER_BETALT_FORFALT_BIDRAG("MB"),
     ;
 
     companion object {
