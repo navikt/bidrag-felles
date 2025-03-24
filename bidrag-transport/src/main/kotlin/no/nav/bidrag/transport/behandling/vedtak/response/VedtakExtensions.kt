@@ -8,6 +8,7 @@ import no.nav.bidrag.domene.enums.vedtak.BehandlingsrefKilde
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.tid.Datoperiode
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrense
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrensePeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
@@ -104,16 +105,15 @@ fun List<GrunnlagDto>.erResultatEndringUnderGrense(søknadsbarnReferanse: String
     return delberegningGrense?.innhold?.endringErOverGrense == false
 }
 
-fun List<GrunnlagDto>.erResultatEndringUnderGrenseForPeriode(sluttberegningReferanse: String): Boolean {
-    val delberegningGrense = finnDelberegningSjekkGrensePeriode(sluttberegningReferanse)
+fun List<GrunnlagDto>.erResultatEndringUnderGrenseForPeriode(periode: ÅrMånedsperiode): Boolean {
+    val delberegningGrense = finnDelberegningSjekkGrensePeriode(periode)
     return delberegningGrense?.innhold?.endringErOverGrense == false
 }
 
-fun List<GrunnlagDto>.finnDelberegningSjekkGrensePeriode(sluttberegningReferanse: String) =
+fun List<GrunnlagDto>.finnDelberegningSjekkGrensePeriode(periode: ÅrMånedsperiode) =
     filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrensePeriode>(
         Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE_PERIODE,
-        referanse = sluttberegningReferanse,
-    ).firstOrNull()
+    ).find { it.innhold.periode == periode }
 
 fun List<GrunnlagDto>.finnDelberegningSjekkGrense(søknadsbarnReferanse: String) =
     filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrense>(
