@@ -102,7 +102,7 @@ data class OpprettStønadsendringRequestDto(
     val kravhaver: Personident,
     @Schema(description = "Personidenten til den som mottar bidraget")
     val mottaker: Personident,
-    @Schema(description = "Antatt vedtaksid for siste vedtak. Ikke utfyllt for førstegangsvedtak")
+    @Schema(description = "Vedtaksid for siste vedtak. Ikke utfyllt for førstegangsvedtak")
     val sisteVedtaksid: Long? = null,
     @Schema(description = "Angir første år en stønad skal indeksreguleres")
     val førsteIndeksreguleringsår: Int? = null,
