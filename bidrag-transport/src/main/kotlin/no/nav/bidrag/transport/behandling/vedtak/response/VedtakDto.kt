@@ -28,6 +28,8 @@ data class VedtakForStønad(
     val vedtakstidspunkt: LocalDateTime,
     @Schema(description = "Type vedtak")
     val type: Vedtakstype,
+    @Schema(description = "Referanse som er unik for vedtaket")
+    val unikReferanse: String?,
     @Schema(description = "Hva er kilden til vedtaket. Automatisk eller manuelt")
     val kilde: Vedtakskilde,
     @Schema(description = "Stønadsendringen for vedtaket")

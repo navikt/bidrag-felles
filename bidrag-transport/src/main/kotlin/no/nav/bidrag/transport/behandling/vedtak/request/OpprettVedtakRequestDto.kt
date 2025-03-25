@@ -37,6 +37,8 @@ data class OpprettVedtakRequestDto(
     val opprettetAv: String? = null,
     @Schema(description = "Tidspunkt/timestamp når vedtaket er fattet")
     val vedtakstidspunkt: LocalDateTime = LocalDateTime.now(),
+    @Schema(description = "Referanse som er unik for vedtaket")
+    val unikReferanse: String? = null,
     @Schema(description = "Enheten som er ansvarlig for vedtaket. Kan være null for feks batch")
     @NotBlank
     val enhetsnummer: Enhetsnummer? = null,
