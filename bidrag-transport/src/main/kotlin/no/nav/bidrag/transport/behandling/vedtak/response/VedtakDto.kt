@@ -28,8 +28,6 @@ data class VedtakForStønad(
     val vedtakstidspunkt: LocalDateTime,
     @Schema(description = "Type vedtak")
     val type: Vedtakstype,
-    @Schema(description = "Referanse som er unik for vedtaket")
-    val unikReferanse: String?,
     @Schema(description = "Hva er kilden til vedtaket. Automatisk eller manuelt")
     val kilde: Vedtakskilde,
     @Schema(description = "Stønadsendringen for vedtaket")
@@ -50,8 +48,10 @@ data class VedtakDto(
     val opprettetAvNavn: String?,
     @Schema(description = "Navn på applikasjon som vedtaket er opprettet i")
     val kildeapplikasjon: String,
-    @Schema(description = "Tidspunkt/timestamp når vedtaket er fattet")
-    val vedtakstidspunkt: LocalDateTime,
+    @Schema(description = "Tidspunkt/timestamp når vedtaket er fattet. Er null for vedtaksforslag")
+    val vedtakstidspunkt: LocalDateTime?,
+    @Schema(description = "Referanse som er unik for vedtaket")
+    val unikReferanse: String?,
     @Schema(description = "Enheten som er ansvarlig for vedtaket. Kan være null for feks batch")
     val enhetsnummer: Enhetsnummer?,
     @Schema(description = "Settes hvis overføring til Elin skal utsettes")
@@ -82,6 +82,8 @@ data class StønadsendringDto(
     val kravhaver: Personident,
     @Schema(description = "Personidenten til den som mottar bidraget")
     val mottaker: Personident,
+    @Schema(description = "Antatt vedtaksid for siste vedtak. Ikke utfyllt for førstegangsvedtak")
+    val sisteVedtaksid: Long?,
     @Schema(description = "Angir første år en stønad skal indeksreguleres")
     val førsteIndeksreguleringsår: Int?,
     @Schema(description = "Angir om stønaden skal innkreves")

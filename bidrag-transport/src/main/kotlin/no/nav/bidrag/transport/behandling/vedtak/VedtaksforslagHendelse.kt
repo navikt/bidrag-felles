@@ -5,7 +5,7 @@ import no.nav.bidrag.domene.sak.Saksnummer
 
 data class VedtaksforslagHendelse(
     val status: VedtaksforslagStatus,
-    val id: Int,
+    val vedtaksid: Int,
     val saksnummerListe: List<Saksnummer>,
     val sporingsdata: Sporingsdata,
 )
