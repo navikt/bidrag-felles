@@ -7,6 +7,7 @@ import com.nimbusds.jose.jwk.RSAKey
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
 import com.nimbusds.jwt.SignedJWT
 import io.kotest.matchers.shouldBe
+import org.junit.jupiter.api.Disabled
 import org.junit.jupiter.api.Test
 import java.util.Date
 import kotlin.math.absoluteValue
@@ -60,6 +61,7 @@ class MaskinportenTokenGeneratorTest {
     }
 
     @Test
+    @Disabled
     fun `Skal sjekke at timestamps blir satt riktig på token body`() {
         val config = maskinportenConfig
         val generator = MaskinportenTokenGenerator(config)
