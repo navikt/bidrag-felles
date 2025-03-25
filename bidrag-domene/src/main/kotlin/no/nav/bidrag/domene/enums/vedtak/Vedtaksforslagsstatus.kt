@@ -7,5 +7,5 @@ enum class Vedtaksforslagsstatus {
     OPPRETTET,
     OPPDATERT,
     SLETTET,
-    FATTET
+    FATTET,
 }

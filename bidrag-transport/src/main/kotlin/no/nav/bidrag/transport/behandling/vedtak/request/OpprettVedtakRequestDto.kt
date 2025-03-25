@@ -35,8 +35,10 @@ data class OpprettVedtakRequestDto(
     val type: Vedtakstype,
     @Schema(description = "Skal bare brukes ved batchkjøring. Id til batchjobb som oppretter vedtaket")
     val opprettetAv: String? = null,
-    @Schema(description = "Tidspunkt/timestamp når vedtaket er fattet")
-    val vedtakstidspunkt: LocalDateTime = LocalDateTime.now(),
+    @Schema(description = "Tidspunkt/timestamp når vedtaket er fattet. Er null for vedtaksforslag")
+    val vedtakstidspunkt: LocalDateTime?,
+    @Schema(description = "Referanse som er unik for vedtaket")
+    val unikReferanse: String? = null,
     @Schema(description = "Enheten som er ansvarlig for vedtaket. Kan være null for feks batch")
     @NotBlank
     val enhetsnummer: Enhetsnummer? = null,
@@ -100,6 +102,8 @@ data class OpprettStønadsendringRequestDto(
     val kravhaver: Personident,
     @Schema(description = "Personidenten til den som mottar bidraget")
     val mottaker: Personident,
+    @Schema(description = "Vedtaksid for siste vedtak. Ikke utfyllt for førstegangsvedtak")
+    val sisteVedtaksid: Long? = null,
     @Schema(description = "Angir første år en stønad skal indeksreguleres")
     val førsteIndeksreguleringsår: Int? = null,
     @Schema(description = "Angir om stønaden skal innkreves")

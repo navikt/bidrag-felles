@@ -120,3 +120,5 @@ fun List<GrunnlagDto>.finnDelberegningSjekkGrense(søknadsbarnReferanse: String)
         Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE,
         gjelderBarnReferanse = søknadsbarnReferanse,
     ).firstOrNull()
+
+fun VedtakDto.erVedtaksforslag() = vedtakstidspunkt == null
