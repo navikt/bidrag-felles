@@ -731,8 +731,8 @@ data class NotatResultatBidragsberegningBarnDto(
             }
 
             val deltBosted get() =
-                sluttberegning!!.bidragJustertForDeltBosted ||
-                    sluttberegning.resultat == SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                sluttberegning?.bidragJustertForDeltBosted == true ||
+                    sluttberegning?.resultat == SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
         }
     }
 }
