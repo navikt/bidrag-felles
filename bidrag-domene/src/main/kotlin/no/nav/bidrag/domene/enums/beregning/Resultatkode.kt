@@ -1,5 +1,6 @@
 package no.nav.bidrag.domene.enums.beregning
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.util.fjernAvslagOpphørPrefiks
@@ -40,7 +41,8 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
     ),
 
-    DIREKTE_OPPJØR(listOf(BisysResultatkode("V")), ResultatkodeType.BARNEBIDRAG),
+    @JsonAlias("DIREKTE_OPPJØR")
+    DIREKTE_OPPGJØR(listOf(BisysResultatkode("V")), ResultatkodeType.BARNEBIDRAG),
 
     // Avslag barnebidrag 18 år
     IKKE_DOKUMENTERT_SKOLEGANG(
