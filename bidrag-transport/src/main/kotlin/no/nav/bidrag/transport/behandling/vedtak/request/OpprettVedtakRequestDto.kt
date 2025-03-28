@@ -20,7 +20,6 @@ import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BaseGrunnlag
-import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import java.math.BigDecimal
@@ -81,7 +80,7 @@ data class OpprettGrunnlagRequestDto(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is GrunnlagDto) return false
+        if (other !is OpprettGrunnlagRequestDto) return false
         if (referanse != other.referanse) return false
         if (type != other.type) return false
         if (innholdString != other.innholdString) return false
