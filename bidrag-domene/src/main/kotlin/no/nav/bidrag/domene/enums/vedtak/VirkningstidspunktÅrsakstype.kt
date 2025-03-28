@@ -50,6 +50,8 @@ enum class VirkningstidspunktÅrsakstype(
                 enumValues<VirkningstidspunktÅrsakstype>().find {
                     it.legacyKode.contains(legacyKode) &&
                         (stønadstype == null || it.stønadstype == stønadstype)
+                } ?: enumValues<VirkningstidspunktÅrsakstype>().find {
+                    it.legacyKode.contains(legacyKode)
                 }
                     ?: VirkningstidspunktÅrsakstype.valueOf(
                         legacyKode,
