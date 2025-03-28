@@ -6,39 +6,53 @@ import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(enumAsRef = true, name = "Årsakstype")
 enum class VirkningstidspunktÅrsakstype(
-    val legacyKode: String,
+    vararg val legacyKode: String?,
+    val stønadstype: Stønadstype? = null,
 ) {
-    ANNET("SF"),
-    ENDRING_3_MÅNEDER_TILBAKE("NF"),
-    ENDRING_3_ÅRS_REGELEN("OF"),
-    FRA_BARNETS_FØDSEL("AF"),
-    FRA_BARNETS_FLYTTEMÅNED("CF"),
-    FRA_KRAVFREMSETTELSE("DF"),
-    FRA_MÅNED_ETTER_INNTEKTEN_ØKTE("LF"),
-    FRA_OPPHOLDSTILLATELSE("GF"),
-    FRA_SØKNADSTIDSPUNKT("HF"),
-    FRA_SAMLIVSBRUDD("BF"),
-    FRA_SAMME_MÅNED_SOM_INNTEKTEN_BLE_REDUSERT("KF"),
-    PRIVAT_AVTALE("PA"),
-    REVURDERING_MÅNEDEN_ETTER("QF"),
-    SØKNADSTIDSPUNKT_ENDRING("MF"),
-    TIDLIGERE_FEILAKTIG_AVSLAG("PF"),
-    TRE_MÅNEDER_TILBAKE("EF"),
-    TRE_ÅRS_REGELEN("FF"),
-    FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK("LF"),
-    FRA_MÅNEDEN_ETTER_PRIVAT_AVTALE("PM"),
-    FRA_MÅNEDEN_ETTER_FYLTE_18_ÅR("DB"),
-    FRA_ENDRINGSTIDSPUNKT("FE"),
-    BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE("PM"),
-    MÅNED_ETTER_BETALT_FORFALT_BIDRAG("MB"),
+    FRA_BARNETS_FØDSEL("A"),
+    FRA_SAMLIVSBRUDD("B"),
+    FRA_BARNETS_FLYTTEMÅNED("C"),
+    FRA_MÅNEDEN_ETTER_FYLTE_18_ÅR("D", stønadstype = Stønadstype.BIDRAG18AAR),
+    FRA_KRAVFREMSETTELSE("D"),
+    TRE_MÅNEDER_TILBAKE("E", stønadstype = Stønadstype.FORSKUDD),
+    FRA_SØKNADSTIDSPUNKT("E", "H", stønadstype = Stønadstype.BIDRAG),
+    TRE_ÅRS_REGELEN("F"),
+    FRA_OPPHOLDSTILLATELSE("G"),
+    FRA_SAMME_MÅNED_SOM_INNTEKTEN_BLE_REDUSERT("K", stønadstype = Stønadstype.FORSKUDD),
+    FRA_MÅNED_ETTER_ENDRET_SØKNAD("K", stønadstype = Stønadstype.BIDRAG),
+    FORHØYELSE_TILBAKE_I_TID("L", stønadstype = Stønadstype.BIDRAG),
+    FRA_MÅNED_ETTER_INNTEKTEN_ØKTE("L"),
+    SØKNADSTIDSPUNKT_ENDRING("M"),
+    ENDRING_3_MÅNEDER_TILBAKE("N", stønadstype = Stønadstype.FORSKUDD),
+    AVSLAG_FORHØYELSE_TILBAKE("N", stønadstype = Stønadstype.BIDRAG),
+    ENDRING_3_ÅRS_REGELEN("O", stønadstype = Stønadstype.FORSKUDD),
+    AVSLAG_NEDSETTELSE_TILBAKE("O", stønadstype = Stønadstype.BIDRAG),
+    TIDLIGERE_FEILAKTIG_AVSLAG("P"),
+    REVURDERING_MÅNEDEN_ETTER("Q"),
+    ANNET("S", "U"),
+    OMREGNING("R"),
+    AUTOMATISK_JUSTERING("J"),
+    PRIVAT_AVTALE,
+    FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK,
+    FRA_MÅNEDEN_ETTER_PRIVAT_AVTALE,
+    FRA_ENDRINGSTIDSPUNKT,
+    BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE,
+    MÅNED_ETTER_BETALT_FORFALT_BIDRAG,
     ;
 
     companion object {
-        fun fraLegacyKode(legacyKode: String): VirkningstidspunktÅrsakstype? =
+        fun fraLegacyKode(
+            legacyKode: String,
+            stønadstype: Stønadstype? = null,
+        ): VirkningstidspunktÅrsakstype? =
             try {
-                enumValues<VirkningstidspunktÅrsakstype>().find { it.legacyKode == legacyKode } ?: VirkningstidspunktÅrsakstype.valueOf(
-                    legacyKode,
-                )
+                enumValues<VirkningstidspunktÅrsakstype>().find {
+                    it.legacyKode.contains(legacyKode) &&
+                        (stønadstype == null || it.stønadstype == stønadstype)
+                }
+                    ?: VirkningstidspunktÅrsakstype.valueOf(
+                        legacyKode,
+                    )
             } catch (e: Exception) {
                 null
             }
