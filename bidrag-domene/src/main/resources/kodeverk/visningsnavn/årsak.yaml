@@ -84,3 +84,6 @@ OMREGNING:
 
 AUTOMATISK_JUSTERING:
   intern: "Automatisk justering"
+
+NEDSETTELSE_TILBAKE_I_TID:
+  intern: "Nedsettelse tilbake i tid"
