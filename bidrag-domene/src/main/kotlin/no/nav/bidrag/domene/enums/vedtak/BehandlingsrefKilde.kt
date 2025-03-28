@@ -7,4 +7,6 @@ enum class BehandlingsrefKilde {
     BEHANDLING_ID, // Id fra bidrag-behandling
     BISYS_SØKNAD, // Søknadsid fra Bisys
     BISYS_KLAGE_REF_SØKNAD, // For klage: Bisys søknadsid til den opprinnelige søknaden det klages på
+    ALDERSJUSTERING_BIDRAG,
+    ALDERSJUSTERING_FORSKUDD,
 }
