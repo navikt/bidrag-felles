@@ -680,6 +680,7 @@ data class NotatResultatForskuddBeregningBarnDto(
 
 data class NotatResultatBidragsberegningBarnDto(
     val barn: NotatPersonDto,
+    val indeksår: Int,
     val perioder: List<ResultatBarnebidragsberegningPeriodeDto>,
 ) : VedtakResultatInnhold(NotatMalType.BIDRAG) {
     data class ResultatBarnebidragsberegningPeriodeDto(
