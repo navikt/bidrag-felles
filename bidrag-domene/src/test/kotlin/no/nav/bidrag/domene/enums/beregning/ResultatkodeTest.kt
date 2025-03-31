@@ -3,6 +3,7 @@ package no.nav.bidrag.domene.enums.beregning
 import io.kotest.matchers.booleans.shouldBeFalse
 import io.kotest.matchers.booleans.shouldBeTrue
 import io.kotest.matchers.collections.shouldHaveSize
+import io.kotest.matchers.nulls.shouldBeNull
 import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslag
@@ -15,12 +16,19 @@ class ResultatkodeTest {
     fun `Skal hente resultatkode basert på legacyKode`() {
         val resultatkode = Resultatkode.fraKode("A")
         val resultatkode2 = Resultatkode.fraKode("AVSLAG")
+        val resultatkode3 = Resultatkode.fraKode("DIREKTE_OPPJØR")
+        val resultatkode4 = Resultatkode.fraKode("GIBBERISH")
 
         resultatkode.shouldNotBeNull()
         resultatkode shouldBe Resultatkode.AVSLAG
 
         resultatkode2.shouldNotBeNull()
         resultatkode2 shouldBe Resultatkode.AVSLAG
+
+        resultatkode3.shouldNotBeNull()
+        resultatkode3 shouldBe Resultatkode.DIREKTE_OPPGJØR
+
+        resultatkode4.shouldBeNull()
     }
 
     @Test

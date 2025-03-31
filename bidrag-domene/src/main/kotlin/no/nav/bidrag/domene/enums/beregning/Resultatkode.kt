@@ -7,6 +7,11 @@ import no.nav.bidrag.domene.util.fjernAvslagOpphørPrefiks
 import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 
+val konverterteVerdier =
+    mapOf(
+        "DIREKTE_OPPJØR" to Resultatkode.DIREKTE_OPPGJØR,
+    )
+
 @Schema(enumAsRef = true, name = "Resultatkode")
 enum class Resultatkode(
     val bisysKode: List<BisysResultatkode>,
@@ -275,7 +280,7 @@ enum class Resultatkode(
             try {
                 enumValues<Resultatkode>().find { res -> res.bisysKode.any { it.resultatKode == kode } } ?: Resultatkode.valueOf(kode)
             } catch (e: Exception) {
-                null
+                konverterteVerdier[kode]
             }
 
         fun Resultatkode.tilBisysResultatkode(vedtakstype: Vedtakstype? = null) =
