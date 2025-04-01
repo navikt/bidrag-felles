@@ -24,6 +24,8 @@ data class StønadDto(
     val mottaker: Personident,
     @Schema(description = "Angir første år en stønad skal indeksreguleres")
     val førsteIndeksreguleringsår: Int?,
+    @Schema(description = "Angir neste år siste perioden i stønaden skal indeksreguleres")
+    val nesteIndeksreguleringsår: Int?,
     @Schema(description = "Angir om stønaden skal innkreves")
     val innkreving: Innkrevingstype,
     @Schema(description = "opprettet_av")
