@@ -17,6 +17,7 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
+import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
@@ -54,6 +55,7 @@ val Inntektsrapportering.Companion.visningsnavnSomKreverPeriode get() =
     listOf(
         Inntektsrapportering.OVERGANGSSTØNAD,
     )
+val PrivatAvtaleType.visningsnavn get() = lastVisningsnavnFraFil("privatavtaletype.yaml")[name] ?: visningsnavnMangler(name)
 val Skolealder.visningsnavn get() = lastVisningsnavnFraFil("skolealder.yaml")[name] ?: visningsnavnMangler(name)
 val Tilsynstype.visningsnavn get() = lastVisningsnavnFraFil("tilsynstype.yaml")[name] ?: visningsnavnMangler(name)
 val Inntektstype.visningsnavn get() = lastVisningsnavnFraFil("inntektstype.yaml")[name] ?: visningsnavnMangler(name)

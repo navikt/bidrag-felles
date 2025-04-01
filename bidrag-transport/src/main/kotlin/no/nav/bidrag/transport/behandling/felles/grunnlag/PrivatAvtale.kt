@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -8,6 +9,7 @@ import java.time.LocalDate
 @Schema(description = "Privat avtale i bidragssaken")
 data class PrivatAvtaleGrunnlag(
     val avtaleInngåttDato: LocalDate,
+    val type: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
     val skalIndeksreguleres: Boolean,
 ) : GrunnlagInnhold
 
