@@ -9,7 +9,7 @@ import java.time.LocalDate
 @Schema(description = "Privat avtale i bidragssaken")
 data class PrivatAvtaleGrunnlag(
     val avtaleInngåttDato: LocalDate,
-    val type: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
+    val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
     val skalIndeksreguleres: Boolean,
 ) : GrunnlagInnhold
 
