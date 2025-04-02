@@ -15,6 +15,7 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.person.SivilstandskodePDL
+import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
@@ -769,11 +770,14 @@ data class NotatResultatBeregningInntekterDto(
 data class NotatPrivatAvtaleDto(
     val gjelderBarn: NotatPersonDto,
     val avtaleDato: LocalDate?,
+    val avtaleType: PrivatAvtaleType?,
     val skalIndeksreguleres: Boolean,
     val begrunnelse: NotatBegrunnelseDto? = null,
     val perioder: List<NotatPrivatAvtalePeriodeDto> = emptyList(),
     val beregnetPrivatAvtalePerioder: List<NotatBeregnetPrivatAvtalePeriodeDto> = emptyList(),
-)
+) {
+    val avtaleTypeVisningsnavn get() = avtaleType?.visningsnavn?.intern
+}
 
 data class NotatPrivatAvtalePeriodeDto(
     val periode: DatoperiodeDto,
