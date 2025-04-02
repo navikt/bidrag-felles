@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.stonad.response
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
@@ -22,9 +23,10 @@ data class StønadDto(
     val kravhaver: Personident,
     @Schema(description = "Personidenten til den som mottar bidraget")
     val mottaker: Personident,
-    @Schema(description = "Angir første år en stønad skal indeksreguleres")
+    @Schema(description = "Angir første år en stønad skal indeksreguleres", deprecated = true)
     val førsteIndeksreguleringsår: Int?,
     @Schema(description = "Angir neste år siste perioden i stønaden skal indeksreguleres")
+    @JsonAlias("førsteIndeksreguleringsår")
     val nesteIndeksreguleringsår: Int?,
     @Schema(description = "Angir om stønaden skal innkreves")
     val innkreving: Innkrevingstype,
