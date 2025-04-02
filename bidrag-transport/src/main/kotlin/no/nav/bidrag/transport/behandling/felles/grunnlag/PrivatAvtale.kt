@@ -19,6 +19,11 @@ data class PrivatAvtalePeriodeGrunnlag(
     override val manueltRegistrert: Boolean = true,
 ) : GrunnlagPeriodeInnhold
 
+data class DelberegningPrivatAvtale(
+    val nesteIndeksreguleringsår: BigDecimal? = null,
+    val perioder: List<DelberegningPrivatAvtalePeriode>,
+) : DelberegningUtenPeriode
+
 data class DelberegningPrivatAvtalePeriode(
     override val periode: ÅrMånedsperiode,
     val indeksreguleringFaktor: BigDecimal? = null,
