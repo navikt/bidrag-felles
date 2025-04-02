@@ -82,6 +82,8 @@ interface GrunnlagBeregningPeriode : GrunnlagInnhold {
 
 interface Delberegning : GrunnlagBeregningPeriode
 
+interface DelberegningUtenPeriode : GrunnlagInnhold
+
 interface Sluttberegning : GrunnlagBeregningPeriode
 
 interface GrunnlagPeriodeInnhold : GrunnlagInnhold {
