@@ -13,21 +13,21 @@ data class InnkrevingssakshistorikkDto(
     @field:Schema(
         description = "Beskrivelse av hva posten innebar. E.g \"OCR Innbetaling\" eller \"Påløp avdragsordning\".",
     )
-    val beskrivelse: String,
+    val beskrivelse: String?,
     @field:Schema(
         description = "Ident knyttet til det historiske innslaget.",
     )
-    val ident: Ident,
+    val ident: Ident?,
     @field:Schema(
         description = "Navn til ident knyttet til det historiske innslaget.",
     )
-    val navn: String,
+    val navn: String?,
     @field:Schema(
         description = "Tidspunkt for innslaget.",
     )
-    val dato: LocalDateTime,
+    val dato: LocalDateTime?,
     @field:Schema(
         description = "Innbetalt beløp.",
     )
-    val beløp: BigDecimal,
+    val beløp: BigDecimal?,
 )

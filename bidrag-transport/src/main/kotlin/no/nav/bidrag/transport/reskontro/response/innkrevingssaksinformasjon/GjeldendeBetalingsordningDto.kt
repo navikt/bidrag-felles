@@ -13,37 +13,37 @@ data class GjeldendeBetalingsordningDto(
     @field:Schema(
         description = "Hvilken type behandlingsordning er. E.g \"Lønnstrekk\"",
     )
-    val typeBehandlingsordning: String,
+    val typeBehandlingsordning: String?,
     @field:Schema(
         description = "Hvor innbetalingen kommer fra. Orgnr for bedrift.",
     )
-    val kilde: Organisasjonsnummer,
+    val kilde: Organisasjonsnummer?,
     @field:Schema(
         description = "Navn på bedrift.",
     )
-    val kildeNavn: String,
+    val kildeNavn: String?,
     @field:Schema(
         description = "Dato for siste giro.",
     )
-    val datoSisteGiro: LocalDateTime,
+    val datoSisteGiro: LocalDateTime?,
     @field:Schema(
         description = "Dato for neste forfall.",
     )
-    val nesteForfall: LocalDateTime,
+    val nesteForfall: LocalDateTime?,
     @field:Schema(
         description = "Månedlig beløp.",
     )
-    val beløp: BigDecimal,
+    val beløp: BigDecimal?,
     @field:Schema(
         description = "Sist endret tidspunkt.",
     )
-    val sistEndret: LocalDateTime,
+    val sistEndret: LocalDateTime?,
     @field:Schema(
         description = "Årsak for endring.",
     )
-    val sistEndretÅrsak: String,
+    val sistEndretÅrsak: String?,
     @field:Schema(
         description = "Sum av ubetalt gjeld.",
     )
-    val sumUbetalt: BigDecimal,
+    val sumUbetalt: BigDecimal?,
 )

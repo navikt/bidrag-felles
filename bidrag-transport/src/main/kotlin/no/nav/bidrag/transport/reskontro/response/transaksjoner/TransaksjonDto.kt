@@ -15,7 +15,7 @@ data class TransaksjonDto(
     @field:Schema(
         description = "Id på transaksjonen.",
     )
-    val transaksjonsid: Long,
+    val transaksjonsid: Long?,
     @field:Schema(
         description =
             "Transaksjonskoden for transaksjonen.\nGyldige transaksjonskoder er:\n" +
@@ -77,55 +77,55 @@ data class TransaksjonDto(
                 "| 400   |                 | Avskrivning                                |\n" +
                 "| 401   |                 | Innbetaling/avskriving                     |\n",
     )
-    val transaksjonskode: String,
+    val transaksjonskode: String?,
     @field:Schema(
         description = "Beskrivelse av transaksjonen.",
     )
-    val beskrivelse: String,
+    val beskrivelse: String?,
     @field:Schema(
         description = "Dato uvist over hva",
     )
-    val dato: LocalDate,
+    val dato: LocalDate?,
     @field:Schema(
         description = "Ident til skyldner.",
     )
-    val skyldner: Personident,
+    val skyldner: Personident?,
     @field:Schema(
         description = "Ident til mottaker.",
     )
-    val mottaker: Personident,
+    val mottaker: Personident?,
     @field:Schema(
         description = "Opprinnelig beløp på transaksjonen.",
     )
-    val beløp: BigDecimal,
+    val beløp: BigDecimal?,
     @field:Schema(
         description = "Resterende beløp.",
     )
-    val restBeløp: BigDecimal,
+    val restBeløp: BigDecimal?,
     @field:Schema(
         description = "Beløp i opprinnelig valuta.",
     )
-    val beløpIOpprinneligValuta: BigDecimal,
+    val beløpIOpprinneligValuta: BigDecimal?,
     @field:Schema(
         description = "Valutakode slik utlevert fra NAV.",
     )
-    val valutakode: String,
+    val valutakode: String?,
     @field:Schema(
         description = "Saksnummer for bidragssaken.",
     )
-    val saksnummer: Saksnummer,
+    val saksnummer: Saksnummer?,
     @field:Schema(
         description = "Periode for transaksjonen.",
     )
-    val periode: Datoperiode,
+    val periode: Datoperiode?,
     @field:Schema(
         description = "Ident til barn.",
     )
-    val barn: Personident,
+    val barn: Personident?,
     @field:Schema(
         description = "Delytelsesid for transaksjonen.",
     )
-    val delytelsesid: String,
+    val delytelsesid: String?,
     @field:Schema(
         description =
             "Søknadstype. " +

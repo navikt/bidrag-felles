@@ -12,15 +12,15 @@ data class SkyldnerinformasjonDto(
     @field:Schema(
         description = "Identen til skyldner",
     )
-    val personident: Personident,
+    val personident: Personident?,
     @field:Schema(
         description = "Summen av det løpende bidraget på skyldner. ",
     )
-    val sumLøpendeBidrag: BigDecimal,
+    val sumLøpendeBidrag: BigDecimal?,
     @field:Schema(
         description = "Gjeldene status på innkrevingssaken. ",
     )
-    val innkrevingssaksstatus: String,
+    val innkrevingssaksstatus: String?,
     @field:Schema(
         description =
             "Fakturamåte. \nGyldige verdier er følgende:\n" +
@@ -30,9 +30,9 @@ data class SkyldnerinformasjonDto(
                 "Ingen med purring/arbeidsflyt\n" +
                 "Ingen uten purring/arbeidsflyt\n",
     )
-    val fakturamåte: String,
+    val fakturamåte: String?,
     @field:Schema(
         description = "Siste aktivitet som har oppdatert status på saken.",
     )
-    val sisteAktivitet: String,
+    val sisteAktivitet: String?,
 )

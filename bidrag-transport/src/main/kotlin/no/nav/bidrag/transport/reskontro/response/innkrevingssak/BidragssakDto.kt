@@ -12,19 +12,19 @@ data class BidragssakDto(
     @field:Schema(
         description = "Identifikasjonen til bidragssaken.",
     )
-    val saksnummer: Saksnummer,
+    val saksnummer: Saksnummer?,
     @field:Schema(
         description = "Resterende gjeld til BM på fastsettelsesgebyret (G1).",
     )
-    val bmGjeldFastsettelsesgebyr: BigDecimal,
+    val bmGjeldFastsettelsesgebyr: BigDecimal?,
     @field:Schema(
         description = "Resterende gjeld til BM. Gjelder for H1 - Tilbakekreving.",
     )
-    val bmGjeldRest: BigDecimal,
+    val bmGjeldRest: BigDecimal?,
     @field:Schema(
         description = "Resterende gjeld til BP på fastsettelsesgebyret (G1).",
     )
-    val bpGjeldFastsettelsesgebyr: BigDecimal,
+    val bpGjeldFastsettelsesgebyr: BigDecimal?,
     @field:Schema(
         description = "Liste over alle barn i bidragssaken med tilhørende innkrevingsinformasjon.",
     )

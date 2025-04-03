@@ -12,13 +12,13 @@ data class SkyldnerDto(
     @field:Schema(
         description = "Identen til skyldner",
     )
-    val personident: Personident,
+    val personident: Personident?,
     @field:Schema(
         description = "Sum av beløpsfelt fra innbetalinger i historikk avhengig av fordelingsstatus.",
     )
-    val innbetaltBeløpUfordelt: BigDecimal,
+    val innbetaltBeløpUfordelt: BigDecimal?,
     @field:Schema(
         description = "Sum av saldo gebyrer på sak.",
     )
-    val gjeldIlagtGebyr: BigDecimal,
+    val gjeldIlagtGebyr: BigDecimal?,
 )
