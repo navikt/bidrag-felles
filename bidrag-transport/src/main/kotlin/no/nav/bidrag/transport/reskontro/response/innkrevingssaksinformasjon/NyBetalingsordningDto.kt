@@ -12,9 +12,9 @@ data class NyBetalingsordningDto(
     @field:Schema(
         description = "Dato når ny betalingsordning gjelder fra.",
     )
-    val dato: Datoperiode,
+    val dato: Datoperiode?,
     @field:Schema(
         description = "Nytt beløp.",
     )
-    val beløp: BigDecimal,
+    val beløp: BigDecimal?,
 )

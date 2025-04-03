@@ -13,15 +13,15 @@ data class SaksinformasjonBarnDto(
     @field:Schema(
         description = "Ident til barnet.",
     )
-    val personident: Personident,
+    val personident: Personident?,
     @field:Schema(
         description = "Resterende gjeld til det offentlige (C1, C2, C3).",
     )
-    val restGjeldOffentlig: BigDecimal,
+    val restGjeldOffentlig: BigDecimal?,
     @field:Schema(
         description = "Resterende gjeld privat (B1, D1, E1, F1, J1, J2).",
     )
-    val restGjeldPrivat: BigDecimal,
+    val restGjeldPrivat: BigDecimal?,
     @field:Schema(
         description =
             "Sum av beløp som ikke er utbetalt tilbake til bidragspliktig. Dette kan skje ved for mye innbetalt eller annullerte beløp. " +
@@ -31,7 +31,7 @@ data class SaksinformasjonBarnDto(
     @field:Schema(
         description = "Sum av restbeløp på forskudd (A1).",
     )
-    val sumForskuddUtbetalt: BigDecimal,
+    val sumForskuddUtbetalt: BigDecimal?,
     @field:Schema(
         description =
             "Sum av restbeløp på forskudd (A1). " +
