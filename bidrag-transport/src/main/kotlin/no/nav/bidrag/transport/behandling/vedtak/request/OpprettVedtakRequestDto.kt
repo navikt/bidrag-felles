@@ -3,10 +3,6 @@ package no.nav.bidrag.transport.behandling.vedtak.request
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.Valid
-import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
-import jakarta.validation.constraints.NotEmpty
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.vedtak.BehandlingsrefKilde
 import no.nav.bidrag.domene.enums.vedtak.Beslutningstype
@@ -38,34 +34,34 @@ data class OpprettVedtakRequestDto(
     val vedtakstidspunkt: LocalDateTime?,
     @Schema(description = "Referanse som er unik for vedtaket")
     val unikReferanse: String? = null,
+    //    @NotBlank
     @Schema(description = "Enheten som er ansvarlig for vedtaket. Kan være null for feks batch")
-    @NotBlank
     val enhetsnummer: Enhetsnummer? = null,
     @Schema(description = "Settes hvis overføring til Elin skal utsettes")
     val innkrevingUtsattTilDato: LocalDate? = null,
     @Schema(description = "Settes hvis vedtaket er fastsatt i utlandet")
     val fastsattILand: String? = null,
+    //    @field:Valid
     @Schema(description = "Liste over alle grunnlag som inngår i vedtaket")
-    @field:Valid
     val grunnlagListe: List<OpprettGrunnlagRequestDto>,
+    //    @field:Valid
     @Schema(description = "Liste over alle stønadsendringer som inngår i vedtaket")
-    @field:Valid
     val stønadsendringListe: List<OpprettStønadsendringRequestDto> = emptyList(),
+    //    @field:Valid
     @Schema(description = "Liste over alle engangsbeløp som inngår i vedtaket")
-    @field:Valid
     val engangsbeløpListe: List<OpprettEngangsbeløpRequestDto> = emptyList(),
+    //    @field:Valid
     @Schema(description = "Liste med referanser til alle behandlinger som ligger som grunnlag til vedtaket")
-    @field:Valid
     val behandlingsreferanseListe: List<OpprettBehandlingsreferanseRequestDto> = emptyList(),
 )
 
 @Schema
 data class OpprettGrunnlagRequestDto(
-    @NotBlank
+//    @NotBlank
     override val referanse: String,
-    @NotBlank
+//    @NotBlank
     override val type: Grunnlagstype,
-    @NotBlank
+//    @NotBlank
     override val innhold: JsonNode,
     override val grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
     override val gjelderReferanse: Grunnlagsreferanse? = null,
@@ -90,8 +86,8 @@ data class OpprettGrunnlagRequestDto(
 
 @Schema
 data class OpprettStønadsendringRequestDto(
+    //    @NotBlank
     @Schema(description = "Stønadstype")
-    @NotBlank
     val type: Stønadstype,
     @Schema(description = "Referanse til sak")
     val sak: Saksnummer,
@@ -119,8 +115,8 @@ data class OpprettStønadsendringRequestDto(
     val eksternReferanse: String? = null,
     @Schema(description = "Liste over grunnlag som er knyttet direkte til stønadsendringen")
     val grunnlagReferanseListe: List<Grunnlagsreferanse>,
+    //    @field:Valid
     @Schema(description = "Liste over alle perioder som inngår i stønadsendringen")
-    @field:Valid
     val periodeListe: List<OpprettPeriodeRequestDto>,
 )
 
@@ -128,26 +124,26 @@ data class OpprettStønadsendringRequestDto(
 data class OpprettPeriodeRequestDto(
     @Schema(description = "Periode med fra-og-med-dato og til-dato med format ÅÅÅÅ-MM")
     val periode: ÅrMånedsperiode,
+    //    @Min(0)
     @Schema(description = "Beregnet stønadsbeløp")
-    @Min(0)
     val beløp: BigDecimal?,
+    //    @NotBlank
     @Schema(description = "Valutakoden tilhørende stønadsbeløpet")
-    @NotBlank
     val valutakode: String? = null,
+    //    @NotBlank
     @Schema(description = "Resultatkoden tilhørende stønadsbeløpet")
-    @NotBlank
     val resultatkode: String,
     @Schema(description = "Referanse - delytelseId/beslutningslinjeId -> bidrag-regnskap. Skal fjernes senere")
     val delytelseId: String? = null,
+    //    @NotEmpty
     @Schema(description = "Liste over alle grunnlag som inngår i perioden")
-    @NotEmpty
     val grunnlagReferanseListe: List<Grunnlagsreferanse>,
 )
 
 @Schema
 data class OpprettEngangsbeløpRequestDto(
+    //    @NotBlank
     @Schema(description = "Beløpstype. Særbidrag, gebyr m.m.")
-    @NotBlank
     val type: Engangsbeløptype,
     @Schema(description = "Referanse til sak")
     val sak: Saksnummer,
@@ -157,14 +153,14 @@ data class OpprettEngangsbeløpRequestDto(
     val kravhaver: Personident,
     @Schema(description = "Personidenten til den som mottar engangsbeløpet")
     val mottaker: Personident,
+    //    @Min(0)
     @Schema(description = "Beregnet engangsbeløp")
-    @Min(0)
     val beløp: BigDecimal?,
+    //    @NotBlank
     @Schema(description = "Valutakoden tilhørende engangsbeløpet")
-    @NotBlank
     val valutakode: String?,
+    //    @NotBlank
     @Schema(description = "Resultatkoden tilhørende engangsbeløpet")
-    @NotBlank
     val resultatkode: String,
     @Schema(description = "Angir om engangsbeløpet skal innkreves")
     val innkreving: Innkrevingstype,
@@ -186,20 +182,20 @@ data class OpprettEngangsbeløpRequestDto(
     val delytelseId: String? = null,
     @Schema(description = "Referanse som brukes i utlandssaker")
     val eksternReferanse: String? = null,
+    //    @NotEmpty
     @Schema(description = "Liste over alle grunnlag som inngår i engangsbeløpet")
-    @NotEmpty
     val grunnlagReferanseListe: List<Grunnlagsreferanse>,
+    //    @Min(0)
     @Schema(description = "Beløp BP allerede har betalt. Kan være 0 eller høyere.")
-    @Min(0)
     val betaltBeløp: BigDecimal? = null,
 )
 
 @Schema
 data class OpprettBehandlingsreferanseRequestDto(
+    //    @NotBlank
     @Schema(description = "Kilde/type for en behandlingsreferanse")
-    @NotBlank
     val kilde: BehandlingsrefKilde,
+    //    @NotBlank
     @Schema(description = "Kildesystemets referanse til behandlingen")
-    @NotBlank
     val referanse: String,
 )
