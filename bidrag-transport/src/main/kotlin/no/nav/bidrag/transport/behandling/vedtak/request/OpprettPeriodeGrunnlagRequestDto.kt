@@ -1,14 +1,14 @@
 package no.nav.bidrag.transport.behandling.vedtak.request
 
 import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.constraints.Min
+// import jakarta.validation.constraints.Min
 
 @Schema
 data class OpprettPeriodeGrunnlagRequestDto(
+    //    @Min(0)
     @Schema(description = "Periode-id")
-    @Min(0)
     val periodeId: Int,
+    //    @Min(0)
     @Schema(description = "grunnlag-id")
-    @Min(0)
     val grunnlagId: Int,
 )

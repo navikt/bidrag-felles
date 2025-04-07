@@ -1,8 +1,6 @@
 package no.nav.bidrag.transport.behandling.vedtak.response
 
 import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
 import no.nav.bidrag.domene.enums.vedtak.BehandlingsrefKilde
 import no.nav.bidrag.domene.enums.vedtak.Beslutningstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
@@ -108,8 +106,8 @@ data class StønadsendringDto(
 data class VedtakPeriodeDto(
     @Schema(description = "Periode med fra-og-med-dato og til-dato med format ÅÅÅÅ-MM")
     val periode: ÅrMånedsperiode,
+    //    @Min(0)
     @Schema(description = "Beregnet stønadsbeløp")
-    @Min(0)
     val beløp: BigDecimal?,
     @Schema(description = "Valutakoden tilhørende stønadsbeløpet")
     val valutakode: String?,
@@ -133,14 +131,14 @@ data class EngangsbeløpDto(
     val kravhaver: Personident,
     @Schema(description = "Personidenten til den som mottar engangsbeløpet")
     val mottaker: Personident,
+    //    @Min(0)
     @Schema(description = "Beregnet engangsbeløp")
-    @Min(0)
     val beløp: BigDecimal?,
+    //    @NotBlank
     @Schema(description = "Valutakoden tilhørende engangsbeløpet")
-    @NotBlank
     val valutakode: String?,
+    //    @NotBlank
     @Schema(description = "Resultatkoden tilhørende engangsbeløpet")
-    @NotBlank
     val resultatkode: String,
     @Schema(description = "Angir om engangsbeløpet skal innkreves")
     val innkreving: Innkrevingstype,
@@ -165,8 +163,8 @@ data class EngangsbeløpDto(
     val eksternReferanse: String?,
     @Schema(description = "Liste over alle grunnlag som inngår i beregningen")
     val grunnlagReferanseListe: List<Grunnlagsreferanse>,
+    //    @Min(0)
     @Schema(description = "Beløp BP allerede har betalt. Kan være 0 eller høyere.")
-    @Min(0)
     val betaltBeløp: BigDecimal? = null,
 )
 

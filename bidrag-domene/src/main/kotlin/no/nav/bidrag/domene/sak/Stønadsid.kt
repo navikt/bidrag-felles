@@ -1,6 +1,5 @@
 package no.nav.bidrag.domene.sak
 
-import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.ident.Personident
 
@@ -15,9 +14,8 @@ data class Stønadsid(
     fun toReferanse(): String = "stønadsid_type_${type}_kravhaver_${kravhaver.verdi}_skyldner_${skyldner.verdi}_sak_${sak.verdi}"
 }
 
-data class EngangsbeløpId(
+data class StønadRoller(
     val kravhaver: Personident,
     val skyldner: Personident,
-    val type: Engangsbeløptype,
     val sak: Saksnummer,
 )
