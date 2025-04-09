@@ -54,6 +54,7 @@ class VedtakExtensionsKtTest {
                 opprettetAvNavn = "User Name",
                 opprettetTidspunkt = LocalDateTime.now(),
                 type = Vedtakstype.FASTSETTELSE,
+                vedtaksid = 1,
             )
 
         vedtakDto.særbidragsperiode shouldBe Datoperiode(virkningstidspunkt.atDay(1), virkningstidspunkt.atEndOfMonth())
@@ -65,6 +66,7 @@ class VedtakExtensionsKtTest {
 
         val vedtakDto =
             VedtakDto(
+                vedtaksid = 1,
                 stønadsendringListe = emptyList(),
                 engangsbeløpListe =
                     listOf(
@@ -144,6 +146,7 @@ class VedtakExtensionsKtTest {
                 opprettetAvNavn = "User Name",
                 opprettetTidspunkt = LocalDateTime.now(),
                 type = Vedtakstype.FASTSETTELSE,
+                vedtaksid = 1,
             )
 
         vedtakDto.særbidragsperiode shouldBe null
