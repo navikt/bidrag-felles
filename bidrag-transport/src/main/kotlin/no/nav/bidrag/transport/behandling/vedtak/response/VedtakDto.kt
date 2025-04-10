@@ -36,7 +36,7 @@ data class VedtakForStønad(
 
 @Schema
 data class VedtakDto(
-    val vedtaksid: Long,
+    val vedtaksid: Long = -1,
     @Schema(description = "Hva er kilden til vedtaket. Automatisk eller manuelt")
     val kilde: Vedtakskilde,
     @Schema(description = "Type vedtak")
