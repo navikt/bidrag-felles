@@ -4,7 +4,12 @@ import jakarta.servlet.Filter
 import jakarta.servlet.FilterChain
 import jakarta.servlet.ServletRequest
 import jakarta.servlet.ServletResponse
+import jakarta.servlet.http.HttpServletRequest
 import no.nav.bidrag.commons.security.utils.TokenUtils
+import no.nav.bidrag.commons.web.BidragHttpHeaders.X_ENHET
+import no.nav.bidrag.commons.web.MdcConstants.MDC_APP_NAME
+import no.nav.bidrag.commons.web.MdcConstants.MDC_ENHET
+import no.nav.bidrag.commons.web.MdcConstants.MDC_USER_ID
 import org.slf4j.MDC
 import org.springframework.stereotype.Component
 
@@ -20,11 +25,29 @@ class UserMdcFilter : Filter {
     ) {
         val user = TokenUtils.hentBruker()
         val appName = TokenUtils.hentApplikasjonsnavn()
-        user?.apply { MDC.put(USER_MDC, user) }
-        appName?.apply { MDC.put(APP_NAME_MDC, appName) }
+        user?.apply {
+            MDC.put(USER_MDC, user)
+            MDC.put(MDC_USER_ID, user)
+        }
+        appName?.apply {
+            MDC.put(APP_NAME_MDC, appName)
+            MDC.put(MDC_APP_NAME, appName)
+        }
+        hentEnhetHeader(servletRequest)?.let {
+            MDC.put(MDC_ENHET, it)
+        }
+        try {
+            filterChain.doFilter(servletRequest, servletResponse)
+        } finally {
+            MDC.clear()
+        }
+    }
 
-        filterChain.doFilter(servletRequest, servletResponse)
-        MDC.clear()
+    fun hentEnhetHeader(httpRequest: ServletRequest): String? {
+        if (httpRequest !is HttpServletRequest) {
+            return null
+        }
+        return httpRequest.getHeader(X_ENHET) ?: httpRequest.getHeader("X-enhet")
     }
 
     companion object {
