@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import no.nav.bidrag.commons.security.utils.TokenUtils
 import no.nav.bidrag.commons.util.IdUtils
+import no.nav.bidrag.commons.web.MdcConstants.MDC_APP_NAME
 import no.nav.bidrag.commons.web.MdcConstants.MDC_CALL_ID
 import no.nav.bidrag.commons.web.MdcConstants.MDC_ENHET
 import no.nav.bidrag.commons.web.MdcConstants.MDC_USER_ID
@@ -26,10 +27,11 @@ class MdcFilter(
         val enhetsnummer = httpServletRequest.getHeader(EnhetFilter.X_ENHET_HEADER) ?: EnhetFilter.fetchForThread()
         val userId = TokenUtils.hentBruker()
         val callId = resolveCallId(httpServletRequest)
-
+        val appName = TokenUtils.hentApplikasjonsnavn()
         MDC.put(MDC_CALL_ID, callId)
         MDC.put(MDC_USER_ID, userId)
         MDC.put(MDC_ENHET, enhetsnummer)
+        MDC.put(MDC_APP_NAME, appName)
 
         httpServletResponse.setHeader(BidragHttpHeaders.NAV_CALL_ID, callId)
         httpServletResponse.setHeader(BidragHttpHeaders.X_ENHET, enhetsnummer)
