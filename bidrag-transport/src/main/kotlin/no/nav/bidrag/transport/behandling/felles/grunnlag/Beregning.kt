@@ -252,6 +252,7 @@ data class DelberegningUnderholdskostnad(
     val nettoTilsynsutgift: BigDecimal?,
     val barnetrygd: BigDecimal,
     val underholdskostnad: BigDecimal,
+    val forpleining: BigDecimal? = null,
 ) : Delberegning
 
 data class FaktiskUtgiftPeriode(
