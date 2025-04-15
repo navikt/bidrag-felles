@@ -71,6 +71,10 @@ data class BostatusPeriode(
     val bostatus: Bostatuskode,
     @Schema(description = "Referanse til BM eller BP som bostatus for personen gjelder for")
     val relatertTilPart: Grunnlagsreferanse,
+    @Schema(
+        description = "Om perioder er med i beregning eller ikke. Er bare relevant for grunnlag overført fra Bisys og ikke i ny løsning",
+    )
+    val medIBeregning: Boolean = true,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold
 
