@@ -17,7 +17,7 @@ enum class TokenUtsteder {
 object TokenUtils {
     private val LOGGER = LoggerFactory.getLogger(TokenUtils::class.java)
     private const val ISSUER_AZURE_AD_IDENTIFIER = "login.microsoftonline.com"
-    private const val ISSUER_TOKENX_IDENTIFIER = "tokenx"
+    private const val ISSUER_TOKENX_IDENTIFIER = "tokendings"
     private const val ISSUER_IDPORTEN_IDENTIFIER = "idporten"
     private const val ISSUER_STS_IDENTIFIER = "security-token-service"
     private const val ISSUER_MASKINPORTEN_IDENTIFIER = "maskinporten"
