@@ -5,4 +5,5 @@ enum class Søknadstype {
     FABM,
     FABP,
     EN,
+    MP,
 }
