@@ -3,6 +3,8 @@ package no.nav.bidrag.commons.web.interceptor
 import com.nimbusds.oauth2.sdk.GrantType
 import no.nav.bidrag.commons.security.SikkerhetsKontekst
 import no.nav.bidrag.commons.security.service.ClientConfigurationWellknownProperties
+import no.nav.bidrag.commons.security.utils.TokenUtils
+import no.nav.bidrag.commons.security.utils.TokenUtsteder
 import no.nav.security.token.support.client.core.ClientProperties
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenService
 import no.nav.security.token.support.client.spring.ClientConfigurationProperties
@@ -47,6 +49,24 @@ abstract class AzureTokenClientInterceptor(
         val clientProperties = filterClientProperties(clientConfigurationProperties, uri)
         val clientWellknownProperties = filterClientPropertiesWellKnown(clientConfigurationWellknownProperties, uri)
 
+        if (TokenUtils.erTokenUtstedtAv(TokenUtsteder.TOKENX)) {
+            return ClientProperties(
+                clientWellknownProperties.tokenXUrl,
+                clientWellknownProperties.wellKnownUrl,
+                oAuth2GrantType ?: clientCredentialOrJwtBearer(),
+                clientProperties.scope,
+                clientWellknownProperties.authenticationTokenX!!,
+                clientProperties.resourceUrl,
+                ClientProperties.TokenExchangeProperties(
+                    clientProperties.scope
+                        .first()
+                        .replace("api://", "")
+                        .replace("/.default", "")
+                        .replace(".", ":"),
+                    "",
+                ),
+            )
+        }
         return ClientProperties(
             clientProperties.tokenEndpointUrl,
             clientWellknownProperties.wellKnownUrl,
@@ -54,7 +74,7 @@ abstract class AzureTokenClientInterceptor(
             clientProperties.scope,
             clientProperties.authentication,
             clientProperties.resourceUrl,
-            clientProperties.tokenExchange,
+            null,
         )
     }
 
@@ -76,7 +96,14 @@ abstract class AzureTokenClientInterceptor(
         .firstOrNull { uri.toString().startsWith(it.resourceUrl.toString()) }
         ?: error("could not find oauth2 client config for uri=$uri")
 
-    private fun clientCredentialOrJwtBearer() = if (erSystembruker()) GrantType.CLIENT_CREDENTIALS else GrantType.JWT_BEARER
+    private fun clientCredentialOrJwtBearer() =
+        if (erSystembruker()) {
+            GrantType.CLIENT_CREDENTIALS
+        } else if (TokenUtils.erTokenUtstedtAv(TokenUtsteder.TOKENX)) {
+            GrantType.TOKEN_EXCHANGE
+        } else {
+            GrantType.JWT_BEARER
+        }
 
     private fun erSystembruker(): Boolean {
         return try {
@@ -89,7 +116,7 @@ abstract class AzureTokenClientInterceptor(
             return preferredUsername == null
         } catch (e: Throwable) {
             // Ingen request context. Skjer ved kall som har opphav i kjørende applikasjon. Ping etc.
-            true
+            false
         }
     }
 }
