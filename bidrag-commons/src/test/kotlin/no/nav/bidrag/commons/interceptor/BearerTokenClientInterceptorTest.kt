@@ -57,7 +57,7 @@ class BearerTokenClientInterceptorTest {
                     it.scope shouldBe r.scope
                     it.tokenExchange shouldBe r.tokenExchange
                     it.authentication shouldBe r.authentication
-                    it.grantType shouldBe r.grantType
+                    it.grantType shouldBe GrantType.JWT_BEARER
                 },
             )
         }
