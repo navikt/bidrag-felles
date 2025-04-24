@@ -35,6 +35,9 @@ enum class Inntektstype {
     BARNETILLEGG_SPK,
     BARNETILLEGG_TILTAKSPENGER,
 
+    // Barnetillegg hentet fra Bisys
+    BARNETILLEGG_SUMMERT,
+
     ;
 
     companion object {

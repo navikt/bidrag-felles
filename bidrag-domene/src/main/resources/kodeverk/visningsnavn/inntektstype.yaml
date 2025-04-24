@@ -51,3 +51,5 @@ BARNETILLEGG_SPK:
   intern: "SPK"
 BARNETILLEGG_TILTAKSPENGER:
   intern: "Tiltakspenger"
+BARNETILLEGG_SUMMERT:
+  intern: "Summert"
