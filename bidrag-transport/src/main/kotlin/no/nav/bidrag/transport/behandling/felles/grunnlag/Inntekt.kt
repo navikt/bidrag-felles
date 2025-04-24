@@ -69,3 +69,18 @@ data class BeregnetInntekt(
         val beløp: BigDecimal,
     )
 }
+
+enum class InntektSkatteklasseType {
+    INGEN,
+    SKATTEKLASSE_0,
+    SKATTEKLASSE_1,
+    SKATTEKLASSE_2,
+}
+
+data class InntektSkatteklasse(
+    val år: Int,
+    val skatteklasse: InntektSkatteklasseType,
+    val deltFordel: Boolean,
+    val særfradragEnsligForsørger: Boolean,
+    val særfradragDeltBosted: Boolean,
+) : GrunnlagInnhold
