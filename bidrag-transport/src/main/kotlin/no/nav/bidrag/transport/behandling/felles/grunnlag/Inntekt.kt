@@ -31,7 +31,6 @@ data class InntektsrapporteringPeriode(
     @Schema(description = "Liste med inntektsposter som inntekten består av. Vil være tom hvis det er manuelt registrert")
     @JsonAlias("inntekstpostListe")
     val inntektspostListe: List<Inntektspost> = emptyList(),
-    val manuellSkattesatsFaktor: BigDecimal? = null,
 ) : GrunnlagPeriodeInnhold {
     data class Inntektspost(
         @Schema(description = "Kode for inntektspost", example = "bonus")
