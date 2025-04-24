@@ -14,6 +14,7 @@ enum class Grunnlagstype {
     @JsonEnumDefaultValue
     UKJENT,
 
+    INNTEKT_SKATTEKLASSE,
     SÆRFRADRAG,
     SKATTEKLASSE,
     SAMVÆRSKLASSE,
