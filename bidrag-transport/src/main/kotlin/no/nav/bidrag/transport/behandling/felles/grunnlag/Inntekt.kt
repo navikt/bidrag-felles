@@ -76,7 +76,11 @@ enum class InntektSkatteklasseType {
     SKATTEKLASSE_2,
 }
 
-data class InntektSkatteklasse(
+data class InntektSkattelement(
+    val skattelementer: List<InntektSkattelementÅr> = emptyList(),
+) : GrunnlagInnhold
+
+data class InntektSkattelementÅr(
     val år: Int,
     val skatteklasse: InntektSkatteklasseType,
     val deltFordel: Boolean,
