@@ -116,7 +116,7 @@ abstract class AzureTokenClientInterceptor(
             return preferredUsername == null
         } catch (e: Throwable) {
             // Ingen request context. Skjer ved kall som har opphav i kjørende applikasjon. Ping etc.
-            false
+            true
         }
     }
 }
