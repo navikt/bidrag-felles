@@ -109,6 +109,8 @@ data class SluttberegningBarnebidragAldersjustering(
     val beregnetBeløp: BigDecimal,
     val resultatBeløp: BigDecimal,
     val bpAndelBeløp: BigDecimal,
+    val bpAndelFaktorVedDeltBosted: BigDecimal? = null,
+    val deltBosted: Boolean = false,
 ) : Sluttberegning
 
 @Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))
