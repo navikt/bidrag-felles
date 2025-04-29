@@ -23,6 +23,7 @@ data class KopiBarnetilsynMedStønadPeriode(
     override val fraVedtakId: Long,
     val tilsynstype: Tilsynstype,
     val skolealder: Skolealder,
+    val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnholdKopi
 
 data class KopiSamværsperiodeGrunnlag(
