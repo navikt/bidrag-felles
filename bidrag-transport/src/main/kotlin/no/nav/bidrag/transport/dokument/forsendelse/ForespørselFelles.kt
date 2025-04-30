@@ -77,7 +77,7 @@ sealed class DokumentForespørsel(
 }
 
 data class MottakerTo(
-    val ident: Personident? = null,
+    val ident: PersonIdent? = null,
     val språk: String? = null,
     val navn: String? = null,
     val identType: MottakerIdentTypeTo? = null,
