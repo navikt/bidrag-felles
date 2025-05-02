@@ -6,7 +6,6 @@ import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 
-
 data class HentDokumentValgRequest(
     @Schema(enumAsRef = true) val soknadType: SoknadType? = null,
     @Schema(enumAsRef = true) val vedtakType: Vedtakstype? = null,

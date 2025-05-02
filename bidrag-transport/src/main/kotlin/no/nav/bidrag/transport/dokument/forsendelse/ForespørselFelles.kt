@@ -2,7 +2,6 @@ package no.nav.bidrag.transport.dokument.forsendelse
 
 import com.fasterxml.jackson.annotation.JsonInclude
 import io.swagger.v3.oas.annotations.media.Schema
-import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.transport.dokument.DokumentArkivSystemDto
 import no.nav.bidrag.transport.dokument.isForsendelse
 import no.nav.bidrag.transport.dokument.isNumeric
