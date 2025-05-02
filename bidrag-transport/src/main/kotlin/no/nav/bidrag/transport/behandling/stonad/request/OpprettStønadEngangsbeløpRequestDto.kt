@@ -32,6 +32,8 @@ data class OpprettStønadEngangsbeløpRequestDto(
     val betaltBeløp: BigDecimal?,
     @Schema(description = "Valutakoden tilhørende stønadsbeløpet")
     val valutakode: String?,
+    @Schema(description = "Resultatkoden tilhørende engangsbeløpet")
+    val resultatkode: String,
     @Schema(description = "Angir om engangsbeløpet skal innkreves")
     val innkreving: Innkrevingstype,
     @Schema(
