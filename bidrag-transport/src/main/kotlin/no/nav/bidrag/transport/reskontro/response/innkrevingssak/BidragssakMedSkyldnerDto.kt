@@ -8,5 +8,5 @@ import io.swagger.v3.oas.annotations.media.Schema
 )
 data class BidragssakMedSkyldnerDto(
     val skyldner: SkyldnerDto?,
-    val bidragssak: BidragssakDto?,
+    val bidragssaker: List<BidragssakDto>?,
 )
