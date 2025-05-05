@@ -20,12 +20,14 @@ data class OpprettStønadEngangsbeløpRequestDto(
     val kravhaver: Personident,
     @Schema(description = "Personidenten til den som mottar engangsbeløpet")
     val mottaker: Personident,
+    @Schema(description = "Vedtaksid")
+    val vedtaksid: Int,
     @Schema(description = "Perioden er gyldig fra angitt tidspunkt (vedtakstidspunkt)")
     val gyldigFra: LocalDateTime,
     @Schema(description = "Angir tidspunkt perioden eventuelt er ugyldig fra (tidspunkt for vedtak med periode som erstattet denne)")
     val gyldigTil: LocalDateTime?,
     @Schema(description = "Periode gjort ugyldig av vedtak-id")
-    val periodeGjortUgyldigAvVedtaksid: Int?,
+    val gjortUgyldigAvVedtaksid: Int?,
     @Schema(description = "Beregnet stønadsbeløp")
     val beløp: BigDecimal?,
     @Schema(description = "Allerede innbetalt beløp")
