@@ -43,7 +43,7 @@ data class SaksinformasjonBarnDto(
             "Sum av restbeløp på forskudd (A1). " +
                 "Beregnes ikke for kall på saksnummer.",
     )
-    val sumInnbetaltAndel: BigDecimal? = null,
+    val sumUtbetaltAndel: BigDecimal? = null,
     @field:Schema(
         description =
             "Sum av restbeløp på forskudd (A1). " +
