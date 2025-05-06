@@ -140,6 +140,7 @@ data class DelberegningBidragsevne(
     val skatt: Skatt,
     val underholdBarnEgenHusstand: BigDecimal,
     val sumInntekt25Prosent: BigDecimal = BigDecimal.ZERO,
+    val sumBidragAndreBarn: BigDecimal = BigDecimal.ZERO,
 ) : Delberegning {
     data class Skatt(
         val minstefradrag: BigDecimal,
