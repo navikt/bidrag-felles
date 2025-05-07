@@ -32,6 +32,8 @@ val VedtakHendelse.behandlingId
 
 fun VedtakHendelse.erFattetGjennomBidragBehandling() = behandlingId != null
 
+fun VedtakHendelse.erFattetGjennomBidragAutomatiskJobb() = opprettetAv.contains("bidrag-automatisk-jobb")
+
 val VedtakHendelse.saksnummer
     get(): String? =
         stønadsendringListe?.firstOrNull()?.sak?.verdi
