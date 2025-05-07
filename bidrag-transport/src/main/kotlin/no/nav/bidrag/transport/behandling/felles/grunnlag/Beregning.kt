@@ -111,7 +111,22 @@ data class SluttberegningBarnebidragAldersjustering(
     val bpAndelBeløp: BigDecimal,
     val bpAndelFaktorVedDeltBosted: BigDecimal? = null,
     val deltBosted: Boolean = false,
-) : Sluttberegning
+) : Sluttberegning {
+    @get:JsonIgnore
+    val resultat
+        get() =
+            when {
+                deltBosted -> SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                else -> "kostnadsberegnet"
+            }
+
+    @get:JsonIgnore
+    val bisysResultatkode
+        get() = sluttberegningBisyskodeMap[resultat] ?: "KBB"
+
+    @get:JsonIgnore
+    val resultatVisningsnavn get() = lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[resultat]
+}
 
 @Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))
 data class DelberegningInntekt(

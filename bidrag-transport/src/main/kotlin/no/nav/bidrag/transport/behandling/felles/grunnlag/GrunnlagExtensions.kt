@@ -207,6 +207,12 @@ val List<BaseGrunnlag>.delberegningSamværsklasse get() =
     }!!
         .innholdTilObjekt<DelberegningSamværsklasse>()
 
+fun List<BaseGrunnlag>.finnSluttberegningBarnebidragAldersjusteringGrunnlagIReferanser(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =
+    finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SluttberegningBarnebidrag>(
+        Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG_ALDERSJUSTERING,
+        grunnlagsreferanseListe,
+    ).firstOrNull()
+
 fun List<BaseGrunnlag>.finnSluttberegningBarnebidragGrunnlagIReferanser(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =
     finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SluttberegningBarnebidrag>(
         Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG,
