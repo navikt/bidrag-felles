@@ -21,6 +21,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarn
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
 import java.time.YearMonth
+import java.util.*
 
 val VedtakDto.saksnummer get() = stønadsendringListe.firstOrNull()?.sak?.verdi ?: engangsbeløpListe.firstOrNull()?.sak?.verdi
 val VedtakDto.behandlingId get() =
@@ -80,6 +81,17 @@ val VedtakDto.erDirekteAvslag get(): Boolean {
             .firstOrNull()
             ?.resultatkode
             ?.let { Resultatkode.fraKode(it)?.erDirekteAvslag() } ?: false
+}
+
+fun VedtakDto.tilHendelseResultattekst(): String {
+    val vedtakstype = type.name.replaceFirstChar { it.uppercase() }
+    val stønadstype =
+        stønadsendringListe
+            .firstOrNull()
+            ?.type
+            ?.name
+            ?.lowercase()
+    return "$vedtakstype${stønadstype.let { " $it" }}"
 }
 
 fun StønadsendringDto.finnSistePeriode() = periodeListe.maxBy { it.periode.fom }
