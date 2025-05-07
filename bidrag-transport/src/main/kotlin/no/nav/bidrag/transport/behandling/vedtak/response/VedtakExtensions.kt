@@ -82,6 +82,17 @@ val VedtakDto.erDirekteAvslag get(): Boolean {
             ?.let { Resultatkode.fraKode(it)?.erDirekteAvslag() } ?: false
 }
 
+fun VedtakDto.tilBatchHendelseResultattekst(): String {
+    val vedtakstype = type.name.lowercase().replaceFirstChar { it.uppercase() }
+    val stønadstype =
+        stønadsendringListe
+            .firstOrNull()
+            ?.type
+            ?.name
+            ?.lowercase()
+    return "$vedtakstype${stønadstype.let { " $it" }}"
+}
+
 fun StønadsendringDto.finnSistePeriode() = periodeListe.maxBy { it.periode.fom }
 
 fun VedtakDto.finnSluttberegningBarnebidragAldersjusteringIPeriode(periode: VedtakPeriodeDto) =
