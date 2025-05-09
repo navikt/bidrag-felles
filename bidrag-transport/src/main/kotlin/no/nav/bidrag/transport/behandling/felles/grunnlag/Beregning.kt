@@ -72,6 +72,8 @@ data class SluttberegningBarnebidrag(
     val bidragJustertTilForskuddssats: Boolean = false,
     val begrensetRevurderingUtført: Boolean = false,
     val ikkeOmsorgForBarnet: Boolean = false,
+    // Brukes bare ved overføring av bisys vedtak
+    val tilleggsbidrag: BigDecimal? = null,
 ) : Sluttberegning {
     @get:JsonIgnore
     val resultat
