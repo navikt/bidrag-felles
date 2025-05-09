@@ -74,6 +74,10 @@ data class SluttberegningBarnebidrag(
     val ikkeOmsorgForBarnet: Boolean = false,
     // Brukes bare ved overføring av bisys vedtak
     val tilleggsbidrag: BigDecimal? = null,
+    // Beregnet evne til BP etter FF
+    val bpEvneVedForholdsmessigFordeling: BigDecimal? = null,
+    // Andel av U basert på fordeling fra FF
+    val bpAndelAvUVedForholdsmessigFordelingFaktor: BigDecimal? = null,
 ) : Sluttberegning {
     @get:JsonIgnore
     val resultat
