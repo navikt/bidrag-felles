@@ -10,7 +10,7 @@ import java.time.LocalDate
 data class SluttberegningForholdsmessigFordeling(
     override val periode: ÅrMånedsperiode,
     val saksnummer: Saksnummer,
-    val datoBeregning: LocalDate,
+    val datoBeregning: LocalDate? = null,
     val stønadstype: Stønadstype,
     val underholdskostnad: BigDecimal,
     val bpAndelUFaktor: BigDecimal,

@@ -78,6 +78,7 @@ data class SluttberegningBarnebidrag(
     val bpEvneVedForholdsmessigFordeling: BigDecimal? = null,
     // Andel av U basert på fordeling fra FF
     val bpAndelAvUVedForholdsmessigFordelingFaktor: BigDecimal? = null,
+    val bpSumBidrag: BigDecimal? = null,
 ) : Sluttberegning {
     @get:JsonIgnore
     val resultat
