@@ -26,7 +26,9 @@ data class AldersjusteringIkkeAldersjustertResultat(
 
 abstract class AldersjusteringResultat(
     val aldersjustert: Boolean,
-)
+) {
+    constructor() : this(false)
+}
 
 data class AldersjusteringResultatlisteResponse(
     val resultatListe: List<AldersjusteringResultat>,
