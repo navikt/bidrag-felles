@@ -1,5 +1,7 @@
 package no.nav.bidrag.transport.automatiskjobb
 
+import com.fasterxml.jackson.annotation.JsonSubTypes
+import com.fasterxml.jackson.annotation.JsonTypeInfo
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
@@ -45,6 +47,11 @@ data class AldersjusteringIkkeAldersjustertResultat(
     )
 }
 
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "aldersjustert")
+@JsonSubTypes(
+    JsonSubTypes.Type(value = AldersjusteringAldersjustertResultat::class, name = "true"),
+    JsonSubTypes.Type(value = AldersjusteringIkkeAldersjustertResultat::class, name = "false"),
+)
 abstract class AldersjusteringResultat(
     val aldersjustert: Boolean,
 ) {
