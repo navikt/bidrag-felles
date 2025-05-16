@@ -1,9 +1,6 @@
-package no.nav.bidrag.transport.behandling.stonad.response
+package no.nav.bidrag.transport.behandling.belopshistorikk.request
 
 import io.swagger.v3.oas.annotations.media.Schema
-import jakarta.persistence.Column
-import jakarta.validation.constraints.Min
-import jakarta.validation.constraints.NotBlank
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.ident.Personident
@@ -11,9 +8,8 @@ import no.nav.bidrag.domene.sak.Saksnummer
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-data class StønadEngangsbeløpDto(
-    @Schema(description = "Engangsbeløpsid")
-    val engangsbeløpsid: Int,
+@Schema(description = "Egenskaper ved et engangsbeløp")
+data class OpprettEngangsbeløpRequestDto(
     @Schema(description = "Engangsbeløptype")
     val type: Engangsbeløptype,
     @Schema(description = "Referanse til sak")
@@ -30,35 +26,24 @@ data class StønadEngangsbeløpDto(
     val gyldigFra: LocalDateTime,
     @Schema(description = "Angir tidspunkt perioden eventuelt er ugyldig fra (tidspunkt for vedtak med periode som erstattet denne)")
     val gyldigTil: LocalDateTime?,
-    @Schema(description = "Periode-gjort-ugyldig-av-vedtaksid")
+    @Schema(description = "Periode gjort ugyldig av vedtak-id")
     val gjortUgyldigAvVedtaksid: Int?,
-    @Schema(description = "Beregnet engangsbeløp")
-    @Min(0)
+    @Schema(description = "Beregnet stønadsbeløp")
     val beløp: BigDecimal?,
-    @Schema(description = "Beløp BP allerede har betalt")
-    @Min(0)
-    val betaltBeløp: BigDecimal? = null,
-    @Schema(description = "Valutakoden tilhørende engangsbeløpet")
-    @NotBlank
+    @Schema(description = "Allerede innbetalt beløp")
+    val betaltBeløp: BigDecimal?,
+    @Schema(description = "Valutakoden tilhørende stønadsbeløpet")
     val valutakode: String?,
     @Schema(description = "Resultatkoden tilhørende engangsbeløpet")
-    @NotBlank
     val resultatkode: String,
     @Schema(description = "Angir om engangsbeløpet skal innkreves")
     val innkreving: Innkrevingstype,
     @Schema(
         description =
-            "Referanse til engangsbeløp, brukes for å kunne omgjøre engangsbeløp senere i et klagevedtak. Unik innenfor et vedtak." +
-                "Referansen er enten angitt i requesten for opprettelse av vedtak " +
-                "eller generert av bidrag-vedtak hvis den ikke var angitt i requesten.",
+            "Referanse til engangsbeløp, brukes for å kunne omgjøre engangsbeløp senere i et klagevedtak. Unik innenfor et vedtak. " +
+                "Unik referanse blir generert av bidrag-vedtak hvis den ikke er angitt i requesten.",
     )
-    val referanse: String,
-    @Column(nullable = false, name = "opprettet_av")
-    val opprettetAv: String = "",
-    @Column(nullable = false, name = "opprettet_tidspunkt")
-    val opprettetTidspunkt: LocalDateTime = LocalDateTime.now(),
-    @Column(nullable = true, name = "endret_av")
-    val endretAv: String? = null,
-    @Column(nullable = true, name = "endret_tidspunkt")
-    val endretTidspunkt: LocalDateTime? = null,
+    val referanse: String? = null,
+    @Schema(description = "Opprettet av")
+    val opprettetAv: String,
 )

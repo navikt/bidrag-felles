@@ -10,6 +10,10 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
+@Deprecated(
+    "Flyttet til annen pakke",
+    replaceWith = ReplaceWith("no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadDto")
+)
 data class StønadDto(
     @Schema(description = "Stønadsid")
     val stønadsid: Int,
@@ -42,6 +46,10 @@ data class StønadDto(
     val periodeListe: List<StønadPeriodeDto>,
 )
 
+@Deprecated(
+    "Flyttet til annen pakke",
+    replaceWith = ReplaceWith("no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadPeriodeDto")
+)
 data class StønadPeriodeDto(
     @Schema(description = "Periodeid")
     val periodeid: Int,

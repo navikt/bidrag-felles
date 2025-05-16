@@ -1,11 +1,11 @@
-package no.nav.bidrag.transport.behandling.stonad.response
+package no.nav.bidrag.transport.behandling.belopshistorikk.response
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
-@Schema(description = "Respons med stønad og beløpsinformasjon for alle perioder", deprecated = true)
+@Schema(description = "Respons med stønad og beløpsinformasjon for alle perioder")
 data class StønadMedPeriodeBeløpResponse(
     @Schema(description = "Angir første år en stønad skal indeksreguleres", deprecated = true)
     val førsteIndeksreguleringsår: Int?,

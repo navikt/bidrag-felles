@@ -1,4 +1,4 @@
-package no.nav.bidrag.transport.behandling.stonad.request
+package no.nav.bidrag.transport.behandling.belopshistorikk.request
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
@@ -9,7 +9,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
-@Schema(description = "Egenskaper ved en stønadsendring", deprecated = true)
+@Schema(description = "Egenskaper ved en stønadsendring")
 data class OpprettStønadRequestDto(
     @Schema(description = "Stønadstype")
     val type: Stønadstype,
@@ -31,7 +31,7 @@ data class OpprettStønadRequestDto(
     val periodeListe: List<OpprettStønadsperiodeRequestDto>,
 )
 
-@Schema(description = "Egenskaper ved en periode", deprecated = true)
+@Schema(description = "Egenskaper ved en periode")
 data class OpprettStønadsperiodeRequestDto(
     @Schema(description = "Periode med Fra-og-med-dato og til-dato med format ÅÅÅÅ-MM")
     val periode: ÅrMånedsperiode,

@@ -1,4 +1,4 @@
-package no.nav.bidrag.transport.behandling.stonad.response
+package no.nav.bidrag.transport.behandling.belopshistorikk.response
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
@@ -6,13 +6,13 @@ import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 import java.math.BigDecimal
 
-@Schema(description = "Respons med alle løpende bidragssaker for angitt skyldner på angitt dato", deprecated = true)
+@Schema(description = "Respons med alle løpende bidragssaker for angitt skyldner på angitt dato")
 data class LøpendeBidragssakerResponse(
     @Schema(description = "Liste med info om skyldnerens løpende bidragssaker")
     val bidragssakerListe: List<LøpendeBidragssak> = emptyList(),
 )
 
-@Schema(description = "Objekt med relevant informasjon om skyldners bidragssaker", deprecated = true)
+@Schema(description = "Objekt med relevant informasjon om skyldners bidragssaker")
 data class LøpendeBidragssak(
     @Schema(description = "Saksnummer")
     val sak: Saksnummer,
