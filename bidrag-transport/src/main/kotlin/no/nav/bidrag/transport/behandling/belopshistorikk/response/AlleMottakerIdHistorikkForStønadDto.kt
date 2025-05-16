@@ -1,11 +1,11 @@
-package no.nav.bidrag.transport.behandling.stonad.response
+package no.nav.bidrag.transport.behandling.belopshistorikk.response
 
 import io.swagger.v3.oas.annotations.media.Schema
 import java.time.LocalDateTime
 
 @Schema
 data class AlleMottakerIdHistorikkForStonadDto(
-    @Schema(description = "Alle forekomster på mottaker-id-historikk for en stønad", deprecated = true)
+    @Schema(description = "Alle forekomster på mottaker-id-historikk for en stønad")
     val alleMottakerIdHistorikkForStonad: List<MottakerIdHistorikkDto>?,
 )
 

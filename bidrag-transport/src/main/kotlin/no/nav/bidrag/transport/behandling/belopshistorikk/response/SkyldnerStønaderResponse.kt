@@ -1,17 +1,17 @@
-package no.nav.bidrag.transport.behandling.stonad.response
+package no.nav.bidrag.transport.behandling.belopshistorikk.response
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 
-@Schema(description = "Respons med alle stønader for angitt skyldner", deprecated = true)
+@Schema(description = "Respons med alle stønader for angitt skyldner")
 data class SkyldnerStønaderResponse(
     @Schema(description = "Liste med info om skyldnerens stønader")
     val stønader: List<SkyldnerStønad> = emptyList(),
 )
 
-@Schema(description = "Objekt med relevant informasjon om skyldners stønader", deprecated = true)
+@Schema(description = "Objekt med relevant informasjon om skyldners stønader")
 data class SkyldnerStønad(
     @Schema(description = "Saksnummer")
     val sak: Saksnummer,

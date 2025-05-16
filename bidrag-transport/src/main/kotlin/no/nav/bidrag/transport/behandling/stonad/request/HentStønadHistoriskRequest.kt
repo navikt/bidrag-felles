@@ -6,7 +6,7 @@ import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 import java.time.LocalDateTime
 
-@Schema(description = "Request for å hente stønad og perioder som var gyldige på angitt tidspunkt")
+@Schema(description = "Request for å hente stønad og perioder som var gyldige på angitt tidspunkt", deprecated = true)
 data class HentStønadHistoriskRequest(
     @Schema(description = "Stønadstype")
     val type: Stønadstype,
