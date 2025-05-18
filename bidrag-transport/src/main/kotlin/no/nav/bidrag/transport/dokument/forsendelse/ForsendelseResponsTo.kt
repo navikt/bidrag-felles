@@ -32,6 +32,7 @@ data class ForsendelseResponsTo(
     @Schema(description = "Dato forsendelsen ble opprettet") val opprettetDato: LocalDate? = null,
     @Schema(description = "Dato på hoveddokumentet i forsendelsen") val dokumentDato: LocalDate? = null,
     @Schema(description = "Dato forsendelsen ble distribuert") val distribuertDato: LocalDate? = null,
+    val unikReferanse: String? = null,
 ) {
     fun hentHoveddokument() = if (dokumenter.isEmpty()) null else dokumenter[0]
 }
