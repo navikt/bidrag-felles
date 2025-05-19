@@ -271,6 +271,15 @@ enum class Resultatkode(
         listOf(BisysResultatkode("VO")),
         ResultatkodeType.BARNEBIDRAG,
     ),
+
+    INNVILGET_VEDTAK(
+        listOf(BisysResultatkode("IV")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    SKJØNN_UTLANDET(
+        listOf(BisysResultatkode("11B")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
     ;
 
     val legacyKode get() = bisysKode.firstOrNull()?.resultatKode
