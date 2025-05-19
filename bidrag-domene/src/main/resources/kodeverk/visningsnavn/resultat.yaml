@@ -152,3 +152,9 @@ INGEN_ENDRING_UNDER_GRENSE:
 
 IKKE_STERK_NOK_GRUNN_OG_BIDRAGET_HAR_OPPHØRT:
   intern: "Ikke sterk nok grunn og bidraget har opphørt"
+
+INNVILGET_VEDTAK:
+  intern: "Innvilget vedtak"
+
+SKJØNN_UTLANDET:
+  intern: "Skjønn utlandet"
