@@ -42,6 +42,7 @@ data class OpprettForsendelseForespørsel(
             "Opprett tittel på forsendelse automatisk basert på behandling detaljer. " +
                 "Skal bare settes til false hvis gamle brevmeny (Bisys) brukes",
     ) val opprettTittel: Boolean? = false,
+    val unikReferanse: String? = null,
 )
 
 data class BehandlingInfoDto(
@@ -99,3 +100,7 @@ data class OpprettDokumentForespørsel(
                 "Hvis dette er satt til false så antas det at kallende system bestiller dokumentet selv.",
     ) val bestillDokument: Boolean = true,
 ) : DokumentForespørsel()
+
+data class ForsendelseConflictResponse(
+    val forsendelseId: Long,
+)
