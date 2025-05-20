@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.ident.Personident
-import no.nav.bidrag.domene.ident.ReellMottager
+import no.nav.bidrag.domene.ident.ReellMottaker
 import no.nav.bidrag.domene.ident.SamhandlerId
 
 data class RolleDto(
@@ -14,8 +14,9 @@ data class RolleDto(
     val type: Rolletype,
     @Deprecated("Internlogisk felt, burde ikke brukes utenfor back end.")
     val objektnummer: String? = null,
-    val reellMottager: ReellMottager? = null,
-    val reelMottaker: ReelMottakerDto? = null,
+    @Deprecated("Bruk heller reellMottaker", replaceWith = ReplaceWith("reellMottaker"))
+    val reellMottager: ReellMottaker? = null,
+    val reellMottaker: ReellMottakerDto? = null,
     val mottagerErVerge: Boolean = false,
     val samhandlerIdent: SamhandlerId? = null,
     @Deprecated("Bruk fødselsnummer", ReplaceWith("fødselsnummer"))
@@ -27,16 +28,16 @@ data class RolleDto(
         require(reellMottager == null || type == Rolletype.BARN) { "Reell mottager kan kun opprettes for barn." }
     }
 
-    fun rmErSamhandlerId() = reelMottaker?.ident?.erSamhandlerId() ?: reellMottager?.erSamhandlerId() ?: false
+    fun rmErSamhandlerId() = reellMottaker?.ident?.erSamhandlerId() ?: reellMottager?.erSamhandlerId() ?: false
 
-    fun rmErVerge() = reelMottaker?.verge ?: false
+    fun rmErVerge() = reellMottaker?.verge ?: false
 
-    fun rmSamhandlerId() = reelMottaker?.ident?.samhandlerId() ?: reellMottager?.samhandlerId()
+    fun rmSamhandlerId() = reellMottaker?.ident?.samhandlerId() ?: reellMottager?.samhandlerId()
 
-    fun rmFødselsnummer() = reelMottaker?.ident?.personIdent() ?: reellMottager?.personIdent()
+    fun rmFødselsnummer() = reellMottaker?.ident?.personIdent() ?: reellMottager?.personIdent()
 }
 
-data class ReelMottakerDto(
-    val ident: ReellMottager,
+data class ReellMottakerDto(
+    val ident: ReellMottaker,
     val verge: Boolean = false,
 )
