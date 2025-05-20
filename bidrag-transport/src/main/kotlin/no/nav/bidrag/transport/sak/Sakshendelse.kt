@@ -2,7 +2,7 @@ package no.nav.bidrag.transport.sak
 
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.ident.Personident
-import no.nav.bidrag.domene.ident.ReellMottager
+import no.nav.bidrag.domene.ident.ReellMottaker
 import no.nav.bidrag.domene.ident.SamhandlerId
 import no.nav.bidrag.domene.sak.Saksnummer
 
@@ -17,7 +17,7 @@ data class Saksrolle(
     val ident: Personident? = null,
     val type: Rolletype,
     val samhandlerId: SamhandlerId? = null,
-    val reelMottager: ReellMottager? = null,
+    val reelMottager: ReellMottaker? = null,
     val ukjent: Boolean = false,
 )
 

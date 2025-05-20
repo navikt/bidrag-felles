@@ -7,7 +7,7 @@ import no.nav.bidrag.domene.felles.Verdiobjekt
 import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 
-class ReellMottager(
+class ReellMottaker(
     override val verdi: String,
 ) : Verdiobjekt<String>() {
     override fun gyldig(): Boolean = Personident(verdi).gyldig() || SamhandlerId(verdi).gyldig()
@@ -21,16 +21,16 @@ class ReellMottager(
     fun samhandlerId() = if (erSamhandlerId()) SamhandlerId(verdi) else null
 }
 
-class ReellMottagerReadingConverter : Converter<String, ReellMottager> {
-    override fun convert(source: String) = source.trimToNull()?.let { ReellMottager(source) }
+class ReellMottagerReadingConverter : Converter<String, ReellMottaker> {
+    override fun convert(source: String) = source.trimToNull()?.let { ReellMottaker(source) }
 }
 
-class ReellMottagerWritingConverter : Converter<ReellMottager, String> {
-    override fun convert(source: ReellMottager) = source.verdi.trimToNull()
+class ReellMottagerWritingConverter : Converter<ReellMottaker, String> {
+    override fun convert(source: ReellMottaker) = source.verdi.trimToNull()
 }
 
-class ReellMottagerConverter : AttributeConverter<ReellMottager, String> {
-    override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { ReellMottager(source) }
+class ReellMottagerConverter : AttributeConverter<ReellMottaker, String> {
+    override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { ReellMottaker(source) }
 
-    override fun convertToDatabaseColumn(source: ReellMottager?) = source?.verdi.trimToNull()
+    override fun convertToDatabaseColumn(source: ReellMottaker?) = source?.verdi.trimToNull()
 }
