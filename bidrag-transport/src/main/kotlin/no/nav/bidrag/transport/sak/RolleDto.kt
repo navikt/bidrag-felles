@@ -15,6 +15,7 @@ data class RolleDto(
     @Deprecated("Internlogisk felt, burde ikke brukes utenfor back end.")
     val objektnummer: String? = null,
     val reellMottager: ReellMottager? = null,
+    val reelMottaker: ReelMottakerDto? = null,
     val mottagerErVerge: Boolean = false,
     val samhandlerIdent: SamhandlerId? = null,
     @Deprecated("Bruk fødselsnummer", ReplaceWith("fødselsnummer"))
@@ -26,9 +27,16 @@ data class RolleDto(
         require(reellMottager == null || type == Rolletype.BARN) { "Reell mottager kan kun opprettes for barn." }
     }
 
-    fun rmErSamhandlerId() = reellMottager?.erSamhandlerId() ?: false
+    fun rmErSamhandlerId() = reelMottaker?.ident?.erSamhandlerId() ?: reellMottager?.erSamhandlerId() ?: false
 
-    fun rmSamhandlerId() = reellMottager?.samhandlerId()
+    fun rmErVerge() = reelMottaker?.verge ?: false
 
-    fun rmFødselsnummer() = reellMottager?.personIdent()
+    fun rmSamhandlerId() = reelMottaker?.ident?.samhandlerId() ?: reellMottager?.samhandlerId()
+
+    fun rmFødselsnummer() = reelMottaker?.ident?.personIdent() ?: reellMottager?.personIdent()
 }
+
+data class ReelMottakerDto(
+    val ident: ReellMottager,
+    val verge: Boolean = false,
+)
