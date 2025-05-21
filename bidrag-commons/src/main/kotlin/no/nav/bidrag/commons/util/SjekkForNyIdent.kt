@@ -137,7 +137,7 @@ class IdentConsumer(
                 restTemplate
                     .postForEntity(
                         "$personUrl$PERSON_PATH",
-                        HentePersonidenterRequest(ident, setOf(Identgruppe.FOLKEREGISTERIDENT), true),
+                        HentePersonidenterRequest(ident, setOf(Identgruppe.FOLKEREGISTERIDENT, Identgruppe.NPID), true),
                         Array<PersonidentDto>::class.java,
                     ).body
                     ?.map { it.ident } ?: listOf(ident)
