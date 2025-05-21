@@ -130,6 +130,34 @@ class IdentConsumer(
         private val LOGGER = LoggerFactory.getLogger(SjekkForNyIdentAspect::class.java)
     }
 
+    @Cacheable(value = ["bidrag-commons_hentAlleIdenter_cache"], key = "#ident")
+    fun hentAlleIdenter(ident: String): List<String> {
+        if (Ident(ident).erPersonIdent()) {
+            return try {
+                restTemplate
+                    .postForEntity(
+                        "$personUrl$PERSON_PATH",
+                        HentePersonidenterRequest(ident, setOf(Identgruppe.FOLKEREGISTERIDENT), true),
+                        Array<PersonidentDto>::class.java,
+                    ).body
+                    ?.map { it.ident } ?: listOf(ident)
+            } catch (e: NoSuchElementException) {
+                LOGGER.warn(
+                    "Bidrag-person fant ingen person på kalt ident. " +
+                        "\nFeilmelding: ${e.message} CallId: ${CorrelationId.fetchCorrelationIdForThread()}.\n$e",
+                )
+                listOf(ident)
+            } catch (e: Exception) {
+                LOGGER.error(
+                    "Noe gikk galt i kall mot bidrag-person: ${e.message} " +
+                        "CallId: ${CorrelationId.fetchCorrelationIdForThread()}.\n$e",
+                )
+                listOf(ident)
+            }
+        }
+        return listOf(ident)
+    }
+
     @Cacheable(value = ["bidrag-commons_sjekkIdent_cache"], key = "#ident")
     fun sjekkIdent(ident: String): String {
         if (Ident(ident).erPersonIdent()) {
