@@ -122,7 +122,7 @@ class SjekkForNyIdentAspect(
 
 @Component
 class IdentConsumer(
-    @Value("\${PERSON_URL}") private val personUrl: String,
+    @Value("\${PERSON_URL:\${BIDRAG_PERSON_URL}}") private val personUrl: String,
     @Qualifier("azure") private val restTemplate: RestOperations,
 ) : AbstractRestClient(restTemplate, "\${NAIS_APP_NAME}") {
     companion object {
