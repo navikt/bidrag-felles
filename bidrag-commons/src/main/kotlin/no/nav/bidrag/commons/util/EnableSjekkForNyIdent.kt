@@ -7,5 +7,5 @@ import java.lang.annotation.Inherited
 @Inherited
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.ANNOTATION_CLASS, AnnotationTarget.CLASS)
-@Import(value = [IdentConsumer::class, SjekkForNyIdentAspect::class])
+@Import(value = [IdentConsumer::class, SjekkForNyIdentAspect::class, IdentUtils::class])
 annotation class EnableSjekkForNyIdent
