@@ -22,6 +22,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.finnOgKonverterGrunnla
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragGrunnlagIReferanser
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentAldersjusteringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
+import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdentKonvertert
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedReferanseKonvertert
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
 import no.nav.bidrag.transport.felles.tilVisningsnavn
@@ -111,14 +112,15 @@ fun tilAldersjusteringResultattekst(
             val person =
                 vedtak.grunnlagListe
                     .hentPersonMedReferanseKonvertert(aldersjusteringDetaljerGrunnlag.gjelderBarnReferanse)
+                    ?: vedtak.grunnlagListe.hentPersonMedIdentKonvertert(stønadsendring.kravhaver.verdi)
 
             val stønadstype = if (stønadsendring.type == Stønadstype.FORSKUDD) "Forskuddet" else "Bidraget"
             if (person == null) {
                 return "$stønadstype til barn ${stønadsendring.kravhaver.verdi} " +
-                    "ble ikke aldersjustert: ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
+                    "ble ikke aldersjustert. ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
             }
             return "$stønadstype til barn født ${person.fødselsdato.tilVisningsnavn()} " +
-                "ble ikke aldersjustert: ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
+                "ble ikke aldersjustert. ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
         }
     }
     return vedtak.tilBatchHendelseResultattekst()

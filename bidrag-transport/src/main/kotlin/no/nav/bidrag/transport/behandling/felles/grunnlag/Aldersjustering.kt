@@ -32,9 +32,10 @@ data class AldersjusteringDetaljerGrunnlag(
 ) : GrunnlagInnhold {
     @JsonIgnore
     val begrunnelserVisningsnavn: String? =
-        begrunnelser?.joinToString(", ") {
-            it.lowercase().replaceFirstChar { fc -> fc.uppercase() }.replace("_", " ")
-        }
+        begrunnelser
+            ?.joinToString(", ") {
+                it.lowercase().replace("_", " ")
+            }?.replaceFirstChar { fc -> fc.uppercase() }
 
     @JsonIgnore
     val førsteBegrunnelseVisningsnavn: String? =
