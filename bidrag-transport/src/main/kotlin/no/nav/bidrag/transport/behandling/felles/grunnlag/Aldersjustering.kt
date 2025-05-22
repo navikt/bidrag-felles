@@ -31,3 +31,21 @@ data class KopiSamværsperiodeGrunnlag(
     override val fraVedtakId: Long,
     val samværsklasse: Samværsklasse,
 ) : GrunnlagPeriodeInnholdKopi
+
+data class AldersjusteringDetaljerGrunnlag(
+    val grunnlagFraVedtak: Long,
+    val aldersjustert: Boolean = true,
+    val aldersjusteresManuelt: Boolean = false,
+    val begrunnelser: List<String>? = null,
+) : GrunnlagInnhold {
+    val begrunnelserVisningsnavn: String? =
+        begrunnelser?.joinToString(", ") {
+            it.lowercase().replace("_", " ")
+        }
+
+    val førsteBegrunnelseVisningsnavn: String? =
+        begrunnelser
+            ?.map {
+                it.lowercase().replaceFirstChar { fc -> fc.uppercase() }.replace("_", " ")
+            }?.firstOrNull()
+}
