@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
@@ -29,11 +30,13 @@ data class AldersjusteringDetaljerGrunnlag(
     val aldersjusteresManuelt: Boolean = false,
     val begrunnelser: List<String>? = null,
 ) : GrunnlagInnhold {
+    @JsonIgnore
     val begrunnelserVisningsnavn: String? =
         begrunnelser?.joinToString(", ") {
             it.lowercase().replaceFirstChar { fc -> fc.uppercase() }.replace("_", " ")
         }
 
+    @JsonIgnore
     val førsteBegrunnelseVisningsnavn: String? =
         begrunnelser
             ?.map {
