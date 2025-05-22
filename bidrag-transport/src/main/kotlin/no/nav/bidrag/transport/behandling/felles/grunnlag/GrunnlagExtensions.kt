@@ -182,6 +182,20 @@ fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferans
             .firstOrNull()
     }
 
+fun Collection<BaseGrunnlag>.hentPersonMedIdentKonvertert(ident: String?) =
+    hentAllePersoner()
+        .find {
+            it.personIdent == ident
+        }?.innholdTilObjekt<Person>()
+
+fun Collection<BaseGrunnlag>.hentPersonMedReferanseKonvertert(referanse: Grunnlagsreferanse?) =
+    referanse?.let {
+        toList()
+            .filtrerBasertPåEgenReferanse(referanse = referanse)
+            .firstOrNull()
+            ?.innholdTilObjekt<Person>()
+    }
+
 // Særbidrag grunnlag
 val List<BaseGrunnlag>.særbidragskategori get() =
     filtrerBasertPåEgenReferanse(Grunnlagstype.SÆRBIDRAG_KATEGORI).firstOrNull()?.innholdTilObjekt<SærbidragskategoriGrunnlag>()
@@ -227,3 +241,9 @@ inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.tilInnholdMedReferanse() =
         innholdTilObjekt<T>(),
         this,
     )
+
+fun List<BaseGrunnlag>.hentAldersjusteringDetaljerGrunnlag(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =
+    finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<AldersjusteringDetaljerGrunnlag>(
+        Grunnlagstype.ALDERSJUSTERING_DETALJER,
+        grunnlagsreferanseListe = grunnlagsreferanseListe,
+    ).firstOrNull()

@@ -5,8 +5,10 @@ import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erDirekteAvslag
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.vedtak.BehandlingsrefKilde
+import no.nav.bidrag.domene.enums.vedtak.Beslutningstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrense
@@ -18,8 +20,11 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenRe
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåFremmedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragGrunnlagIReferanser
+import no.nav.bidrag.transport.behandling.felles.grunnlag.hentAldersjusteringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
+import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedReferanseKonvertert
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
+import no.nav.bidrag.transport.felles.tilVisningsnavn
 import java.time.YearMonth
 
 val VedtakDto.saksnummer get() = stønadsendringListe.firstOrNull()?.sak?.verdi ?: engangsbeløpListe.firstOrNull()?.sak?.verdi
@@ -91,6 +96,32 @@ fun VedtakDto.tilBatchHendelseResultattekst(): String {
             ?.name
             ?.lowercase()
     return "$vedtakstype${stønadstype.let { " $it" }}"
+}
+
+fun tilAldersjusteringResultattekst(
+    vedtak: VedtakDto,
+    stønadsendring: StønadsendringDto,
+): String? {
+    if (vedtak.type != Vedtakstype.ALDERSJUSTERING) return vedtak.tilBatchHendelseResultattekst()
+    if (stønadsendring.beslutning == Beslutningstype.AVVIST) {
+        val aldersjusteringDetaljerGrunnlag =
+            vedtak.grunnlagListe.hentAldersjusteringDetaljerGrunnlag(stønadsendring.grunnlagReferanseListe)
+
+        if (aldersjusteringDetaljerGrunnlag != null) {
+            val person =
+                vedtak.grunnlagListe
+                    .hentPersonMedReferanseKonvertert(aldersjusteringDetaljerGrunnlag.gjelderBarnReferanse)
+
+            val stønadstype = if (stønadsendring.type == Stønadstype.FORSKUDD) "Forskuddet" else "Bidraget"
+            if (person == null) {
+                return "$stønadstype til barn ${stønadsendring.kravhaver.verdi} " +
+                    "ble ikke aldersjustert: ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
+            }
+            return "$stønadstype til barn født ${person.fødselsdato.tilVisningsnavn()} " +
+                "ble ikke aldersjustert: ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
+        }
+    }
+    return vedtak.tilBatchHendelseResultattekst()
 }
 
 fun StønadsendringDto.finnSistePeriode() = periodeListe.maxBy { it.periode.fom }
