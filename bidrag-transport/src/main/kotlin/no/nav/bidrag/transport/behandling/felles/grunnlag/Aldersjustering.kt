@@ -31,7 +31,7 @@ data class AldersjusteringDetaljerGrunnlag(
 ) : GrunnlagInnhold {
     val begrunnelserVisningsnavn: String? =
         begrunnelser?.joinToString(", ") {
-            it.lowercase().replace("_", " ")
+            it.lowercase().replaceFirstChar { fc -> fc.uppercase() }.replace("_", " ")
         }
 
     val førsteBegrunnelseVisningsnavn: String? =
