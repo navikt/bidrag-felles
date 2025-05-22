@@ -12,7 +12,7 @@ import java.time.LocalDateTime
 
 @Deprecated(
     "Flyttet til annen pakke",
-    replaceWith = ReplaceWith("no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadDto")
+    replaceWith = ReplaceWith("no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadDto"),
 )
 data class StønadDto(
     @Schema(description = "Stønadsid")
@@ -48,7 +48,7 @@ data class StønadDto(
 
 @Deprecated(
     "Flyttet til annen pakke",
-    replaceWith = ReplaceWith("no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadPeriodeDto")
+    replaceWith = ReplaceWith("no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadPeriodeDto"),
 )
 data class StønadPeriodeDto(
     @Schema(description = "Periodeid")
