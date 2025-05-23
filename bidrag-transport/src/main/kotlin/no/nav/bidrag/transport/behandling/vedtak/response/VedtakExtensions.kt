@@ -115,12 +115,13 @@ fun tilAldersjusteringResultattekst(
                     ?: vedtak.grunnlagListe.hentPersonMedIdentKonvertert(stønadsendring.kravhaver.verdi)
 
             val stønadstype = if (stønadsendring.type == Stønadstype.FORSKUDD) "Forskuddet" else "Bidraget"
-            if (person == null) {
-                return "$stønadstype til barn ${stønadsendring.kravhaver.verdi} " +
-                    "ble ikke aldersjustert. ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
+            return if (aldersjusteringDetaljerGrunnlag.innhold.aldersjusteresManuelt) {
+                val barnInfo = person?.fødselsdato?.tilVisningsnavn()?.let { "født $it" } ?: stønadsendring.kravhaver.verdi
+                "$stønadstype til barn $barnInfo skal aldersjusteres manuelt. ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
+            } else {
+                val barnInfo = person?.fødselsdato?.tilVisningsnavn()?.let { "født $it" } ?: stønadsendring.kravhaver.verdi
+                "$stønadstype til barn $barnInfo ble ikke aldersjustert. ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
             }
-            return "$stønadstype til barn født ${person.fødselsdato.tilVisningsnavn()} " +
-                "ble ikke aldersjustert. ${aldersjusteringDetaljerGrunnlag.innhold.begrunnelserVisningsnavn}"
         }
     }
     return vedtak.tilBatchHendelseResultattekst()

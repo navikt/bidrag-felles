@@ -53,45 +53,48 @@ class VedtakExtensionsKtTest {
                 gjelderBarnReferanse = barn.referanse,
             )
 
-        val stønadsendringDto =
-            StønadsendringDto(
-                kravhaver = Personident(""),
-                skyldner = Personident(""),
-                mottaker = Personident(","),
-                sak = Saksnummer(""),
-                type = Stønadstype.BIDRAG,
-                beslutning = Beslutningstype.AVVIST,
-                innkreving = Innkrevingstype.UTEN_INNKREVING,
-                førsteIndeksreguleringsår = 1,
-                omgjørVedtakId = null,
-                eksternReferanse = "",
-                grunnlagReferanseListe = listOf(grunnlag.referanse),
-                periodeListe = emptyList(),
-                sisteVedtaksid = null,
-            )
-        val vedtakDto =
-            VedtakDto(
-                stønadsendringListe = emptyList(),
-                engangsbeløpListe = emptyList(),
-                behandlingsreferanseListe = emptyList(),
-                grunnlagListe = listOf(barn, grunnlag),
-                enhetsnummer = Enhetsnummer("1234"),
-                vedtakstidspunkt = LocalDateTime.parse("2020-01-01T00:00:00"),
-                unikReferanse = null,
-                fastsattILand = "NO",
-                innkrevingUtsattTilDato = null,
-                kilde = Vedtakskilde.MANUELT,
-                kildeapplikasjon = "APP",
-                opprettetAv = "USER",
-                opprettetAvNavn = "User Name",
-                opprettetTidspunkt = LocalDateTime.now(),
-                type = Vedtakstype.ALDERSJUSTERING,
-                vedtaksid = 1,
-            )
+        val stønadsendringDto = opprettStønadsendring(listOf(grunnlag.referanse))
+        val vedtakDto = opprettVedtakDto(listOf(barn, grunnlag))
         aldersjusteringGrunnlag.begrunnelserVisningsnavn shouldBe
             "Siste vedtak er justert ned til evne, siste vedtak er justert ned til 25 prosent av inntekt"
         tilAldersjusteringResultattekst(vedtakDto, stønadsendringDto) shouldBe
             "Bidraget til barn født 01.01.2021 ble ikke aldersjustert. Siste vedtak er justert ned til evne, siste vedtak er justert ned til 25 prosent av inntekt"
+    }
+
+    @Test
+    fun `skal oppprette visningsnavn begrunnelse for manuell aldersjustering`() {
+        val barn =
+            GrunnlagDto(
+                referanse = "barn",
+                type = Grunnlagstype.PERSON_SØKNADSBARN,
+                innhold =
+                    POJONode(
+                        Person(
+                            fødselsdato = LocalDate.parse("2021-01-01"),
+                        ),
+                    ),
+            )
+        val aldersjusteringGrunnlag =
+            AldersjusteringDetaljerGrunnlag(
+                grunnlagFraVedtak = 1,
+                aldersjustert = true,
+                aldersjusteresManuelt = true,
+                begrunnelser = listOf("SISTE_VEDTAK_ER_INNVILGET_VEDTAK"),
+            )
+        val grunnlag =
+            GrunnlagDto(
+                type = Grunnlagstype.ALDERSJUSTERING_DETALJER,
+                innhold = POJONode(aldersjusteringGrunnlag),
+                referanse = "test",
+                gjelderBarnReferanse = barn.referanse,
+            )
+
+        val stønadsendringDto = opprettStønadsendring(listOf(grunnlag.referanse))
+        val vedtakDto = opprettVedtakDto(listOf(barn, grunnlag))
+        aldersjusteringGrunnlag.begrunnelserVisningsnavn shouldBe
+            "Siste vedtak er innvilget vedtak"
+        tilAldersjusteringResultattekst(vedtakDto, stønadsendringDto) shouldBe
+            "Bidraget til barn født 01.01.2021 skal aldersjusteres manuelt. Siste vedtak er innvilget vedtak"
     }
 
     @Test
@@ -225,3 +228,40 @@ class VedtakExtensionsKtTest {
         vedtakDto.særbidragsperiode shouldBe null
     }
 }
+
+private fun opprettStønadsendring(grunnlagListe: List<String>) =
+    StønadsendringDto(
+        kravhaver = Personident(""),
+        skyldner = Personident(""),
+        mottaker = Personident(","),
+        sak = Saksnummer(""),
+        type = Stønadstype.BIDRAG,
+        beslutning = Beslutningstype.AVVIST,
+        innkreving = Innkrevingstype.UTEN_INNKREVING,
+        førsteIndeksreguleringsår = 1,
+        omgjørVedtakId = null,
+        eksternReferanse = "",
+        grunnlagReferanseListe = grunnlagListe,
+        periodeListe = emptyList(),
+        sisteVedtaksid = null,
+    )
+
+private fun opprettVedtakDto(grunnlagListe: List<GrunnlagDto>) =
+    VedtakDto(
+        stønadsendringListe = emptyList(),
+        engangsbeløpListe = emptyList(),
+        behandlingsreferanseListe = emptyList(),
+        grunnlagListe = grunnlagListe,
+        enhetsnummer = Enhetsnummer("1234"),
+        vedtakstidspunkt = LocalDateTime.parse("2020-01-01T00:00:00"),
+        unikReferanse = null,
+        fastsattILand = "NO",
+        innkrevingUtsattTilDato = null,
+        kilde = Vedtakskilde.MANUELT,
+        kildeapplikasjon = "APP",
+        opprettetAv = "USER",
+        opprettetAvNavn = "User Name",
+        opprettetTidspunkt = LocalDateTime.now(),
+        type = Vedtakstype.ALDERSJUSTERING,
+        vedtaksid = 1,
+    )
