@@ -25,11 +25,13 @@ data class KopiSamværsperiodeGrunnlag(
 ) : GrunnlagPeriodeInnholdKopi
 
 data class AldersjusteringDetaljerGrunnlag(
+    override val periode: ÅrMånedsperiode,
+    override val manueltRegistrert: Boolean = false,
     val grunnlagFraVedtak: Long? = null,
     val aldersjustert: Boolean = true,
     val aldersjusteresManuelt: Boolean = false,
     val begrunnelser: List<String>? = null,
-) : GrunnlagInnhold {
+) : GrunnlagPeriodeInnhold {
     @JsonIgnore
     val begrunnelserVisningsnavn: String? =
         begrunnelser
