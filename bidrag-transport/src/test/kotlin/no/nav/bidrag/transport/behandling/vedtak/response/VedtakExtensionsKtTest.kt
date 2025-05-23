@@ -60,7 +60,7 @@ class VedtakExtensionsKtTest {
         aldersjusteringGrunnlag.begrunnelserVisningsnavn shouldBe
             "Siste vedtak er justert ned til evne, siste vedtak er justert ned til 25 prosent av inntekt"
         tilAldersjusteringResultattekst(vedtakDto, stønadsendringDto) shouldBe
-            "Bidraget til barn født 01.01.2021 ble ikke aldersjustert. Siste vedtak er justert ned til evne, siste vedtak er justert ned til 25 prosent av inntekt"
+            "Bidraget til barn født 01.01.2021 ble ikke aldersjustert. Siste vedtak er justert ned til evne"
     }
 
     @Test
