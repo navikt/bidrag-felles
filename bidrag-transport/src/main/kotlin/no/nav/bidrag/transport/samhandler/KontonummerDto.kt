@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.samhandler
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.land.Landkode3
 
 @Schema(
@@ -22,5 +23,5 @@ data class KontonummerDto(
     @Schema(description = "BankCode. Format varierer.")
     val bankCode: String? = null,
     @Schema(description = "Kontoens valuta.")
-    val valutakode: String? = null,
+    val valutakode: Valutakode? = null,
 )

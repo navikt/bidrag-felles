@@ -1,6 +1,8 @@
 package no.nav.bidrag.transport.samhandler
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.diverse.Språk
+import no.nav.bidrag.domene.enums.samhandler.OffentligIdType
 import no.nav.bidrag.domene.ident.SamhandlerId
 import no.nav.bidrag.transport.felles.AuditLogDto
 
@@ -18,11 +20,11 @@ data class SamhandlerDto(
                 "UTOR for utenlandske organisasjonsnummere, " +
                 "FNR for norske personnummer.",
     )
-    val offentligIdType: String? = null,
+    val offentligIdType: OffentligIdType? = null,
     @Schema(description = "Definerer hvilket område samhandleren er knyttet til.")
     val områdekode: Områdekode? = null,
     @Schema(description = "Språk til samhandleren.")
-    val språk: String? = null,
+    val språk: Språk? = null,
     @Schema(description = "Samhandlerens adresse.")
     val adresse: AdresseDto? = null,
     @Schema(description = "Samhandlerens kontonummer. Kontonummer er ikke inkludert i søkeresultat mot TSS, kun i oppslag.")
