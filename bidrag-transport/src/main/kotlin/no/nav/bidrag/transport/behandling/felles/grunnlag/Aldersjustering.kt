@@ -25,7 +25,7 @@ data class KopiSamværsperiodeGrunnlag(
 ) : GrunnlagPeriodeInnholdKopi
 
 data class AldersjusteringDetaljerGrunnlag(
-    val grunnlagFraVedtak: Long,
+    val grunnlagFraVedtak: Long? = null,
     val aldersjustert: Boolean = true,
     val aldersjusteresManuelt: Boolean = false,
     val begrunnelser: List<String>? = null,
