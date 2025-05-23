@@ -14,6 +14,7 @@ import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.Datoperiode
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Person
@@ -40,6 +41,7 @@ class VedtakExtensionsKtTest {
             )
         val aldersjusteringGrunnlag =
             AldersjusteringDetaljerGrunnlag(
+                periode = ÅrMånedsperiode(YearMonth.now().withMonth(7), null),
                 grunnlagFraVedtak = 1,
                 aldersjustert = true,
                 aldersjusteresManuelt = false,
@@ -76,6 +78,7 @@ class VedtakExtensionsKtTest {
             )
         val aldersjusteringGrunnlag =
             AldersjusteringDetaljerGrunnlag(
+                periode = ÅrMånedsperiode(YearMonth.now().withMonth(7), null),
                 grunnlagFraVedtak = 1,
                 aldersjustert = true,
                 aldersjusteresManuelt = true,
