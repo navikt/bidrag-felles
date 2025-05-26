@@ -3,7 +3,7 @@ package no.nav.bidrag.transport.samhandler
 enum class Områdekode(
     val tssOmrådekode: String,
     val visningsnavn: String,
-    ) {
+) {
     UTENRIKSSTASJON("0050", "Utenriksstasjon"),
     ADVOKAT("0060", "Advokat"),
     ARBEIDSGIVER("0070", "Arbeidsgiver"),
@@ -16,6 +16,7 @@ enum class Områdekode(
 
     companion object {
         fun fraTssOmrådekode(tssOmrådekode: String): Områdekode? = entries.find { it.tssOmrådekode == tssOmrådekode }
+
         fun fraVisningsnavn(visningsnavn: String): Områdekode? = entries.find { it.visningsnavn == visningsnavn }
     }
 }
