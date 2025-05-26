@@ -26,8 +26,3 @@ data class ForskuddPeriode(
     val barnBorMedBM: Boolean?,
     val inntektListe: List<Inntekt>,
 )
-
-data class Inntekt(
-    val type: String,
-    val beløp: BigDecimal,
-)
