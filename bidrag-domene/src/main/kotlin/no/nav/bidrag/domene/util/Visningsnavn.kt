@@ -18,6 +18,7 @@ import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
+import no.nav.bidrag.domene.enums.samhandler.OffentligIdType
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
@@ -113,6 +114,7 @@ val ResultatkodeSærtilskudd.visningsnavn get() =
     lastVisningsnavnFraFil("resultatDeprecated.yaml", "SÆRTILSKUDD")[name]
         ?: visningsnavnMangler(name)
 val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[name] ?: visningsnavnMangler(name)
+val OffentligIdType.visningsnavn get() = lastVisningsnavnFraFil("offentligidtype.yaml")[name] ?: visningsnavnMangler(name)
 
 fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype? = null) =
     when {

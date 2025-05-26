@@ -25,6 +25,8 @@ const val POSTNUMMER = "Postnummer"
 const val LANDKODER = "Landkoder"
 const val NAV_SKJEMA = "NAVSkjema"
 const val LANDKODER_ISO2 = "LandkoderISO2"
+const val SPRÅK = "Språk"
+const val VALUTAER = "Valutaer"
 const val SUMMERT_SKATTEGRUNNLAG = "Summert skattegrunnlag"
 const val SPESIFISERT_SUMMERT_SKATTEGRUNNLAG = "SpesifisertSummertSkattegrunnlag"
 const val LOENNSBESKRIVELSE = "Loennsbeskrivelse"
@@ -47,6 +49,10 @@ fun finnPoststedForPostnummer(postnummer: String): String? = finnVisningsnavnFor
 fun finnLandkodeForLandkoder(landkode: String): String? = finnVisningsnavnForKode(landkode, LANDKODER)
 
 fun finnLandkodeForLandkoderIso2(landkode: String): String? = finnVisningsnavnForKode(landkode, LANDKODER_ISO2)
+
+fun finnSpråknavnForSpråkkode(språkkode: String): String? = finnVisningsnavnForKode(språkkode, SPRÅK)
+
+fun finnValutanavnForValutakode(valutakode: String): String? = finnVisningsnavnForKode(valutakode, VALUTAER)
 
 fun finnVisningsnavnLønnsbeskrivelse(fulltNavnInntektspost: String): String =
     finnVisningsnavnForKode(fulltNavnInntektspost, LOENNSBESKRIVELSE) ?: ""
