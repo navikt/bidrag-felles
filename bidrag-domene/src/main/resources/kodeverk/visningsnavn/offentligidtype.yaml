@@ -1,0 +1,8 @@
+NORSK_ORGNR:
+  intern: "Norsk orgnummer"
+NORSK_FNR:
+  intern: "Norsk personnummer"
+UTENLANDSK_ORGNR:
+  intern: "Utenlandsk orgnummer"
+UTENLANDSK_FNR:
+  intern: "Utenlandsk personnummer"
