@@ -23,5 +23,5 @@ data class KontonummerDto(
     @Schema(description = "BankCode. Format varierer.")
     val bankCode: String? = null,
     @Schema(description = "Kontoens valuta.")
-    val valutakode: Valutakode? = null,
+    val valutakode: Valutakode,
 )
