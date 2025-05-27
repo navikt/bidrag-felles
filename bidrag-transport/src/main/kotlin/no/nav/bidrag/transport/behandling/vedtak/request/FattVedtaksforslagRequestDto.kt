@@ -6,12 +6,12 @@ import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
 
 @Schema(description = "Request for å fatte vedtak for vedtaksforslag. Kan inneholde flere stønader innenfor et vedtaksforslag")
-data class FattVedtaksforslagRequestDto(
+data class FatteVedtaksforslagRequestDto(
     @Schema(description = "Liste over stønader som det skal fattes vedtak for")
-    val StønadListe: List<Stønad> = emptyList(),
+    val stønadListe: List<FattVedtaksforslagStønadDto> = emptyList(),
 )
 
-data class Stønad(
+data class FattVedtaksforslagStønadDto(
     @Schema(description = "Hvilken type stønad det er snakk om")
     val type: Stønadstype,
     @Schema(description = "Saksnummer")
