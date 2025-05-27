@@ -10,9 +10,9 @@ data class SamhandlerDto(
     @Schema(description = "Identen til samhandler")
     val samhandlerId: SamhandlerId?,
     @Schema(description = "Navn på samhandler")
-    val navn: String?,
+    val navn: String,
     @Schema(description = "Offentlig id for samhandlere.")
-    val offentligId: String? = null,
+    val offentligId: String,
     @Schema(
         description =
             "Type offentlig id. " +
@@ -20,11 +20,11 @@ data class SamhandlerDto(
                 "UTOR for utenlandske organisasjonsnummere, " +
                 "FNR for norske personnummer.",
     )
-    val offentligIdType: OffentligIdType? = null,
+    val offentligIdType: OffentligIdType,
     @Schema(description = "Definerer hvilket område samhandleren er knyttet til.")
-    val områdekode: Områdekode? = null,
+    val områdekode: Områdekode,
     @Schema(description = "Språk til samhandleren.")
-    val språk: Språk? = null,
+    val språk: Språk,
     @Schema(description = "Samhandlerens adresse.")
     val adresse: AdresseDto? = null,
     @Schema(description = "Samhandlerens kontonummer. Kontonummer er ikke inkludert i søkeresultat mot TSS, kun i oppslag.")
