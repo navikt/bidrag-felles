@@ -1,7 +1,6 @@
 package no.nav.bidrag.commons.unleash
 
 import io.getunleash.variant.Variant
-import no.nav.bidrag.commons.unleash.UnleashFeaturesProvider
 
 /**
  * Eksempel for hvordan UnleasFeatures kan defineres.
@@ -11,7 +10,7 @@ import no.nav.bidrag.commons.unleash.UnleashFeaturesProvider
  *   UnleashFeatures.STENG_VEDTAK.isEnabled
  * ```
  */
-enum class UnleashFeatures(
+enum class ExampleUnleashFeatures(
     private val featureName: String,
     defaultValue: Boolean,
 ) {

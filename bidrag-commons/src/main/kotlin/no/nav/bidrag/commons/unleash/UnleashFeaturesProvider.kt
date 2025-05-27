@@ -2,26 +2,13 @@ package no.nav.bidrag.commons.unleash
 
 import io.getunleash.DefaultUnleash
 import io.getunleash.Unleash
-import io.getunleash.util.UnleashConfig
 import io.getunleash.variant.Variant
-import java.util.UUID
 
 class UnleashFeaturesProvider(
     unleashProperties: UnleashProperties,
 ) {
     init {
-        val config =
-            UnleashConfig
-                .builder()
-                .appName(unleashProperties.appName)
-                .environment(unleashProperties.environment)
-                .instanceId(UUID.randomUUID().toString())
-                .unleashAPI("${unleashProperties.unleashApi}/api/")
-                .apiKey(unleashProperties.apiKey)
-                .synchronousFetchOnInitialisation(true)
-                .unleashContextProvider(DefaultUnleashContextProvider())
-                .build()
-
+        val config = generateUnleashConfig(unleashProperties)
         instance = DefaultUnleash(config)
     }
 
