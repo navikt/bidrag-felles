@@ -30,6 +30,7 @@ data class SøknadGrunnlag(
 
 data class VirkningstidspunktGrunnlag(
     val virkningstidspunkt: LocalDate,
+    val opprinneligVirkningstidspunkt: LocalDate? = null,
     val opphørsdato: LocalDate? = null,
     val årsak: VirkningstidspunktÅrsakstype? = null,
     val avslag: Resultatkode? = null,
