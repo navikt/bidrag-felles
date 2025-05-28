@@ -8,4 +8,6 @@ enum class OffentligIdType {
     FNR,
     UTOR,
     UTPE,
+    DNR,
+    HPR
 }
