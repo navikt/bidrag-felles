@@ -13,5 +13,5 @@ data class SumPrSak(
     @Schema(description = "Antall innslag av innsendt stønadstype for saken.")
     val antall: Long,
     @Schema(description = "Samlet beløp for alle innslag i saken.")
-    val beløp: BigDecimal,
+    val beløp: BigDecimal?,
 )
