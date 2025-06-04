@@ -1,15 +1,11 @@
 package no.nav.bidrag.transport.behandling.vedtak.response
 
 import com.fasterxml.jackson.databind.node.POJONode
+import io.kotest.assertions.throwables.shouldNotThrow
 import io.kotest.matchers.shouldBe
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
-import no.nav.bidrag.domene.enums.vedtak.Beslutningstype
-import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
-import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
-import no.nav.bidrag.domene.enums.vedtak.Stønadstype
-import no.nav.bidrag.domene.enums.vedtak.Vedtakskilde
-import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
+import no.nav.bidrag.domene.enums.vedtak.*
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
@@ -45,7 +41,11 @@ class VedtakExtensionsKtTest {
                 grunnlagFraVedtak = 1,
                 aldersjustert = true,
                 aldersjusteresManuelt = false,
-                begrunnelser = listOf("SISTE_VEDTAK_ER_JUSTERT_NED_TIL_EVNE", "SISTE_VEDTAK_ER_JUSTERT_NED_TIL_25_PROSENT_AV_INNTEKT"),
+                begrunnelser =
+                    listOf(
+                        "SISTE_VEDTAK_ER_JUSTERT_NED_TIL_EVNE",
+                        "SISTE_VEDTAK_ER_JUSTERT_NED_TIL_25_PROSENT_AV_INNTEKT",
+                    ),
             )
         val grunnlag =
             GrunnlagDto(
@@ -229,6 +229,44 @@ class VedtakExtensionsKtTest {
             )
 
         vedtakDto.særbidragsperiode shouldBe null
+    }
+
+    @Test
+    fun `skal håndtere at stønadsendringDtos periodeliste er tom`() {
+        val barn =
+            GrunnlagDto(
+                referanse = "barn",
+                type = Grunnlagstype.PERSON_SØKNADSBARN,
+                innhold =
+                    POJONode(
+                        Person(
+                            fødselsdato = LocalDate.parse("2021-01-01"),
+                        ),
+                    ),
+            )
+        val aldersjusteringGrunnlag =
+            AldersjusteringDetaljerGrunnlag(
+                periode = ÅrMånedsperiode(YearMonth.now().withMonth(7), null),
+                grunnlagFraVedtak = 1,
+                aldersjustert = true,
+                aldersjusteresManuelt = false,
+                begrunnelser =
+                    listOf(
+                        "SISTE_VEDTAK_ER_JUSTERT_NED_TIL_EVNE",
+                        "SISTE_VEDTAK_ER_JUSTERT_NED_TIL_25_PROSENT_AV_INNTEKT",
+                    ),
+            )
+        val grunnlag =
+            GrunnlagDto(
+                type = Grunnlagstype.ALDERSJUSTERING_DETALJER,
+                innhold = POJONode(aldersjusteringGrunnlag),
+                referanse = "test",
+                gjelderBarnReferanse = barn.referanse,
+            )
+
+        val stønadsendringDto = opprettStønadsendring(listOf(grunnlag.referanse))
+
+        shouldNotThrow<NoSuchElementException> { stønadsendringDto.finnSistePeriode() }
     }
 }
 

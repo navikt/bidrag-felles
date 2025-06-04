@@ -127,7 +127,7 @@ fun tilAldersjusteringResultattekst(
     return vedtak.tilBatchHendelseResultattekst()
 }
 
-fun StønadsendringDto.finnSistePeriode() = periodeListe.maxBy { it.periode.fom }
+fun StønadsendringDto.finnSistePeriode() = periodeListe.maxByOrNull { it.periode.fom }
 
 fun VedtakDto.finnSluttberegningBarnebidragAldersjusteringIPeriode(periode: VedtakPeriodeDto) =
     grunnlagListe
