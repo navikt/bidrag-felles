@@ -27,7 +27,7 @@ data class SamhandlerDto(
     val språk: Språk? = null,
     @Schema(description = "Samhandlerens adresse.")
     val adresse: AdresseDto? = null,
-    @Schema(description = "Samhandlerens kontonummer. Kontonummer er ikke inkludert i søkeresultat mot TSS, kun i oppslag.")
+    @Schema(description = "Samhandlerens kontonummer.")
     val kontonummer: KontonummerDto? = null,
     @Schema(description = "Kontaktperson for samhandler. Benyttes primært av utland.")
     val kontaktperson: String? = null,

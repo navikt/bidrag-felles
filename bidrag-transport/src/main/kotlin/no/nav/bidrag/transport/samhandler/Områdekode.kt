@@ -1,7 +1,7 @@
 package no.nav.bidrag.transport.samhandler
 
 enum class Områdekode(
-    val tssOmrådekode: String,
+    val tssOmrådekode: String?, // Gamle TSS områdekoder. Benyttes i Bisys. Nye områdekoder har ingen TSS kode.
     val visningsnavn: String,
 ) {
     UTENRIKSSTASJON("0050", "Utenriksstasjon"),
@@ -12,6 +12,7 @@ enum class Områdekode(
     UTENLANDSK_FOGD("0270", "Utenlandsk fogd"),
     SOSIALKONTO("0280", "Sosialkontor"),
     BARNEVERNSINSTITUSJON("0290", "Barnevernsinstitusjon"),
+    VERGE(null, "Verge"),
     ;
 
     companion object {
