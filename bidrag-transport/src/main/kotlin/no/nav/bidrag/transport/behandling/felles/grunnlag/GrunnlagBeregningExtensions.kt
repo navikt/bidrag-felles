@@ -24,6 +24,7 @@ fun List<GrunnlagDto>.finnSluttberegningIReferanser(grunnlagsreferanseListe: Lis
             Grunnlagstype.SLUTTBEREGNING_FORSKUDD,
             Grunnlagstype.SLUTTBEREGNING_SÆRBIDRAG,
             Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG,
+            Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG_ALDERSJUSTERING,
         ).contains(it.type) &&
             grunnlagsreferanseListe.contains(it.referanse)
     }
