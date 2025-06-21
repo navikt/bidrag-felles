@@ -74,6 +74,8 @@ data class SluttberegningBarnebidrag(
     val ikkeOmsorgForBarnet: Boolean = false,
     // Brukes bare ved overføring av bisys vedtak
     val tilleggsbidrag: BigDecimal? = null,
+    // Brukes bare ved overføring av bisys vedtak
+    val forsvaretsBarnetillegg: Boolean? = null,
     // Beregnet evne til BP etter FF
     val bpEvneVedForholdsmessigFordeling: BigDecimal? = null,
     // Andel av U basert på fordeling fra FF
