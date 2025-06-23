@@ -9,6 +9,7 @@ enum class BisysSøknadstype(
     EGET_TILTAK("ET"),
     SØKNAD("FA"),
     INNKREVINGSGRUNNLAG("IG"),
+    ALDERSJUSTERING("AJ"),
     INDEKSREGULERING("IR"),
     KLAGE_BEGRENSET_SATS("KB"),
     KLAGE("KL"),

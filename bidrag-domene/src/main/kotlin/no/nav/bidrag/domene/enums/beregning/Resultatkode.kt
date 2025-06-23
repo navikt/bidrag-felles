@@ -280,6 +280,45 @@ enum class Resultatkode(
         listOf(BisysResultatkode("11B")),
         ResultatkodeType.BARNEBIDRAG,
     ),
+
+    // Koder som ikke brukes i ny løsning men bare i Bisys
+
+    LAVERE_ENN_INNTEKTSEVNE_BEGGE_PARTER(
+        listOf(BisysResultatkode("4E")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    LAVERE_ENN_INNTEKTSEVNE_BIDRAGSPLIKTIG(
+        listOf(BisysResultatkode("4E1")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    LAVERE_ENN_INNTEKTSEVNE_BIDRAGSMOTTAKER(
+        listOf(BisysResultatkode("4E2")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    MANGLER_DOKUMENTASJON_AV_INNTEKT_BEGGE_PARTER(
+        listOf(BisysResultatkode("4D")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    MANGLER_DOKUMENTASJON_AV_INNTEKT_BIDRAGSPLIKTIG(
+        listOf(BisysResultatkode("4D1")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    MANGLER_DOKUMENTASJON_AV_INNTEKT_BIDRAGSMOTTAKER(
+        listOf(BisysResultatkode("4D2")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    INNTIL_1_ÅR_TILBAKE(
+        listOf(BisysResultatkode("VT")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    MAKS_25_PROSENT_AV_INNTEKT(
+        listOf(BisysResultatkode("7M")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
+    KOSTNADSBEREGNET_BIDRAG(
+        listOf(BisysResultatkode("KBB")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
     ;
 
     val legacyKode get() = bisysKode.firstOrNull()?.resultatKode
