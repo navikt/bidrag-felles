@@ -129,6 +129,11 @@ fun tilAldersjusteringResultattekst(
 
 fun StønadsendringDto.finnSistePeriode() = periodeListe.maxByOrNull { it.periode.fom }
 
+fun StønadsendringDto.hentSisteLøpendePeriode() =
+    periodeListe
+        .maxByOrNull { it.periode.fom }
+        ?.takeIf { it.periode.til == null || it.periode.til!!.isAfter(YearMonth.now()) }
+
 fun VedtakDto.finnSluttberegningBarnebidragAldersjusteringIPeriode(periode: VedtakPeriodeDto) =
     grunnlagListe
         .finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SluttberegningBarnebidragAldersjustering>(

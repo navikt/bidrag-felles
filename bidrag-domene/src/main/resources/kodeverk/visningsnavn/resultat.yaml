@@ -158,3 +158,22 @@ INNVILGET_VEDTAK:
 
 SKJØNN_UTLANDET:
   intern: "Skjønn utlandet"
+
+LAVERE_ENN_INNTEKTSEVNE_BEGGE_PARTER:
+  intern: "Lavere enn inntektsevne begge parter"
+LAVERE_ENN_INNTEKTSEVNE_BIDRAGSPLIKTIG:
+  intern: "Lavere enn inntektsevne bidragspliktig"
+LAVERE_ENN_INNTEKTSEVNE_BIDRAGSMOTTAKER:
+  intern: "Lavere enn inntektsevne bidragsmottaker"
+MANGLER_DOKUMENTASJON_AV_INNTEKT_BEGGE_PARTER:
+  intern: "Mangler dokumentasjon av inntekt begge parter"
+MANGLER_DOKUMENTASJON_AV_INNTEKT_BIDRAGSPLIKTIG:
+  intern: "Mangler dokumentasjon av inntekt bidragspliktig"
+MANGLER_DOKUMENTASJON_AV_INNTEKT_BIDRAGSMOTTAKER:
+  intern: "Mangler dokumentasjon av inntekt bidragsmottaker"
+INNTIL_1_ÅR_TILBAKE:
+  intern: "Inntil 1 år tilbake"
+MAKS_25_PROSENT_AV_INNTEKT:
+  intern: "Maks 25 prosent av inntekt"
+KOSTNADSBEREGNET_BIDRAG:
+  intern: "Kostnadsberegnet bidrag"
