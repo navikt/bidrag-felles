@@ -32,6 +32,8 @@ data class VedtakForStønad(
     val stønadsendring: StønadsendringDto,
     @Schema(description = "Referanser til alle behandlinger som ligger som grunnlag til vedtaket")
     val behandlingsreferanser: List<BehandlingsreferanseDto>,
+    @Schema(description = "Navn på applikasjon som vedtaket er opprettet i")
+    val kildeapplikasjon: String,
 )
 
 @Schema
