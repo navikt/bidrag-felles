@@ -13,7 +13,7 @@ class MaskinportenTokenCache(
         get() = jwtClaimsSet?.expirationTime?.is20SecondsPrior ?: false
 
     private val Date.is20SecondsPrior: Boolean
-        get() = epochSeconds - (Date().epochSeconds + TWENTY_SECONDS) < 0
+        get() = epochSeconds - (Date().epochSeconds + FIVE_SECONDS) < 0
 
     private val Date.epochSeconds: Long
         get() = time / 1000
@@ -24,6 +24,6 @@ class MaskinportenTokenCache(
         }
 
     companion object {
-        private const val TWENTY_SECONDS = 20
+        private const val FIVE_SECONDS = 5
     }
 }
