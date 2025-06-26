@@ -13,6 +13,8 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpRequest.BodyPublishers.ofString
 import java.net.http.HttpResponse.BodyHandlers.ofString
+import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.Retryable
 
 /**
  * Maskinporten brukes for å sikre autentisering og tilgangskontroll for datautveksling mellom ulike virksomheter.
@@ -81,6 +83,11 @@ class MaskinportenClient(
         }
     }
 
+    @Retryable(
+        value = [MaskinportenClientException::class],
+        maxAttempts = 3,
+        backoff = Backoff(delay = 2000),
+    )
     private fun hentNyttJwtToken(scope: String): String =
         httpClient.send(opprettMaskinportenTokenRequest(scope), ofString()).run {
             if (statusCode() != 200) {

@@ -7,14 +7,14 @@ import org.junit.jupiter.api.Test
 
 internal class MaskinportenTokenCacheTest {
     @Test
-    fun `skal ikke returnere token om token utgår om under 20 sekunder`() {
-        val tokenCache = MaskinportenTokenCache(opprettMaskinportenToken(19))
+    fun `skal ikke returnere token om token utgår om under 5 sekunder`() {
+        val tokenCache = MaskinportenTokenCache(opprettMaskinportenToken(4))
         tokenCache.maskinportenToken shouldBe null
     }
 
     @Test
-    fun `skal returnere token om token har lenger gjennværende levetid enn 20 sekunder`() {
-        val tokenCache = MaskinportenTokenCache(opprettMaskinportenToken(23))
+    fun `skal returnere token om token har lenger gjennværende levetid enn 5 sekunder`() {
+        val tokenCache = MaskinportenTokenCache(opprettMaskinportenToken(6))
         tokenCache.maskinportenToken shouldNotBe null
     }
 
