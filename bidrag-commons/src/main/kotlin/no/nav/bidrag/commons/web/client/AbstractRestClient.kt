@@ -3,6 +3,7 @@ package no.nav.bidrag.commons.web.client
 import io.micrometer.core.instrument.Counter
 import io.micrometer.core.instrument.Metrics
 import io.micrometer.core.instrument.Timer
+import no.nav.bidrag.commons.util.secureLogger
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.http.HttpEntity
@@ -30,7 +31,6 @@ abstract class AbstractRestClient(
     protected val responsFailure: Counter =
         Metrics.counter("$metricsPrefix.response", "status", "failure")
 
-    protected val secureLogger: Logger = LoggerFactory.getLogger("secureLogger")
     protected val log: Logger = LoggerFactory.getLogger(this::class.java)
 
     protected inline fun <reified T : Any> getForEntity(uri: URI): T? = getForEntity(uri, null)
@@ -152,7 +152,7 @@ abstract class AbstractRestClient(
         uri: URI,
     ): T? {
         if (!respons.statusCode.is2xxSuccessful) {
-            secureLogger.info("Kall mot $uri feilet:  ${respons.body}")
+            secureLogger.info { "Kall mot $uri feilet:  ${respons.body}" }
             log.info("Kall mot $uri feilet: ${respons.statusCode}")
             throw HttpServerErrorException(
                 respons.statusCode,
