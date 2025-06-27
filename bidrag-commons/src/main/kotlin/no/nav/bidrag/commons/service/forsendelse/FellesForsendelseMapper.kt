@@ -152,7 +152,8 @@ class FellesForsendelseMapper(
         if (rm.ident.verdi == barn.fødselsnummer!!.verdi) {
             return if (erOver18År(barn.fødselsnummer!!)) {
                 secureLogger.info {
-                    "Fødselsnummer til RM til barn er har samme fødselsnummer som barnet ${barn.fødselsnummer!!.verdi} og barnet er over 18 år. Setter mottaker av forsendelsen til barnet"
+                    "Fødselsnummer til RM til barn er har samme fødselsnummer som barnet ${barn.fødselsnummer!!.verdi} " +
+                        "og barnet er over 18 år. Setter mottaker av forsendelsen til barnet"
                 }
                 ForsendelseGjelderMottakerInfo(
                     barn.fødselsnummer!!.verdi,
@@ -161,7 +162,8 @@ class FellesForsendelseMapper(
                 )
             } else {
                 secureLogger.info {
-                    "Fødselsnummer til RM til barn er har samme fødselsnummer som barnet ${barn.fødselsnummer!!.verdi} og men er under 18 år. Setter mottaker av forsendelsen til BM"
+                    "Fødselsnummer til RM til barn er har samme fødselsnummer som barnet ${barn.fødselsnummer!!.verdi} " +
+                        "og men er under 18 år. Setter mottaker av forsendelsen til BM"
                 }
                 null
             }
