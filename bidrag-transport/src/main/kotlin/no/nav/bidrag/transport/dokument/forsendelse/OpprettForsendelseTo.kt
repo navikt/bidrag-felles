@@ -43,6 +43,13 @@ data class OpprettForsendelseForespørsel(
                 "Skal bare settes til false hvis gamle brevmeny (Bisys) brukes",
     ) val opprettTittel: Boolean? = false,
     val unikReferanse: String? = null,
+    @Schema(
+        description =
+            "Distribuer forsendelse automatisk etter ferdigstilling. " +
+                "Dette kan brukes hvis det er opprettet av batch " +
+                "eller en vedtaksbrev som skal automatisk distribueres etter fattet vedtak (feks manuell aldersjustering)",
+    )
+    val distribuerAutomatiskEtterFerdigstilling: Boolean = false,
 )
 
 data class BehandlingInfoDto(

@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.dokument
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 enum class HendelseType {
     JOURNALFORING,
@@ -29,6 +30,8 @@ data class JournalpostHendelse(
     val sakstilknytninger: List<String> = emptyList(),
     val dokumentDato: LocalDate? = null,
     val journalfortDato: LocalDate? = null,
+    val distribuertTidspunkt: LocalDateTime? = null,
+    val journalpostIdFagarkiv: String? = null,
 ) {
     fun erHendelseTypeJournalforing() = hendelseType == HendelseType.JOURNALFORING
 
