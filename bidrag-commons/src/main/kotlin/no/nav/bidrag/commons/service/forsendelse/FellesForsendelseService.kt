@@ -14,8 +14,11 @@ class FellesForsendelseService(
     private val forsendelseConsumer: FellesForsendelseConsumer,
     private val forsendelseMapper: FellesForsendelseMapper,
 ) {
-    fun opprettForsendelse(forsendelseBestilling: FellesForsendelseBestilling): Long {
-        val request = forsendelseMapper.tilOpprettForsendelseRequest(forsendelseBestilling)
+    fun opprettForsendelse(
+        forsendelseBestilling: FellesForsendelseBestilling,
+        distribuerAutomatisk: Boolean = false,
+    ): Long {
+        val request = forsendelseMapper.tilOpprettForsendelseRequest(forsendelseBestilling, distribuerAutomatisk)
         try {
             val forsendelseId = forsendelseConsumer.opprettForsendelse(request)
 
