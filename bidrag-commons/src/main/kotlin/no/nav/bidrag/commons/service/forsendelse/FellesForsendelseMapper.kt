@@ -40,6 +40,7 @@ data class FellesForsendelseBestilling(
     val tema: JournalTema = JournalTema.BID,
     val batchId: String? = null,
     val unikReferanse: String? = null,
+    val distribuerAutomatisk: Boolean? = false,
 )
 
 data class ForsendelseGjelderMottakerInfo(
@@ -74,7 +75,10 @@ class FellesForsendelseMapper(
             )
     }
 
-    fun tilOpprettForsendelseRequest(forsendelseBestilling: FellesForsendelseBestilling): OpprettForsendelseForespørsel {
+    fun tilOpprettForsendelseRequest(
+        forsendelseBestilling: FellesForsendelseBestilling,
+        distribuerAutomatisk: Boolean = false,
+    ): OpprettForsendelseForespørsel {
         val mottakerErSamhandler = forsendelseBestilling.mottaker.let { SamhandlerId(it).gyldig() }
         val saksnummer = forsendelseBestilling.saksnummer
         val enhet = finnEierfogd(forsendelseBestilling.saksnummer)
@@ -101,6 +105,7 @@ class FellesForsendelseMapper(
             batchId = forsendelseBestilling.batchId,
             tema = forsendelseBestilling.tema,
             behandlingInfo = forsendelseBestilling.behandlingInfoDto,
+            distribuerAutomatiskEtterFerdigstilling = distribuerAutomatisk,
             dokumenter =
                 listOf(
                     OpprettDokumentForespørsel(
