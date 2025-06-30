@@ -315,6 +315,10 @@ enum class Resultatkode(
         listOf(BisysResultatkode("7M")),
         ResultatkodeType.BARNEBIDRAG,
     ),
+    MANGLER_BIDRAGSEVNE(
+        listOf(BisysResultatkode("6MB")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
     KOSTNADSBEREGNET_BIDRAG(
         listOf(BisysResultatkode("KBB")),
         ResultatkodeType.BARNEBIDRAG,
