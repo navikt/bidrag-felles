@@ -26,6 +26,7 @@ data class SøknadGrunnlag(
     val opprinneligVedtakstype: Vedtakstype? = null,
     val begrensetRevurdering: Boolean = false,
     val egetTiltak: Boolean = false,
+    val privatAvtale: Boolean = false,
 ) : GrunnlagInnhold
 
 data class VirkningstidspunktGrunnlag(
