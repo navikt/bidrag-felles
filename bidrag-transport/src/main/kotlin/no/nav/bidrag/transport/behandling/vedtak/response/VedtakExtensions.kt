@@ -120,10 +120,10 @@ fun tilAldersjusteringResultattekst(
                 "$stønadstype til barn $barnInfo ble ikke aldersjustert etter manuell vurdering. Vedtaket grunnlaget hentes fra har resultat ${aldersjusteringDetaljerGrunnlag.innhold.førsteBegrunnelseVisningsnavn}"
             } else if (aldersjusteringDetaljerGrunnlag.innhold.aldersjusteresManuelt) {
                 val barnInfo = person?.fødselsdato?.tilVisningsnavn()?.let { "født $it" } ?: stønadsendring.kravhaver.verdi
-                "$stønadstype til barn $barnInfo skal aldersjusteres manuelt. Vedtaket grunnlaget hentes fra har resultat ${aldersjusteringDetaljerGrunnlag.innhold.førsteBegrunnelseVisningsnavn}"
+                "$stønadstype til barn $barnInfo skal aldersjusteres manuelt. ${aldersjusteringDetaljerGrunnlag.innhold.førsteBegrunnelseVisningsnavn}"
             } else {
                 val barnInfo = person?.fødselsdato?.tilVisningsnavn()?.let { "født $it" } ?: stønadsendring.kravhaver.verdi
-                "$stønadstype til barn $barnInfo ble ikke aldersjustert. Vedtaket grunnlaget hentes fra har resultat ${aldersjusteringDetaljerGrunnlag.innhold.førsteBegrunnelseVisningsnavn}"
+                "$stønadstype til barn $barnInfo ble ikke aldersjustert. ${aldersjusteringDetaljerGrunnlag.innhold.førsteBegrunnelseVisningsnavn}"
             }
         }
     }
