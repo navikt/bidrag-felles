@@ -37,6 +37,7 @@ data class ManuellVedtakGrunnlag(
     val stønadstype: Stønadstype,
     val egetTiltak: Boolean = false,
     val begrensetRevurdering: Boolean = false,
+    val privatAvtale: Boolean = false,
     val resultatkodeSistePeriode: String,
     val resultatSistePeriode: String,
     val manglerGrunnlag: Boolean = false,
