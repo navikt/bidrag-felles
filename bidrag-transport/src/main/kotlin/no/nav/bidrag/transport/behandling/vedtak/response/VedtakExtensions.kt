@@ -11,9 +11,11 @@ import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrense
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrensePeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
+import no.nav.bidrag.transport.behandling.felles.grunnlag.InnholdMedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
@@ -129,6 +131,22 @@ fun tilAldersjusteringResultattekst(
     }
     return vedtak.tilBatchHendelseResultattekst()
 }
+
+fun VedtakDto.finnVirkningstidspunkt(stønadsendringDto: StønadsendringDto): InnholdMedReferanse<VirkningstidspunktGrunnlag>? =
+    grunnlagListe
+        .finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<VirkningstidspunktGrunnlag>(
+            Grunnlagstype.VIRKNINGSTIDSPUNKT,
+            stønadsendringDto.grunnlagReferanseListe,
+        ).firstOrNull()
+
+fun VedtakDto.finnAldersjusteringDetaljerGrunnlag(
+    stønadsendringDto: StønadsendringDto,
+): InnholdMedReferanse<AldersjusteringDetaljerGrunnlag>? =
+    grunnlagListe
+        .finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<AldersjusteringDetaljerGrunnlag>(
+            Grunnlagstype.ALDERSJUSTERING_DETALJER,
+            stønadsendringDto.grunnlagReferanseListe,
+        ).firstOrNull()
 
 fun StønadsendringDto.finnSistePeriode() = periodeListe.maxByOrNull { it.periode.fom }
 
