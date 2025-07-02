@@ -44,6 +44,7 @@ private val sluttberegningBisyskodeMap =
         SluttberegningBarnebidrag::bidragJustertNedTilEvne.name to "6MB",
         SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name to "7M",
         SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name to "RFO",
+        SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name to "RFO",
         "kostnadsberegnet" to "KBB",
     )
 
@@ -70,6 +71,7 @@ data class SluttberegningBarnebidrag(
     val bidragJustertNedTilEvne: Boolean = false,
     val bidragJustertNedTil25ProsentAvInntekt: Boolean = false,
     val bidragJustertTilForskuddssats: Boolean = false,
+    val bidragJustertManueltTilForskuddssats: Boolean = false,
     val begrensetRevurderingUtført: Boolean = false,
     val ikkeOmsorgForBarnet: Boolean = false,
     // Brukes bare ved overføring av bisys vedtak
@@ -89,6 +91,7 @@ data class SluttberegningBarnebidrag(
             when {
                 ikkeOmsorgForBarnet -> SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
                 bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
+                bidragJustertManueltTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name
                 bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
                 barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
                 bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name

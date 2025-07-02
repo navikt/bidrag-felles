@@ -18,3 +18,5 @@ kostnadsberegnet:
   intern: "Kostnadsberegnet bidrag"
 bidragJustertTilForskuddssats:
   intern: "Bidrag justert til forskuddssats"
+bidragJustertManueltTilForskuddssats:
+  intern: "Bidrag justert manuelt til forskuddssats"
