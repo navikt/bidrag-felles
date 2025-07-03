@@ -52,6 +52,14 @@ data class AldersjusteringDetaljerGrunnlag(
     val aldersjusteresManuelt: Boolean = false,
     @Schema(description = "Er sann hvis aldersjustering er gjort manuelt")
     val aldersjustertManuelt: Boolean = false,
+    @Schema(
+        description =
+            "Vedtaksid som er opprettet av automatisk aldersjustering." +
+                " Dette settes hvis det er fattet manuell vedtak " +
+                "etter at automatisk aldersjustering ikke kunne hente grunnlag fra siste manuelle vedtak" +
+                " Vil bare bli satt hvis aldersjustertManuelt=true",
+    )
+    val følgerAutomatiskVedtak: Int? = null,
     val begrunnelser: List<String>? = null,
 ) : GrunnlagPeriodeInnhold {
     @JsonIgnore
