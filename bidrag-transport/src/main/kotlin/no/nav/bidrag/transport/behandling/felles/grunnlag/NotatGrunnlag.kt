@@ -7,6 +7,7 @@ data class NotatGrunnlag(
 ) : GrunnlagInnhold {
     enum class NotatType {
         VIRKNINGSTIDSPUNKT,
+        VIRKNINGSTIDSPUNKT_VURDERING_AV_SKOLEGANG,
         BOFORHOLD,
         INNTEKT,
         UTGIFTER,
