@@ -22,6 +22,7 @@ import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.ident.Personident
@@ -51,6 +52,7 @@ import java.util.Locale
 
 data class VedtakNotatDto(
     val type: NotatMalType = NotatMalType.FORSKUDD,
+    val stønadstype: Stønadstype? = null,
     val medInnkreving: Boolean = true,
     val saksnummer: String,
     val behandling: NotatBehandlingDetaljerDto,
@@ -325,6 +327,7 @@ data class NotatVirkningstidspunktDto(
     @Schema(name = "årsak", enumAsRef = true)
     val årsak: VirkningstidspunktÅrsakstype?,
     val begrunnelse: NotatBegrunnelseDto,
+    val begrunnelseVurderingAvSkolegang: NotatBegrunnelseDto? = null,
     @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
     val notat: NotatBegrunnelseDto = begrunnelse,
 ) {
