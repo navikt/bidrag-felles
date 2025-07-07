@@ -37,12 +37,7 @@ internal class TokenUtilsTest {
             "RyYWc6YmlkcmFnLXVpLWZlYXR1cmUiLCJSb2xlIjoiYWNjZXNzX2FzX2FwcGxpY2F0aW9uIiwiTkFWaWRlbnQiOiJaOTk0OTc" +
             "3In0.7XhNn27iaKY-z4voUp-ZfR__5u3Rv5rJCgTpSNVW1nY"
     private val tokenXUserToken =
-        "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovL3Rva2VuZGluZ3MuZGV2LWdjcC5uYWlzLmlvIiwiaWF0Ijox" +
-            "Njc0MTEyODk3LCJleHAiOjE3MDU2NDg4OTcsImF1ZCI6ImRldi1nY3A6YmlkcmFnOmJpZHJhZy1yZWlzZWtvc3RuYWQtYXBpI" +
-            "iwic3ViIjoiel9xZmw5RUhlLWoySGtZQ3RLeUZuT05hR1E5TWJLUTBRQm00MUgtVEVCVT0iLCJjbGllbnRfaWQiOiJkZXYtZ2" +
-            "NwOmJpZHJhZzpiaWRyYWctcmVpc2Vrb3N0bmFkLXVpIiwicGlkIjoiMTQ4MTcyOTgwMTAiLCJhY3IiOiJMZXZlbDQiLCJpZHA" +
-            "iOiJodHRwczovL29pZGMtdmVyMi5kaWZpLm5vL2lkcG9ydGVuLW9pZGMtcHJvdmlkZXIvIiwic2NvcGUiOiJvcGVuaWQiLCJj" +
-            "bGllbnRfb3Jnbm8iOiI4ODk2NDA3ODIifQ.KauxVua8ebC9Lc-Wx4XE2NlI_0_c1YvJi1Y5drEOoUM"
+        "eyJraWQiOiJjNmY0YjdmYy0zMDM1LTRmNjctOGM1ZC04YTZhZmIwODUyYWQiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxOTUyNzAzMDkzOCIsImlzcyI6Imh0dHBzOi8vdG9rZW54LmRldi1nY3AubmF2LmNsb3VkLm5haXMuaW8iLCJjbGllbnRfYW1yIjoicHJpdmF0ZV9rZXlfand0IiwicGlkIjoiMTk1MjcwMzA5MzgiLCJjbGllbnRfaWQiOiJkZXYtZ2NwOm5haXM6dG9rZW54LXRva2VuLWdlbmVyYXRvciIsImF1ZCI6ImRldi1nY3A6YmlkcmFnOmJpZHJhZy1iaWRyYWdza2Fsa3VsYXRvci1hcGkiLCJhY3IiOiJMZXZlbDQiLCJuYmYiOjE3NTE4ODYxNzIsImlkcCI6Imh0dHBzOi8vdGVzdC5pZHBvcnRlbi5ubyIsInNjb3BlIjoib3BlbmlkIiwiZXhwIjoxNzUxODg5NzcyLCJpYXQiOjE3NTE4ODYxNzIsImp0aSI6ImMwMjA5ODlhLWRjYTItNGJhNC1iNzQ3LTA1MDQ2NzE0MTg4ZSIsImNvbnN1bWVyIjp7ImF1dGhvcml0eSI6ImlzbzY1MjMtYWN0b3JpZC11cGlzIiwiSUQiOiIwMTkyOjg4OTY0MDc4MiJ9fQ.Tp0hKRbzE_NnEJ6FrdWOG2ajbvi6Vl1X2sLX_204-TS7ZS_zs6pwgvQ_MxzmbmFmqEIKhyKPQBRg5VK-vtSnIXKCZx-C6uCtW6RpuV7FBnXwhDm9xUH-Dv-gxep8rDYzvro4O_T8XIhHvyUXYYbDw-SQs62Jhav18jt5x46IGt-1Ke63lwkA0bnA9jqwVCvrNySc0qKumqZIkHb44DcaxehumF-xBclYAulIArjRRe80WB5QlZrhi2WasNh6qg6i0ZsUz5PfP22wapAo6suG8X16rZrLSNST_l4iGhuUBonCRGjgLyIbc6_c5IZaXMSso_UI1DHhzf58aob4SbyPSw\n"
 
     @AfterEach
     fun clearTokenContext() {
@@ -114,13 +109,13 @@ internal class TokenUtilsTest {
     @Test
     fun skalHenteApplikasjonsnavnFraTokenxToken() {
         mockTokenContext(tokenXUserToken)
-        TokenUtils.hentApplikasjonsnavn() shouldBe "bidrag-reisekostnad-ui"
+        TokenUtils.hentApplikasjonsnavn() shouldBe "tokenx-token-generator"
     }
 
     @Test
     fun skalHenteFødselsnummerFraTokenxToken() {
         mockTokenContext(tokenXUserToken)
-        TokenUtils.hentBruker() shouldBe "14817298010"
+        TokenUtils.hentBruker() shouldBe "19527030938"
     }
 
     @Test
