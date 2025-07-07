@@ -108,6 +108,12 @@ abstract class AzureTokenClientInterceptor(
     private fun erSystembruker(): Boolean {
         return try {
             if (SikkerhetsKontekst.erIApplikasjonKontekst()) return true
+            if (SpringTokenValidationContextHolder()
+                    .getTokenValidationContext()
+                    .hasTokenFor("tokenx")
+            ) {
+                return false
+            }
             val preferredUsername =
                 SpringTokenValidationContextHolder()
                     .getTokenValidationContext()
