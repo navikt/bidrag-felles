@@ -1,7 +1,5 @@
 package no.nav.bidrag.transport.samhandler
 
-import kotlin.collections.set
-
 data class FeltValideringsfeil(
     val feltnavn: String,
     var feilmelding: String,
