@@ -30,3 +30,12 @@ data class BidragssakDto(
     @Schema(description = "Rollene som saken inneholder")
     val roller: List<RolleDto> = emptyList(),
 )
+
+data class SamhandlerSakerDto(
+    val antallSaker: Int,
+    val saksnummere: List<String>,
+)
+
+data class SamhandlerrSakerRequestDto(
+    val samhandlerId: String,
+)
