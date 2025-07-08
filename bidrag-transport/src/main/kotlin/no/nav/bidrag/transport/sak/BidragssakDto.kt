@@ -36,6 +36,6 @@ data class SamhandlerSakerDto(
     val saksnummere: List<String>,
 )
 
-data class SamhandlerrSakerRequestDto(
+data class SamhandlerSakerRequestDto(
     val samhandlerId: String,
 )
