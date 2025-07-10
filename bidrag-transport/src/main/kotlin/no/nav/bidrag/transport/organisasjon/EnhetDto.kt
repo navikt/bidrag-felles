@@ -27,7 +27,7 @@ data class EnhetKontaktinfoDto(
         fun medStandardadresse(enhetsnummer: Enhetsnummer) =
             EnhetKontaktinfoDto(
                 nummer = enhetsnummer,
-                navn = "NAV Familie- og pensjonsytelser",
+                navn = "Nav Familie- og pensjonsytelser",
                 telefonnummer = "55553333",
                 postadresse =
                     EnhetspostadresseDto(
