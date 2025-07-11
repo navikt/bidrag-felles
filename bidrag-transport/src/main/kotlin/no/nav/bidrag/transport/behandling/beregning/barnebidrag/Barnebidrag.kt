@@ -32,7 +32,7 @@ data class ResultatBeregning(
 @Schema(description = "Request til BidragsberegningOrkestrator")
 data class BidragsberegningOrkestratorRequest(
     @Schema(description = "Grunnlag for beregning av barnebidrag")
-    val beregnGrunnlag: BeregnGrunnlag? = null,
+    val beregnGrunnlag: BeregnGrunnlag,
     @Schema(description = "Grunnlag for orkestrering av klage")
     val klageOrkestratorGrunnlag: KlageOrkestratorGrunnlag? = null,
     @Schema(description = "Type beregning")
