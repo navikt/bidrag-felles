@@ -43,8 +43,6 @@ data class BidragsberegningOrkestratorRequest(
 data class KlageOrkestratorGrunnlag(
     @Schema(description = "Id til stønad")
     val stønad: Stønadsid,
-    @Schema(description = "Perioden klagen gjelder for")
-    val klageperiode: ÅrMånedsperiode,
     @Schema(description = "Vedtaksid til påklaget vedtak")
     val påklagetVedtakId: Int,
 )
