@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>2.2.0</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
-        <jackson.version>2.19.1</jackson.version>
+        <jackson.version>2.19.2</jackson.version>
         <kotest.version>5.9.1</kotest.version>
         <swagger.version>2.2.34</swagger.version>
         <ktlint.version>1.6.0</ktlint.version>
