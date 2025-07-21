@@ -1,9 +1,9 @@
 ORG:
-  intern: "Norsk orgnummer"
+  intern: "Norsk organisasjonsnummer"
 FNR:
   intern: "Norsk personnummer"
 UTOR:
-  intern: "Utenlandsk orgnummer"
+  intern: "Utenlandsk organisasjonsnummer"
 UTPE:
   intern: "Utenlandsk personnummer"
 DNR:
