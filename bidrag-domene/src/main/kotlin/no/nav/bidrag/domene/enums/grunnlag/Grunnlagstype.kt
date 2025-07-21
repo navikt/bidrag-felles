@@ -174,5 +174,5 @@ enum class Grunnlagstype {
     ALDERSJUSTERING_DETALJER,
 
     // Klage
-    RESULTAT_FRA_VEDTAK
+    RESULTAT_FRA_VEDTAK,
 }
