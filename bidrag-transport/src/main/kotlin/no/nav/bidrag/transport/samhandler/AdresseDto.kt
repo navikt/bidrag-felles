@@ -16,7 +16,13 @@ data class AdresseDto(
     @Schema(description = "Tredje adresselinje brukes i noen tilfeller til region.")
     val adresselinje3: String? = null,
     @Schema(description = "Postnr dersom dette er tilgjengelig som strukturerte data.")
+    @Deprecated(
+        message = "Bruk postnnummer.",
+        replaceWith = ReplaceWith("postnummer"),
+    )
     val postnr: String? = null,
+    @Schema(description = "Postnummer dersom dette er tilgjengelig som strukturerte data.")
+    val postnummer: String? = null,
     @Schema(description = "Poststed dersom dette er tilgjengelig som strukturerte data.")
     val poststed: String? = null,
     @Schema(description = "Land. ISO 3166-1 alfa-3.")
