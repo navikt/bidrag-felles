@@ -7,8 +7,10 @@ import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
 import no.nav.bidrag.commons.security.utils.TokenUtils
 import no.nav.bidrag.commons.web.BidragHttpHeaders.X_ENHET
+import no.nav.bidrag.commons.web.BidragHttpHeaders.X_SAKSNUMMER
 import no.nav.bidrag.commons.web.MdcConstants.MDC_APP_NAME
 import no.nav.bidrag.commons.web.MdcConstants.MDC_ENHET
+import no.nav.bidrag.commons.web.MdcConstants.MDC_SAKSNUMMER
 import no.nav.bidrag.commons.web.MdcConstants.MDC_USER_ID
 import org.slf4j.MDC
 import org.springframework.stereotype.Component
@@ -36,11 +38,21 @@ class UserMdcFilter : Filter {
         hentEnhetHeader(servletRequest)?.let {
             MDC.put(MDC_ENHET, it)
         }
+        hentSaksnummerHeader(servletRequest)?.let {
+            MDC.put(MDC_SAKSNUMMER, it)
+        }
         try {
             filterChain.doFilter(servletRequest, servletResponse)
         } finally {
             MDC.clear()
         }
+    }
+
+    fun hentSaksnummerHeader(httpRequest: ServletRequest): String? {
+        if (httpRequest !is HttpServletRequest) {
+            return null
+        }
+        return httpRequest.getHeader(X_SAKSNUMMER) ?: httpRequest.getHeader("X-saksnummer")
     }
 
     fun hentEnhetHeader(httpRequest: ServletRequest): String? {
