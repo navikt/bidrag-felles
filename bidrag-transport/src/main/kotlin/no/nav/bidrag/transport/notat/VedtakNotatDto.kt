@@ -763,7 +763,8 @@ data class NotatResultatBeregningInntekterDto(
     val barnEndeligInntekt: BigDecimal? = null,
 ) {
     val totalEndeligInntekt get() =
-        (inntektBM ?: BigDecimal.ZERO) + (inntektBP ?: BigDecimal.ZERO) +
+        (inntektBM ?: BigDecimal.ZERO) +
+            (inntektBP ?: BigDecimal.ZERO) +
             (barnEndeligInntekt ?: BigDecimal.ZERO)
     val inntektBPMånedlig get() = inntektBP?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))
     val inntektBMMånedlig get() = inntektBM?.divide(BigDecimal(12), MathContext(10, RoundingMode.HALF_UP))

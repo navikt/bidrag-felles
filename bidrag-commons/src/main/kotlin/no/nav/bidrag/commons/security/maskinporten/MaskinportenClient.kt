@@ -7,14 +7,14 @@ import com.github.benmanes.caffeine.cache.Caffeine
 import com.github.benmanes.caffeine.cache.LoadingCache
 import com.nimbusds.jwt.SignedJWT
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.retry.annotation.Backoff
+import org.springframework.retry.annotation.Retryable
 import org.springframework.stereotype.Service
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpRequest.BodyPublishers.ofString
 import java.net.http.HttpResponse.BodyHandlers.ofString
-import org.springframework.retry.annotation.Backoff
-import org.springframework.retry.annotation.Retryable
 
 /**
  * Maskinporten brukes for å sikre autentisering og tilgangskontroll for datautveksling mellom ulike virksomheter.
