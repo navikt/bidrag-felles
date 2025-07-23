@@ -6,20 +6,20 @@ import no.nav.bidrag.commons.web.MdcConstants
 import org.slf4j.MDC
 
 class DefaultUnleashContextProvider : UnleashContextProvider {
-    override fun getContext(): UnleashContext {
-        val userId = MDC.get("user")
-        val context =
+    companion object {
+        fun generateUnleashContext(): UnleashContext =
             UnleashContext
                 .builder()
-                .userId(userId)
+                .userId(MDC.get("user"))
+                .addProperty("saksnummer", MDC.get(MdcConstants.MDC_SAKSNUMMER))
+                .addProperty("enhet", MDC.get(MdcConstants.MDC_ENHET))
                 .appName(MDC.get("applicationKey"))
+                .build()
 
-        MDC.get(MdcConstants.MDC_ENHET)?.let {
-            context.addProperty("enhet", it)
+        fun updateSaksnummer(saksummer: String) {
+            MDC.put(MdcConstants.MDC_SAKSNUMMER, saksummer)
         }
-        MDC.get(MdcConstants.MDC_SAKSNUMMER)?.let {
-            context.addProperty("saksnummer", it)
-        }
-        return context.build()
     }
+
+    override fun getContext(): UnleashContext = generateUnleashContext()
 }
