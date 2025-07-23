@@ -1,4 +1,4 @@
-package no.nav.bidrag.transport.samhandler
+package no.nav.bidrag.domene.enums.samhandler
 
 enum class Områdekode(
     val tssOmrådekode: String?, // Gamle TSS områdekoder. Benyttes i Bisys. Nye områdekoder har ingen TSS kode.
