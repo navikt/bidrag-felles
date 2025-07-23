@@ -30,6 +30,7 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.net.URL
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import no.nav.bidrag.domene.enums.samhandler.Områdekode
 
 typealias VisningsnavnKodeMap = Map<String, Visningsnavn>
 
@@ -115,6 +116,7 @@ val ResultatkodeSærtilskudd.visningsnavn get() =
         ?: visningsnavnMangler(name)
 val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[name] ?: visningsnavnMangler(name)
 val OffentligIdType.visningsnavn get() = lastVisningsnavnFraFil("offentligidtype.yaml")[name] ?: visningsnavnMangler(name)
+val Områdekode.visningsnavn get() = lastVisningsnavnFraFil("områdekode.yaml")[name] ?: visningsnavnMangler(name)
 
 fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype? = null) =
     when {

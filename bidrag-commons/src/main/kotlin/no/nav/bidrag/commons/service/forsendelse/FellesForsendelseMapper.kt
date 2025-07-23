@@ -19,9 +19,9 @@ import no.nav.bidrag.transport.dokument.forsendelse.MottakerTo
 import no.nav.bidrag.transport.dokument.forsendelse.OpprettDokumentForespørsel
 import no.nav.bidrag.transport.dokument.forsendelse.OpprettForsendelseForespørsel
 import no.nav.bidrag.transport.sak.RolleDto
-import no.nav.bidrag.transport.samhandler.Områdekode
 import org.springframework.stereotype.Service
 import java.time.LocalDate
+import no.nav.bidrag.domene.enums.samhandler.Områdekode
 
 private val log = KotlinLogging.logger {}
 

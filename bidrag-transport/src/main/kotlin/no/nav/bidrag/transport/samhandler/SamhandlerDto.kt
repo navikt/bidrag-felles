@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.samhandler
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.samhandler.OffentligIdType
+import no.nav.bidrag.domene.enums.samhandler.Områdekode
 import no.nav.bidrag.domene.ident.SamhandlerId
 import no.nav.bidrag.transport.felles.AuditLogDto
 
