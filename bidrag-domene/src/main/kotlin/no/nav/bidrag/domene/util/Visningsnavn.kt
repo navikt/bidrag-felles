@@ -19,6 +19,7 @@ import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
 import no.nav.bidrag.domene.enums.samhandler.OffentligIdType
+import no.nav.bidrag.domene.enums.samhandler.Områdekode
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
@@ -30,7 +31,6 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.net.URL
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
-import no.nav.bidrag.domene.enums.samhandler.Områdekode
 
 typealias VisningsnavnKodeMap = Map<String, Visningsnavn>
 
