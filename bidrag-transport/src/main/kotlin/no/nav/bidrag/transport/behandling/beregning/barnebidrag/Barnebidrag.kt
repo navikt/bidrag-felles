@@ -2,11 +2,13 @@ package no.nav.bidrag.transport.behandling.beregning.barnebidrag
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Beregningstype
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.beregning.felles.BeregnGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import java.math.BigDecimal
+import java.time.LocalDate
 import java.util.Collections.emptyList
 
 @Schema(description = "Resultatet av en barnebidragsberegning")
@@ -45,6 +47,12 @@ data class KlageOrkestratorGrunnlag(
     val stønad: Stønadsid,
     @Schema(description = "Vedtaksid til påklaget vedtak")
     val påklagetVedtakId: Int,
+    val manuellAldersjustering: List<KlageOrkestratorManuellAldersjustering> = emptyList(),
+)
+
+data class KlageOrkestratorManuellAldersjustering(
+    val aldersjusteringForÅr: Int,
+    val grunnlagFraVedtak: Int,
 )
 
 @Schema(description = "Response fra BidragsberegningOrkestrator")
@@ -61,4 +69,6 @@ data class ResultatVedtak(
     val delvedtak: Boolean = false,
     @Schema(description = "Er klagevedtak?")
     val klagevedtak: Boolean = false,
+    val vedtakstype: Vedtakstype,
+    val beregnetFraDato: LocalDate = resultat.beregnetBarnebidragPeriodeListe.minOf { it.periode.fom }.atDay(1),
 )

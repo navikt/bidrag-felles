@@ -9,6 +9,7 @@ import no.nav.bidrag.domene.enums.vedtak.Beslutningstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
+import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetaljerGrunnlag
@@ -100,6 +101,13 @@ fun VedtakDto.tilBatchHendelseResultattekst(): String {
             ?.lowercase()
     return "$vedtakstype${stønadstype.let { " $it" }}"
 }
+
+fun VedtakDto.finnStønadsendring(stønad: Stønadsid) =
+    stønadsendringListe.find {
+        it.kravhaver == stønad.kravhaver &&
+            it.skyldner == stønad.skyldner &&
+            it.type == stønad.type
+    }
 
 fun tilAldersjusteringResultattekst(
     vedtak: VedtakDto,
