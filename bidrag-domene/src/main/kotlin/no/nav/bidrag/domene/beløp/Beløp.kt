@@ -11,7 +11,7 @@ import java.math.BigDecimal
 
 class Beløp(
     override val verdi: BigDecimal,
-    val valutakode: Valutakode?,
+    val valutakode: Valutakode? = Valutakode.NOK,
 ) : Verdiobjekt<BigDecimal>() {
     override fun gyldig(): Boolean = verdi >= BigDecimal.ZERO && (valutakode == null || valutakode in Valutakode.entries)
 
