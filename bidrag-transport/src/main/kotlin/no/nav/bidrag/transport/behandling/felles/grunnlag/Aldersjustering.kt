@@ -12,25 +12,25 @@ import java.time.LocalDateTime
 
 data class KopiDelberegningUnderholdskostnad(
     override val periode: ÅrMånedsperiode,
-    override val fraVedtakId: Long,
+    override val fraVedtakId: Int,
     val nettoTilsynsutgift: BigDecimal?,
     val barnetilsynMedStønad: BigDecimal?,
 ) : GrunnlagPeriodeInnholdKopi
 
 data class KopiDelberegningBidragspliktigesAndel(
     override val periode: ÅrMånedsperiode,
-    override val fraVedtakId: Long,
+    override val fraVedtakId: Int,
     val endeligAndelFaktor: BigDecimal,
 ) : GrunnlagPeriodeInnholdKopi
 
 data class KopiSamværsperiodeGrunnlag(
     override val periode: ÅrMånedsperiode,
-    override val fraVedtakId: Long,
+    override val fraVedtakId: Int,
     val samværsklasse: Samværsklasse,
 ) : GrunnlagPeriodeInnholdKopi
 
 data class ManuellVedtakGrunnlag(
-    val vedtaksid: Long,
+    val vedtaksid: Int,
     val fattetTidspunkt: LocalDateTime,
     val virkningsDato: LocalDate,
     val vedtakstype: Vedtakstype,
@@ -46,7 +46,7 @@ data class ManuellVedtakGrunnlag(
 data class AldersjusteringDetaljerGrunnlag(
     override val periode: ÅrMånedsperiode,
     override val manueltRegistrert: Boolean = false,
-    val grunnlagFraVedtak: Long? = null,
+    val grunnlagFraVedtak: Int? = null,
     val aldersjustert: Boolean = true,
     @Schema(description = "Er sann hvis automatiske løsningen ikke kunne aldersjustere og det må utføres manuelt")
     val aldersjusteresManuelt: Boolean = false,

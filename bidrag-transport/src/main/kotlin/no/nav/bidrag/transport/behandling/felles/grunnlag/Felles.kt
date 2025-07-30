@@ -99,7 +99,7 @@ interface GrunnlagPeriodeInnhold : GrunnlagInnhold {
 
 interface GrunnlagPeriodeInnholdKopi : GrunnlagInnhold {
     val periode: ÅrMånedsperiode
-    val fraVedtakId: Long
+    val fraVedtakId: Int
 }
 
 interface InnhentetGrunnlagInnhold<out T> : GrunnlagInnhold {
