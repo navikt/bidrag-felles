@@ -21,5 +21,5 @@ data class FattVedtaksforslagStønadDto(
     @Schema(description = "Personen som er kravhaver i stønaden")
     val kravhaver: Personident,
     @Schema(description = "Siste vedtaksid for stønaden")
-    val sisteVedtaksid: Long? = null,
+    val sisteVedtaksid: Int? = null,
 )

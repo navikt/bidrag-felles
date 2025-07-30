@@ -37,7 +37,7 @@ data class BeregnGrunnlagAldersjustering(
 @Schema(description = "Vedtak som skal brukes ved beregning av aldersjustering")
 data class BeregnGrunnlagVedtak(
     @Schema(description = "Gjelder barn - referanse til personobjekt for søknadsbarn") val gjelderBarnReferanse: Grunnlagsreferanse,
-    @Schema(description = "Vedtak id") val vedtakId: Long,
+    @Schema(description = "Vedtak id") val vedtakId: Int,
     @Schema(description = "Vedtak innhold") val vedtakInnhold: VedtakDto,
 )
 

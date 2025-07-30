@@ -21,7 +21,7 @@ import java.time.LocalDateTime
 @Schema(description = "Objekt med relevant informasjon fra vedtak")
 data class VedtakForStønad(
     @Schema(description = "Unik id generert for vedtak")
-    val vedtaksid: Long,
+    val vedtaksid: Int,
     @Schema(description = "Tidspunkt vedtaket ble fattet")
     val vedtakstidspunkt: LocalDateTime,
     @Schema(description = "Type vedtak")
@@ -38,7 +38,7 @@ data class VedtakForStønad(
 
 @Schema
 data class VedtakDto(
-    val vedtaksid: Long = -1,
+    val vedtaksid: Int = -1,
     @Schema(description = "Hva er kilden til vedtaket. Automatisk eller manuelt")
     val kilde: Vedtakskilde,
     @Schema(description = "Type vedtak")
@@ -84,7 +84,7 @@ data class StønadsendringDto(
     @Schema(description = "Personidenten til den som mottar bidraget")
     val mottaker: Personident,
     @Schema(description = "Vedtaksid for siste vedtak. Ikke utfyllt for førstegangsvedtak")
-    val sisteVedtaksid: Long?,
+    val sisteVedtaksid: Int?,
     @Schema(description = "Angir første år en stønad skal indeksreguleres")
     val førsteIndeksreguleringsår: Int?,
     @Schema(description = "Angir om stønaden skal innkreves")
