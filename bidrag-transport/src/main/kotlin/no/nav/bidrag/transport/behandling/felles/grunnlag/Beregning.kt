@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
+import no.nav.bidrag.domene.beløp.Beløp
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
@@ -11,6 +12,7 @@ import no.nav.bidrag.domene.util.lastVisningsnavnFraFil
 import java.math.BigDecimal
 import java.math.MathContext
 import java.time.LocalDate
+import java.time.Year
 import java.util.Collections.emptyList
 
 data class SluttberegningForskudd(
@@ -139,6 +141,15 @@ data class SluttberegningBarnebidragAldersjustering(
     @get:JsonIgnore
     val resultatVisningsnavn get() = lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[resultat]
 }
+
+data class SluttberegningIndeksregulering(
+    override val periode: ÅrMånedsperiode,
+    val indeksreguleringFaktor: BigDecimal? = null,
+    val beløp: Beløp,
+    val originaltBeløp: Beløp,
+    val andelFaktor: BigDecimal,
+    val nesteIndeksreguleringsår: Year? = null,
+) : Sluttberegning
 
 @Deprecated("", replaceWith = ReplaceWith("DelberegningSumInntekt"))
 data class DelberegningInntekt(
