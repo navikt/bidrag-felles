@@ -69,6 +69,7 @@ data class ResultatVedtak(
     val delvedtak: Boolean = false,
     @Schema(description = "Er klagevedtak?")
     val klagevedtak: Boolean = false,
+    val gjenopprettetBeløpshistorikk: Boolean = false,
     val vedtakstype: Vedtakstype,
     val beregnetFraDato: LocalDate = resultat.beregnetBarnebidragPeriodeListe.minOf { it.periode.fom }.atDay(1),
 )
