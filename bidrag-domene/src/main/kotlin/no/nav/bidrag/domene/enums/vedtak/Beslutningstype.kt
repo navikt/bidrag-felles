@@ -7,4 +7,5 @@ enum class Beslutningstype {
     AVVIST,
     STADFESTELSE,
     ENDRING,
+    DELVEDTAK,
 }
