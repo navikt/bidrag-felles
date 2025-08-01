@@ -72,4 +72,6 @@ data class ResultatVedtak(
     val gjenopprettetBeløpshistorikk: Boolean = false,
     val vedtakstype: Vedtakstype,
     val beregnetFraDato: LocalDate = resultat.beregnetBarnebidragPeriodeListe.minOf { it.periode.fom }.atDay(1),
-)
+) {
+    val endeligVedtak get() = !delvedtak && !klagevedtak
+}
