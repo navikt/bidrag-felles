@@ -147,7 +147,6 @@ data class SluttberegningIndeksregulering(
     val indeksreguleringFaktor: BigDecimal? = null,
     val beløp: Beløp,
     val originaltBeløp: Beløp,
-    val andelFaktor: BigDecimal,
     val nesteIndeksreguleringsår: Year? = null,
 ) : Sluttberegning
 
