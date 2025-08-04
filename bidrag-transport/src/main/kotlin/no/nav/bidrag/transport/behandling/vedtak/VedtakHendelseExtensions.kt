@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.vedtak
 
 import no.nav.bidrag.domene.enums.behandling.TypeBehandling
 import no.nav.bidrag.domene.enums.vedtak.BehandlingsrefKilde
+import no.nav.bidrag.domene.enums.vedtak.Beslutningstype
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
@@ -29,6 +30,11 @@ val VedtakHendelse.behandlingId
                 it.kilde == BehandlingsrefKilde.BEHANDLING_ID.name
             }?.referanse
             ?.toLong()
+
+fun VedtakHendelse.erDelvedtak() =
+    this.stønadsendringListe?.any { se ->
+        se.beslutning == Beslutningstype.DELVEDTAK
+    } == true
 
 fun VedtakHendelse.erFattetGjennomBidragBehandling() = behandlingId != null
 

@@ -16,10 +16,13 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetalje
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrense
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrensePeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
+import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnholdMedReferanse
+import no.nav.bidrag.transport.behandling.felles.grunnlag.ResultatFraVedtakGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
+import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåFremmedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragGrunnlagIReferanser
@@ -211,3 +214,52 @@ fun List<GrunnlagDto>.finnDelberegningSjekkGrense(søknadsbarnReferanse: String)
     ).firstOrNull()
 
 fun VedtakDto.erVedtaksforslag() = vedtakstidspunkt == null
+
+fun List<GrunnlagDto>.finnResultatFraAnnenVedtak(
+    grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
+    finnFørsteTreff: Boolean = false,
+): ResultatFraVedtakGrunnlag? =
+    if (!finnFørsteTreff && grunnlagsreferanseListe.isEmpty()) {
+        null
+    } else if (grunnlagsreferanseListe.isEmpty()) {
+        filtrerOgKonverterBasertPåEgenReferanse<ResultatFraVedtakGrunnlag>(Grunnlagstype.RESULTAT_FRA_VEDTAK).firstOrNull()?.innhold
+    } else {
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<ResultatFraVedtakGrunnlag>(
+            Grunnlagstype.RESULTAT_FRA_VEDTAK,
+            grunnlagsreferanseListe,
+        ).firstOrNull()?.innhold
+    }
+
+val VedtakDto.referertVedtaksid get() =
+    if (erOrkestrertVedtak) {
+        stønadsendringListe.firstNotNullOfOrNull { se ->
+            se.periodeListe.firstNotNullOfOrNull { p ->
+                val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                if (resultatFraAnnenVedtak?.klagevedtak == true) resultatFraAnnenVedtak.vedtaksid else null
+            }
+        }
+    } else if (erDelvedtak) {
+        stønadsendringListe.firstNotNullOfOrNull { se ->
+            se.periodeListe.firstNotNullOfOrNull { p ->
+                val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                resultatFraAnnenVedtak?.vedtaksid
+            }
+        }
+    } else {
+        null
+    }
+
+val VedtakDto.harResultatFraAnnenVedtak get() = this.grunnlagListe.finnResultatFraAnnenVedtak(finnFørsteTreff = true) != null
+
+val VedtakDto.erDelvedtak get() =
+    this.stønadsendringListe.any { se ->
+        se.beslutning == Beslutningstype.DELVEDTAK
+    }
+
+val VedtakDto.erOrkestrertVedtak get() =
+    this.stønadsendringListe.all { se ->
+        se.beslutning != Beslutningstype.DELVEDTAK &&
+            se.periodeListe.all { p ->
+                this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
+            }
+    }
