@@ -144,7 +144,6 @@ data class SluttberegningBarnebidragAldersjustering(
 
 data class SluttberegningIndeksregulering(
     override val periode: ÅrMånedsperiode,
-    val indeksreguleringFaktor: BigDecimal? = null,
     val beløp: Beløp,
     val originaltBeløp: Beløp,
     val nesteIndeksreguleringsår: Year? = null,
