@@ -34,6 +34,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
 import no.nav.bidrag.transport.felles.tilVisningsnavn
 import java.time.YearMonth
 
+val Vedtakstype.erIndeksEllerAldersjustering get() = listOf(Vedtakstype.ALDERSJUSTERING, Vedtakstype.INDEKSREGULERING).contains(this)
 val VedtakDto.saksnummer get() = stønadsendringListe.firstOrNull()?.sak?.verdi ?: engangsbeløpListe.firstOrNull()?.sak?.verdi
 val VedtakDto.behandlingId get() =
     behandlingsreferanseListe
