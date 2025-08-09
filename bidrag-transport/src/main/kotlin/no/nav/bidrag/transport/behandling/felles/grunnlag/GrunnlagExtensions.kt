@@ -4,6 +4,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
+import no.nav.bidrag.transport.behandling.vedtak.response.finnDelberegningSjekkGrense
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
 inline fun <reified T : List<GrunnlagInnhold>> BaseGrunnlag.innholdTilObjektListe(): T =
@@ -232,6 +233,11 @@ fun List<BaseGrunnlag>.finnSluttberegningBarnebidragGrunnlagIReferanser(grunnlag
         Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG,
         grunnlagsreferanseListe,
     ).firstOrNull()
+
+fun List<GrunnlagDto>.erResultatEndringUnderGrense(søknadsbarnReferanse: String): Boolean {
+    val delberegningGrense = finnDelberegningSjekkGrense(søknadsbarnReferanse)
+    return delberegningGrense?.innhold?.endringErOverGrense == false
+}
 
 inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.tilInnholdMedReferanse() =
     InnholdMedReferanse(
