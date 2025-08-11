@@ -6,6 +6,7 @@ import no.nav.bidrag.domene.ident.Ident
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.transport.person.HentePersonidenterRequest
 import no.nav.bidrag.transport.person.Identgruppe
+import no.nav.bidrag.transport.person.PersonDto
 import no.nav.bidrag.transport.person.PersonidentDto
 import org.aspectj.lang.ProceedingJoinPoint
 import org.aspectj.lang.annotation.Around
@@ -127,8 +128,32 @@ class IdentConsumer(
 ) : AbstractRestClient(restTemplate, "\${NAIS_APP_NAME}") {
     companion object {
         const val PERSON_PATH = "/personidenter"
+        const val INFORMASJON_PATH = "/informasjon"
         private val LOGGER = LoggerFactory.getLogger(SjekkForNyIdentAspect::class.java)
     }
+
+    @Cacheable(value = ["bidrag-commons_hentFødselsdato_cache"], key = "#ident")
+    fun hentPersonInformasjon(ident: Personident): PersonDto? =
+        try {
+            restTemplate
+                .postForEntity(
+                    "$personUrl$INFORMASJON_PATH",
+                    PersonDto(ident),
+                    PersonDto::class.java,
+                ).body
+        } catch (e: NoSuchElementException) {
+            LOGGER.warn(
+                "Bidrag-person fant ingen person på kalt ident. " +
+                    "\nFeilmelding: ${e.message} CallId: ${CorrelationId.fetchCorrelationIdForThread()}.\n$e",
+            )
+            null
+        } catch (e: Exception) {
+            LOGGER.error(
+                "Noe gikk galt i kall mot bidrag-person: ${e.message} " +
+                    "CallId: ${CorrelationId.fetchCorrelationIdForThread()}.\n$e",
+            )
+            null
+        }
 
     @Cacheable(value = ["bidrag-commons_hentAlleIdenter_cache"], key = "#ident")
     fun hentAlleIdenter(ident: String): List<String> {
