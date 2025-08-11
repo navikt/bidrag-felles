@@ -4,8 +4,14 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
-import no.nav.bidrag.transport.behandling.vedtak.response.finnDelberegningSjekkGrense
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.felles.commonObjectmapper
+
+val Grunnlagstype.erIndeksEllerAldersjustering get() =
+    listOf(
+        Grunnlagstype.SLUTTBEREGNING_INDEKSREGULERING,
+        Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG_ALDERSJUSTERING,
+    ).contains(this)
 
 inline fun <reified T : List<GrunnlagInnhold>> BaseGrunnlag.innholdTilObjektListe(): T =
     try {
@@ -234,10 +240,46 @@ fun List<BaseGrunnlag>.finnSluttberegningBarnebidragGrunnlagIReferanser(grunnlag
         grunnlagsreferanseListe,
     ).firstOrNull()
 
-fun List<GrunnlagDto>.erResultatEndringUnderGrense(søknadsbarnReferanse: String): Boolean {
+fun List<GrunnlagDto>.erResultatEndringUnderGrense(
+    søknadsbarnReferanse: String,
+    periodeGrunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
+): Boolean {
+    val erIndeksreguleringEllerAldersjustering =
+        finnSluttberegningIReferanser(periodeGrunnlagsreferanseListe)?.type?.erIndeksEllerAldersjustering == true
+    if (erIndeksreguleringEllerAldersjustering) {
+        return false
+    }
     val delberegningGrense = finnDelberegningSjekkGrense(søknadsbarnReferanse)
     return delberegningGrense?.innhold?.endringErOverGrense == false
 }
+
+fun List<GrunnlagDto>.erResultatEndringUnderGrenseForPeriode(
+    periode: ÅrMånedsperiode,
+    søknadsbarnReferanse: String,
+    periodeGrunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
+): Boolean {
+    val erIndeksreguleringEllerAldersjustering =
+        finnSluttberegningIReferanser(periodeGrunnlagsreferanseListe)?.type?.erIndeksEllerAldersjustering == true
+    if (erIndeksreguleringEllerAldersjustering) {
+        return false
+    }
+    val delberegningGrense = finnDelberegningSjekkGrensePeriode(periode, søknadsbarnReferanse)
+    return delberegningGrense?.innhold?.endringErOverGrense == false
+}
+
+fun List<GrunnlagDto>.finnDelberegningSjekkGrensePeriode(
+    periode: ÅrMånedsperiode,
+    søknadsbarnReferanse: String,
+) = filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrensePeriode>(
+    Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE_PERIODE,
+    gjelderBarnReferanse = søknadsbarnReferanse,
+).find { it.innhold.periode == periode }
+
+fun List<GrunnlagDto>.finnDelberegningSjekkGrense(søknadsbarnReferanse: String) =
+    filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrense>(
+        Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE,
+        gjelderBarnReferanse = søknadsbarnReferanse,
+    ).firstOrNull()
 
 inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.tilInnholdMedReferanse() =
     InnholdMedReferanse(
