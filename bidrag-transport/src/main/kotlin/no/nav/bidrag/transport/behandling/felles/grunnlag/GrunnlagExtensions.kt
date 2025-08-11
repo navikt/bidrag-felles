@@ -255,7 +255,7 @@ fun List<GrunnlagDto>.erResultatEndringUnderGrense(
 
 fun List<GrunnlagDto>.erResultatEndringUnderGrenseForPeriode(
     periode: ÅrMånedsperiode,
-    søknadsbarnReferanse: String,
+    søknadsbarnReferanse: String?,
     periodeGrunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
 ): Boolean {
     val erIndeksreguleringEllerAldersjustering =
@@ -269,7 +269,7 @@ fun List<GrunnlagDto>.erResultatEndringUnderGrenseForPeriode(
 
 fun List<GrunnlagDto>.finnDelberegningSjekkGrensePeriode(
     periode: ÅrMånedsperiode,
-    søknadsbarnReferanse: String,
+    søknadsbarnReferanse: String?,
 ) = filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrensePeriode>(
     Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE_PERIODE,
     gjelderBarnReferanse = søknadsbarnReferanse,
