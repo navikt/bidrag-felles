@@ -11,3 +11,7 @@ data class ResultatFraVedtakGrunnlag(
     val opprettParagraf35c: Boolean = false,
     val vedtakstidspunkt: LocalDateTime? = null,
 ) : GrunnlagInnhold
+
+data class VedtakOrkestreringDetaljerGrunnlag(
+    val klagevedtakId: Int,
+) : GrunnlagInnhold

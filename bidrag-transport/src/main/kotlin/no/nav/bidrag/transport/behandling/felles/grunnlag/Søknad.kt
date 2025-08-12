@@ -6,6 +6,7 @@ import no.nav.bidrag.domene.enums.rolle.SøktAvType
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import java.time.LocalDate
+import java.time.YearMonth
 
 data class SøknadGrunnlag(
     val mottattDato: LocalDate,
@@ -33,6 +34,7 @@ data class VirkningstidspunktGrunnlag(
     val virkningstidspunkt: LocalDate,
     val opprinneligVirkningstidspunkt: LocalDate? = null,
     val opphørsdato: LocalDate? = null,
+    val beregnTilDato: YearMonth? = null,
     val årsak: VirkningstidspunktÅrsakstype? = null,
     val avslag: Resultatkode? = null,
 ) : GrunnlagInnhold
