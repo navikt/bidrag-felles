@@ -17,3 +17,7 @@ fun LocalDate?.toCompactString(): String = this?.format(formatterCompact) ?: ""
 fun LocalDateTime?.toCompactString(): String = this?.format(formatterCompactLocalDateTime) ?: ""
 
 fun YearMonth?.toCompactString(): String = this?.format(formatterCompactYearMonth) ?: ""
+
+fun LocalDate.toYearMonth(): YearMonth = YearMonth.of(year, monthValue)
+
+fun LocalDateTime.toYearMonth(): YearMonth = YearMonth.of(year, monthValue)

@@ -11,10 +11,7 @@ import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.Datoperiode
-import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetaljerGrunnlag
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrense
-import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrensePeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnholdMedReferanse
@@ -23,7 +20,6 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebid
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåEgenReferanse
-import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåFremmedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragGrunnlagIReferanser
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentAldersjusteringDetaljerGrunnlag
@@ -31,7 +27,9 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdentKonvertert
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedReferanseKonvertert
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
+import no.nav.bidrag.transport.behandling.vedtak.Stønadsendring
 import no.nav.bidrag.transport.felles.tilVisningsnavn
+import no.nav.bidrag.transport.felles.toYearMonth
 import java.time.YearMonth
 
 val VedtakForStønad.virkningstidspunkt get() = stønadsendring.periodeListe.minOfOrNull { it.periode.fom }
@@ -160,6 +158,28 @@ fun VedtakDto.finnAldersjusteringDetaljerGrunnlag(
             Grunnlagstype.ALDERSJUSTERING_DETALJER,
             stønadsendringDto.grunnlagReferanseListe,
         ).firstOrNull()
+
+fun VedtakDto.finnVirkningstidspunktForStønad(stønadsid: Stønadsid): YearMonth {
+    val stønadsendring = finnStønadsendring(stønadsid)!!
+    return finnVirkningstidspunkt(stønadsendring)?.innhold?.virkningstidspunkt?.toYearMonth()
+        ?: stønadsendring.periodeListe.minOf { it.periode.fom }
+}
+
+fun Stønadsendring.tilStønadsid() =
+    Stønadsid(
+        kravhaver = kravhaver,
+        skyldner = skyldner,
+        type = type,
+        sak = sak,
+    )
+
+fun StønadsendringDto.tilStønadsid() =
+    Stønadsid(
+        kravhaver = kravhaver,
+        skyldner = skyldner,
+        type = type,
+        sak = sak,
+    )
 
 fun StønadsendringDto.finnSistePeriode() = periodeListe.maxByOrNull { it.periode.fom }
 
