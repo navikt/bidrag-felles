@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import java.time.LocalDateTime
+import java.time.YearMonth
 
 data class ResultatFraVedtakGrunnlag(
     val vedtaksid: Int?,
@@ -14,4 +15,7 @@ data class ResultatFraVedtakGrunnlag(
 
 data class VedtakOrkestreringDetaljerGrunnlag(
     val klagevedtakId: Int,
+    val beregnTilDato: YearMonth,
+    // Settes bare hvis det innkreves fra en annen dato enn vikrningstidspunktet
+    val innkrevesFraDato: YearMonth? = null,
 ) : GrunnlagInnhold

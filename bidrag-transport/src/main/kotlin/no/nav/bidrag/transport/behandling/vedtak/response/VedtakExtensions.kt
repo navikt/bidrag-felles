@@ -17,6 +17,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnholdMedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.ResultatFraVedtakGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
+import no.nav.bidrag.transport.behandling.felles.grunnlag.VedtakOrkestreringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåEgenReferanse
@@ -215,6 +216,14 @@ fun StønadsendringDto.finnSøknadsbarnReferanse(grunnlagListe: List<GrunnlagDto
 }
 
 fun VedtakDto.erVedtaksforslag() = vedtakstidspunkt == null
+
+fun List<GrunnlagDto>.finnOrkestreringDetaljer(
+    grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
+): VedtakOrkestreringDetaljerGrunnlag? =
+    finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<VedtakOrkestreringDetaljerGrunnlag>(
+        Grunnlagstype.VEDTAK_ORKESTRERING_DETALJER,
+        grunnlagsreferanseListe,
+    ).firstOrNull()?.innhold
 
 fun List<GrunnlagDto>.finnResultatFraAnnenVedtak(
     grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
