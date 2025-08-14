@@ -24,8 +24,18 @@ enum class BisysSøknadstype(
     OMGJØRING("OM"),
     OMGJØRING_BEGRENSET_SATS("OB"),
     PARAGRAF_35_C("35"),
+    PARAGRAF_35_C_BEGRENSET_SATS("3B"),
 
     ;
+
+    fun erBegrensetRevurdering() =
+        listOf(
+            PARAGRAF_35_C_BEGRENSET_SATS,
+            OMGJØRING_BEGRENSET_SATS,
+            KLAGE_BEGRENSET_SATS,
+            REVURDERING,
+            BEGRENSET_REVURDERING,
+        ).contains(this)
 
     companion object {
         fun fraKode(kode: String): BisysSøknadstype? =
