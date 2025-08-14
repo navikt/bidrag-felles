@@ -23,6 +23,7 @@ enum class BisysSøknadstype(
     OPPJUSTERT_FORSKUDD("OF"),
     OMGJØRING("OM"),
     OMGJØRING_BEGRENSET_SATS("OB"),
+    PARAGRAF_35_C("35"),
 
     ;
 
