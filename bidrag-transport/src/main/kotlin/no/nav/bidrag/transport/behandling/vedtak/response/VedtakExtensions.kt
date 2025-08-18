@@ -271,14 +271,16 @@ val VedtakDto.referertVedtaksid get() =
 val VedtakDto.harResultatFraAnnenVedtak get() = this.grunnlagListe.finnResultatFraAnnenVedtak(finnFørsteTreff = true) != null
 
 val VedtakDto.erDelvedtak get() =
-    this.stønadsendringListe.any { se ->
-        se.beslutning == Beslutningstype.DELVEDTAK
-    }
+    this.stønadsendringListe.isNotEmpty() &&
+        this.stønadsendringListe.any { se ->
+            se.beslutning == Beslutningstype.DELVEDTAK
+        }
 
 val VedtakDto.erOrkestrertVedtak get() =
-    this.stønadsendringListe.all { se ->
-        se.beslutning != Beslutningstype.DELVEDTAK &&
-            se.periodeListe.all { p ->
-                this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
-            }
-    }
+    this.stønadsendringListe.isNotEmpty() &&
+        this.stønadsendringListe.all { se ->
+            se.beslutning != Beslutningstype.DELVEDTAK &&
+                se.periodeListe.all { p ->
+                    this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
+                }
+        }
