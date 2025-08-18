@@ -17,6 +17,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnholdMedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.ResultatFraVedtakGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningIndeksregulering
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VedtakOrkestreringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
@@ -188,6 +189,14 @@ fun StønadsendringDto.hentSisteLøpendePeriode() =
     periodeListe
         .maxByOrNull { it.periode.fom }
         ?.takeIf { it.periode.til == null || it.periode.til!!.isAfter(YearMonth.now()) }
+
+fun VedtakDto.finnSluttberegningBarnebidragIndeksreguleringIPeriode(periode: VedtakPeriodeDto) =
+    grunnlagListe
+        .finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SluttberegningIndeksregulering>(
+            Grunnlagstype.SLUTTBEREGNING_INDEKSREGULERING,
+            periode.grunnlagReferanseListe,
+        ).firstOrNull()
+        ?.innhold
 
 fun VedtakDto.finnSluttberegningBarnebidragAldersjusteringIPeriode(periode: VedtakPeriodeDto) =
     grunnlagListe
