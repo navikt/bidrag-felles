@@ -22,6 +22,7 @@ import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
+import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
@@ -42,6 +43,9 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUnderholdskostnad
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidrag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningIndeksregulering
+import no.nav.bidrag.transport.notat.NotatResultatBidragsberegningBarnDto.ResultatBarnebidragsberegningPeriodeDto
 import java.math.BigDecimal
 import java.math.MathContext
 import java.math.RoundingMode
@@ -52,6 +56,7 @@ import java.util.Locale
 
 data class VedtakNotatDto(
     val type: NotatMalType = NotatMalType.FORSKUDD,
+    val erOrkestrertVedtak: Boolean,
     val stønadstype: Stønadstype? = null,
     val medInnkreving: Boolean = true,
     val saksnummer: String,
@@ -682,9 +687,16 @@ data class NotatResultatForskuddBeregningBarnDto(
     }
 }
 
+data class EndeligOrkestrertVedtak(
+    val type: Vedtakstype?,
+    val perioder: List<ResultatBarnebidragsberegningPeriodeDto>,
+)
+
 data class NotatResultatBidragsberegningBarnDto(
     val barn: NotatPersonDto,
     val indeksår: Int? = null,
+    val innkrevesFraDato: YearMonth? = null,
+    val orkestrertVedtak: EndeligOrkestrertVedtak? = null,
     val perioder: List<ResultatBarnebidragsberegningPeriodeDto>,
 ) : VedtakResultatInnhold(NotatMalType.BIDRAG) {
     data class ResultatBarnebidragsberegningPeriodeDto(
@@ -696,19 +708,22 @@ data class NotatResultatBidragsberegningBarnDto(
         val beregnetBidrag: BigDecimal,
         val faktiskBidrag: BigDecimal,
         val resultatKode: Resultatkode?,
+        val erOpphør: Boolean = false,
         val erDirekteAvslag: Boolean = false,
+        val vedtakstype: Vedtakstype,
         val beregningsdetaljer: BidragPeriodeBeregningsdetaljer? = null,
+        val klageOmgjøringDetaljer: KlageOmgjøringDetaljer? = null,
+        val delvedtakstypeVisningsnavn: String,
+        val resultatkodeVisningsnavn: String,
     ) {
-        @Suppress("unused")
-        val resultatkodeVisningsnavn get() =
-            if (resultatKode?.erDirekteAvslag() == true || resultatKode == Resultatkode.INGEN_ENDRING_UNDER_GRENSE) {
-                resultatKode.visningsnavnIntern()
-            } else {
-                beregningsdetaljer
-                    ?.sluttberegning
-                    ?.resultatVisningsnavn
-                    ?.intern
-            }
+        data class KlageOmgjøringDetaljer(
+            val resultatFraVedtakVedtakstidspunkt: LocalDateTime? = null,
+            val beregnTilDato: YearMonth? = null,
+            val manuellAldersjustering: Boolean = false,
+            val delAvVedtaket: Boolean = true,
+            val kanOpprette35c: Boolean = false,
+            val skalOpprette35c: Boolean = false,
+        )
 
         data class BidragPeriodeBeregningsdetaljer(
             val bpHarEvne: Boolean,
@@ -725,8 +740,15 @@ data class NotatResultatBidragsberegningBarnDto(
             val endringUnderGrense: DelberegningEndringSjekkGrensePeriode? = null,
             val sluttberegning: SluttberegningBarnebidrag? = null,
             val delberegningUnderholdskostnad: DelberegningUnderholdskostnad? = null,
+            val indeksreguleringDetaljer: IndeksreguleringDetaljer? = null,
+            val sluttberegningAldersjustering: SluttberegningBarnebidragAldersjustering? = null,
             val delberegningBidragspliktigesBeregnedeTotalBidrag: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto? = null,
         ) {
+            data class IndeksreguleringDetaljer(
+                val sluttberegning: SluttberegningIndeksregulering?,
+                val faktor: BigDecimal,
+            )
+
             data class NotatBeregningsdetaljerSamværsfradrag(
                 val samværsfradrag: BigDecimal,
                 val samværsklasse: Samværsklasse,
