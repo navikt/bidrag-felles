@@ -323,6 +323,12 @@ enum class Resultatkode(
         listOf(BisysResultatkode("KBB")),
         ResultatkodeType.BARNEBIDRAG,
     ),
+
+    INDEKSREGULERING(
+        listOf(BisysResultatkode("IREG")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.FORSKUDD,
+    ),
     ;
 
     val legacyKode get() = bisysKode.firstOrNull()?.resultatKode
