@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.beregning.barnebidrag
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Beregningstype
+import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -48,6 +49,8 @@ data class KlageOrkestratorGrunnlag(
     @Schema(description = "Vedtaksid til påklaget vedtak")
     val påklagetVedtakId: Int,
     val manuellAldersjustering: List<KlageOrkestratorManuellAldersjustering> = emptyList(),
+    val innkrevingstype: Innkrevingstype = Innkrevingstype.MED_INNKREVING,
+    val gjelderParagraf35c: Boolean = false,
 )
 
 data class KlageOrkestratorManuellAldersjustering(
