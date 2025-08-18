@@ -179,3 +179,6 @@ MANGLER_BIDRAGSEVNE:
     intern: "Mangler bidragsevne"
 KOSTNADSBEREGNET_BIDRAG:
   intern: "Kostnadsberegnet bidrag"
+
+INDEKSREGULERING:
+  intern: "Indeksregulering"
