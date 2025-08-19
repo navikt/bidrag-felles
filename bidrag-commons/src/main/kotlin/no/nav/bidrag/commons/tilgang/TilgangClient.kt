@@ -13,12 +13,19 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
+import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.domene.sak.Saksnummer
+import no.nav.bidrag.transport.tilgang.SporingsdataPersonRequest
+import no.nav.bidrag.transport.tilgang.SporingsdataSakRequest
+import no.nav.bidrag.transport.tilgang.TilgangTilPersonRequest
+import no.nav.bidrag.transport.tilgang.TilgangTilSakRequest
+import no.nav.bidrag.transport.tilgang.TilgangskontrollResponse
 
 @Component
 @Import(RestOperationsAzure::class)
 class TilgangClient(
-    @Value("\${BIDRAG_TILGANG_URL}") private val tilgangURI: URI,
-    @Qualifier("azure") private val restTemplate: RestTemplate,
+    @param:Value("\${BIDRAG_TILGANG_URL}") private val tilgangURI: URI,
+    @param:Qualifier("azure") private val restTemplate: RestTemplate,
 ) : AbstractRestClient(restTemplate, "tilgang") {
     private val logger = LoggerFactory.getLogger(this::class.java)
 
@@ -47,44 +54,46 @@ class TilgangClient(
             .build()
             .toUri()
 
-    fun harTilgangSaksnummer(saksnummer: String): Boolean {
+    fun harTilgangSaksnummer(saksnummer: Saksnummer): Boolean {
         try {
             val headers = HttpHeaders()
             headers.contentType = MediaType.TEXT_PLAIN
-            return postForNonNullEntity(sakUri, saksnummer, headers)
+            val response: TilgangskontrollResponse = postForNonNullEntity(sakUri, TilgangTilSakRequest(saksnummer), headers)
+            return response.harTilgang
         } catch (e: Exception) {
             logger.error("Feil ved sjekk på tilgang til saksnummer $saksnummer ", e)
             return false
         }
     }
 
-    fun harTilgangPerson(personIdent: String): Boolean {
+    fun harTilgangPerson(personident: Personident): Boolean {
         try {
             val headers = HttpHeaders()
             headers.contentType = MediaType.TEXT_PLAIN
-            return postForNonNullEntity(personUri, personIdent, headers)
+            val response: TilgangskontrollResponse = postForNonNullEntity(personUri, TilgangTilPersonRequest(personident), headers)
+            return response.harTilgang
         } catch (e: Exception) {
             logger.error("Feil ved sjekk på tilgang til person ", e)
             return false
         }
     }
 
-    fun hentSporingsdataSak(saksnummer: String): Sporingsdata {
+    fun hentSporingsdataSak(saksnummer: Saksnummer): Sporingsdata {
         try {
             val headers = HttpHeaders()
             headers.contentType = MediaType.TEXT_PLAIN
-            return postForNonNullEntity(sporingsdataSakUri, saksnummer, headers)
+            return postForNonNullEntity(sporingsdataSakUri, SporingsdataSakRequest(saksnummer), headers)
         } catch (e: Exception) {
             logger.error("Feil ved henting av sporingsdata for sak $saksnummer ", e)
             throw e
         }
     }
 
-    fun hentSporingsdataPerson(personIdent: String): Sporingsdata {
+    fun hentSporingsdataPerson(personident: Personident): Sporingsdata {
         try {
             val headers = HttpHeaders()
             headers.contentType = MediaType.TEXT_PLAIN
-            return postForNonNullEntity(sporingsdataPersonUri, personIdent, headers)
+            return postForNonNullEntity(sporingsdataPersonUri, SporingsdataPersonRequest(personident), headers)
         } catch (e: Exception) {
             logger.error("Feil ved henting av sporingsdata for person ", e)
             throw e
