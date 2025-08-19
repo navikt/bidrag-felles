@@ -53,15 +53,15 @@ class AuditAdviceTest {
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS))
 
-        verify { tilgangClient.hentSporingsdataSak("0123456") }
+        verify { tilgangClient.hentSporingsdataSak(Saksnummer("0123456")) }
         verify { auditLogger.log(AuditLoggerEvent.ACCESS, any()) }
     }
 
     @Test
     fun `loggTilgang logger tilgang for personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(Personident(fnr))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(fnr)
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.DELETE))
 
@@ -76,14 +76,14 @@ class AuditAdviceTest {
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.CREATE))
 
-        verify { tilgangClient.hentSporingsdataSak("0123456") }
+        verify { tilgangClient.hentSporingsdataSak(Saksnummer("0123456")) }
         verify { auditLogger.log(AuditLoggerEvent.CREATE, any()) }
     }
 
     @Test
     fun `loggTilgang logger tilgang for personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
         every { joinPoint.args } returns arrayOf(fnr)
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.UPDATE))
@@ -107,15 +107,15 @@ class AuditAdviceTest {
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS))
 
-        verify { tilgangClient.hentSporingsdataSak("0123456") }
+        verify { tilgangClient.hentSporingsdataSak(Saksnummer("0123456")) }
         verify { auditLogger.log(AuditLoggerEvent.ACCESS, any()) }
     }
 
     @Test
     fun `loggTilgang logger tilgang for requestBody med personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjektFørst(Personident(fnr)))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjektFørst(fnr))
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS))
 
@@ -130,15 +130,15 @@ class AuditAdviceTest {
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS))
 
-        verify { tilgangClient.hentSporingsdataSak("0123456") }
+        verify { tilgangClient.hentSporingsdataSak(Saksnummer("0123456")) }
         verify { auditLogger.log(AuditLoggerEvent.ACCESS, any()) }
     }
 
     @Test
     fun `loggTilgang logger tilgang for requestBody med personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(DummyMedStringFørst(fnr))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(DummyMedStringFørst(fnr.verdi))
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS))
 
@@ -164,15 +164,15 @@ class AuditAdviceTest {
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS, "id"))
 
-        verify { tilgangClient.hentSporingsdataSak("0123456") }
+        verify { tilgangClient.hentSporingsdataSak(Saksnummer("0123456")) }
         verify { auditLogger.log(AuditLoggerEvent.ACCESS, any()) }
     }
 
     @Test
     fun `loggTilgang logger tilgang for navngitt personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf("sdf", 321, Personident(fnr))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf("sdf", 321, fnr)
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
         every { joinPoint.signature } returns codeSignature
@@ -193,14 +193,14 @@ class AuditAdviceTest {
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS, "id"))
 
-        verify { tilgangClient.hentSporingsdataSak("0123456") }
+        verify { tilgangClient.hentSporingsdataSak(Saksnummer("0123456")) }
         verify { auditLogger.log(AuditLoggerEvent.ACCESS, any()) }
     }
 
     @Test
     fun `loggTilgang logger tilgang for navngitt personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
         every { joinPoint.args } returns arrayOf("sdf", 321, fnr)
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
@@ -238,15 +238,15 @@ class AuditAdviceTest {
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS, "saksnummer"))
 
-        verify { tilgangClient.hentSporingsdataSak("0123456") }
+        verify { tilgangClient.hentSporingsdataSak(Saksnummer("0123456")) }
         verify { auditLogger.log(AuditLoggerEvent.ACCESS, any()) }
     }
 
     @Test
     fun `loggTilgang logger tilgang for requestBody med navngitt personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjekt(fnr = Personident(fnr)))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjekt(fnr = fnr))
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
         every { joinPoint.signature } returns codeSignature
@@ -267,15 +267,15 @@ class AuditAdviceTest {
 
         auditAdvice.loggTilgang(joinPoint, AuditLog(AuditLoggerEvent.ACCESS, "fnr"))
 
-        verify { tilgangClient.hentSporingsdataSak("0123456") }
+        verify { tilgangClient.hentSporingsdataSak(Saksnummer("0123456")) }
         verify { auditLogger.log(AuditLoggerEvent.ACCESS, any()) }
     }
 
     @Test
     fun `loggTilgang logger tilgang for requestBody med navngitt personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(DummyMedString(fnr = fnr))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(DummyMedString(fnr = fnr.verdi))
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
         every { joinPoint.signature } returns codeSignature

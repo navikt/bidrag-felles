@@ -1,6 +1,8 @@
 package no.nav.bidrag.transport.tilgang
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.domene.sak.Saksnummer
 
 data class TilgangskontrollResponse(
     @param:Schema(
@@ -29,3 +31,16 @@ enum class OpprinnelseTilgangsbeslutning {
     BIDRAG_SAK_PIP,
     BIDRAG_TILGANGSKONTROLL,
 }
+
+data class TilgangTilSakRequest(
+    val saksnummer: Saksnummer,
+)
+
+data class TilgangTilPersonRequest(
+    val personident: Personident,
+)
+
+data class TilgangTilTemaRequest(
+    val tema: String,
+    val navIdent: String? = null,
+)
