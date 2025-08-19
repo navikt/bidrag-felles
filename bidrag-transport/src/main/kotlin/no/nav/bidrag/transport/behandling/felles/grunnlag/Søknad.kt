@@ -38,4 +38,12 @@ data class VirkningstidspunktGrunnlag(
     val beregnTilDato: YearMonth? = null,
     val årsak: VirkningstidspunktÅrsakstype? = null,
     val avslag: Resultatkode? = null,
+    val beregnTil: BeregnTil? = null,
 ) : GrunnlagInnhold
+
+@Schema(enumAsRef = true)
+enum class BeregnTil {
+    OPPRINNELIG_VEDTAKSTIDSPUNKT,
+    INNEVÆRENDE_MÅNED,
+    ETTERFØLGENDE_MANUELL_VEDTAK,
+}
