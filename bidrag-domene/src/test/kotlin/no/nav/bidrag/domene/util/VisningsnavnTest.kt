@@ -16,6 +16,7 @@ import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
+import no.nav.bidrag.domene.enums.vedtak.BeregnTil
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
@@ -23,6 +24,15 @@ import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
 class VisningsnavnTest {
+    @Test
+    fun `Valider at alle kodeverdier for BeregnTil har visningsnavn`() {
+        BeregnTil.entries.forEach {
+            withClue("${it.name} mangler visningsnavn") {
+                it.visningsnavn.intern.isNotEmpty() shouldBe true
+            }
+        }
+    }
+
     @Test
     fun `Valider at alle kodeverdier for PrivatAvtaleType har visningsnavn`() {
         PrivatAvtaleType.entries.forEach {

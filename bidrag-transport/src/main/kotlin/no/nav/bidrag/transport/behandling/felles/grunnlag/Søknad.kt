@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.vedtak.BeregnTil
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import java.time.LocalDate
@@ -40,10 +41,3 @@ data class VirkningstidspunktGrunnlag(
     val avslag: Resultatkode? = null,
     val beregnTil: BeregnTil? = null,
 ) : GrunnlagInnhold
-
-@Schema(enumAsRef = true)
-enum class BeregnTil {
-    OPPRINNELIG_VEDTAKSTIDSPUNKT,
-    INNEVÆRENDE_MÅNED,
-    ETTERFØLGENDE_MANUELL_VEDTAK,
-}

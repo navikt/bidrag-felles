@@ -24,6 +24,7 @@ import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
+import no.nav.bidrag.domene.enums.vedtak.BeregnTil
 import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
@@ -67,6 +68,7 @@ val Engangsbeløptype.visningsnavn get() = lastVisningsnavnFraFil("engangsbeløp
 val Særbidragskategori.visningsnavn get() = lastVisningsnavnFraFil("særbidragskategori.yaml")[name] ?: visningsnavnMangler(name)
 val Vedtakstype.visningsnavn get() = lastVisningsnavnFraFil("vedtakstype.yaml")[name] ?: visningsnavnMangler(name)
 val Samværsklasse.visningsnavn get() = lastVisningsnavnFraFil("samværsklasse.yaml")[name] ?: visningsnavnMangler(name)
+val BeregnTil.visningsnavn get() = lastVisningsnavnFraFil("beregntil.yaml")[name] ?: visningsnavnMangler(name)
 val SamværskalkulatorFerietype.visningsnavn get() =
     lastVisningsnavnFraFil("samværskalkulatorferietype.yaml")[name]
         ?: visningsnavnMangler(name)
