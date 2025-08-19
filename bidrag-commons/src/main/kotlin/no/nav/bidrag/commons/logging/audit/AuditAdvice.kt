@@ -45,7 +45,8 @@ class AuditAdvice(
         if (index > -1) {
             auditForParameter(joinpoint.args[index], auditLog.auditLoggerEvent)
         } else {
-            val sporingsdata = finnSporingsdataForNavngittFeltIRequestBody(joinpoint.args.first(), auditLog.oppslagsparameter)
+            val sporingsdata =
+                finnSporingsdataForNavngittFeltIRequestBody(joinpoint.args.first(), auditLog.oppslagsparameter)
             auditLogger.log(auditLog.auditLoggerEvent, sporingsdata)
         }
     }
@@ -89,13 +90,12 @@ class AuditAdvice(
 
     private fun finnSporingsdataForString(s: String): Sporingsdata =
         when {
-            Saksnummer(s).gyldig() -> tilgangClient.hentSporingsdataSak(s)
-            Personident(s).gyldig() -> tilgangClient.hentSporingsdataPerson(s)
+            Saksnummer(s).gyldig() -> tilgangClient.hentSporingsdataSak(Saksnummer(s))
+            Personident(s).gyldig() -> tilgangClient.hentSporingsdataPerson(Personident(s))
             else -> error("Type på oppslagsfelt ikke støttet av audit-log")
         }
 
-    private fun finnSporingsdataForPersonIdent(personIdent: Personident): Sporingsdata =
-        tilgangClient.hentSporingsdataPerson(personIdent.verdi)
+    private fun finnSporingsdataForPersonIdent(personIdent: Personident): Sporingsdata = tilgangClient.hentSporingsdataPerson(personIdent)
 
-    private fun finnSporingsdataForSaksnummer(saksnummer: Saksnummer): Sporingsdata = tilgangClient.hentSporingsdataSak(saksnummer.verdi)
+    private fun finnSporingsdataForSaksnummer(saksnummer: Saksnummer): Sporingsdata = tilgangClient.hentSporingsdataSak(saksnummer)
 }

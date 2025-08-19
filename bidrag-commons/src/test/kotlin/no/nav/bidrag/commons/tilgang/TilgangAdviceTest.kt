@@ -51,14 +51,14 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
 
-        verify { tilgangClient.harTilgangSaksnummer("0123456") }
+        verify { tilgangClient.harTilgangSaksnummer(Saksnummer("0123456")) }
     }
 
     @Test
     fun `sjekkTilgang sjekker tilgang for personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(Personident(fnr))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(fnr)
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
 
@@ -72,14 +72,14 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
 
-        verify { tilgangClient.harTilgangSaksnummer("0123456") }
+        verify { tilgangClient.harTilgangSaksnummer(Saksnummer("0123456")) }
     }
 
     @Test
     fun `sjekkTilgang sjekker tilgang for personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(fnr)
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(fnr.verdi)
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
 
@@ -101,14 +101,14 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
 
-        verify { tilgangClient.harTilgangSaksnummer("0123456") }
+        verify { tilgangClient.harTilgangSaksnummer(Saksnummer("0123456")) }
     }
 
     @Test
     fun `sjekkTilgang sjekker tilgang for requestBody med personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjektFørst(Personident(fnr)))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjektFørst(fnr))
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
 
@@ -122,14 +122,14 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
 
-        verify { tilgangClient.harTilgangSaksnummer("0123456") }
+        verify { tilgangClient.harTilgangSaksnummer(Saksnummer("0123456")) }
     }
 
     @Test
     fun `sjekkTilgang sjekker tilgang for requestBody med personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(DummyMedStringFørst(fnr))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(DummyMedStringFørst(fnr.verdi))
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
 
@@ -154,14 +154,14 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll("id"))
 
-        verify { tilgangClient.harTilgangSaksnummer("0123456") }
+        verify { tilgangClient.harTilgangSaksnummer(Saksnummer("0123456")) }
     }
 
     @Test
     fun `sjekkTilgang sjekker tilgang for navngitt personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf("sdf", 321, Personident(fnr))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf("sdf", 321, fnr)
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
         every { joinPoint.signature } returns codeSignature
@@ -181,14 +181,14 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll("id"))
 
-        verify { tilgangClient.harTilgangSaksnummer("0123456") }
+        verify { tilgangClient.harTilgangSaksnummer(Saksnummer("0123456")) }
     }
 
     @Test
     fun `sjekkTilgang sjekker tilgang for navngitt personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf("sdf", 321, fnr)
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf("sdf", 321, fnr.verdi)
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
         every { joinPoint.signature } returns codeSignature
@@ -219,14 +219,14 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll("saksnummer"))
 
-        verify { tilgangClient.harTilgangSaksnummer("0123456") }
+        verify { tilgangClient.harTilgangSaksnummer(Saksnummer("0123456")) }
     }
 
     @Test
     fun `sjekkTilgang sjekker tilgang for requestBody med navngitt personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
-        every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjekt(fnr = Personident(fnr)))
+        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjekt(fnr = fnr))
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
         every { joinPoint.signature } returns codeSignature
@@ -246,7 +246,7 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll("fnr"))
 
-        verify { tilgangClient.harTilgangSaksnummer("0123456") }
+        verify { tilgangClient.harTilgangSaksnummer(Saksnummer("0123456")) }
     }
 
     @Test
@@ -260,7 +260,7 @@ class TilgangAdviceTest {
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll("fnr"))
 
-        verify { tilgangClient.harTilgangPerson(fnr) }
+        verify { tilgangClient.harTilgangPerson(Personident(fnr)) }
     }
 
     @Test

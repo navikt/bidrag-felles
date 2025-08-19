@@ -60,8 +60,8 @@ class TilgangAdvice(
 
     private fun sjekkForParameter(param: Any) {
         when (param) {
-            is Saksnummer -> sjekkTilgangTilSak(param.verdi)
-            is Personident -> sjekkTilgangTilPerson(param.verdi)
+            is Saksnummer -> sjekkTilgangTilSak(param)
+            is Personident -> sjekkTilgangTilPerson(param)
             is String -> sjekkTilgangForString(param)
             else -> sjekkTilgangForFørsteKonstruktørparameterIRequestBody(param)
         }
@@ -73,8 +73,8 @@ class TilgangAdvice(
     ) {
         val param = Feltekstraherer.finnFeltverdiForNavn(requestBody, feltnavn)
         when (param) {
-            is Saksnummer -> sjekkTilgangTilSak(param.verdi)
-            is Personident -> sjekkTilgangTilPerson(param.verdi)
+            is Saksnummer -> sjekkTilgangTilSak(param)
+            is Personident -> sjekkTilgangTilPerson(param)
             is String -> sjekkTilgangForString(param)
             else -> error("Type på konstruktørparameter ikke støttet av audit-log")
         }
@@ -82,18 +82,18 @@ class TilgangAdvice(
 
     private fun sjekkTilgangForString(s: String) {
         when {
-            Saksnummer(s).gyldig() -> sjekkTilgangTilSak(s)
-            Personident(s).gyldig() -> sjekkTilgangTilPerson(s)
+            Saksnummer(s).gyldig() -> sjekkTilgangTilSak(Saksnummer(s))
+            Personident(s).gyldig() -> sjekkTilgangTilPerson(Personident(s))
             else -> error("Type på oppslagsfelt ikke støttet av audit-log")
         }
     }
 
-    private fun sjekkTilgangTilPerson(personIdent: String) {
-        val tilgang = tilgangClient.harTilgangPerson(personIdent)
+    private fun sjekkTilgangTilPerson(personident: Personident) {
+        val tilgang = tilgangClient.harTilgangPerson(personident)
         if (!tilgang) throw HttpClientErrorException(HttpStatusCode.valueOf(403), "Bruker har ikke tilgang til denne personen.")
     }
 
-    private fun sjekkTilgangTilSak(saksnummer: String) {
+    private fun sjekkTilgangTilSak(saksnummer: Saksnummer) {
         val tilgang = tilgangClient.harTilgangSaksnummer(saksnummer)
         if (!tilgang) throw HttpClientErrorException(HttpStatusCode.valueOf(403), "Bruker har ikke tilgang til sak: $saksnummer.")
     }

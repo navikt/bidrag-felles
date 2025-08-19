@@ -2,7 +2,14 @@ package no.nav.bidrag.commons.tilgang
 
 import no.nav.bidrag.commons.web.client.AbstractRestClient
 import no.nav.bidrag.commons.web.config.RestOperationsAzure
+import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.transport.tilgang.Sporingsdata
+import no.nav.bidrag.transport.tilgang.SporingsdataPersonRequest
+import no.nav.bidrag.transport.tilgang.SporingsdataSakRequest
+import no.nav.bidrag.transport.tilgang.TilgangTilPersonRequest
+import no.nav.bidrag.transport.tilgang.TilgangTilSakRequest
+import no.nav.bidrag.transport.tilgang.TilgangskontrollResponse
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
@@ -13,13 +20,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URI
-import no.nav.bidrag.domene.ident.Personident
-import no.nav.bidrag.domene.sak.Saksnummer
-import no.nav.bidrag.transport.tilgang.SporingsdataPersonRequest
-import no.nav.bidrag.transport.tilgang.SporingsdataSakRequest
-import no.nav.bidrag.transport.tilgang.TilgangTilPersonRequest
-import no.nav.bidrag.transport.tilgang.TilgangTilSakRequest
-import no.nav.bidrag.transport.tilgang.TilgangskontrollResponse
 
 @Component
 @Import(RestOperationsAzure::class)
