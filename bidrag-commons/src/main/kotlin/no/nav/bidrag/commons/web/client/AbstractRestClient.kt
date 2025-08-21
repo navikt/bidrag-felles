@@ -152,8 +152,8 @@ abstract class AbstractRestClient(
         uri: URI,
     ): T? {
         if (!respons.statusCode.is2xxSuccessful) {
-            secureLogger.info { "Kall mot $uri feilet:  ${respons.body}" }
-            log.info("Kall mot $uri feilet: ${respons.statusCode}")
+            secureLogger.debug { "Kall mot $uri feilet:  ${respons.body}" }
+            log.debug("Kall mot $uri feilet: ${respons.statusCode}")
             throw HttpServerErrorException(
                 respons.statusCode,
                 "",

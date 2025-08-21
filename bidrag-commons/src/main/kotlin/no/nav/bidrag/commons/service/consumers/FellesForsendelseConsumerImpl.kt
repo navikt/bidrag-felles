@@ -38,7 +38,7 @@ class FellesForsendelseConsumerImpl(
             return forsendelseResponse.forsendelseId!!
         } catch (e: HttpStatusCodeException) {
             if (e.statusCode == HttpStatus.CONFLICT) {
-                secureLogger.info { "Forsendelse med referanse ${opprettForsendelseForespørsel.unikReferanse} finnes allerede. " }
+                secureLogger.debug { "Forsendelse med referanse ${opprettForsendelseForespørsel.unikReferanse} finnes allerede. " }
                 val resultat = e.getResponseBodyAs(ForsendelseConflictResponse::class.java)!!
                 return resultat.forsendelseId
             } else {

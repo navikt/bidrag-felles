@@ -156,7 +156,7 @@ class FellesForsendelseMapper(
         val rm = barn.reellMottaker ?: return null
         if (rm.ident.verdi == barn.fødselsnummer!!.verdi) {
             return if (erOver18År(barn.fødselsnummer!!)) {
-                secureLogger.info {
+                secureLogger.debug {
                     "Fødselsnummer til RM til barn er har samme fødselsnummer som barnet ${barn.fødselsnummer!!.verdi} " +
                         "og barnet er over 18 år. Setter mottaker av forsendelsen til barnet"
                 }
@@ -166,7 +166,7 @@ class FellesForsendelseMapper(
                     Rolletype.BARN,
                 )
             } else {
-                secureLogger.info {
+                secureLogger.debug {
                     "Fødselsnummer til RM til barn er har samme fødselsnummer som barnet ${barn.fødselsnummer!!.verdi} " +
                         "og men er under 18 år. Setter mottaker av forsendelsen til BM"
                 }
@@ -175,7 +175,7 @@ class FellesForsendelseMapper(
         }
         // sjekker om denne reelle mottaker er verge -> forsendelse skal til RM
         if (rm.verge) {
-            secureLogger.info { "RM ${rm.ident} til barn ${barn.fødselsnummer} er verge. Setter mottaker av forsendelsen til RM" }
+            secureLogger.debug { "RM ${rm.ident} til barn ${barn.fødselsnummer} er verge. Setter mottaker av forsendelsen til RM" }
             // Hvis reell mottaker eksisterer og er verge, sendes forsendelsen til vergen
             return ForsendelseGjelderMottakerInfo(barn.fødselsnummer!!.verdi, rm.ident.verdi, Rolletype.REELMOTTAKER)
         }
@@ -195,7 +195,7 @@ class FellesForsendelseMapper(
                 "Fant ikke samhandler med id ${rm.ident} i bidrag-samhandler",
             )
         if (samhandler.områdekode == Områdekode.BARNEVERNSINSTITUSJON) {
-            secureLogger.info {
+            secureLogger.debug {
                 "RM ${rm.ident} til barnet ${barn.fødselsnummer} er barnevernsinstitusjon." +
                     " Setter mottaker av forsendelsen til RM"
             }
@@ -205,7 +205,7 @@ class FellesForsendelseMapper(
                 Rolletype.REELMOTTAKER,
             )
         }
-        secureLogger.info {
+        secureLogger.debug {
             "RM ${rm.ident} til barnet ${barn.fødselsnummer} er ikke barnevernsinstitusjon eller verge." +
                 " Setter mottaker av forsendelsen til BM"
         }

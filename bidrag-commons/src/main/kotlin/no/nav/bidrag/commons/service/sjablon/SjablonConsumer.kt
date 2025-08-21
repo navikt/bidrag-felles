@@ -73,7 +73,7 @@ class SjablonConsumer(
                     null,
                     object : ParameterizedTypeReference<List<Sjablontall>>() {},
                 )
-            logger.info { "Hentet sjablontall fra bidrag-sjablon" }
+            logger.debug { "Hentet sjablontall fra bidrag-sjablon" }
             return sjablonResponse
         } catch (exception: RestClientResponseException) {
             logger.error(exception) {
@@ -95,7 +95,7 @@ class SjablonConsumer(
                     object : ParameterizedTypeReference<List<Samværsfradrag>>() {},
                 )
 
-            logger.info { "Hentet sjabloner for samværsfradrag fra bidrag-sjablon" }
+            logger.debug { "Hentet sjabloner for samværsfradrag fra bidrag-sjablon" }
             return sjablonResponse
         } catch (exception: RestClientResponseException) {
             logger.error(exception) {

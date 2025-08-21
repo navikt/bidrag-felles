@@ -138,7 +138,7 @@ private fun hentKodeverk(kodeverk: String): KodeverkKoderBetydningerResponse {
             .defaultHeader("Nav-Call-Id", CorrelationId.fetchCorrelationIdForThread())
             .defaultHeader("Nav-Consumer-Id", System.getenv("NAIS_APP_NAME") ?: "bidrag-commons")
             .build()
-    log.info("Laster kodeverk for $kodeverk")
+    log.debug("Laster kodeverk for $kodeverk")
     return restTemplate.getForEntity<KodeverkKoderBetydningerResponse>(kodeverkContext).body!!
 }
 

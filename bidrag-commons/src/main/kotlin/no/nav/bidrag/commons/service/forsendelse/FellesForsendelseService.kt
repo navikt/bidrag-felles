@@ -22,7 +22,7 @@ class FellesForsendelseService(
         try {
             val forsendelseId = forsendelseConsumer.opprettForsendelse(request)
 
-            log.info {
+            log.debug {
                 "Opprettet forsendelse $forsendelseId for bestilling $forsendelseBestilling"
             }
             return forsendelseId

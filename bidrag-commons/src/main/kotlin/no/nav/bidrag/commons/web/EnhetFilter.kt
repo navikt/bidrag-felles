@@ -25,10 +25,10 @@ class EnhetFilter : Filter {
                     ENHETSNUMMER_VALUE.set(enhetsnummer)
                     MDC.put(ENHET_MDC, enhetsnummer)
                     (servletResponse as HttpServletResponse).addHeader(X_ENHET_HEADER, enhetsnummer)
-                    logger.info("Behandler request '{}' for enhet med enhetsnummer {}", requestURI, enhetsnummer)
+                    logger.debug("Behandler request '{}' for enhet med enhetsnummer {}", requestURI, enhetsnummer)
                 } else {
                     ENHETSNUMMER_VALUE.set(null)
-                    logger.info("Behandler request '{}' uten informasjon om enhetsnummer.", requestURI)
+                    logger.debug("Behandler request '{}' uten informasjon om enhetsnummer.", requestURI)
                 }
             }
         } else {
