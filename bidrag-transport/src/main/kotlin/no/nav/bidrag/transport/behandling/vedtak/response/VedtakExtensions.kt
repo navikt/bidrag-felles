@@ -254,7 +254,7 @@ val VedtakDto.referertVedtaksid get() =
         stønadsendringListe.firstNotNullOfOrNull { se ->
             se.periodeListe.firstNotNullOfOrNull { p ->
                 val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
-                if (resultatFraAnnenVedtak?.klagevedtak == true) resultatFraAnnenVedtak.vedtaksid else null
+                if (resultatFraAnnenVedtak?.omgjøringsvedtak == true) resultatFraAnnenVedtak.vedtaksid else null
             }
         }
     } else if (erDelvedtak) {

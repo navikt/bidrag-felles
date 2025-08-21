@@ -1,11 +1,13 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import java.time.LocalDateTime
 import java.time.YearMonth
 
 data class ResultatFraVedtakGrunnlag(
     val vedtaksid: Int?,
-    val klagevedtak: Boolean = false,
+    @JsonAlias("klagevedtak")
+    val omgjøringsvedtak: Boolean = false,
     val beregnet: Boolean = false,
     // Om det skal opprettes paragraf 35c søknad for vedtakisden.
     // Brukes for etterfølgende vedtak når klagevedtak har beregningsperiode til opprinnelig vedtakstidspunkt
@@ -14,7 +16,8 @@ data class ResultatFraVedtakGrunnlag(
 ) : GrunnlagInnhold
 
 data class VedtakOrkestreringDetaljerGrunnlag(
-    val klagevedtakId: Int,
+    @JsonAlias("klagevedtakId")
+    val omgjøringsvedtakId: Int,
     val beregnTilDato: YearMonth,
     // Settes bare hvis det innkreves fra en annen dato enn vikrningstidspunktet
     val innkrevesFraDato: YearMonth? = null,

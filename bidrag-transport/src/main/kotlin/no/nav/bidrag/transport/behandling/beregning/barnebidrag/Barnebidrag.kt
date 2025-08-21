@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.beregning.barnebidrag
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Beregningstype
 import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
@@ -70,11 +71,12 @@ data class ResultatVedtak(
     val resultat: BeregnetBarnebidragResultat,
     @Schema(description = "Er delvedtak?")
     val delvedtak: Boolean = false,
-    @Schema(description = "Er klagevedtak?")
-    val klagevedtak: Boolean = false,
+    @Schema(description = "Er klagevedtak eller omgjøringsvedtak")
+    @JsonAlias("klagevedtak")
+    val omgjøringsvedtak: Boolean = false,
     val beregnet: Boolean = false,
     val vedtakstype: Vedtakstype,
     val beregnetFraDato: LocalDate = resultat.beregnetBarnebidragPeriodeListe.minOf { it.periode.fom }.atDay(1),
 ) {
-    val endeligVedtak get() = !delvedtak && !klagevedtak
+    val endeligVedtak get() = !delvedtak && !omgjøringsvedtak
 }

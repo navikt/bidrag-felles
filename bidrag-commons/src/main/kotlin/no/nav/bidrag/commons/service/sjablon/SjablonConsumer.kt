@@ -117,7 +117,7 @@ class SjablonConsumer(
                     object : ParameterizedTypeReference<List<Bidragsevne>>() {},
                 )
 
-            logger.info { "Hentet sjabloner for bidragsevne fra bidrag-sjablon" }
+            logger.debug { "Hentet sjabloner for bidragsevne fra bidrag-sjablon" }
             return sjablonResponse
         } catch (exception: RestClientResponseException) {
             logger.error(exception) {
@@ -139,7 +139,7 @@ class SjablonConsumer(
                     object : ParameterizedTypeReference<List<TrinnvisSkattesats>>() {},
                 )
 
-            logger.info { "Hentet sjabloner for trinnvis skattesats fra bidrag-sjablon" }
+            logger.debug { "Hentet sjabloner for trinnvis skattesats fra bidrag-sjablon" }
             return sjablonResponse
         } catch (exception: RestClientResponseException) {
             logger.error(exception) {
@@ -161,7 +161,7 @@ class SjablonConsumer(
                     object : ParameterizedTypeReference<List<Barnetilsyn>>() {},
                 )
 
-            logger.info { "Hentet sjabloner for barnetilsyn fra bidrag-sjablon" }
+            logger.debug { "Hentet sjabloner for barnetilsyn fra bidrag-sjablon" }
             return sjablonResponse
         } catch (exception: RestClientResponseException) {
             logger.error(exception) {
@@ -183,7 +183,7 @@ class SjablonConsumer(
                     object : ParameterizedTypeReference<List<Forbruksutgifter>>() {},
                 )
 
-            logger.info { "Hentet sjabloner for forbruksutgifter fra bidrag-sjablon" }
+            logger.debug { "Hentet sjabloner for forbruksutgifter fra bidrag-sjablon" }
             return sjablonResponse
         } catch (exception: RestClientResponseException) {
             logger.error(exception) {
@@ -205,7 +205,7 @@ class SjablonConsumer(
                     object : ParameterizedTypeReference<List<MaksFradrag>>() {},
                 )
 
-            logger.info { "Hentet sjabloner for maks fradrag fra bidrag-sjablon" }
+            logger.debug { "Hentet sjabloner for maks fradrag fra bidrag-sjablon" }
             return sjablonResponse
         } catch (exception: RestClientResponseException) {
             logger.error(exception) {
@@ -227,7 +227,7 @@ class SjablonConsumer(
                     object : ParameterizedTypeReference<List<MaksTilsyn>>() {},
                 )
 
-            logger.info { "Hentet sjabloner for maks tilsyn fra bidrag-sjablon" }
+            logger.debug { "Hentet sjabloner for maks tilsyn fra bidrag-sjablon" }
             return sjablonResponse
         } catch (exception: RestClientResponseException) {
             logger.error(exception) {

@@ -10,11 +10,11 @@ import io.getunleash.variant.Variant
  *   UnleashFeatures.STENG_VEDTAK.isEnabled
  * ```
  */
-enum class ExampleUnleashFeatures(
+enum class FellesUnleashFeatures(
     private val featureName: String,
     defaultValue: Boolean,
 ) {
-    STENG_VEDTAK("vedtakssperre", false),
+    DEBUG_LOGGING("debug_logging", false),
     ;
 
     private var defaultValue = false
