@@ -73,7 +73,8 @@ internal class EnhetFilterTest {
     @Test
     fun `skal logge når et enhetsnummer ikke kan videresendes`() {
         every { httpServletRequestMock.getHeader(EnhetFilter.X_ENHET_HEADER) } returns null
-
+        val logger = LoggerFactory.getLogger(EnhetFilter::class.java) as Logger
+        logger.level = ch.qos.logback.classic.Level.DEBUG // Ensure DEBUG level
         enhetFilter.doFilter(httpServletRequestMock, httpServletResponseMock, filterChainMock)
 
         val logCaptor = slot<ILoggingEvent>()
