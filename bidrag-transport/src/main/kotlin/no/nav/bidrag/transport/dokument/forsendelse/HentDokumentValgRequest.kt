@@ -16,6 +16,7 @@ data class HentDokumentValgRequest(
     val vedtakId: String? = null,
     val behandlingId: String? = null,
     val enhet: String? = null,
+    val inneholderAldersjustering: Boolean? = false,
     @Schema(enumAsRef = true) val stonadType: Stønadstype? = null,
     @Schema(enumAsRef = true) val engangsBelopType: Engangsbeløptype? = null,
 ) {
