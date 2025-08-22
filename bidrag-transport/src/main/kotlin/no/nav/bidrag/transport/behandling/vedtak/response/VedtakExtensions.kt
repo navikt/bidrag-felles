@@ -255,12 +255,29 @@ fun List<GrunnlagDto>.finnResultatFraAnnenVedtak(
         ).firstOrNull()?.innhold
     }
 
-val VedtakDto.aldersjusteringVedtaksid get() =
+fun VedtakDto.finnAldersjusteringVedtaksidForStønad(stønadsid: Stønadsid? = null) =
     if (erOrkestrertVedtak) {
-        stønadsendringListe.any { s ->
-            s.periodeListe.any { p ->
-                val resultatFraAnnenVedtak = grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
-                resultatFraAnnenVedtak?.vedtakstype == Vedtakstype.ALDERSJUSTERING
+        if (stønadsid != null) {
+            finnStønadsendring(stønadsid)
+                ?.periodeListe
+                ?.firstNotNullOfOrNull { p ->
+                    val resultatFraAnnenVedtak = grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                    if (resultatFraAnnenVedtak?.vedtakstype == Vedtakstype.ALDERSJUSTERING) {
+                        resultatFraAnnenVedtak.vedtaksid
+                    } else {
+                        null
+                    }
+                }
+        } else {
+            stønadsendringListe.firstNotNullOfOrNull { p ->
+                p.periodeListe.firstNotNullOfOrNull { p ->
+                    val resultatFraAnnenVedtak = grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                    if (resultatFraAnnenVedtak?.vedtakstype == Vedtakstype.ALDERSJUSTERING) {
+                        resultatFraAnnenVedtak.vedtaksid
+                    } else {
+                        null
+                    }
+                }
             }
         }
     } else {
