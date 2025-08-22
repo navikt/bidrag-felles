@@ -255,6 +255,18 @@ fun List<GrunnlagDto>.finnResultatFraAnnenVedtak(
         ).firstOrNull()?.innhold
     }
 
+val VedtakDto.aldersjusteringVedtaksid get() =
+    if (erOrkestrertVedtak) {
+        stønadsendringListe.any { s ->
+            s.periodeListe.any { p ->
+                val resultatFraAnnenVedtak = grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                resultatFraAnnenVedtak?.vedtakstype == Vedtakstype.ALDERSJUSTERING
+            }
+        }
+    } else {
+        null
+    }
+
 val VedtakDto.referertVedtaksid get() =
     if (erOrkestrertVedtak) {
         val orkestertGrunnlag = this.grunnlagListe.finnOrkestreringDetaljer()
