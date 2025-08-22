@@ -45,6 +45,8 @@ internal class CorrelationIdFilterTest {
     fun `skal logge requests mot servlet`() {
         every { httpServletRequestMock.requestURI } returns "something"
         every { httpServletRequestMock.method } returns "GET"
+        val logger = LoggerFactory.getLogger(CorrelationIdFilter::class.java) as Logger
+        logger.level = ch.qos.logback.classic.Level.DEBUG // Ensure DEBUG level
         correlationIdFilter.doFilter(httpServletRequestMock, httpServletResponseMock, filterChainMock)
         verify(atLeast = 1) { appenderMock.doAppend(capture(logMeldinger)) }
         logMeldinger.joinToString { it.formattedMessage } shouldContain "prosessing GET something"
