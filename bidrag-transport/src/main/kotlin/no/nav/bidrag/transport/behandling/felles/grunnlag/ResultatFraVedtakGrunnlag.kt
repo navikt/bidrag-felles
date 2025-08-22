@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import java.time.LocalDateTime
 import java.time.YearMonth
 
@@ -13,6 +14,7 @@ data class ResultatFraVedtakGrunnlag(
     // Brukes for etterfølgende vedtak når klagevedtak har beregningsperiode til opprinnelig vedtakstidspunkt
     val opprettParagraf35c: Boolean = false,
     val vedtakstidspunkt: LocalDateTime? = null,
+    val vedtakstype: Vedtakstype? = null,
 ) : GrunnlagInnhold
 
 data class VedtakOrkestreringDetaljerGrunnlag(
