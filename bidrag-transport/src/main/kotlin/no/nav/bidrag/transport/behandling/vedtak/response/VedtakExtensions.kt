@@ -229,10 +229,16 @@ fun VedtakDto.erVedtaksforslag() = vedtakstidspunkt == null
 fun List<GrunnlagDto>.finnOrkestreringDetaljer(
     grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
 ): VedtakOrkestreringDetaljerGrunnlag? =
-    finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<VedtakOrkestreringDetaljerGrunnlag>(
-        Grunnlagstype.VEDTAK_ORKESTRERING_DETALJER,
-        grunnlagsreferanseListe,
-    ).firstOrNull()?.innhold
+    if (grunnlagsreferanseListe.isEmpty()) {
+        filtrerOgKonverterBasertPåEgenReferanse<VedtakOrkestreringDetaljerGrunnlag>(
+            Grunnlagstype.VEDTAK_ORKESTRERING_DETALJER,
+        ).firstOrNull()?.innhold
+    } else {
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<VedtakOrkestreringDetaljerGrunnlag>(
+            Grunnlagstype.VEDTAK_ORKESTRERING_DETALJER,
+            grunnlagsreferanseListe,
+        ).firstOrNull()?.innhold
+    }
 
 fun List<GrunnlagDto>.finnResultatFraAnnenVedtak(
     grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
@@ -251,7 +257,8 @@ fun List<GrunnlagDto>.finnResultatFraAnnenVedtak(
 
 val VedtakDto.referertVedtaksid get() =
     if (erOrkestrertVedtak) {
-        stønadsendringListe.firstNotNullOfOrNull { se ->
+        val orkestertGrunnlag = this.grunnlagListe.finnOrkestreringDetaljer()
+        orkestertGrunnlag?.omgjøringsvedtakId ?: stønadsendringListe.firstNotNullOfOrNull { se ->
             se.periodeListe.firstNotNullOfOrNull { p ->
                 val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
                 if (resultatFraAnnenVedtak?.omgjøringsvedtak == true) resultatFraAnnenVedtak.vedtaksid else null
@@ -277,7 +284,7 @@ val VedtakDto.erDelvedtak get() =
         }
 
 val VedtakDto.erOrkestrertVedtak get() =
-    this.stønadsendringListe.isNotEmpty() &&
+    this.grunnlagListe.finnOrkestreringDetaljer() != null || this.stønadsendringListe.isNotEmpty() &&
         this.stønadsendringListe.all { se ->
             se.beslutning != Beslutningstype.DELVEDTAK &&
                 se.periodeListe.all { p ->
