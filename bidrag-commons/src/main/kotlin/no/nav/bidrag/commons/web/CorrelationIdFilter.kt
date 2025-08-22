@@ -35,7 +35,7 @@ class CorrelationIdFilter : Filter {
                     )
                 }
             MDC.put(CORRELATION_ID_MDC, correlationId.get())
-            logger.debug("{} is prosessing {} {}", CorrelationIdFilter::class.java.simpleName, method, requestURI)
+            logger.trace("{} is prosessing {} {}", CorrelationIdFilter::class.java.simpleName, method, requestURI)
         }
         filterChain.doFilter(servletRequest, servletResponse)
         MDC.clear()
