@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
+import no.nav.bidrag.transport.behandling.vedtak.response.VedtakForStønad
 import java.time.LocalDateTime
 import java.time.YearMonth
 
@@ -23,4 +24,8 @@ data class VedtakOrkestreringDetaljerGrunnlag(
     val beregnTilDato: YearMonth,
     // Settes bare hvis det innkreves fra en annen dato enn vikrningstidspunktet
     val innkrevesFraDato: YearMonth? = null,
+) : GrunnlagInnhold
+
+data class EtterfølgendeManuelleVedtakGrunnlag(
+    val vedtaksliste: List<VedtakForStønad> = emptyList(),
 ) : GrunnlagInnhold

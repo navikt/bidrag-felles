@@ -177,4 +177,5 @@ enum class Grunnlagstype {
     // Klage
     RESULTAT_FRA_VEDTAK,
     VEDTAK_ORKESTRERING_DETALJER,
+    ETTERFØLGENDE_MANUELLE_VEDTAK,
 }

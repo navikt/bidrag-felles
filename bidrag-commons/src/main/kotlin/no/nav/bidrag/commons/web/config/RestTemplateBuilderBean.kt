@@ -2,6 +2,7 @@ package no.nav.bidrag.commons.web.config
 
 import no.nav.bidrag.commons.web.interceptor.ConsumerIdClientInterceptor
 import no.nav.bidrag.commons.web.interceptor.MdcValuesPropagatingClientInterceptor
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.actuate.metrics.web.client.ObservationRestTemplateCustomizer
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.boot.web.client.RestTemplateBuilder
@@ -29,12 +30,14 @@ class RestTemplateBuilderBean {
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         observationRestTemplateCustomizer: ObservationRestTemplateCustomizer,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+        @Value("\${bidrag.rest.read.timeout.seconds:15}") readTimeoutSeconds: Long,
+        @Value("\${bidrag.rest.connect.timeout.seconds:15}") connectTimeoutSeconds: Long,
     ) = RestTemplateBuilder()
         .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
         .additionalCustomizers(observationRestTemplateCustomizer)
         .additionalCustomizers(iNaisProxyCustomizer)
-        .connectTimeout(Duration.of(15, ChronoUnit.SECONDS))
-        .readTimeout(Duration.of(15, ChronoUnit.SECONDS))
+        .connectTimeout(Duration.of(connectTimeoutSeconds, ChronoUnit.SECONDS))
+        .readTimeout(Duration.of(readTimeoutSeconds, ChronoUnit.SECONDS))
 
     /**
      * Denne bønnnen initialiseres hvis proxy-url ikke finnes. Hvis proxy-url finnnes vil bønnen over
