@@ -129,7 +129,7 @@ class IdentConsumer(
     companion object {
         const val PERSON_PATH = "/personidenter"
         const val INFORMASJON_PATH = "/informasjon"
-        private val LOGGER = LoggerFactory.getLogger(SjekkForNyIdentAspect::class.java)
+        private val LOGGER = LoggerFactory.getLogger(IdentConsumer::class.java)
     }
 
     @Cacheable(value = ["bidrag-commons_hentFødselsdato_cache"], key = "#ident")
