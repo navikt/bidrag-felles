@@ -56,9 +56,7 @@ class TilgangClient(
 
     fun harTilgangSaksnummer(saksnummer: Saksnummer): Boolean {
         try {
-            val headers = HttpHeaders()
-            headers.contentType = MediaType.TEXT_PLAIN
-            val response: TilgangskontrollResponse = postForNonNullEntity(sakUri, TilgangTilSakRequest(saksnummer), headers)
+            val response: TilgangskontrollResponse = postForNonNullEntity(sakUri, TilgangTilSakRequest(saksnummer))
             return response.harTilgang
         } catch (e: Exception) {
             logger.error("Feil ved sjekk på tilgang til saksnummer $saksnummer ", e)
@@ -68,9 +66,7 @@ class TilgangClient(
 
     fun harTilgangPerson(personident: Personident): Boolean {
         try {
-            val headers = HttpHeaders()
-            headers.contentType = MediaType.TEXT_PLAIN
-            val response: TilgangskontrollResponse = postForNonNullEntity(personUri, TilgangTilPersonRequest(personident), headers)
+            val response: TilgangskontrollResponse = postForNonNullEntity(personUri, TilgangTilPersonRequest(personident))
             return response.harTilgang
         } catch (e: Exception) {
             logger.error("Feil ved sjekk på tilgang til person ", e)
@@ -80,9 +76,7 @@ class TilgangClient(
 
     fun hentSporingsdataSak(saksnummer: Saksnummer): Sporingsdata {
         try {
-            val headers = HttpHeaders()
-            headers.contentType = MediaType.TEXT_PLAIN
-            return postForNonNullEntity(sporingsdataSakUri, SporingsdataSakRequest(saksnummer), headers)
+            return postForNonNullEntity(sporingsdataSakUri, SporingsdataSakRequest(saksnummer))
         } catch (e: Exception) {
             logger.error("Feil ved henting av sporingsdata for sak $saksnummer ", e)
             throw e
@@ -91,9 +85,7 @@ class TilgangClient(
 
     fun hentSporingsdataPerson(personident: Personident): Sporingsdata {
         try {
-            val headers = HttpHeaders()
-            headers.contentType = MediaType.TEXT_PLAIN
-            return postForNonNullEntity(sporingsdataPersonUri, SporingsdataPersonRequest(personident), headers)
+            return postForNonNullEntity(sporingsdataPersonUri, SporingsdataPersonRequest(personident))
         } catch (e: Exception) {
             logger.error("Feil ved henting av sporingsdata for person ", e)
             throw e
