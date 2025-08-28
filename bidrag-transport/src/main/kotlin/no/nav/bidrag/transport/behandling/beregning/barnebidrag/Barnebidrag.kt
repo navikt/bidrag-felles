@@ -38,20 +38,24 @@ data class BidragsberegningOrkestratorRequest(
     @Schema(description = "Grunnlag for beregning av barnebidrag")
     val beregnGrunnlag: BeregnGrunnlag,
     @Schema(description = "Grunnlag for orkestrering av klage")
-    val klageOrkestratorGrunnlag: KlageOrkestratorGrunnlag? = null,
+    @JsonAlias("klageOrkestratorGrunnlag")
+    val omgjøringOrkestratorGrunnlag: OmgjøringOrkestratorGrunnlag? = null,
     @Schema(description = "Type beregning")
     val beregningstype: Beregningstype = Beregningstype.BIDRAG,
 )
 
 @Schema(description = "Grunnlag for orkestrering av aldersjustering")
-data class KlageOrkestratorGrunnlag(
+data class OmgjøringOrkestratorGrunnlag(
     @Schema(description = "Id til stønad")
     val stønad: Stønadsid,
     @Schema(description = "Vedtaksid til påklaget vedtak")
-    val påklagetVedtakId: Int,
+    @JsonAlias("påklagetVedtakId")
+    val omgjørVedtakId: Int,
     val manuellAldersjustering: List<KlageOrkestratorManuellAldersjustering> = emptyList(),
     val innkrevingstype: Innkrevingstype = Innkrevingstype.MED_INNKREVING,
+    @Schema(description = "Om behandlingen gjelder paragraf35c")
     val gjelderParagraf35c: Boolean = false,
+    val gjelderKlage: Boolean = false,
 )
 
 data class KlageOrkestratorManuellAldersjustering(
