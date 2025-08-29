@@ -1,5 +1,7 @@
 package no.nav.bidrag.commons.web.config
 
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 import no.nav.bidrag.commons.web.interceptor.ConsumerIdClientInterceptor
 import no.nav.bidrag.commons.web.interceptor.MdcValuesPropagatingClientInterceptor
 import org.springframework.beans.factory.annotation.Value
@@ -10,8 +12,6 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
-import java.time.Duration
-import java.time.temporal.ChronoUnit
 
 @Suppress("SpringFacetCodeInspection")
 @Configuration
@@ -55,10 +55,12 @@ class RestTemplateBuilderBean {
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         observationRestTemplateCustomizer: ObservationRestTemplateCustomizer,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
+        @Value("\${bidrag.rest.read.timeout.seconds:15}") readTimeoutSeconds: Long,
+        @Value("\${bidrag.rest.connect.timeout.seconds:15}") connectTimeoutSeconds: Long,
     ): RestTemplateBuilder =
         RestTemplateBuilder()
             .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
             .additionalCustomizers(observationRestTemplateCustomizer)
-            .connectTimeout(Duration.of(15, ChronoUnit.SECONDS))
-            .readTimeout(Duration.of(15, ChronoUnit.SECONDS))
+            .connectTimeout(Duration.of(connectTimeoutSeconds, ChronoUnit.SECONDS))
+            .readTimeout(Duration.of(readTimeoutSeconds, ChronoUnit.SECONDS))
 }
