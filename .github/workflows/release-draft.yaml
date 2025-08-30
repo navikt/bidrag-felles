@@ -10,7 +10,7 @@ on:
     types: [opened, reopened, synchronize]
 
 env:
-  publish: ${{github.ref == 'refs/heads/main' && !startsWith(github.ref, 'refs/dependabot')}}
+  publish: true
 
 permissions:
   contents: write
