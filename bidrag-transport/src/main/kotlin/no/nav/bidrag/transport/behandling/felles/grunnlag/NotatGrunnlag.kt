@@ -1,10 +1,13 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonAlias
+
 data class NotatGrunnlag(
     val innhold: String,
     val erMedIVedtaksdokumentet: Boolean,
     val type: NotatType,
-    val fraOpprinneligVedtak: Boolean = false,
+    @JsonAlias("fraOpprinneligVedtak")
+    val fraOmgjortVedtak: Boolean = false,
 ) : GrunnlagInnhold {
     enum class NotatType {
         VIRKNINGSTIDSPUNKT,
