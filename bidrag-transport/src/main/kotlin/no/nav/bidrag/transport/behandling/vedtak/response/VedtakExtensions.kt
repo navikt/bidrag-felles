@@ -209,6 +209,13 @@ fun VedtakDto.finnSluttberegningBarnebidragAldersjusteringIPeriode(periode: Vedt
 
 fun VedtakDto.finnSluttberegningBarnebidragIPeriode(periode: VedtakPeriodeDto) =
     grunnlagListe.finnSluttberegningBarnebidragGrunnlagIReferanser(periode.grunnlagReferanseListe)?.innhold
+        ?: run {
+            val periodeFraVedtak =
+                stønadsendringListe
+                    .flatMap { it.periodeListe }
+                    .firstOrNull { p -> p.periode.overlapper(periode.periode) } ?: return@run null
+            grunnlagListe.finnSluttberegningBarnebidragGrunnlagIReferanser(periodeFraVedtak.grunnlagReferanseListe)?.innhold
+        }
 
 fun VedtakDto.finnSluttberegningBarnebidragGrunnlagIPeriode(periode: VedtakPeriodeDto) =
     grunnlagListe.finnSluttberegningBarnebidragGrunnlagIReferanser(periode.grunnlagReferanseListe)
