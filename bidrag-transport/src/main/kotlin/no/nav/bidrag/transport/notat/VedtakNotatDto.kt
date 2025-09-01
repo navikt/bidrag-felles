@@ -22,6 +22,7 @@ import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
+import no.nav.bidrag.domene.enums.vedtak.BeregnTil
 import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
@@ -325,6 +326,9 @@ data class NotatVirkningstidspunktDto(
     @Schema(type = "string", format = "date", example = "01.12.2025")
     @JsonFormat(pattern = "yyyy-MM")
     val søktFraDato: YearMonth?,
+    val beregnTilDato: YearMonth?,
+    val beregnTil: BeregnTil?,
+    val etterfølgendeVedtakVirkningstidspunkt: YearMonth?,
     @Schema(type = "string", format = "date", example = "01.12.2025")
     @JsonFormat(pattern = "yyyy-MM-dd")
     val virkningstidspunkt: LocalDate?,
@@ -347,6 +351,7 @@ data class NotatVirkningstidspunktDto(
 @Schema(description = "Notat begrunnelse skrevet av saksbehandler")
 data class NotatBegrunnelseDto(
     val innhold: String?,
+    val innholdFraOpprinneligVedtak: String?,
     @Schema(name = "intern", deprecated = true)
     val intern: String? = innhold,
     val gjelder: NotatPersonDto? = null,

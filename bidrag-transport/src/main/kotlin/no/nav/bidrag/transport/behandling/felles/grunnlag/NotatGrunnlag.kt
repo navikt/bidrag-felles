@@ -4,6 +4,7 @@ data class NotatGrunnlag(
     val innhold: String,
     val erMedIVedtaksdokumentet: Boolean,
     val type: NotatType,
+    val fraOpprinneligVedtak: Boolean = false,
 ) : GrunnlagInnhold {
     enum class NotatType {
         VIRKNINGSTIDSPUNKT,

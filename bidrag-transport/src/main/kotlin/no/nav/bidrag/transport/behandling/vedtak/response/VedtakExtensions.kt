@@ -11,6 +11,7 @@ import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.Datoperiode
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
@@ -305,6 +306,17 @@ val VedtakDto.referertVedtaksid get() =
     }
 
 val VedtakDto.harResultatFraAnnenVedtak get() = this.grunnlagListe.finnResultatFraAnnenVedtak(finnFørsteTreff = true) != null
+
+fun VedtakDto.erPeriodeFraOmgjøringsvedtak(periode: ÅrMånedsperiode): Boolean =
+    stønadsendringListe.any { se ->
+        se.periodeListe.any { p ->
+            p.periode == periode &&
+                p.grunnlagReferanseListe.any { gr ->
+                    val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                    resultatFraAnnenVedtak != null && resultatFraAnnenVedtak.omgjøringsvedtak
+                }
+        }
+    }
 
 val VedtakDto.erDelvedtak get() =
     this.stønadsendringListe.isNotEmpty() &&
