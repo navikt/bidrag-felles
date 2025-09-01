@@ -310,13 +310,17 @@ val VedtakDto.harResultatFraAnnenVedtak get() = this.grunnlagListe.finnResultatF
 fun VedtakDto.erPeriodeFraOmgjøringsvedtak(periode: ÅrMånedsperiode): Boolean =
     stønadsendringListe.any { se ->
         se.periodeListe.any { p ->
-            p.periode == periode &&
-                p.grunnlagReferanseListe.any { gr ->
-                    val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
-                    resultatFraAnnenVedtak != null && resultatFraAnnenVedtak.omgjøringsvedtak
-                }
+            val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+            p.periode == periode && resultatFraAnnenVedtak != null && resultatFraAnnenVedtak.omgjøringsvedtak
         }
     }
+
+fun VedtakDto.finnSistePeriodeOmgjøringsvedtak(stønadsendringDto: StønadsendringDto) =
+    stønadsendringDto.periodeListe
+        .filter { p ->
+            val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+            resultatFraAnnenVedtak != null && resultatFraAnnenVedtak.omgjøringsvedtak
+        }.maxByOrNull { it.periode.fom }
 
 val VedtakDto.erDelvedtak get() =
     this.stønadsendringListe.isNotEmpty() &&
