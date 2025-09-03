@@ -316,10 +316,11 @@ val VedtakDto.harResultatFraAnnenVedtak get() = this.grunnlagListe.finnResultatF
 
 fun VedtakDto.erPeriodeFraOmgjøringsvedtak(periode: ÅrMånedsperiode): Boolean =
     stønadsendringListe.any { se ->
-        se.periodeListe.any { p ->
-            val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
-            p.periode == periode && resultatFraAnnenVedtak != null && resultatFraAnnenVedtak.omgjøringsvedtak
-        }
+        se.periodeListe.isNotEmpty() &&
+            se.periodeListe.any { p ->
+                val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                p.periode == periode && resultatFraAnnenVedtak != null && resultatFraAnnenVedtak.omgjøringsvedtak
+            }
     }
 
 fun VedtakDto.finnSistePeriodeOmgjøringsvedtak(stønadsendringDto: StønadsendringDto) =
@@ -339,6 +340,7 @@ val VedtakDto.erOrkestrertVedtak get() =
     this.grunnlagListe.finnOrkestreringDetaljer() != null || this.stønadsendringListe.isNotEmpty() &&
         this.stønadsendringListe.all { se ->
             se.beslutning != Beslutningstype.DELVEDTAK &&
+                se.periodeListe.isNotEmpty() &&
                 se.periodeListe.all { p ->
                     this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
                 }
