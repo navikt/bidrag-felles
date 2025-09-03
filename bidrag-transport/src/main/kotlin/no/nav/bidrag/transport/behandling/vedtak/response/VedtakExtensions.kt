@@ -162,10 +162,10 @@ fun VedtakDto.finnAldersjusteringDetaljerGrunnlag(
             stønadsendringDto.grunnlagReferanseListe,
         ).firstOrNull()
 
-fun VedtakDto.finnVirkningstidspunktForStønad(stønadsid: Stønadsid): YearMonth {
+fun VedtakDto.finnVirkningstidspunktForStønad(stønadsid: Stønadsid): YearMonth? {
     val stønadsendring = finnStønadsendring(stønadsid)!!
     return finnVirkningstidspunkt(stønadsendring)?.innhold?.virkningstidspunkt?.toYearMonth()
-        ?: stønadsendring.periodeListe.minOf { it.periode.fom }
+        ?: stønadsendring.periodeListe.minOfOrNull { it.periode.fom }
 }
 
 fun Stønadsendring.tilStønadsid() =
