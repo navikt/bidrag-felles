@@ -19,6 +19,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.InnholdMedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.ResultatFraVedtakGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningIndeksregulering
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SøknadGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VedtakOrkestreringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
@@ -152,6 +153,13 @@ fun VedtakDto.finnVirkningstidspunkt(stønadsendringDto: StønadsendringDto): In
             Grunnlagstype.VIRKNINGSTIDSPUNKT,
             stønadsendringDto.grunnlagReferanseListe,
         ).firstOrNull()
+
+fun VedtakDto.finnSøknadGrunnlag(): SøknadGrunnlag? =
+    grunnlagListe
+        .filtrerOgKonverterBasertPåEgenReferanse<SøknadGrunnlag>(
+            Grunnlagstype.SØKNAD,
+        ).firstOrNull()
+        ?.innhold
 
 fun VedtakDto.finnAldersjusteringDetaljerGrunnlag(
     stønadsendringDto: StønadsendringDto,
@@ -295,7 +303,7 @@ fun VedtakDto.finnAldersjusteringVedtaksidForStønad(stønadsid: Stønadsid? = n
 val VedtakDto.referertVedtaksid get() =
     if (erOrkestrertVedtak) {
         val orkestertGrunnlag = this.grunnlagListe.finnOrkestreringDetaljer()
-        orkestertGrunnlag?.omgjøringsvedtakId ?: stønadsendringListe.firstNotNullOfOrNull { se ->
+        orkestertGrunnlag?.omgjørVedtakId ?: stønadsendringListe.firstNotNullOfOrNull { se ->
             se.periodeListe.firstNotNullOfOrNull { p ->
                 val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
                 if (resultatFraAnnenVedtak?.omgjøringsvedtak == true) resultatFraAnnenVedtak.vedtaksid else null
