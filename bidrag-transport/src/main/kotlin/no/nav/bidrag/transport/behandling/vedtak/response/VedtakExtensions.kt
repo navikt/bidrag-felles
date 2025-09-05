@@ -303,7 +303,7 @@ fun VedtakDto.finnAldersjusteringVedtaksidForStønad(stønadsid: Stønadsid? = n
 val VedtakDto.referertVedtaksid get() =
     if (erOrkestrertVedtak) {
         val orkestertGrunnlag = this.grunnlagListe.finnOrkestreringDetaljer()
-        orkestertGrunnlag?.omgjørVedtakId ?: stønadsendringListe.firstNotNullOfOrNull { se ->
+        orkestertGrunnlag?.omgjøringsvedtakId ?: stønadsendringListe.firstNotNullOfOrNull { se ->
             se.periodeListe.firstNotNullOfOrNull { p ->
                 val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
                 if (resultatFraAnnenVedtak?.omgjøringsvedtak == true) resultatFraAnnenVedtak.vedtaksid else null
