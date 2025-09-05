@@ -19,8 +19,8 @@ data class ResultatFraVedtakGrunnlag(
 ) : GrunnlagInnhold
 
 data class VedtakOrkestreringDetaljerGrunnlag(
-    @JsonAlias("klagevedtakId", "omgjøringsvedtakId")
-    val omgjørVedtakId: Int,
+    @JsonAlias("klagevedtakId")
+    val omgjøringsvedtakId: Int,
     val beregnTilDato: YearMonth,
     // Settes bare hvis det innkreves fra en annen dato enn vikrningstidspunktet
     val innkrevesFraDato: YearMonth? = null,
