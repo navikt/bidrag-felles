@@ -63,6 +63,12 @@ val VedtakDto.søknadKlageRefId get() = behandlingsreferanseListe.søknadKlageRe
 
 val VedtakForStønad.søknadsid get() = behandlingsreferanser.søknadsid
 val VedtakForStønad.søknadKlageRefId get() = behandlingsreferanser.søknadKlageRefId
+val VedtakDto.minsteVirkningstidspunkt get() =
+    grunnlagListe
+        .filtrerBasertPåEgenReferanse(
+            Grunnlagstype.VIRKNINGSTIDSPUNKT,
+        ).map { it.innholdTilObjekt<VirkningstidspunktGrunnlag>() }
+        .minOfOrNull { it.virkningstidspunkt }
 
 val VedtakDto.virkningstidspunkt get() =
     grunnlagListe
