@@ -70,7 +70,7 @@ val VedtakDto.minsteVirkningstidspunkt get() =
         ).map { it.innholdTilObjekt<VirkningstidspunktGrunnlag>() }
         .minOfOrNull { it.virkningstidspunkt } ?: stønadsendringListe
         .filter { it.periodeListe.isNotEmpty() }
-        .minOfOrNull { it.periodeListe.minOf { it.periode.fom } }
+        .minOfOrNull { it.periodeListe.minOf { it.periode.fom.atDay(1) } }
 
 val VedtakDto.virkningstidspunkt get() =
     grunnlagListe
