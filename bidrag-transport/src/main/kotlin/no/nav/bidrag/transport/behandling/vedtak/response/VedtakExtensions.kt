@@ -68,7 +68,9 @@ val VedtakDto.minsteVirkningstidspunkt get() =
         .filtrerBasertPåEgenReferanse(
             Grunnlagstype.VIRKNINGSTIDSPUNKT,
         ).map { it.innholdTilObjekt<VirkningstidspunktGrunnlag>() }
-        .minOfOrNull { it.virkningstidspunkt }
+        .minOfOrNull { it.virkningstidspunkt } ?: stønadsendringListe
+        .filter { it.periodeListe.isNotEmpty() }
+        .minOfOrNull { it.periodeListe.minOf { it.periode.fom } }
 
 val VedtakDto.virkningstidspunkt get() =
     grunnlagListe
