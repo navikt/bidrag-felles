@@ -51,16 +51,17 @@ data class OmgjøringOrkestratorGrunnlag(
     @Schema(description = "Vedtaksid til påklaget vedtak")
     @JsonAlias("påklagetVedtakId")
     val omgjørVedtakId: Int,
-    val manuellAldersjustering: List<KlageOrkestratorManuellAldersjustering> = emptyList(),
+    val manuellAldersjustering: List<OmgjøringorkestratorManuellAldersjustering> = emptyList(),
     val innkrevingstype: Innkrevingstype = Innkrevingstype.MED_INNKREVING,
     @Schema(description = "Om behandlingen gjelder paragraf35c")
     val gjelderParagraf35c: Boolean = false,
     val gjelderKlage: Boolean = false,
 )
 
-data class KlageOrkestratorManuellAldersjustering(
+data class OmgjøringorkestratorManuellAldersjustering(
     val aldersjusteringForÅr: Int,
-    val grunnlagFraVedtak: Int,
+    val grunnlagFraVedtak: Int?,
+    val grunnlagFraOmgjøringsvedtak: Boolean = false,
 )
 
 @Schema(description = "Response fra BidragsberegningOrkestrator")
