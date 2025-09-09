@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.beregning.barnebidrag
 import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Beregningstype
+import no.nav.bidrag.domene.enums.vedtak.BeregnTil
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -55,6 +56,7 @@ data class OmgjøringOrkestratorGrunnlag(
     val gjelderParagraf35c: Boolean = false,
     val gjelderKlage: Boolean = false,
     val skalInnkreves: Boolean,
+    val erBeregningsperiodeLøpende: Boolean,
 )
 
 data class OmgjøringorkestratorManuellAldersjustering(
