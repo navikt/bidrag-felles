@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -41,6 +42,7 @@ data class ManuellVedtakGrunnlag(
     val resultatkodeSistePeriode: String,
     val resultatSistePeriode: String,
     val manglerGrunnlag: Boolean = false,
+    val innkrevingstype: Innkrevingstype = Innkrevingstype.MED_INNKREVING,
 ) : GrunnlagInnhold
 
 data class AldersjusteringDetaljerGrunnlag(
