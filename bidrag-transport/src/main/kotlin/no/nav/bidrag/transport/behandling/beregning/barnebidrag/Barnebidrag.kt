@@ -3,7 +3,6 @@ package no.nav.bidrag.transport.behandling.beregning.barnebidrag
 import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Beregningstype
-import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -52,10 +51,10 @@ data class OmgjøringOrkestratorGrunnlag(
     @JsonAlias("påklagetVedtakId")
     val omgjørVedtakId: Int,
     val manuellAldersjustering: List<OmgjøringorkestratorManuellAldersjustering> = emptyList(),
-    val innkrevingstype: Innkrevingstype = Innkrevingstype.MED_INNKREVING,
     @Schema(description = "Om behandlingen gjelder paragraf35c")
     val gjelderParagraf35c: Boolean = false,
     val gjelderKlage: Boolean = false,
+    val skalInnkreves: Boolean,
 )
 
 data class OmgjøringorkestratorManuellAldersjustering(
