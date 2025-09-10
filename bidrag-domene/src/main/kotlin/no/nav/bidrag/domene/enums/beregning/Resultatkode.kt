@@ -323,6 +323,10 @@ enum class Resultatkode(
         listOf(BisysResultatkode("KBB")),
         ResultatkodeType.BARNEBIDRAG,
     ),
+    INNKREVINGSGRUNNLAG(
+        listOf(BisysResultatkode("IV")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
 
     INDEKSREGULERING(
         listOf(BisysResultatkode("IREG")),

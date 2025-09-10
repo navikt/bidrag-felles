@@ -182,3 +182,6 @@ KOSTNADSBEREGNET_BIDRAG:
 
 INDEKSREGULERING:
   intern: "Indeksregulering"
+
+INNKREVINGSGRUNNLAG:
+  intern: "Innkrevingsgrunnlag"
