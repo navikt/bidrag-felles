@@ -21,6 +21,8 @@ object TokenUtils {
     private const val ISSUER_IDPORTEN_IDENTIFIER = "idporten"
     private const val ISSUER_STS_IDENTIFIER = "security-token-service"
     private const val ISSUER_MASKINPORTEN_IDENTIFIER = "maskinporten"
+    private const val AZURE_NAV_TENANT_ID_PROD = "62366534-1ec3-4962-8869-9b5535279d0b"
+    private const val AZURE_NAV_TENANT_ID_DEV = "966ac572-f5b7-4bbe-aa88-c76419c0f851"
 
     @JvmStatic
     fun hentSaksbehandlerIdent(): String? = if (!erApplikasjonsbruker()) hentBruker() else null
@@ -33,6 +35,23 @@ object TokenUtils {
 
     @JvmStatic
     fun hentBruker(): String? = hentBruker(hentToken())
+
+    @JvmStatic
+    private fun hentTokenTenantId(): String? {
+        val token = hentToken()
+        return try {
+            konverterTokenTilJwt(token)?.jwtClaimsSet?.getStringClaim("tid")
+        } catch (var2: Exception) {
+            LOGGER.error("Klarte ikke parse ${token?.substring(0, token.length.coerceAtMost(10))}...", var2)
+            return null
+        }
+    }
+
+    @JvmStatic
+    fun erProd(): Boolean = hentTokenTenantId() == AZURE_NAV_TENANT_ID_PROD
+
+    @JvmStatic
+    fun erDev(): Boolean = hentTokenTenantId() == AZURE_NAV_TENANT_ID_DEV
 
     @JvmStatic
     fun erTokenUtstedtAv(tokenUtsteder: TokenUtsteder): Boolean = hentToken()?.let { hentTokenUtsteder(it) == tokenUtsteder } ?: false
