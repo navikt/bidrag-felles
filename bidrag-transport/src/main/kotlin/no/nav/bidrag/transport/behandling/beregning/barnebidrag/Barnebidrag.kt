@@ -40,6 +40,7 @@ data class BidragsberegningOrkestratorRequest(
     @Schema(description = "Grunnlag for orkestrering av klage")
     @JsonAlias("klageOrkestratorGrunnlag")
     val omgjøringOrkestratorGrunnlag: OmgjøringOrkestratorGrunnlag? = null,
+    val erDirekteAvslag: Boolean = false,
     @Schema(description = "Type beregning")
     val beregningstype: Beregningstype = Beregningstype.BIDRAG,
 )
@@ -54,7 +55,9 @@ data class OmgjøringOrkestratorGrunnlag(
     val manuellAldersjustering: List<OmgjøringorkestratorManuellAldersjustering> = emptyList(),
     @Schema(description = "Om behandlingen gjelder paragraf35c")
     val gjelderParagraf35c: Boolean = false,
+    // Om det er klage eller en omgjøring. Bestemmer hvilken vedtakstype som skal brukes i delvedtakene
     val gjelderKlage: Boolean = false,
+    // Om det skal innkreves. Utfører ikke aldersjustering/indeksregulering hvis ingen innkreving
     val skalInnkreves: Boolean,
     val erBeregningsperiodeLøpende: Boolean,
 )
