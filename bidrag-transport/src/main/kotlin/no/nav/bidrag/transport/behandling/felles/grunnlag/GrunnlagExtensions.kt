@@ -253,6 +253,11 @@ fun List<GrunnlagDto>.erResultatEndringUnderGrense(
     return delberegningGrense?.innhold?.endringErOverGrense == false
 }
 
+fun List<GrunnlagDto>.hentVirkningstidspunktGrunnlagForBarn(gjelderBarnReferanse: String? = null): VirkningstidspunktGrunnlag? =
+    filtrerBasertPåEgenReferanse(Grunnlagstype.VIRKNINGSTIDSPUNKT)
+        .firstOrNull { gjelderBarnReferanse.isNullOrEmpty() || it.gjelderBarnReferanse == gjelderBarnReferanse }
+        ?.innholdTilObjekt<VirkningstidspunktGrunnlag>()
+
 fun List<GrunnlagDto>.erResultatEndringUnderGrenseForPeriode(
     periode: ÅrMånedsperiode,
     søknadsbarnReferanse: String?,

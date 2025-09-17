@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.barnetilsyn.Skolealder
 import no.nav.bidrag.domene.enums.barnetilsyn.Tilsynstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erDirekteAvslag
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.diverse.Kilde
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
@@ -28,6 +29,7 @@ import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.DatoperiodeDto
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.domene.util.lastVisningsnavnFraFil
 import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
@@ -41,9 +43,12 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSje
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUnderholdskostnad
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
+import no.nav.bidrag.transport.behandling.felles.grunnlag.ResultatFraVedtakGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningIndeksregulering
+import no.nav.bidrag.transport.behandling.vedtak.response.erIndeksEllerAldersjustering
+import no.nav.bidrag.transport.felles.tilVisningsnavn
 import no.nav.bidrag.transport.notat.NotatResultatBidragsberegningBarnDto.ResultatBarnebidragsberegningPeriodeDto
 import java.math.BigDecimal
 import java.math.MathContext
@@ -73,6 +78,14 @@ data class VedtakNotatDto(
     val inntekter: NotatInntekterDto,
     val vedtak: NotatVedtakDetaljerDto,
 )
+
+@Schema(enumAsRef = true)
+enum class ResultatInnholdType {
+    FORSKUDD,
+    SÆRBIDRAG,
+    BIDRAG,
+    GEBYR,
+}
 
 @Schema(enumAsRef = true)
 enum class NotatMalType {
@@ -704,21 +717,80 @@ data class NotatResultatBidragsberegningBarnDto(
 ) : VedtakResultatInnhold(NotatMalType.BIDRAG) {
     data class ResultatBarnebidragsberegningPeriodeDto(
         val periode: ÅrMånedsperiode,
-        val underholdskostnad: BigDecimal,
-        val bpsAndelU: BigDecimal,
-        val bpsAndelBeløp: BigDecimal,
-        val samværsfradrag: BigDecimal,
-        val beregnetBidrag: BigDecimal,
-        val faktiskBidrag: BigDecimal,
-        val resultatKode: Resultatkode?,
+        val underholdskostnad: BigDecimal = BigDecimal.ZERO,
+        val bpsAndelU: BigDecimal = BigDecimal.ZERO,
+        val bpsAndelBeløp: BigDecimal = BigDecimal.ZERO,
+        val samværsfradrag: BigDecimal = BigDecimal.ZERO,
+        val beregnetBidrag: BigDecimal = BigDecimal.ZERO,
+        val faktiskBidrag: BigDecimal = BigDecimal.ZERO,
+        val resultatKode: Resultatkode? = null,
         val erOpphør: Boolean = false,
         val erDirekteAvslag: Boolean = false,
         val vedtakstype: Vedtakstype,
         val beregningsdetaljer: BidragPeriodeBeregningsdetaljer? = null,
         val klageOmgjøringDetaljer: KlageOmgjøringDetaljer? = null,
-        val delvedtakstypeVisningsnavn: String,
-        val resultatkodeVisningsnavn: String,
+        var delvedtakstypeVisningsnavn: String = "",
+        var resultatkodeVisningsnavn: String = "",
+        val resultatFraVedtak: ResultatFraVedtakGrunnlag? = null,
     ) {
+        init {
+            if (delvedtakstypeVisningsnavn.isEmpty()) {
+                delvedtakstypeVisningsnavn = tilDelvedtakstypeVisningsnavn()
+            }
+            if (resultatkodeVisningsnavn.isEmpty()) {
+                resultatkodeVisningsnavn = tilResultatkodeVisningsnavn()
+            }
+        }
+
+        fun tilDelvedtakstypeVisningsnavn(): String {
+            if (klageOmgjøringDetaljer == null || resultatFraVedtak == null) return ""
+            return when {
+                resultatFraVedtak.omgjøringsvedtak && vedtakstype == Vedtakstype.KLAGE -> "Klagevedtak"
+                resultatFraVedtak.omgjøringsvedtak && !vedtakstype.erIndeksEllerAldersjustering -> "Omgjøringsvedtak"
+                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Beregnet aldersjustering"
+                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.INDEKSREGULERING -> "Beregnet indeksregulering"
+                klageOmgjøringDetaljer.beregnTilDato != null && periode.fom >= klageOmgjøringDetaljer.beregnTilDato
+                -> {
+                    val prefiks =
+                        if (vedtakstype == Vedtakstype.ALDERSJUSTERING) {
+                            "Aldersjustering"
+                        } else if (vedtakstype == Vedtakstype.INDEKSREGULERING) {
+                            "Indeksregulering"
+                        } else {
+                            "Vedtak"
+                        }
+                    "$prefiks (${resultatFraVedtak.vedtakstidspunkt?.toLocalDate().tilVisningsnavn()})"
+                }
+                else -> "Gjenopprettet beløpshistorikk"
+            }
+        }
+
+        @Suppress("unused")
+        fun tilResultatkodeVisningsnavn(): String =
+            when {
+                erOpphør ->
+                    if (beregningsdetaljer?.sluttberegning?.ikkeOmsorgForBarnet == true ||
+                        beregningsdetaljer?.sluttberegning?.barnetErSelvforsørget == true
+                    ) {
+                        beregningsdetaljer.sluttberegning.resultatVisningsnavn!!.intern
+                    } else if (resultatFraVedtak?.omgjøringsvedtak == true && resultatKode != null) {
+                        resultatKode.visningsnavn.intern
+                    } else {
+                        "Opphør"
+                    }
+                vedtakstype == Vedtakstype.INNKREVING -> "Innkreving"
+
+                vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Aldersjustering"
+
+                vedtakstype == Vedtakstype.INDEKSREGULERING -> "Indeksregulering"
+
+                resultatKode?.erDirekteAvslag() == true ||
+                    resultatKode == Resultatkode.INGEN_ENDRING_UNDER_GRENSE ||
+                    resultatKode == Resultatkode.INNVILGET_VEDTAK -> resultatKode.visningsnavnIntern(vedtakstype)
+
+                else -> beregningsdetaljer?.sluttberegning?.resultatVisningsnavn?.intern ?: ""
+            }
+
         data class KlageOmgjøringDetaljer(
             val resultatFraVedtakVedtakstidspunkt: LocalDateTime? = null,
             val beregnTilDato: YearMonth? = null,
@@ -731,9 +803,9 @@ data class NotatResultatBidragsberegningBarnDto(
         data class BidragPeriodeBeregningsdetaljer(
             val bpHarEvne: Boolean,
             val antallBarnIHusstanden: Double? = null,
-            val forskuddssats: BigDecimal,
-            val barnetilleggBM: NotatDelberegningBarnetilleggDto,
-            val barnetilleggBP: NotatDelberegningBarnetilleggDto,
+            val forskuddssats: BigDecimal = BigDecimal.ZERO,
+            val barnetilleggBM: NotatDelberegningBarnetilleggDto? = null,
+            val barnetilleggBP: NotatDelberegningBarnetilleggDto? = null,
             val voksenIHusstanden: Boolean? = null,
             val enesteVoksenIHusstandenErEgetBarn: Boolean? = null,
             val bpsAndel: DelberegningBidragspliktigesAndel? = null,
