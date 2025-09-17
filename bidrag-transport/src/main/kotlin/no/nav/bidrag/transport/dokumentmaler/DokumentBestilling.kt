@@ -32,12 +32,6 @@ import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
 
-data class DokumentBestillingResult(
-    val dokumentReferanse: String,
-    val journalpostId: String,
-    val bestillingSystem: String,
-)
-
 data class DokumentBestilling(
     val bestillBatch: Boolean,
     var mottaker: Mottaker? = null,
