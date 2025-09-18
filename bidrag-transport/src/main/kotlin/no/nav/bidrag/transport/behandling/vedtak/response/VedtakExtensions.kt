@@ -352,6 +352,17 @@ val VedtakDto.erDelvedtak get() =
             se.beslutning == Beslutningstype.DELVEDTAK
         }
 
+val VedtakDto.omgjøringsvedtakErEnesteVedtak get() =
+    this.grunnlagListe.finnOrkestreringDetaljer() != null ||
+        this.stønadsendringListe.isNotEmpty() &&
+        this.stønadsendringListe.all { se ->
+            se.beslutning != Beslutningstype.DELVEDTAK &&
+                se.periodeListe.isNotEmpty() &&
+                se.periodeListe.all { p ->
+                    val resultatFraVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                    resultatFraVedtak != null && resultatFraVedtak.omgjøringsvedtak
+                }
+        }
 val VedtakDto.erOrkestrertVedtak get() =
     this.grunnlagListe.finnOrkestreringDetaljer() != null || this.stønadsendringListe.isNotEmpty() &&
         this.stønadsendringListe.all { se ->
