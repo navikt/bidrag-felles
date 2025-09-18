@@ -353,8 +353,7 @@ val VedtakDto.erDelvedtak get() =
         }
 
 val VedtakDto.omgjøringsvedtakErEnesteVedtak get() =
-    this.grunnlagListe.finnOrkestreringDetaljer() != null ||
-        this.stønadsendringListe.isNotEmpty() &&
+    this.stønadsendringListe.isNotEmpty() &&
         this.stønadsendringListe.all { se ->
             se.beslutning != Beslutningstype.DELVEDTAK &&
                 se.periodeListe.isNotEmpty() &&
