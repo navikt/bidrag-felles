@@ -762,7 +762,8 @@ data class NotatResultatBidragsberegningBarnDto(
                     "$prefiks (${resultatFraVedtak.vedtakstidspunkt?.toLocalDate().tilVisningsnavn()})"
                 }
                 resultatFraVedtak.vedtaksid == null -> "Opphør"
-                resultatFraVedtak.vedtakstidspunkt != null -> "Vedtak (${resultatFraVedtak.vedtakstidspunkt.toLocalDate().tilVisningsnavn()})"
+                resultatFraVedtak.vedtakstidspunkt != null
+                -> "Vedtak (${resultatFraVedtak.vedtakstidspunkt.toLocalDate().tilVisningsnavn()})"
                 else -> "Vedtak"
             }
         }
