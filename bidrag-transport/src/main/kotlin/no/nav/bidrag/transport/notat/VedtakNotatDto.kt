@@ -743,13 +743,14 @@ data class NotatResultatBidragsberegningBarnDto(
         }
 
         fun tilDelvedtakstypeVisningsnavn(): String {
-            if (klageOmgjøringDetaljer == null || resultatFraVedtak == null) return ""
+            if (resultatFraVedtak == null) return ""
             return when {
                 resultatFraVedtak.omgjøringsvedtak && vedtakstype == Vedtakstype.KLAGE -> "Klagevedtak"
                 resultatFraVedtak.omgjøringsvedtak && !vedtakstype.erIndeksEllerAldersjustering -> "Omgjøringsvedtak"
                 resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Aldersjustering"
                 resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.INDEKSREGULERING -> "Indeksregulering"
-                klageOmgjøringDetaljer.beregnTilDato != null && periode.fom >= klageOmgjøringDetaljer.beregnTilDato
+                klageOmgjøringDetaljer != null &&
+                    klageOmgjøringDetaljer.beregnTilDato != null && periode.fom >= klageOmgjøringDetaljer.beregnTilDato
                 -> {
                     val prefiks =
                         if (vedtakstype == Vedtakstype.ALDERSJUSTERING) {
@@ -761,7 +762,7 @@ data class NotatResultatBidragsberegningBarnDto(
                         }
                     "$prefiks (${resultatFraVedtak.vedtakstidspunkt?.toLocalDate().tilVisningsnavn()})"
                 }
-                resultatFraVedtak.vedtaksid == null -> "Opphør"
+                resultatFraVedtak.vedtaksid == null && resultatKode == Resultatkode.OPPHØR -> "Opphør"
                 resultatFraVedtak.vedtakstidspunkt != null
                 -> "Vedtak (${resultatFraVedtak.vedtakstidspunkt.toLocalDate().tilVisningsnavn()})"
                 else -> "Vedtak"
