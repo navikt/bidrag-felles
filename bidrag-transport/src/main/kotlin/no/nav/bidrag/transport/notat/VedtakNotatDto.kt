@@ -747,8 +747,8 @@ data class NotatResultatBidragsberegningBarnDto(
             return when {
                 resultatFraVedtak.omgjøringsvedtak && vedtakstype == Vedtakstype.KLAGE -> "Klagevedtak"
                 resultatFraVedtak.omgjøringsvedtak && !vedtakstype.erIndeksEllerAldersjustering -> "Omgjøringsvedtak"
-                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Beregnet aldersjustering"
-                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.INDEKSREGULERING -> "Beregnet indeksregulering"
+                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Aldersjustering"
+                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.INDEKSREGULERING -> "Indeksregulering"
                 klageOmgjøringDetaljer.beregnTilDato != null && periode.fom >= klageOmgjøringDetaljer.beregnTilDato
                 -> {
                     val prefiks =
@@ -761,7 +761,9 @@ data class NotatResultatBidragsberegningBarnDto(
                         }
                     "$prefiks (${resultatFraVedtak.vedtakstidspunkt?.toLocalDate().tilVisningsnavn()})"
                 }
-                else -> "Gjenopprettet beløpshistorikk"
+                resultatFraVedtak.vedtaksid == null -> "Opphør"
+                resultatFraVedtak.vedtakstidspunkt != null -> "Vedtak (${resultatFraVedtak.vedtakstidspunkt.toLocalDate().tilVisningsnavn()})"
+                else -> "Vedtak"
             }
         }
 
