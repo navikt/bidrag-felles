@@ -742,11 +742,18 @@ data class NotatResultatBidragsberegningBarnDto(
             }
         }
 
+        private val erKlagevedtak get() =
+            resultatFraVedtak != null && resultatFraVedtak.omgjøringsvedtak &&
+                vedtakstype == Vedtakstype.KLAGE
+        private val erOmgjøringsvedtak get() =
+            resultatFraVedtak != null && resultatFraVedtak.omgjøringsvedtak &&
+                !vedtakstype.erIndeksEllerAldersjustering
+
         fun tilDelvedtakstypeVisningsnavn(): String {
             if (resultatFraVedtak == null) return ""
             return when {
-                resultatFraVedtak.omgjøringsvedtak && vedtakstype == Vedtakstype.KLAGE -> "Klagevedtak"
-                resultatFraVedtak.omgjøringsvedtak && !vedtakstype.erIndeksEllerAldersjustering -> "Omgjøringsvedtak"
+                erKlagevedtak -> "Klagevedtak"
+                erOmgjøringsvedtak -> "Omgjøringsvedtak"
                 resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Aldersjustering"
                 resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.INDEKSREGULERING -> "Indeksregulering"
                 klageOmgjøringDetaljer != null &&
@@ -762,7 +769,15 @@ data class NotatResultatBidragsberegningBarnDto(
                         }
                     "$prefiks (${resultatFraVedtak.vedtakstidspunkt?.toLocalDate().tilVisningsnavn()})"
                 }
-                resultatFraVedtak.vedtaksid == null && resultatKode == Resultatkode.OPPHØR -> "Opphør"
+                resultatFraVedtak.vedtaksid == null && resultatKode == Resultatkode.OPPHØR ->
+                    // Betyr at opphør er konsekvens av vedtak (opphør perioder før pga virkningstidspunkt settes framover i tid)
+                    if (erKlagevedtak) {
+                        "Klagevedtak"
+                    } else if (erOmgjøringsvedtak) {
+                        "Omgjøringsvedtak"
+                    } else {
+                        "Opphør"
+                    }
                 resultatFraVedtak.vedtakstidspunkt != null
                 -> "Vedtak (${resultatFraVedtak.vedtakstidspunkt.toLocalDate().tilVisningsnavn()})"
                 else -> "Vedtak"
