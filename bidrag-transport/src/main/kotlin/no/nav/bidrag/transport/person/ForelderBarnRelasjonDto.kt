@@ -16,6 +16,7 @@ data class ForelderBarnRelasjon(
     val relatertPersonsIdent: Personident?,
     @Schema(description = "Hvilken rolle personen i requesten har til personen i responsen")
     val relatertPersonsRolle: Familierelasjon,
+    val metadata: Metadata? = null,
 ) {
     fun erRelatertPersonsBarn(): Boolean = relatertPersonsRolle == Familierelasjon.BARN
 }

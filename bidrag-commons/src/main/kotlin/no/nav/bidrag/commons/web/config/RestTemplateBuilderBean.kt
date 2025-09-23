@@ -1,7 +1,5 @@
 package no.nav.bidrag.commons.web.config
 
-import java.time.Duration
-import java.time.temporal.ChronoUnit
 import no.nav.bidrag.commons.web.interceptor.ConsumerIdClientInterceptor
 import no.nav.bidrag.commons.web.interceptor.MdcValuesPropagatingClientInterceptor
 import org.springframework.beans.factory.annotation.Value
@@ -12,6 +10,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
+import java.time.Duration
+import java.time.temporal.ChronoUnit
 
 @Suppress("SpringFacetCodeInspection")
 @Configuration
