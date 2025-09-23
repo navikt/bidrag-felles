@@ -19,5 +19,7 @@ data class BidragBeregningResponsDto(
         val beløpSamvær: BigDecimal,
         val stønadstype: Stønadstype,
         val samværsklasse: Samværsklasse? = null,
+        val underholdskostnad: BigDecimal? = null,
+        val bpAndelUnderholdskostnad: BigDecimal? = null,
     )
 }
