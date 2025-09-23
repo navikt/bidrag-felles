@@ -45,7 +45,7 @@ import java.math.RoundingMode
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
-import java.util.*
+import java.util.Locale
 
 data class VedtakNotatDto(
     val type: NotatMalType = NotatMalType.FORSKUDD,
