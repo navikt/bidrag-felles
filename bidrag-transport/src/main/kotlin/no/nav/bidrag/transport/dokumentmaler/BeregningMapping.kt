@@ -10,8 +10,6 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.KopiSamværsperiodeGru
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnGrunnlagSomErReferertFraGrunnlagsreferanseListe
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningIReferanser
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
-import no.nav.bidrag.transport.notat.NotatResultatBidragsberegningBarnDto
-import no.nav.bidrag.transport.notat.NotatResultatBidragsberegningBarnDto.ResultatBarnebidragsberegningPeriodeDto.BidragPeriodeBeregningsdetaljer.NotatBeregningsdetaljerSamværsfradrag
 import java.math.BigDecimal
 
 fun List<GrunnlagDto>.finnKopiDelberegningBidragspliktigesAndel(): KopiDelberegningBidragspliktigesAndel? {
@@ -32,7 +30,8 @@ fun List<GrunnlagDto>.finnAldersjusteringDetaljerGrunnlag(): AldersjusteringDeta
 
 fun List<GrunnlagDto>.finnAldersjusteringDelberegningSamværsfradrag(
     grunnlagsreferanseListe: List<Grunnlagsreferanse>,
-): NotatBeregningsdetaljerSamværsfradrag? {
+): DokumentmalResultatBidragsberegningBarnDto.ResultatBarnebidragsberegningPeriodeDto
+    .BidragPeriodeBeregningsdetaljer.NotatBeregningsdetaljerSamværsfradrag? {
     val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return null
     val delberegningSamværsfradragGrunnlag =
         finnGrunnlagSomErReferertFraGrunnlagsreferanseListe(
@@ -47,9 +46,10 @@ fun List<GrunnlagDto>.finnAldersjusteringDelberegningSamværsfradrag(
         ).firstOrNull() ?: return null
 
     val delberegningSamværsfradrag = delberegningSamværsfradragGrunnlag.innholdTilObjekt<DelberegningSamværsfradrag>()
-    return NotatBeregningsdetaljerSamværsfradrag(
-        samværsfradrag = delberegningSamværsfradrag.beløp,
-        samværsklasse = samværsperiodeGrunnlag.innholdTilObjekt<KopiSamværsperiodeGrunnlag>().samværsklasse,
-        gjennomsnittligSamværPerMåned = BigDecimal.ZERO,
-    )
+    return DokumentmalResultatBidragsberegningBarnDto.ResultatBarnebidragsberegningPeriodeDto.BidragPeriodeBeregningsdetaljer
+        .NotatBeregningsdetaljerSamværsfradrag(
+            samværsfradrag = delberegningSamværsfradrag.beløp,
+            samværsklasse = samværsperiodeGrunnlag.innholdTilObjekt<KopiSamværsperiodeGrunnlag>().samværsklasse,
+            gjennomsnittligSamværPerMåned = BigDecimal.ZERO,
+        )
 }

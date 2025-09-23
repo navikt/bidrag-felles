@@ -25,9 +25,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUnderholds
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SivilstandPeriode
 import no.nav.bidrag.transport.behandling.vedtak.response.VedtakPeriodeDto
-import no.nav.bidrag.transport.notat.NotatPersonDto
-import no.nav.bidrag.transport.notat.NotatResultatBidragsberegningBarnDto
-import no.nav.bidrag.transport.notat.VedtakResultatInnhold
+import no.nav.bidrag.transport.dokumentmaler.notat.VedtakResultatInnhold
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -45,7 +43,7 @@ data class DokumentBestilling(
     val datoSakOpprettet: LocalDate? = null,
     val spraak: String? = null,
     val roller: Roller = Roller(),
-    val rollerV2: List<NotatPersonDto> = emptyList(),
+    val rollerV2: List<DokumentmalPersonDto> = emptyList(),
     val rmISak: Boolean? = false,
     val vedtakDetaljer: VedtakDetaljer? = null,
     val sjablonDetaljer: SjablonDetaljer,
@@ -448,7 +446,7 @@ data class DelvedtakDto(
     val beregnet: Boolean,
     val indeksår: Int,
     val resultatFraVedtakVedtakstidspunkt: LocalDateTime? = null,
-    val perioder: List<NotatResultatBidragsberegningBarnDto.ResultatBarnebidragsberegningPeriodeDto>,
+    val perioder: List<DokumentmalResultatBidragsberegningBarnDto.ResultatBarnebidragsberegningPeriodeDto>,
     val grunnlagFraVedtak: List<GrunnlagFraVedtak> = emptyList(),
 ) {
     val endeligVedtak get() = !omgjøringsvedtak && !delvedtak
