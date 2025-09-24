@@ -119,6 +119,8 @@ data class DokumentmalResultatBidragsberegningBarnDto(
                     } else {
                         "Opphør"
                     }
+                vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Aldersjustering"
+                vedtakstype == Vedtakstype.INDEKSREGULERING -> "Indeksregulering"
                 resultatFraVedtak.vedtakstidspunkt != null
                 -> "Vedtak (${resultatFraVedtak.vedtakstidspunkt.toLocalDate().tilVisningsnavn()})"
                 else -> "Vedtak"
