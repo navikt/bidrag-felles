@@ -375,6 +375,8 @@ enum class Resultatkode(
 
         fun Resultatkode.erDirekteAvslag(): Boolean = erType(ResultatkodeType.DIREKTE_AVSLAG)
 
+        fun Resultatkode.erAvvisning(): Boolean = erType(ResultatkodeType.AVVISNING)
+
         fun Resultatkode.erOpphør(): Boolean = erType(ResultatkodeType.OPPHØR)
 
         fun Resultatkode.erAvslag(): Boolean =
