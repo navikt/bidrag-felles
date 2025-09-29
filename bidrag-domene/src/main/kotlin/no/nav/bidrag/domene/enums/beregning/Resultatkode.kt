@@ -77,6 +77,7 @@ enum class Resultatkode(
         ResultatkodeType.OPPHØR,
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
+        ResultatkodeType.AVVISNING,
     ),
     IKKE_OMSORG_FOR_BARNET_BP(
         listOf(BisysResultatkode("IOP")),
