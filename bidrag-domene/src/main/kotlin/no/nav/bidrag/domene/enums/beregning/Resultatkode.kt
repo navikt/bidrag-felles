@@ -78,6 +78,10 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
     ),
+    IKKE_OMSORG_FOR_BARNET_BP(
+        listOf(BisysResultatkode("IOP")),
+        ResultatkodeType.AVVISNING,
+    ),
     BIDRAGSPLIKTIG_ER_DØD(
         listOf(BisysResultatkode("BPD")),
         ResultatkodeType.BARNEBIDRAG,
@@ -399,6 +403,7 @@ enum class Resultatkode(
     enum class ResultatkodeType {
         OPPHØR,
         AVSLAG,
+        AVVISNING,
         DIREKTE_AVSLAG,
         FORSKUDD,
         BARNEBIDRAG,

@@ -20,6 +20,7 @@ data class HentDokumentValgRequest(
     val erOrkestrertVedtak: Boolean? = false,
     @Schema(enumAsRef = true) val stonadType: Stønadstype? = null,
     @Schema(enumAsRef = true) val engangsBelopType: Engangsbeløptype? = null,
+    val forsendelseId: Long? = null,
 ) {
     fun erKlage() = vedtakType == Vedtakstype.KLAGE || soknadType == Vedtakstype.KLAGE.name
 
