@@ -79,8 +79,8 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
     ),
-    IKKE_OMSORG_FOR_BARNET_BP(
-        listOf(BisysResultatkode("IOP")),
+    BM_HAR_OMSORG_FOR_BARNET(
+        listOf(BisysResultatkode("AOB")),
         ResultatkodeType.AVVISNING,
     ),
     BIDRAGSPLIKTIG_ER_DØD(
