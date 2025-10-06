@@ -24,7 +24,7 @@ class GrunnlagDtoFellesTest {
 
         grunnlag.toString() shouldBe "PERSON_BIDRAGSMOTTAKER - referanse=Person-150-BM, " +
             "gjelderReferanse=null, grunnlagsreferanseListe=<tomt>," +
-            " innhold={\"ident\":\"123213213213\",\"navn\":\"Navn Navnesen\",\"fødselsdato\":\"2020-01-01\",\"bidragsmottaker\":null,\"delAvOpprinneligBehandling\":false}"
+            " innhold={\"ident\":\"123213213213\",\"navn\":\"Navn Navnesen\",\"fødselsdato\":\"2020-01-01\",\"bidragsmottaker\":null,\"delAvOpprinneligBehandling\":true}"
     }
 
     @Test
