@@ -119,5 +119,5 @@ data class Person(
     val navn: String? = null,
     val fødselsdato: LocalDate = LocalDate.parse("2000-01-01"),
     val bidragsmottaker: Grunnlagsreferanse? = null,
-    val delAvOpprinneligBehandling: Boolean = false,
+    val delAvOpprinneligBehandling: Boolean = true,
 ) : GrunnlagInnhold
