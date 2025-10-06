@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.barnetilsyn.Skolealder
 import no.nav.bidrag.domene.enums.barnetilsyn.Tilsynstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvvisning
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.diverse.Kilde
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
@@ -95,6 +96,9 @@ data class NotatBehandlingDetaljerDto(
     val avslag: Resultatkode?,
     val klageMottattDato: LocalDate? = null,
 ) {
+    @get:Schema(name = "erAvvisning")
+    val erAvvisning get() = avslag?.erAvvisning() == true
+
     @get:Schema(name = "avslagVisningsnavn")
     val avslagVisningsnavn
         get() = vedtakstype?.let { avslag?.visningsnavnIntern(vedtakstype) } ?: avslag?.visningsnavn?.intern
