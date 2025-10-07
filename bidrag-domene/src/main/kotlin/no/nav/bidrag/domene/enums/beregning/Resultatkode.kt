@@ -79,6 +79,14 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
     ),
+    BARNET_ER_DØD(
+        listOf(BisysResultatkode("AOB")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.FORSKUDD,
+        ResultatkodeType.OPPHØR,
+        ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+    ),
     BM_HAR_OMSORG_FOR_BARNET(
         listOf(BisysResultatkode("AOB")),
         ResultatkodeType.AVVISNING,
