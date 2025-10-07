@@ -129,7 +129,7 @@ IKKE_OMSORG_FOR_BARNET:
 BARNET_ER_DØD:
   intern: "Barnet er død"
 
-BM_HAR_OMSORG_FOR_BARNET:
+BIDRAGSMOTTAKER_HAR_OMSORG_FOR_BARNET:
   intern: "Bidragsmottaker har omsorg for barnet"
 
 BIDRAGSPLIKTIG_ER_DØD:
