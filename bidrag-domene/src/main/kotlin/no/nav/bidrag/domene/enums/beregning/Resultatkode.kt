@@ -79,7 +79,9 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
     ),
-    BARNET_ER_DØD(
+
+    @JsonAlias("BARNET_ER_DØD")
+    BARNET_ER_DØDT(
         listOf(BisysResultatkode("OBD")),
         ResultatkodeType.BARNEBIDRAG,
         ResultatkodeType.FORSKUDD,
