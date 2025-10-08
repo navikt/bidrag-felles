@@ -1,8 +1,8 @@
 package no.nav.bidrag.domene.enums.behandling
 
-// Ved konvertering til Stønadstype så blir noen detaljer borte.
-// Dette er enum som er 1-1 med bisys sine søknad gruppe kode. Brukes i blant annet bidrag-behandling og ved opprettelse av oppgaver
-enum class SøktOmType(
+// Enum verdier av tabellen t_kode_sokn_gr i bisys
+// Dette er enum som er 1-1 med bisys sine søknad gruppe kode. Brukes i blant annet bidrag-behandling og ved opprettelse av oppgaver i bidrag-arbeidsflyt
+enum class Behandlingstema(
     val bisysKode: String,
 ) {
     AVSKRIVNING("AV"),
@@ -33,9 +33,9 @@ enum class SøktOmType(
     ;
 
     companion object {
-        fun fraKode(kode: String): SøktOmType? =
+        fun fraKode(kode: String): Behandlingstema? =
             try {
-                enumValues<SøktOmType>().find { res -> res.bisysKode == kode } ?: SøktOmType.valueOf(kode)
+                enumValues<Behandlingstema>().find { res -> res.bisysKode == kode } ?: Behandlingstema.valueOf(kode)
             } catch (e: Exception) {
                 null
             }
