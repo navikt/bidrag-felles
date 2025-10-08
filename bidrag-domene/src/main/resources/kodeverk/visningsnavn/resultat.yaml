@@ -126,8 +126,8 @@ AVSLUTTET_SKOLEGANG:
 IKKE_OMSORG_FOR_BARNET:
   intern: "Ikke omsorg for barnet"
 
-BARNET_ER_DØD:
-  intern: "Barnet er død"
+BARNET_ER_DØDT:
+  intern: "Barnet er dødt"
 
 BIDRAGSMOTTAKER_HAR_OMSORG_FOR_BARNET:
   intern: "Bidragsmottaker har omsorg for barnet"
