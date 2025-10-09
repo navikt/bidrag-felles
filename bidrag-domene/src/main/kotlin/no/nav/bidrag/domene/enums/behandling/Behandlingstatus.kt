@@ -11,9 +11,9 @@ enum class Behandlingstatus(
     // Lukket status
     DØMT_AVSLUTTET("DM", false, true),
     ERKJENT_AVSLUTTET("ER", false, true),
-    ENDELIG_VEDTAK_FATTET("EV", false, true),
     AVVIST("AV", false, true),
     MIDLERTIDLIG_VEDTAK("MV", true, true),
+    VEDTAK_FATTET_ETTER_MIDLERTIDLIG_VEDTAK("EV", false, true),
     UNNTAS_KLAGE("UK", false, true),
     G4("G4", false, true),
     SENDT_UTLANDET_LUKKET("SUL", false, true),
