@@ -1,5 +1,8 @@
 package no.nav.bidrag.domene.enums.behandling
 
+import io.swagger.v3.oas.annotations.media.Schema
+
+@Schema(enumAsRef = true)
 enum class Behandlingstatus(
     val bisysKode: String,
     val kreverOppgave: Boolean,
@@ -36,9 +39,9 @@ enum class Behandlingstatus(
     ;
 
     companion object {
-        fun fraKode(kode: String): Behandlingstema? =
+        fun fraKode(kode: String): Behandlingstatus? =
             try {
-                enumValues<Behandlingstema>().find { res -> res.bisysKode == kode } ?: Behandlingstema.valueOf(kode)
+                enumValues<Behandlingstatus>().find { res -> res.bisysKode == kode } ?: Behandlingstatus.valueOf(kode)
             } catch (e: Exception) {
                 null
             }

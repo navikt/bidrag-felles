@@ -1,10 +1,13 @@
 package no.nav.bidrag.domene.enums.behandling
 
+import io.swagger.v3.oas.annotations.media.Schema
+
 typealias BisysSøknadstype = Behandlingstype
 
 // Enum verdier av kodetabellen t_kode_sokn_type
 // Ved konvertering til Vedtakstype så blir noen detaljer borte (feks om det er begrenset revurdering eller revurdering).
 // Dette er enum som er 1-1 med bisys sine søknadstyper. Brukes i blant annet bidrag-behandling
+@Schema(enumAsRef = true)
 enum class Behandlingstype(
     val bisysKode: String,
 ) {

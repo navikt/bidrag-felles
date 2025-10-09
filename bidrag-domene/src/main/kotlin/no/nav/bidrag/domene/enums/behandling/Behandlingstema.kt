@@ -1,7 +1,10 @@
 package no.nav.bidrag.domene.enums.behandling
 
+import io.swagger.v3.oas.annotations.media.Schema
+
 // Enum verdier av tabellen t_kode_sokn_gr i bisys
 // Dette er enum som er 1-1 med bisys sine søknad gruppe kode. Brukes i blant annet bidrag-behandling og ved opprettelse av oppgaver i bidrag-arbeidsflyt
+@Schema(enumAsRef = true)
 enum class Behandlingstema(
     val bisysKode: String,
 ) {
