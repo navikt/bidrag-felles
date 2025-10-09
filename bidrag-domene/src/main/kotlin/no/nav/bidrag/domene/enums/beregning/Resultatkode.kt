@@ -339,7 +339,7 @@ enum class Resultatkode(
         ResultatkodeType.BARNEBIDRAG,
     ),
     INNKREVINGSGRUNNLAG(
-        listOf(BisysResultatkode("IV")),
+        listOf(BisysResultatkode("IKG")),
         ResultatkodeType.BARNEBIDRAG,
     ),
 
