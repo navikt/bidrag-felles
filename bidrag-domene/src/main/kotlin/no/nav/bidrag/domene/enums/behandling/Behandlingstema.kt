@@ -1,6 +1,8 @@
 package no.nav.bidrag.domene.enums.behandling
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 
 // Enum verdier av tabellen t_kode_sokn_gr i bisys
 // Dette er enum som er 1-1 med bisys sine søknad gruppe kode. Brukes i blant annet bidrag-behandling og ved opprettelse av oppgaver i bidrag-arbeidsflyt
@@ -44,3 +46,32 @@ enum class Behandlingstema(
             }
     }
 }
+
+fun tilBeskrivelseBehandlingstema(
+    stønadstype: Stønadstype? = null,
+    engangsbeløptype: Engangsbeløptype? = null,
+    behandlingstema: Behandlingstema? = null,
+): String? =
+    when (stønadstype) {
+        Stønadstype.FORSKUDD -> "Bidragsforskudd"
+        Stønadstype.BIDRAG -> "Barnebidrag"
+        Stønadstype.BIDRAG18AAR -> "Barnebidrag 18 år"
+        Stønadstype.EKTEFELLEBIDRAG -> "Ektefellebidrag"
+        Stønadstype.OPPFOSTRINGSBIDRAG -> "Oppfostringbidrag"
+        Stønadstype.MOTREGNING -> "Motregning"
+        else ->
+            when (engangsbeløptype) {
+                Engangsbeløptype.SAERTILSKUDD, Engangsbeløptype.SÆRTILSKUDD, Engangsbeløptype.SÆRBIDRAG -> "Særbidrag"
+                Engangsbeløptype.DIREKTE_OPPGJOR, Engangsbeløptype.DIREKTE_OPPGJØR -> "Direkte oppgjør"
+                Engangsbeløptype.ETTERGIVELSE -> "Ettergivelse"
+                Engangsbeløptype.ETTERGIVELSE_TILBAKEKREVING -> "Ettergivelse tilbakekreving"
+                Engangsbeløptype.GEBYR_MOTTAKER, Engangsbeløptype.GEBYR_SKYLDNER -> "Gebyr"
+                Engangsbeløptype.TILBAKEKREVING -> "Tilbakekreving"
+                else ->
+                    behandlingstema
+                        ?.name
+                        ?.lowercase()
+                        ?.replace("_", " ")
+                        ?.replaceFirstChar { it.uppercase() }
+            }
+    }

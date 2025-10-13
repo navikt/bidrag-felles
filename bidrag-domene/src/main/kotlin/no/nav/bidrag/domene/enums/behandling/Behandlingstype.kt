@@ -32,7 +32,7 @@ enum class Behandlingstype(
     OMGJØRING_BEGRENSET_SATS("OB", true),
     PARAGRAF_35_C("35", true),
     PARAGRAF_35_C_BEGRENSET_SATS("3B", true),
-    MANEDLIG_PALOP("MP", false),
+    MÅNEDLIG_PÅLOP("MP", false),
 
     ;
 

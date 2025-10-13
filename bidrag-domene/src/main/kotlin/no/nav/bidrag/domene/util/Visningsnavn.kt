@@ -6,6 +6,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import no.nav.bidrag.domene.enums.barnetilsyn.Skolealder
 import no.nav.bidrag.domene.enums.barnetilsyn.Tilsynstype
+import no.nav.bidrag.domene.enums.behandling.Behandlingstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvslag
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeBarnebidrag
@@ -58,6 +59,7 @@ val Inntektsrapportering.Companion.visningsnavnSomKreverPeriode get() =
     listOf(
         Inntektsrapportering.OVERGANGSSTØNAD,
     )
+val Behandlingstype.visningsnavn get() = lastVisningsnavnFraFil("behandlingstype.yaml")[name] ?: visningsnavnMangler(name)
 val PrivatAvtaleType.visningsnavn get() = lastVisningsnavnFraFil("privatavtaletype.yaml")[name] ?: visningsnavnMangler(name)
 val Skolealder.visningsnavn get() = lastVisningsnavnFraFil("skolealder.yaml")[name] ?: visningsnavnMangler(name)
 val Tilsynstype.visningsnavn get() = lastVisningsnavnFraFil("tilsynstype.yaml")[name] ?: visningsnavnMangler(name)
