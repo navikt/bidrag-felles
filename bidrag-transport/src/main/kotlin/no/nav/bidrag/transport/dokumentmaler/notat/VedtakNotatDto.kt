@@ -56,7 +56,8 @@ data class VedtakNotatDto(
     val saksnummer: String,
     val behandling: NotatBehandlingDetaljerDto,
     val saksbehandlerNavn: String?,
-    val virkningstidspunkt: NotatVirkningstidspunktDto,
+    val virkningstidspunkt: NotatVirkningstidspunktBarnDto,
+    val virkningstidspunktV2: NotatVirkningstidspunktDto,
     val utgift: NotatSærbidragUtgifterDto?,
     val boforhold: NotatBoforholdDto,
     val samvær: List<NotatSamværDto> = emptyList(),
@@ -321,6 +322,12 @@ data class NotatSærbidragKategoriDto(
 )
 
 data class NotatVirkningstidspunktDto(
+    val erLikForAlle: Boolean,
+    val barn: List<NotatVirkningstidspunktBarnDto>,
+)
+
+data class NotatVirkningstidspunktBarnDto(
+    val rolle: DokumentmalPersonDto,
     val søknadstype: String?,
     val vedtakstype: Vedtakstype?,
     val søktAv: SøktAvType?,
@@ -331,6 +338,7 @@ data class NotatVirkningstidspunktDto(
     @JsonFormat(pattern = "yyyy-MM")
     val søktFraDato: YearMonth?,
     val beregnTilDato: YearMonth?,
+    val opphørsdato: YearMonth?,
     val beregnTil: BeregnTil?,
     val etterfølgendeVedtakVirkningstidspunkt: YearMonth?,
     @Schema(type = "string", format = "date", example = "01.12.2025")
