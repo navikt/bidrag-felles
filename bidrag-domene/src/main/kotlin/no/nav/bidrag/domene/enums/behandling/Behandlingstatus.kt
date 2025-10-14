@@ -2,6 +2,7 @@ package no.nav.bidrag.domene.enums.behandling
 
 import io.swagger.v3.oas.annotations.media.Schema
 
+// Enum verdier av tabellen T_KODE_SOKN_STAT i bisys
 @Schema(enumAsRef = true)
 enum class Behandlingstatus(
     val bisysKode: String,
