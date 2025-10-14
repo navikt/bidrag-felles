@@ -250,6 +250,16 @@ fun StønadsendringDto.finnSøknadsbarnReferanse(grunnlagListe: List<GrunnlagDto
 
 fun VedtakDto.erVedtaksforslag() = vedtakstidspunkt == null
 
+fun List<GrunnlagDto>.finnSøknadGrunnlag(): SøknadGrunnlag? =
+    filtrerOgKonverterBasertPåEgenReferanse<SøknadGrunnlag>(
+        Grunnlagstype.SØKNAD,
+    ).firstOrNull()?.innhold
+
+fun VedtakDto.erInnkrevingsgrunnlag(): Boolean {
+    val søknad = this.grunnlagListe.finnSøknadGrunnlag()
+    return søknad != null && søknad.innkrevingsgrunnlag
+}
+
 fun List<GrunnlagDto>.finnOrkestreringDetaljer(
     grunnlagsreferanseListe: List<Grunnlagsreferanse> = emptyList(),
 ): VedtakOrkestreringDetaljerGrunnlag? =
@@ -363,7 +373,7 @@ val VedtakDto.omgjøringsvedtakErEnesteVedtak get() =
                 }
         }
 val VedtakDto.erOrkestrertVedtak get() =
-    this.grunnlagListe.finnOrkestreringDetaljer() != null || this.stønadsendringListe.isNotEmpty() &&
+    this.grunnlagListe.finnOrkestreringDetaljer() != null || this.stønadsendringListe.isNotEmpty() && !this.erInnkrevingsgrunnlag() &&
         this.stønadsendringListe.all { se ->
             se.beslutning != Beslutningstype.DELVEDTAK &&
                 se.periodeListe.isNotEmpty() &&
