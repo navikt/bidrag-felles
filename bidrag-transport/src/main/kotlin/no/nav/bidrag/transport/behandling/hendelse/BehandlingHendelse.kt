@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.hendelse
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.behandling.Behandlingstatus
 import no.nav.bidrag.domene.enums.behandling.Behandlingstema
@@ -17,8 +18,12 @@ data class BehandlingHendelse(
     val type: BehandlingHendelseType,
     val status: BehandlingStatusType,
     val vedtakstype: Vedtakstype,
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.uuuu-HH-mm-ss")
     val opprettetTidspunkt: LocalDateTime,
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.uuuu-HH-mm-ss")
     val endretTidspunkt: LocalDateTime,
+    @Schema(type = "string", format = "date", example = "01.12.2025")
+    @JsonFormat(pattern = "dd.MM.uuuu")
     val mottattDato: LocalDate,
     val barn: List<BehandlingHendelseBarn> = emptyList(),
     val sporingsdata: Sporingsdata,
@@ -39,6 +44,8 @@ data class BehandlingHendelseBarn(
     val engangsbeløptype: Engangsbeløptype? = null,
     val medInnkreving: Boolean = true,
     val søktAv: SøktAvType,
+    @Schema(type = "string", format = "date", example = "01.12.2025")
+    @JsonFormat(pattern = "dd.MM.uuuu")
     val søktFraDato: LocalDate,
     val ident: String,
     @Schema(
