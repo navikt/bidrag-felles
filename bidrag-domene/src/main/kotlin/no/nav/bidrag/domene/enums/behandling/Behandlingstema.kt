@@ -48,6 +48,34 @@ enum class Behandlingstema(
     }
 }
 
+fun Behandlingstema.tilBeskrivelse(medInnkreving: Boolean = false): String? =
+    when (this) {
+        Behandlingstema.BIDRAG_18_ÅR -> if (medInnkreving) "18 år, innkreving" else "18 år"
+        Behandlingstema.SÆRBIDRAG -> if (medInnkreving) "Særtilskudd,innkreving" else "Særtilskudd"
+        Behandlingstema.BIDRAG_18_ÅR_PLUSS_TILLEGGSBIDRAG -> if (medInnkreving) "18 år, tilleggsb,innkreving" else "18 år, tilleggsb."
+        Behandlingstema.TILLEGGSBIDRAG -> if (medInnkreving) "Tilleggsbidrag,innkreving" else "Tilleggsbidrag"
+        Behandlingstema.BIDRAG -> if (medInnkreving) "Bidrag,innkreving" else "Bidrag"
+        Behandlingstema.BIDRAG_PLUSS_TILLEGGSBIDRAG -> if (medInnkreving) "Bidrag,tilleggsb,innkreving" else "Bidrag,tilleggsb"
+        Behandlingstema.EKTEFELLEBIDRAG -> if (medInnkreving) "Ektefellebidrag m/innkr" else "Ektefellebidrag u/innkr"
+        Behandlingstema.DIREKTE_OPPGJØR -> "Direkte oppgjør"
+        Behandlingstema.AVSKRIVNING -> "Avskrivning direkte betalt"
+        Behandlingstema.ETTERGIVELSE -> "Ettergivelse"
+        Behandlingstema.ERSTATNING -> "Erstatning"
+        Behandlingstema.FARSSKAP -> "Farskap"
+        Behandlingstema.KUNNSKAP_OM_BIOLOGISK_FAR -> "Kunnskap om biologisk far"
+        Behandlingstema.FORSKUDD -> "Forskudd"
+        Behandlingstema.GEBYR -> "Gebyr"
+        Behandlingstema.INNKREVING -> "Innkreving"
+        Behandlingstema.MORSSKAP -> "Morskap"
+        Behandlingstema.MOTREGNING -> "Motregning"
+        Behandlingstema.OPPFOSTRINGSBIDRAG -> "Oppfostringsbidrag,innkreving"
+        Behandlingstema.REFUSJON_BIDRAG -> "Refusjon bidrag"
+        Behandlingstema.REISEKOSTNADER -> "Reisekostnader"
+        Behandlingstema.SAKSOMKOSTNINGER -> "Saksomkostninger"
+        Behandlingstema.TILBAKEKREVING_ETTERGIVELSE -> "Tilbakekr,ettergivelse"
+        Behandlingstema.TILBAKEKREVING -> "Tilbakekreving"
+    }
+
 fun tilBeskrivelseBehandlingstema(
     stønadstype: Stønadstype? = null,
     engangsbeløptype: Engangsbeløptype? = null,
