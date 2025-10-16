@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Beregningstype
 import no.nav.bidrag.domene.enums.vedtak.BeregnTil
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -104,6 +105,7 @@ data class BeregningGrunnlagV2(
     val søknadsbarnreferanse: Grunnlagsreferanse,
     val periode: ÅrMånedsperiode,
     val opphørsdato: YearMonth? = null,
+    val stønadstype: Stønadstype,
     val omgjøringOrkestratorGrunnlag: OmgjøringOrkestratorGrunnlag? = null,
 )
 
