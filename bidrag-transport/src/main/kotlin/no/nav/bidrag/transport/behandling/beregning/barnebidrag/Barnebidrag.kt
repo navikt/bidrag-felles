@@ -9,8 +9,10 @@ import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.beregning.felles.BeregnGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
+import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import java.math.BigDecimal
 import java.time.LocalDate
+import java.time.YearMonth
 import java.util.Collections.emptyList
 
 @Schema(description = "Resultatet av en barnebidragsberegning")
@@ -89,3 +91,36 @@ data class ResultatVedtak(
 ) {
     val endeligVedtak get() = !delvedtak && !omgjøringsvedtak
 }
+
+data class BidragsberegningOrkestratorRequestV2(
+    val beregningsperiode: ÅrMånedsperiode,
+    val beregningBarn: List<BeregningGrunnlagV2>,
+    val grunnlagsliste: List<GrunnlagDto>,
+    val erDirekteAvslag: Boolean = false,
+    val beregningstype: Beregningstype = Beregningstype.BIDRAG,
+)
+
+data class BeregningGrunnlagV2(
+    val søknadsbarnreferanse: Grunnlagsreferanse,
+    val periode: ÅrMånedsperiode,
+    val opphørsdato: YearMonth? = null,
+    val omgjøringOrkestratorGrunnlag: OmgjøringOrkestratorGrunnlag? = null,
+)
+
+data class BidragsberegningOrkestratorResponseV2(
+    var grunnlagListe: List<GrunnlagDto> = emptyList(),
+    val resultat: List<BidragsberegningResultatBarnV2> = emptyList(),
+)
+
+data class BidragsberegningResultatBarnV2(
+    val søknadsbarnreferanse: Grunnlagsreferanse,
+    val resultatVedtakListe: List<ResultatVedtakV2> = emptyList(),
+)
+
+data class ResultatVedtakV2(
+    var periodeListe: List<ResultatPeriode> = emptyList(),
+    val delvedtak: Boolean = false,
+    val omgjøringsvedtak: Boolean = false,
+    val beregnet: Boolean = false,
+    val vedtakstype: Vedtakstype,
+)
