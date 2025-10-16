@@ -44,7 +44,7 @@ data class BehandlingHendelseBarn(
     val medInnkreving: Boolean = true,
     val søktAv: SøktAvType,
     @JsonFormat(pattern = "uuuu-MM-dd")
-    val søktFraDato: LocalDate,
+    val søktFraDato: LocalDate?,
     val ident: String,
     @Schema(
         description = "Kan være ulik i samme behandling hvis det er barnebidragsbehandling som er slått ut til forholdsmessig fordeling",
