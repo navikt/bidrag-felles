@@ -125,4 +125,5 @@ data class ResultatVedtakV2(
     val omgjøringsvedtak: Boolean = false,
     val beregnet: Boolean = false,
     val vedtakstype: Vedtakstype,
+    val beregnetFraDato: LocalDate = periodeListe.minOf { it.periode.fom }.atDay(1),
 )
