@@ -8,6 +8,9 @@ import no.nav.bidrag.commons.service.AppContext
 import no.nav.bidrag.commons.service.retryTemplateSynchronous
 import no.nav.bidrag.commons.util.secureLogger
 import no.nav.bidrag.commons.web.client.AbstractRestClient
+import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.transport.organisasjon.EnhetDto
+import no.nav.bidrag.transport.organisasjon.HentEnhetRequest
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.cache.annotation.Cacheable
@@ -67,9 +70,16 @@ internal class BidragOrganisasjonConsumer(
             .build()
             .toUri()
 
-    @Cacheable(SaksbehandlernavnProvider.SAKSBEHANDLERINFO_CACHE)
+    @Cacheable(EnhetProvider.SAKSBEHANDLERINFO_CACHE)
     fun hentSaksbehandlerInfo(saksbehandlerIdent: String): SaksbehandlerInfoResponse? =
         getForEntity(createUri("/saksbehandler/info/$saksbehandlerIdent"))
+
+    @Cacheable(EnhetProvider.GEOGRAFISK_TILKNYTNING_CACHE)
+    fun hentArbeidsfordelingGeografiskTilknytningEnhet(ident: String): EnhetDto? =
+        postForNonNullEntity(
+            createUri("/arbeidsfordeling/enhet/geografisktilknytning"),
+            HentEnhetRequest(Personident(ident)),
+        )
 }
 
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -78,6 +88,7 @@ data class SaksbehandlerInfoResponse(
     val navn: String,
 )
 
+@Deprecated("Bruk EnhetProvider istedenfor")
 class SaksbehandlernavnProvider {
     companion object {
         const val SAKSBEHANDLERINFO_CACHE = "SAKSBEHANDLERINFO_CACHE"
@@ -97,6 +108,50 @@ class SaksbehandlernavnProvider {
                 }
             } catch (e: Exception) {
                 secureLogger.error(e) { "Det skjedde en feil ved henting av saksbehandlernavn for saksbehandler $saksbehandlerIdent" }
+                null
+            }
+    }
+}
+
+class EnhetProvider {
+    companion object {
+        const val SAKSBEHANDLERINFO_CACHE = "SAKSBEHANDLERINFO_CACHE"
+        const val GEOGRAFISK_TILKNYTNING_CACHE = "GEOGRAFISK_TILKNYTNING_CACHE"
+
+        /**
+         * Hent navn på personen som tilhører en NAV-ident (feks Z994977)
+         */
+        fun hentSaksbehandlernavn(saksbehandlerIdent: String): String? =
+            try {
+                retryTemplateSynchronous(
+                    "EnhetProvider.hentSaksbehandlernavn for ident $saksbehandlerIdent",
+                ).execute<String, HttpClientErrorException> {
+                    AppContext
+                        .getBean("CommonsBidragOrganisasjonConsumer", BidragOrganisasjonConsumer::class.java)
+                        .hentSaksbehandlerInfo(saksbehandlerIdent)
+                        ?.navn
+                }
+            } catch (e: Exception) {
+                secureLogger.error(e) { "Det skjedde en feil ved henting av saksbehandlernavn for saksbehandler $saksbehandlerIdent" }
+                null
+            }
+
+        /**
+         * Hent geografisk tilknytning (enhet) for person
+         */
+        fun hentGeografiskTilknytningPerson(personident: String): String? =
+            try {
+                retryTemplateSynchronous(
+                    "EnhetProvider.hentGeografiskTilknytningPerson for ident $personident",
+                ).execute<String, HttpClientErrorException> {
+                    AppContext
+                        .getBean("CommonsBidragOrganisasjonConsumer", BidragOrganisasjonConsumer::class.java)
+                        .hentArbeidsfordelingGeografiskTilknytningEnhet(personident)
+                        ?.nummer
+                        ?.verdi
+                }
+            } catch (e: Exception) {
+                secureLogger.error(e) { "Det skjedde en feil ved henting av enhet for $personident" }
                 null
             }
     }
