@@ -17,6 +17,7 @@ enum class Behandlingstype(
     EGET_TILTAK("ET", "Eget tiltak", false),
     SØKNAD("FA", "Søknad", false),
     INNKREVINGSGRUNNLAG("IG", "Innkr.grunnlag", false),
+    FORHOLDSMESSIG_FORDELING("FF", "Forholdsmessig fordeling", false),
     ALDERSJUSTERING("AJ", "Aldersjustering", false),
     INDEKSREGULERING("IR", "Indeksregulering", false),
     KLAGE_BEGRENSET_SATS("KB", "Klage begr sats", true),
