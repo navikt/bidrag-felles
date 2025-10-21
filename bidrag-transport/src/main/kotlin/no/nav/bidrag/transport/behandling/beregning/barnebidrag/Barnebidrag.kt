@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.beregning.barnebidrag
 import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Beregningstype
+import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.vedtak.BeregnTil
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
@@ -117,12 +118,17 @@ data class BidragsberegningOrkestratorResponseV2(
 data class BidragsberegningResultatBarnV2(
     val søknadsbarnreferanse: Grunnlagsreferanse,
     val resultatVedtakListe: List<ResultatVedtakV2> = emptyList(),
+    @Deprecated("Skal ikke brukes. Erstatt med avvisning")
     val beregningsfeil: Exception? = null,
 )
 
 data class ResultatVedtakV2(
     var periodeListe: List<ResultatPeriode> = emptyList(),
+    // Grunnlagliste for delvedtak ved orkestrering. Skal bare inneholde grunnlag fra delvedtak
+    // Grunnlagsliste for hovedberegningen skal ligge i BidragsberegningOrkestratorResponseV2
+    val grunnlagslisteDelvedtak: List<GrunnlagDto> = emptyList(),
     val delvedtak: Boolean = false,
+    val avvisning: Resultatkode? = null,
     val omgjøringsvedtak: Boolean = false,
     val beregnet: Boolean = false,
     val vedtakstype: Vedtakstype,
