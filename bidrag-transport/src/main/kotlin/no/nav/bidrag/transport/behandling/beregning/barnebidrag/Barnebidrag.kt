@@ -117,6 +117,7 @@ data class BidragsberegningOrkestratorResponseV2(
 data class BidragsberegningResultatBarnV2(
     val søknadsbarnreferanse: Grunnlagsreferanse,
     val resultatVedtakListe: List<ResultatVedtakV2> = emptyList(),
+    val beregningsfeil: Exception? = null,
 )
 
 data class ResultatVedtakV2(
