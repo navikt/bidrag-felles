@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.beregning.felles
 
 import no.nav.bidrag.domene.enums.behandling.Behandlingstype
+import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import java.math.BigDecimal
@@ -32,7 +33,7 @@ data class ÅpenSøknadDto(
 
 data class PartISøknad(
     val personident: String?,
-    val rolletype: String,
+    val rolletype: Rolletype,
     val innbetaltBeløp: BigDecimal? = BigDecimal.ZERO,
     val gebyr: Boolean = false,
 )
