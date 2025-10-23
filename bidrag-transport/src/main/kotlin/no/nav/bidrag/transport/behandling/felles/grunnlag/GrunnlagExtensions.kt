@@ -286,6 +286,42 @@ fun List<GrunnlagDto>.finnDelberegningSjekkGrense(søknadsbarnReferanse: String)
         gjelderBarnReferanse = søknadsbarnReferanse,
     ).firstOrNull()
 
+// Filtrerer ut grunnlag som er gyldige for en gitt BM/BP/Barn kombinasjon
+fun List<GrunnlagDto>.finnGyldigeGrunnlagForBarn(
+    bmRef: Grunnlagsreferanse,
+    bpRef: Grunnlagsreferanse,
+    barnRef: Grunnlagsreferanse,
+): List<GrunnlagDto> =
+    this.filter {
+        it.erGyldigForBarn(bmRef, bpRef, barnRef)
+    }
+
+// Sjekker om et grunnlag er gyldig for en gitt BM/BP/Barn kombinasjon
+fun GrunnlagDto.erGyldigForBarn(
+    bmRef: Grunnlagsreferanse,
+    bpRef: Grunnlagsreferanse,
+    barnRef: Grunnlagsreferanse,
+): Boolean {
+    val gjelderRef = this.gjelderReferanse
+    val gjelderBarnRef = this.gjelderBarnReferanse
+
+    return when {
+        // Gjelder BM og riktig barn (eller ingen barn)
+        gjelderRef == bmRef && (gjelderBarnRef == barnRef || gjelderBarnRef == null) -> true
+
+        // Gjelder BP og riktig barn (eller ingen barn)
+        gjelderRef == bpRef && (gjelderBarnRef == barnRef || gjelderBarnRef == null) -> true
+
+        // Gjelder barnet selv
+        gjelderRef == barnRef && (gjelderBarnRef == barnRef || gjelderBarnRef == null) -> true
+
+        // Ingen gjelderReferanse, men gjelderBarnReferanse matcher barn (eller null)
+        gjelderRef == null && (gjelderBarnRef == barnRef || gjelderBarnRef == null) -> true
+
+        else -> false
+    }
+}
+
 inline fun <reified T : GrunnlagInnhold> BaseGrunnlag.tilInnholdMedReferanse() =
     InnholdMedReferanse(
         referanse,
