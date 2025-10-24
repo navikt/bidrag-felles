@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.sak
 
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.sak.Bidragssakstatus
+import no.nav.bidrag.domene.enums.sak.Fogdårsak
 import no.nav.bidrag.domene.enums.sak.Sakskategori
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import no.nav.bidrag.domene.sak.Saksnummer
@@ -38,4 +39,17 @@ data class SamhandlerSakerDto(
 
 data class SamhandlerSakerRequestDto(
     val samhandlerId: String,
+)
+
+data class FjernMidlertidligTilgangRequest(
+    val saksnummer: String,
+    val enhet: String,
+    val årsak: Fogdårsak? = null,
+)
+
+data class OpprettMidlertidligTilgangRequest(
+    val saksnummer: String,
+    val enhet: String,
+    val tilgangTilOgMedDato: LocalDate? = null,
+    val årsak: Fogdårsak = Fogdårsak.MAKO,
 )
