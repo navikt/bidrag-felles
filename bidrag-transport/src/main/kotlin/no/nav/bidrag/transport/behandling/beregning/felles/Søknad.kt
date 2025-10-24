@@ -102,30 +102,3 @@ data class HentSøknadslinje(
     val personidentBarn: String,
     val behandlingstatus: Behandlingstatus,
 )
-
-data class HentSøknadRequest(
-    val søknadsid: String,
-)
-
-data class HentSøknadResponse(
-    val søknad: HentSøknad,
-)
-
-data class HentSøknad(
-    val søknadsid: String,
-    val blankettid: String,
-    val søknadMottattDato: LocalDate,
-    val søknadFomDato: LocalDate? = null,
-    val stønadstype: Stønadstype,
-    val behandlerenhet: String? = null,
-    val saksnummer: String,
-    val behandlingsid: String? = null,
-    val behandlingStatusType: BehandlingStatusType,
-    val hentSøknadslinjerListe: List<HentSøknadslinje> = emptyList(),
-)
-
-data class HentSøknadslinje(
-    val søknadslinjeid: String,
-    val personidentBarn: String,
-    val behandlingstatus: Behandlingstatus,
-)
