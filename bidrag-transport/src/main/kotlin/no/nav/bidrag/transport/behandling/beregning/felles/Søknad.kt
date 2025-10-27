@@ -10,7 +10,12 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 data class FeilregistrerSøknadRequest(
-    val søknadsid: String,
+    val søknadsid: Long,
+)
+
+data class FeilregistrerSøknadsBarnRequest(
+    val søknadsid: Long,
+    val personidentBarn: String,
 )
 
 data class HentBPsÅpneSøknaderRequest(
@@ -22,46 +27,49 @@ data class HentBPsÅpneSøknaderResponse(
 )
 
 data class ÅpenSøknadDto(
+    val søknadsid: Long,
     val behandlingstype: Behandlingstype,
     val saksnummer: String,
-    val søknadsid: String,
     val behandlingstema: Behandlingstema,
     val innkreving: Boolean,
-    val behandlingsid: String?,
+    val behandlingsid: Long? = null,
     val søknadMottattDato: LocalDate,
-    val søknadFomDato: LocalDate?,
+    val søknadFomDato: LocalDate? = null,
     val søktAvType: SøktAvType,
+    val referertSøknadsid: Long? = null,
+    val referertBehandlingsid: Long? = null,
+    val referertVedtaksid: Int? = null,
     val partISøknadListe: List<PartISøknad> = emptyList(),
 )
 
 data class PartISøknad(
-    val personident: String?,
+    val personident: String? = null,
     val rolletype: Rolletype,
     val innbetaltBeløp: BigDecimal? = BigDecimal.ZERO,
     val gebyr: Boolean = false,
 )
 
 data class LeggTilBarnIFFSøknadRequest(
-    val søknadsid: String,
+    val søknadsid: Long,
     val personidentBarn: String,
     val innkreving: Boolean,
 )
 
 data class OppdaterBehandlerenhetRequest(
     val behandlerenhet: String,
-    val søknadsid: String,
+    val søknadsid: Long,
 )
 
 data class OppdaterBehandlingsidRequest(
-    val eksisterendeBehandlingsid: String? = null,
-    val nyBehandlingsid: String,
-    val søknadsid: String,
+    val eksisterendeBehandlingsid: Long? = null,
+    val nyBehandlingsid: Long,
+    val søknadsid: Long,
 )
 
 data class OpprettSøknadRequest(
     val saksnummer: String,
     val behandlingstema: Behandlingstema,
-    val behandlingsid: String?,
+    val behandlingsid: Long? = null,
     val enhet: String,
     val søknadFomDato: LocalDate,
     val innkreving: Boolean,
@@ -73,11 +81,11 @@ data class Barn(
 )
 
 data class OpprettSøknadResponse(
-    val søknadsid: String,
+    val søknadsid: Long,
 )
 
 data class HentSøknadRequest(
-    val søknadsid: String,
+    val søknadsid: Long,
 )
 
 data class HentSøknadResponse(
@@ -85,13 +93,13 @@ data class HentSøknadResponse(
 )
 
 data class HentSøknad(
-    val søknadsid: String,
+    val søknadsid: Long,
     val søknadMottattDato: LocalDate,
     val søknadFomDato: LocalDate? = null,
     val behandlingstema: Behandlingstema,
     val behandlerenhet: String? = null,
     val saksnummer: String,
-    val behandlingsid: String? = null,
+    val behandlingsid: Long? = null,
     val behandlingStatusType: BehandlingStatusType,
     val hentSøknadslinjerListe: List<HentSøknadslinje> = emptyList(),
 )
