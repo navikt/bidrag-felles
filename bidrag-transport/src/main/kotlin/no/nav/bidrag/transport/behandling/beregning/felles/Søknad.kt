@@ -1,10 +1,10 @@
 package no.nav.bidrag.transport.behandling.beregning.felles
 
 import no.nav.bidrag.domene.enums.behandling.Behandlingstatus
+import no.nav.bidrag.domene.enums.behandling.Behandlingstema
 import no.nav.bidrag.domene.enums.behandling.Behandlingstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
-import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.transport.behandling.hendelse.BehandlingStatusType
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -25,7 +25,7 @@ data class ÅpenSøknadDto(
     val behandlingstype: Behandlingstype,
     val saksnummer: String,
     val søknadsid: String,
-    val stønadstype: Stønadstype,
+    val behandlingstema: Behandlingstema,
     val innkreving: Boolean,
     val behandlingsid: String?,
     val søknadMottattDato: LocalDate,
@@ -60,7 +60,7 @@ data class OppdaterBehandlingsidRequest(
 
 data class OpprettSøknadRequest(
     val saksnummer: String,
-    val stønadstype: Stønadstype,
+    val behandlingstema: Behandlingstema,
     val behandlingsid: String?,
     val enhet: String,
     val søknadFomDato: LocalDate,
@@ -86,10 +86,9 @@ data class HentSøknadResponse(
 
 data class HentSøknad(
     val søknadsid: String,
-    val blankettid: String,
     val søknadMottattDato: LocalDate,
     val søknadFomDato: LocalDate? = null,
-    val stønadstype: Stønadstype,
+    val behandlingstema: Behandlingstema,
     val behandlerenhet: String? = null,
     val saksnummer: String,
     val behandlingsid: String? = null,
@@ -98,7 +97,6 @@ data class HentSøknad(
 )
 
 data class HentSøknadslinje(
-    val søknadslinjeid: String,
     val personidentBarn: String,
     val behandlingstatus: Behandlingstatus,
 )
