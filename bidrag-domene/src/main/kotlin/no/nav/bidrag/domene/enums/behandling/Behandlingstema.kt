@@ -48,6 +48,31 @@ enum class Behandlingstema(
     }
 }
 
+fun Stønadstype.tilBehandlingstema(): Behandlingstema =
+    when (this) {
+        Stønadstype.BIDRAG -> Behandlingstema.BIDRAG
+        Stønadstype.BIDRAG18AAR -> Behandlingstema.BIDRAG_18_ÅR
+        Stønadstype.MOTREGNING -> Behandlingstema.MOTREGNING
+        Stønadstype.EKTEFELLEBIDRAG -> Behandlingstema.EKTEFELLEBIDRAG
+        Stønadstype.OPPFOSTRINGSBIDRAG -> Behandlingstema.OPPFOSTRINGSBIDRAG
+        Stønadstype.FORSKUDD -> Behandlingstema.FORSKUDD
+    }
+
+fun Behandlingstema.tilStønadstype(): Stønadstype? =
+    when (this) {
+        Behandlingstema.BIDRAG,
+        Behandlingstema.BIDRAG_PLUSS_TILLEGGSBIDRAG,
+        -> Stønadstype.BIDRAG
+
+        Behandlingstema.BIDRAG_18_ÅR, Behandlingstema.BIDRAG_18_ÅR_PLUSS_TILLEGGSBIDRAG -> Stønadstype.BIDRAG18AAR
+        Behandlingstema.EKTEFELLEBIDRAG -> Stønadstype.EKTEFELLEBIDRAG
+        Behandlingstema.OPPFOSTRINGSBIDRAG -> Stønadstype.OPPFOSTRINGSBIDRAG
+        Behandlingstema.MOTREGNING -> Stønadstype.MOTREGNING
+        Behandlingstema.FORSKUDD -> Stønadstype.FORSKUDD
+
+        else -> null
+    }
+
 fun Behandlingstema.tilBeskrivelse(medInnkreving: Boolean = false): String? =
     when (this) {
         Behandlingstema.BIDRAG_18_ÅR -> if (medInnkreving) "18 år, innkreving" else "18 år"

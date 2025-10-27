@@ -8,6 +8,11 @@ import no.nav.bidrag.domene.land.Landkode
 import no.nav.bidrag.domene.sak.Saksnummer
 import java.time.LocalDate
 
+data class OppdaterRollerISakRequest(
+    val saksnummer: Saksnummer,
+    val roller: Set<RolleDto> = setOf(),
+)
+
 data class OppdaterSakRequest(
     val saksnummer: Saksnummer,
     val status: Bidragssakstatus? = null,
