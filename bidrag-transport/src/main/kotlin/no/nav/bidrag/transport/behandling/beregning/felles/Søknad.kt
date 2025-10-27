@@ -72,8 +72,8 @@ data class Barn(
     val personident: String,
 )
 
-data class OpprettSøknaderResponse(
-    val søknadsidListe: List<String>,
+data class OpprettSøknadResponse(
+    val søknadsid: String,
 )
 
 data class HentSøknadRequest(
