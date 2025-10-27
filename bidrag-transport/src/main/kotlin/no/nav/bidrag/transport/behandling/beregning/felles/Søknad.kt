@@ -73,7 +73,7 @@ data class Barn(
 )
 
 data class OpprettSøknaderResponse(
-    val søknadsidListe: List<String>,
+    val søknadsid: String,
 )
 
 data class HentSøknadRequest(
