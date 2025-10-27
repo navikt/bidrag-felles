@@ -9,6 +9,7 @@ import no.nav.bidrag.domene.sak.Saksnummer
 import java.time.LocalDate
 
 data class OppdaterRollerISakRequest(
+    val saksnummer: Saksnummer,
     val roller: Set<RolleDto> = setOf(),
 )
 
