@@ -52,7 +52,6 @@ data class PartISøknad(
 data class LeggTilBarnIFFSøknadRequest(
     val søknadsid: Long,
     val personidentBarn: String,
-    val innkreving: Boolean,
 )
 
 data class OppdaterBehandlerenhetRequest(
