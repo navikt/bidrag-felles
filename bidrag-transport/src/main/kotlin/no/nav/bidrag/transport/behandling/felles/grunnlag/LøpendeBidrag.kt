@@ -16,7 +16,6 @@ data class LøpendeBidragGrunnlag(
 data class LøpendeBidrag(
     val periode: ÅrMånedsperiode? = null,
     val saksnummer: Saksnummer,
-    val prioritertBidrag: Boolean = false,
     @JsonAlias("type")
     val stønadstype: Stønadstype,
     val løpendeBeløp: BigDecimal,
