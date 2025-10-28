@@ -1,8 +1,10 @@
 package no.nav.bidrag.transport.behandling.beregning.felles
 
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.sak.Sakskategori
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -10,16 +12,16 @@ data class BidragBeregningResponsDto(
     val beregningListe: List<BidragBeregning>,
 ) {
     data class BidragBeregning(
+        val periode: ÅrMånedsperiode? = null,
         val saksnummer: String,
+        val sakskategori: Sakskategori = Sakskategori.N,
         val personidentBarn: Personident,
         val gjelderFom: LocalDate,
         val datoSøknad: LocalDate,
         val beregnetBeløp: BigDecimal,
         val faktiskBeløp: BigDecimal,
         val beløpSamvær: BigDecimal,
-        val stønadstype: Stønadstype,
+        val stønadstype: Stønadstype = Stønadstype.BIDRAG,
         val samværsklasse: Samværsklasse? = null,
-        val underholdskostnad: BigDecimal? = null,
-        val bpAndelUnderholdskostnad: BigDecimal? = null,
     )
 }

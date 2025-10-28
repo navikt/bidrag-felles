@@ -4,10 +4,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
-import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
-import no.nav.bidrag.domene.enums.vedtak.Stønadstype
-import no.nav.bidrag.domene.sak.Saksnummer
 import java.math.BigDecimal
 import java.time.LocalDate
 
@@ -50,21 +47,4 @@ data class UtgiftMaksGodkjentBeløpGrunnlag(
     val beløp: BigDecimal,
     @Schema(description = "Begrunnelse på hvorfor maks godkjent beløp er satt")
     val begrunnelse: String,
-) : GrunnlagInnhold
-
-@Schema(description = "Informasjon om BPs løpende bidragssaker og nyeste manuelle beregning")
-data class LøpendeBidragGrunnlag(
-    val løpendeBidragListe: List<LøpendeBidrag>,
-) : GrunnlagInnhold
-
-data class LøpendeBidrag(
-    val saksnummer: Saksnummer,
-    val type: Stønadstype,
-    val løpendeBeløp: BigDecimal,
-    val valutakode: String = "NOK",
-    val samværsklasse: Samværsklasse,
-    val beregnetBeløp: BigDecimal,
-    val faktiskBeløp: BigDecimal,
-    @Schema(description = "Referanse til barnet det løpende bidraget gjelder for")
-    val gjelderBarn: Grunnlagsreferanse,
 ) : GrunnlagInnhold
