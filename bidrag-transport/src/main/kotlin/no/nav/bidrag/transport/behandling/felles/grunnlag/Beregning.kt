@@ -331,3 +331,48 @@ data class DelberegningEndringSjekkGrense(
     override val periode: ÅrMånedsperiode,
     val endringErOverGrense: Boolean,
 ) : Delberegning
+
+data class DelberegningBidragspliktigesAndelDeltBosted(
+    override val periode: ÅrMånedsperiode,
+    val bpAndelAvUVedDeltBostedFaktor: BigDecimal,
+    val bpAndelAvUVedDeltBostedBeløp: BigDecimal,
+) : Delberegning
+
+data class DelberegningBidragTilFordeling(
+    override val periode: ÅrMånedsperiode,
+    val bidragTilFordeling: BigDecimal,
+    val uMinusNettoBarnetilleggBM: BigDecimal,
+    val bpAndelAvUMinusSamværsfradrag: BigDecimal,
+) : Delberegning
+
+data class DelberegningSumBidragTilFordeling(
+    override val periode: ÅrMånedsperiode,
+    val sumBidragTilFordeling: BigDecimal,
+    val sumPrioriterteBidragTilFordeling: BigDecimal = BigDecimal.ZERO,
+    val erKompletteGrunnlagForAlleLøpendeBidrag: Boolean = true,
+) : Delberegning
+
+data class DelberegningEvne25ProsentAvInntekt(
+    override val periode: ÅrMånedsperiode,
+    val evneJustertFor25ProsentAvInntekt: BigDecimal,
+    val erEvneJustertNedTil25ProsentAvInntekt: Boolean = false,
+) : Delberegning
+
+data class DelberegningAndelAvBidragsevne(
+    override val periode: ÅrMånedsperiode,
+    val andelAvSumBidragTilFordelingFaktor: BigDecimal,
+    val andelAvEvneBeløp: BigDecimal,
+    val bidragEtterFordeling: BigDecimal,
+    val harBPFullEvne: Boolean = true,
+) : Delberegning
+
+data class DelberegningBidragJustertForBPBarnetillegg(
+    override val periode: ÅrMånedsperiode,
+    val bidragJustertForNettoBarnetilleggBP: BigDecimal,
+    val erBidragJustertTilNettoBarnetilleggBP: Boolean = false,
+) : Delberegning
+
+data class DelberegningEndeligBidragBeregnet(
+    override val periode: ÅrMånedsperiode,
+    val endeligBidrag: BigDecimal,
+) : Delberegning
