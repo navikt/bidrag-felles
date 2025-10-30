@@ -19,7 +19,7 @@ data class FeilregistrerSøknadsBarnRequest(
 )
 
 data class HentBPsÅpneSøknaderRequest(
-    val personidentBP: String,
+    val personidentBidragspliktig: String,
 )
 
 data class HentBPsÅpneSøknaderResponse(
@@ -29,6 +29,7 @@ data class HentBPsÅpneSøknaderResponse(
 data class ÅpenSøknadDto(
     val søknadsid: Long,
     val behandlingstype: Behandlingstype,
+    val behandlerenhet: String? = null,
     val saksnummer: String,
     val behandlingstema: Behandlingstema,
     val innkreving: Boolean,
@@ -55,21 +56,21 @@ data class LeggTilBarnIFFSøknadRequest(
 )
 
 data class OppdaterBehandlerenhetRequest(
-    val behandlerenhet: String,
     val søknadsid: Long,
+    val behandlerenhet: String,
 )
 
 data class OppdaterBehandlingsidRequest(
+    val søknadsid: Long,
     val eksisterendeBehandlingsid: Long? = null,
     val nyBehandlingsid: Long,
-    val søknadsid: Long,
 )
 
 data class OpprettSøknadRequest(
     val saksnummer: String,
     val behandlingstema: Behandlingstema,
     val behandlingsid: Long? = null,
-    val enhet: String,
+    val behandlerenhet: String? = null,
     val søknadFomDato: LocalDate,
     val innkreving: Boolean,
     val barnListe: List<Barn>,
