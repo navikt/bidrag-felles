@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonProperty
 import no.nav.bidrag.domene.beløp.Beløp
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
@@ -341,6 +342,8 @@ data class DelberegningBidragspliktigesAndelDeltBosted(
 data class DelberegningBidragTilFordeling(
     override val periode: ÅrMånedsperiode,
     val bidragTilFordeling: BigDecimal,
+    @JsonProperty("uMinusNettoBarnetilleggBM")
+    @JsonAlias("uminusNettoBarnetilleggBM")
     val uMinusNettoBarnetilleggBM: BigDecimal,
     val bpAndelAvUMinusSamværsfradrag: BigDecimal,
 ) : Delberegning
