@@ -16,7 +16,7 @@ INNKREVING_GJELD:
   intern: "Innkreving gjeld"
 TILBAKEKREVING:
   intern: "Tilbakekreving"
-TILBAKEKRAVING_BIDRAG:
+TILBAKEKREVING_BIDRAG:
   intern: "Tilbakekreving bidrag"
 SÆRTILSKUDD:
   intern: "Særtilskudd"
