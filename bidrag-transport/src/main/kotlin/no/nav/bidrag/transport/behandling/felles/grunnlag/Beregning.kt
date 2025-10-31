@@ -379,3 +379,9 @@ data class DelberegningEndeligBidragBeregnet(
     override val periode: ÅrMånedsperiode,
     val endeligBidrag: BigDecimal,
 ) : Delberegning
+
+data class DelberegningEvneLøpendeBidrag(
+    override val periode: ÅrMånedsperiode,
+    val reduksjonUnderholdskostnad: BigDecimal,
+    val bidragsevne: BigDecimal,
+) : Delberegning
