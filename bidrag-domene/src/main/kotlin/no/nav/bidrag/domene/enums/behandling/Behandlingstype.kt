@@ -38,7 +38,7 @@ enum class Behandlingstype(
     MÅNEDLIG_PÅLOP("MP", "Månedlig påløp", false),
     ;
 
-    fun tilVedtakstype() {
+    fun tilVedtakstype() =
         when (this) {
             INDEKSREGULERING -> Vedtakstype.INDEKSREGULERING
             ALDERSJUSTERING -> Vedtakstype.ALDERSJUSTERING
@@ -49,7 +49,6 @@ enum class Behandlingstype(
             REVURDERING, FORHOLDSMESSIG_FORDELING -> Vedtakstype.REVURDERING
             else -> Vedtakstype.ENDRING
         }
-    }
 
     fun erBegrensetRevurdering() =
         listOf(
