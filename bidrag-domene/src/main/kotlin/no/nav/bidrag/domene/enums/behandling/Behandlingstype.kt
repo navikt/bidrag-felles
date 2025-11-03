@@ -1,6 +1,7 @@
 package no.nav.bidrag.domene.enums.behandling
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 
 typealias BisysSøknadstype = Behandlingstype
 
@@ -36,6 +37,19 @@ enum class Behandlingstype(
     PARAGRAF_35_C_BEGRENSET_SATS("3B", "§ 35c begrenset sats", true),
     MÅNEDLIG_PÅLOP("MP", "Månedlig påløp", false),
     ;
+
+    fun tilVedtakstype() {
+        when (this) {
+            INDEKSREGULERING -> Vedtakstype.INDEKSREGULERING
+            ALDERSJUSTERING -> Vedtakstype.ALDERSJUSTERING
+            OPPHØR -> Vedtakstype.OPPHØR
+            SØKNAD -> Vedtakstype.FASTSETTELSE
+            INNKREVINGSGRUNNLAG, PRIVAT_AVTALE -> Vedtakstype.INNKREVING
+            KLAGE_BEGRENSET_SATS, KLAGE, FØLGER_KLAGE -> Vedtakstype.KLAGE
+            REVURDERING, FORHOLDSMESSIG_FORDELING -> Vedtakstype.REVURDERING
+            else -> Vedtakstype.ENDRING
+        }
+    }
 
     fun erBegrensetRevurdering() =
         listOf(
