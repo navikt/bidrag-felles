@@ -53,6 +53,7 @@ data class BehandlingHendelseBarn(
     val omgjørSøknadsid: Long? = null,
     val behandlerEnhet: String,
     val særbidragskategori: Særbidragskategori? = null,
+    val mottattDato: LocalDate? = null,
 )
 
 enum class BehandlingStatusType {
