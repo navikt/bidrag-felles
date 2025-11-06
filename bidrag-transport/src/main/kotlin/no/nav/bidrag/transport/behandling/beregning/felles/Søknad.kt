@@ -46,8 +46,8 @@ data class ÅpenSøknadDto(
 data class PartISøknad(
     val personident: String? = null,
     val rolletype: Rolletype,
-    val behandlingstatus: Behandlingstatus,
-    val innbetaltBeløp: BigDecimal? = BigDecimal.ZERO,
+    val behandlingstatus: Behandlingstatus? = null,
+    val innbetaltBeløp: BigDecimal? = null,
     val gebyr: Boolean = false,
     val referanseGebyr: String? = null,
 )
@@ -75,7 +75,7 @@ data class OpprettSøknadRequest(
     val behandlerenhet: String? = null,
     val søknadFomDato: LocalDate,
     val innkreving: Boolean,
-    val barnListe: List<Barn>,
+    val barnListe: List<Barn> = emptyList(),
 )
 
 data class Barn(
