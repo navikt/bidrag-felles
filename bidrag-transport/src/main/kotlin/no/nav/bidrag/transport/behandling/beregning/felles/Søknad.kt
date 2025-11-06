@@ -46,6 +46,7 @@ data class ÅpenSøknadDto(
 data class PartISøknad(
     val personident: String? = null,
     val rolletype: Rolletype,
+    val behandlingstatus: Behandlingstatus,
     val innbetaltBeløp: BigDecimal? = BigDecimal.ZERO,
     val gebyr: Boolean = false,
     val referanseGebyr: String? = null,
@@ -102,13 +103,7 @@ data class HentSøknad(
     val saksnummer: String,
     val behandlingsid: Long? = null,
     val behandlingStatusType: BehandlingStatusType,
-    val hentSøknadslinjerListe: List<HentSøknadslinje> = emptyList(),
-)
-
-data class HentSøknadslinje(
-    val personidentBarn: String,
-    val behandlingstatus: Behandlingstatus,
-    val referanseGebyr: String? = null,
+    val partISøknadListe: List<PartISøknad> = emptyList(),
 )
 
 data class OppdaterReferanseGebyrRequest(
