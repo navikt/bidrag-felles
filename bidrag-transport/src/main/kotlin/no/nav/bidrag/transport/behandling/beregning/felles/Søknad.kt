@@ -48,6 +48,7 @@ data class PartISøknad(
     val rolletype: Rolletype,
     val innbetaltBeløp: BigDecimal? = BigDecimal.ZERO,
     val gebyr: Boolean = false,
+    val referanseGebyr: String? = null,
 )
 
 data class LeggTilBarnIFFSøknadRequest(
@@ -107,4 +108,11 @@ data class HentSøknad(
 data class HentSøknadslinje(
     val personidentBarn: String,
     val behandlingstatus: Behandlingstatus,
+    val referanseGebyr: String? = null,
+)
+
+data class OppdaterReferanseGebyrRequest(
+    val søknadsid: Long,
+    val personident: String,
+    val referanse: String,
 )
