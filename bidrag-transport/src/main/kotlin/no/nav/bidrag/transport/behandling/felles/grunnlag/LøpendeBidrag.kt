@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
@@ -14,6 +15,7 @@ data class LøpendeBidragGrunnlag(
 
 data class LøpendeBidrag(
     val saksnummer: Saksnummer,
+    @JsonAlias("stønadstype")
     val type: Stønadstype,
     val løpendeBeløp: BigDecimal,
     val valutakode: String = "NOK",
