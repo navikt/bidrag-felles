@@ -25,7 +25,11 @@ data class RolleDto(
     val rolleType: Rolletype = type,
 ) {
     fun valider() {
-        require(reellMottager == null || type == Rolletype.BARN) { "Reell mottager kan kun opprettes for barn." }
+        if(this.harRM()){
+            require(type == Rolletype.BARN) {
+                "Reell mottager kan kun opprettes for barn."
+            }
+        }
     }
 
     fun rmErSamhandlerId() = reellMottaker?.ident?.erSamhandlerId() ?: reellMottager?.erSamhandlerId() ?: false
@@ -35,6 +39,8 @@ data class RolleDto(
     fun rmSamhandlerId() = reellMottaker?.ident?.samhandlerId() ?: reellMottager?.samhandlerId()
 
     fun rmFødselsnummer() = reellMottaker?.ident?.personIdent() ?: reellMottager?.personIdent()
+
+    fun harRM() = (rmFødselsnummer() != null || rmSamhandlerId() != null)
 }
 
 data class ReellMottakerDto(
