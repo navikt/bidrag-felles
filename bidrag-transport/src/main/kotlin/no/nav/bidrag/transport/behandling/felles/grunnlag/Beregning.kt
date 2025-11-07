@@ -377,7 +377,8 @@ data class DelberegningBidragJustertForBPBarnetillegg(
 
 data class DelberegningEndeligBidragBeregnet(
     override val periode: ÅrMånedsperiode,
-    val endeligBidrag: BigDecimal,
+    val beregnetBeløp: BigDecimal,
+    val resultatBeløp: BigDecimal,
 ) : Delberegning
 
 data class DelberegningBidragTilFordelingLøpendeBidrag(
