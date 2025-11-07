@@ -1,6 +1,5 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
-import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
@@ -14,14 +13,26 @@ data class LøpendeBidragGrunnlag(
 ) : GrunnlagInnhold
 
 data class LøpendeBidrag(
-    val periode: ÅrMånedsperiode? = null,
     val saksnummer: Saksnummer,
-    @JsonAlias("type")
+    val type: Stønadstype,
+    val løpendeBeløp: BigDecimal,
+    val valutakode: String = "NOK",
+    val samværsklasse: Samværsklasse,
+    val beregnetBeløp: BigDecimal,
+    val faktiskBeløp: BigDecimal,
+    @Schema(description = "Referanse til barnet det løpende bidraget gjelder for")
+    val gjelderBarn: Grunnlagsreferanse,
+) : GrunnlagInnhold
+
+@Schema(description = "Løpende bidrag periodisert")
+data class LøpendeBidragPeriode(
+    override val periode: ÅrMånedsperiode,
+    val saksnummer: Saksnummer,
     val stønadstype: Stønadstype,
     val løpendeBeløp: BigDecimal,
     val valutakode: String = "NOK",
     val samværsklasse: Samværsklasse,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
-    val gjelderBarn: Grunnlagsreferanse,
-) : GrunnlagInnhold
+    override val manueltRegistrert: Boolean = false,
+) : GrunnlagPeriodeInnhold
