@@ -30,21 +30,8 @@ class OpprettSakRequest(
     val roller: Set<RolleDto> = emptySet(),
 ) {
     fun valider() {
-        roller.forEach { it.valider() }
-
-        val harBM = roller.any { it.erBMmedFnr() }
-
-        //  Hvis BM mangler, må alle BA ha RM
-        if (!harBM) {
-            val alleBarnHarRM =
-                roller
-                    .asSequence()
-                    .filter { it.type == Rolletype.BARN }
-                    .all { it.harRM() }
-
-            require(alleBarnHarRM) {
-                "Hvis bidragsmottaker (BM) ikke er satt, må alle barn (BA) ha reell mottaker (RM)."
-            }
+        roller.forEach {
+            it.valider()
         }
     }
 }

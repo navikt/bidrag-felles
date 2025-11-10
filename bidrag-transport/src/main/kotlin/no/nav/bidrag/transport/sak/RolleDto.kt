@@ -49,12 +49,6 @@ data class RolleDto(
     )
     val mottagerErVerge: Boolean = false,
     @field:Schema(
-        description =
-            "Identifikator for samhandler (organisasjon eller aktør) knyttet til rollen, dersom aktuelt. " +
-                "Skal **ikke** brukes for reell mottaker (RM) — bruk i stedet feltet 'reellMottaker' for dette. ",
-    )
-    val samhandlerIdent: SamhandlerId? = null,
-    @field:Schema(
         description = "Tidligere brukt felt for fødselsnummer. Erstattes av 'fødselsnummer'.",
         deprecated = true,
     )
@@ -68,13 +62,28 @@ data class RolleDto(
     val rolleType: Rolletype = type,
 ) {
     fun valider() {
+        fødselsnummer?.let {
+            require(it.harVerdi()) { "Fødselsnummer kan ikke være tom streng." }
+            require(it.gyldig()) { "Ugyldig fødselsnummer for rolle av type $type." }
+        }
+
         require(type == Rolletype.BARN || !harRM()) {
             "Reell mottaker (RM) kan kun registreres på barn (BA)."
         }
 
-        fødselsnummer?.let {
-            require(it.harVerdi()) { "Fødselsnummer kan ikke være tom streng." }
-            require(it.gyldig()) { "Ugyldig fødselsnummer." }
+        if (type == Rolletype.BARN) {
+            val alder = fødselsnummer?.let { fnr ->
+                runCatching { fnr.beregnAlder() }
+                    .onFailure { throw IllegalArgumentException("Kunne ikke beregne alder for barn med fødselsnummer ${fnr.verdi}.") }
+                    .getOrNull()
+            }
+
+            if (alder != null && alder >= 18) {
+                require(harRM()) {
+                    "Hvis barnet er myndig, må reell mottaker (RM) være satt."
+                }
+            }
+
         }
     }
 
