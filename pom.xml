@@ -13,11 +13,11 @@
     <properties>
         <revision>1.0-SNAPSHOT</revision>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>2.2.10</kotlin.version>
+        <kotlin.version>2.2.21</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <jackson.version>2.19.2</jackson.version>
-        <kotest.version>5.9.1</kotest.version>
-        <swagger.version>2.2.39</swagger.version>
+        <kotest.version>6.0.4</kotest.version>
+        <swagger.version>2.2.40</swagger.version>
         <ktlint.version>1.7.1</ktlint.version>
         <mockk.version>1.14.5</mockk.version>
         <spring-boot.version>3.5.4</spring-boot.version>
