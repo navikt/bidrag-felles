@@ -22,14 +22,13 @@ class OpprettSakRequest(
     val konvensjonsdato: LocalDate? = null,
     val ffuReferansenr: String? = null,
     val land: Landkode? = null,
-
     @field:Schema(
-        description = "Rollene som skal opprettes i saken. " +
-                "Hvis BM mangler, må alle barn (BA) ha reell mottaker (RM)."
+        description =
+            "Rollene som skal opprettes i saken. " +
+                "Hvis BM mangler, må alle barn (BA) ha reell mottaker (RM).",
     )
     val roller: Set<RolleDto> = emptySet(),
 ) {
-
     fun valider() {
         roller.forEach { it.valider() }
 
@@ -37,15 +36,15 @@ class OpprettSakRequest(
 
         //  Hvis BM mangler, må alle BA ha RM
         if (!harBM) {
-            val alleBarnHarRM = roller
-                .asSequence()
-                .filter { it.type == Rolletype.BARN }
-                .all { it.harRM() }
+            val alleBarnHarRM =
+                roller
+                    .asSequence()
+                    .filter { it.type == Rolletype.BARN }
+                    .all { it.harRM() }
 
             require(alleBarnHarRM) {
                 "Hvis bidragsmottaker (BM) ikke er satt, må alle barn (BA) ha reell mottaker (RM)."
             }
         }
     }
-
 }
