@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.sak
 
+import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.sak.Arbeidsfordeling
 import no.nav.bidrag.domene.enums.sak.Bidragssakstatus
 import no.nav.bidrag.domene.enums.sak.Konvensjon
@@ -9,7 +10,9 @@ import no.nav.bidrag.domene.sak.Saksnummer
 import java.time.LocalDate
 
 data class OppdaterRollerISakRequest(
+    @field:Schema(description = "Saksnummeret til saken som rollene skal oppdateres for.")
     val saksnummer: Saksnummer,
+    @field:Schema(description = "Nye eller oppdaterte roller som skal legges til eller endres i saken.")
     val roller: Set<RolleDto> = setOf(),
 )
 
