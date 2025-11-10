@@ -47,6 +47,8 @@ class Personident(
         throw IllegalArgumentException()
     }
 
+    fun harVerdi() = verdi.isNotBlank()
+
     override fun gyldig(): Boolean {
         if (verdi.length != 11 || verdi.toLongOrNull() == null || verdi.substring(0, 1).toInt() in 8..9) {
             return false
