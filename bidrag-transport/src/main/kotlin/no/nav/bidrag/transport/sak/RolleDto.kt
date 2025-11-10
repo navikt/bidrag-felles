@@ -25,7 +25,7 @@ data class RolleDto(
     val rolleType: Rolletype = type,
 ) {
     fun valider() {
-        if(this.harRM()){
+        if (this.harRM()) {
             require(type == Rolletype.BARN) {
                 "Reell mottager kan kun opprettes for barn."
             }
