@@ -32,7 +32,7 @@ enum class Behandlingstema(
     TILLEGGSBIDRAG("TB", "Tilleggsbidrag"),
     TILBAKEKREVING_ETTERGIVELSE("TE", "Tilbakekreving,ettergivelse"),
     TILBAKEKREVING("TK", "Tilbakekreving"),
-    TILBAKEKREVING_BIDRAG("L1", "Tilbakekreving bidrag"),
+    TILBAKEKREVING_BIDRAG("M1", "Tilbakekreving bidrag"),
     BIDRAG_18_ÅR_PLUSS_TILLEGGSBIDRAG("T1", "18 år, tilleggsbidrag"),
     BIDRAG_18_ÅR("18", "18 år"),
     REISEKOSTNADER("RK", "Reisekostnader"),

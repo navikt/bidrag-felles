@@ -25,8 +25,8 @@ enum class Transaksjonskode(
     K1(null, true), // Ettergivelse
     K2(null, true), // Direkte oppgjør (innbetalt beløp)
     K3(null, true), // Tilbakekreving ettergivelse
-    L1("L3", false), // Tilbakekreving bidrag
-    L3(null, true),
+    M1("M3", false), // Tilbakekreving bidrag
+    M3(null, true),
     ;
 
     companion object {
@@ -48,7 +48,7 @@ enum class Transaksjonskode(
                 Engangsbeløptype.DIREKTE_OPPGJOR.name -> K2
                 Engangsbeløptype.DIREKTE_OPPGJØR.name -> K2
                 Engangsbeløptype.ETTERGIVELSE_TILBAKEKREVING.name -> K3
-                Engangsbeløptype.TILBAKEKREVING_BIDRAG.name -> L1
+                Engangsbeløptype.TILBAKEKREVING_BIDRAG.name -> M1
                 else -> throw IllegalStateException("Ugyldig type for transaksjonskode funnet!")
             }
     }
