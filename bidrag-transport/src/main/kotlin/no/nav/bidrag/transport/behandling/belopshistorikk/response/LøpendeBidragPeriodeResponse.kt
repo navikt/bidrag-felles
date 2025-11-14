@@ -32,5 +32,4 @@ data class BidragPeriode(
     val løpendeBeløp: BigDecimal,
     @param:Schema(description = "Valutakode")
     val valutakode: String = "NOK",
-
 )

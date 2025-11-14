@@ -346,6 +346,9 @@ data class DelberegningBidragTilFordeling(
     @JsonAlias("uminusNettoBarnetilleggBM")
     val uMinusNettoBarnetilleggBM: BigDecimal,
     val bpAndelAvUMinusSamværsfradrag: BigDecimal,
+    val nettoBidragEtterBarnetilleggBM: BigDecimal = BigDecimal.ZERO,
+    val bruttoBidragEtterBarnetilleggBM: BigDecimal = BigDecimal.ZERO,
+    val erBidragJustertForNettoBarnetilleggBM: Boolean = false,
 ) : Delberegning
 
 data class DelberegningSumBidragTilFordeling(
@@ -375,11 +378,11 @@ data class DelberegningBidragJustertForBPBarnetillegg(
     val erBidragJustertTilNettoBarnetilleggBP: Boolean = false,
 ) : Delberegning
 
-data class DelberegningEndeligBidragBeregnet(
+data class SuttberegningBarnebidragV2(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
     val resultatBeløp: BigDecimal,
-) : Delberegning
+) : Sluttberegning
 
 data class DelberegningBidragTilFordelingLøpendeBidrag(
     override val periode: ÅrMånedsperiode,

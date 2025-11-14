@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.ident.ReellMottaker
-import no.nav.bidrag.domene.ident.SamhandlerId
 
 data class RolleDto(
     @field:Schema(
@@ -72,18 +71,18 @@ data class RolleDto(
         }
 
         if (type == Rolletype.BARN) {
-            val alder = fødselsnummer?.let { fnr ->
-                runCatching { fnr.beregnAlder() }
-                    .onFailure { throw IllegalArgumentException("Kunne ikke beregne alder for barn med fødselsnummer ${fnr.verdi}.") }
-                    .getOrNull()
-            }
+            val alder =
+                fødselsnummer?.let { fnr ->
+                    runCatching { fnr.beregnAlder() }
+                        .onFailure { throw IllegalArgumentException("Kunne ikke beregne alder for barn med fødselsnummer ${fnr.verdi}.") }
+                        .getOrNull()
+                }
 
             if (alder != null && alder >= 18) {
                 require(harRM()) {
                     "Hvis barnet er myndig, må reell mottaker (RM) være satt."
                 }
             }
-
         }
     }
 
