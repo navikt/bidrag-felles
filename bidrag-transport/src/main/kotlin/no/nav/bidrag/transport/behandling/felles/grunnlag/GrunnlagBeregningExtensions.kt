@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import java.math.BigDecimal
@@ -26,6 +27,7 @@ fun List<GrunnlagDto>.finnSluttberegningIReferanser(grunnlagsreferanseListe: Lis
             Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG,
             Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG_ALDERSJUSTERING,
             Grunnlagstype.SLUTTBEREGNING_INDEKSREGULERING,
+            Grunnlagstype.DELBEREGNING_ENDELIG_BIDRAG_BEREGNET,
         ).contains(it.type) &&
             grunnlagsreferanseListe.contains(it.referanse)
     }
@@ -56,4 +58,32 @@ fun List<GrunnlagDto>.finnTotalInntektForRolleEllerIdent(
         }
     return delberegningSumInntektForRolle?.innholdTilObjekt<DelberegningSumInntekt>()?.totalinntekt
         ?: BigDecimal.ZERO
+}
+
+fun List<GrunnlagDto>.finnSamværsklasse(sluttberegningGrunnlag: GrunnlagDto): Samværsklasse =
+    finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SamværsperiodeGrunnlag>(
+        Grunnlagstype.SAMVÆRSPERIODE,
+        sluttberegningGrunnlag.grunnlagsreferanseListe,
+    ).first().innhold.samværsklasse
+
+fun List<GrunnlagDto>.finnBidragTilFordeling(sluttberegningGrunnlag: GrunnlagDto): BigDecimal {
+    if (sluttberegningGrunnlag.type == Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG) {
+        val sluttberegningObjekt = sluttberegningGrunnlag.innholdTilObjekt<SluttberegningBarnebidrag>()
+        return sluttberegningObjekt.bruttoBidragEtterBarnetilleggBM
+    }
+    return finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragTilFordeling>(
+        Grunnlagstype.DELBEREGNING_BIDRAG_TIL_FORDELING,
+        sluttberegningGrunnlag.grunnlagsreferanseListe,
+    ).first().innhold.bidragTilFordeling
+}
+
+fun List<GrunnlagDto>.finnBidragJustertForBarnetilleggBP(sluttberegningGrunnlag: GrunnlagDto): BigDecimal {
+    if (sluttberegningGrunnlag.type == Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG) {
+        val sluttberegningObjekt = sluttberegningGrunnlag.innholdTilObjekt<SluttberegningBarnebidrag>()
+        return sluttberegningObjekt.bruttoBidragEtterBarnetilleggBP
+    }
+    return finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragJustertForBPBarnetillegg>(
+        Grunnlagstype.DELBEREGNING_BIDRAG_JUSTERT_FOR_BP_BARNETILLEGG,
+        sluttberegningGrunnlag.grunnlagsreferanseListe,
+    ).firstOrNull()?.innhold?.bidragJustertForNettoBarnetilleggBP ?: BigDecimal.ZERO
 }
