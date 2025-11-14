@@ -378,7 +378,7 @@ data class DelberegningBidragJustertForBPBarnetillegg(
     val erBidragJustertTilNettoBarnetilleggBP: Boolean = false,
 ) : Delberegning
 
-data class SuttberegningBarnebidragV2(
+data class SluttberegningBarnebidragV2(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal,
     val resultatBeløp: BigDecimal,
