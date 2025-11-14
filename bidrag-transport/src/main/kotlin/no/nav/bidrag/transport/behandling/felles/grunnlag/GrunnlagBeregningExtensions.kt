@@ -27,7 +27,6 @@ fun List<GrunnlagDto>.finnSluttberegningIReferanser(grunnlagsreferanseListe: Lis
             Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG,
             Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG_ALDERSJUSTERING,
             Grunnlagstype.SLUTTBEREGNING_INDEKSREGULERING,
-            Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG_V2,
         ).contains(it.type) &&
             grunnlagsreferanseListe.contains(it.referanse)
     }
