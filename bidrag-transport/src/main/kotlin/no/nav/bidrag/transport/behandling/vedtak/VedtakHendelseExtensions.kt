@@ -8,6 +8,13 @@ import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
 
+val VedtakHendelse.søknadsider
+    get() =
+        this.behandlingsreferanseListe
+            ?.filter {
+                it.kilde == BehandlingsrefKilde.BISYS_SØKNAD.name
+            }?.map { it.referanse.toLong() } ?: emptyList()
+
 val VedtakHendelse.søknadId
     get() =
         this.behandlingsreferanseListe

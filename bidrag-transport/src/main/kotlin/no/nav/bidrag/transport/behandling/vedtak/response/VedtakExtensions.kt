@@ -223,6 +223,16 @@ fun VedtakDto.finnSluttberegningBarnebidragAldersjusteringIPeriode(periode: Vedt
         ).firstOrNull()
         ?.innhold
 
+fun VedtakDto.finnPeriodeReferanseliste(periode: VedtakPeriodeDto) =
+    periode.grunnlagReferanseListe.takeIf { it.isNotEmpty() }
+        ?: run {
+            stønadsendringListe
+                .flatMap { it.periodeListe }
+                .firstOrNull { p -> p.periode.overlapper(periode.periode) }
+                ?.grunnlagReferanseListe ?: emptyList()
+        }
+
+@Deprecated("Ikke bruk dette da den returner gammel SluttberegningBarnebidrag objekt")
 fun VedtakDto.finnSluttberegningBarnebidragIPeriode(periode: VedtakPeriodeDto) =
     grunnlagListe.finnSluttberegningBarnebidragGrunnlagIReferanser(periode.grunnlagReferanseListe)?.innhold
         ?: run {

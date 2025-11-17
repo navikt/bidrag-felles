@@ -6,9 +6,11 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import no.nav.bidrag.domene.beløp.Beløp
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.domene.util.Visningsnavn
 import no.nav.bidrag.domene.util.lastVisningsnavnFraFil
 import java.math.BigDecimal
 import java.math.MathContext
@@ -30,98 +32,86 @@ data class SluttberegningSærbidrag(
     val resultatBeløp: BigDecimal?,
 ) : Sluttberegning
 
-private val sluttberegningAvslagResultater =
+private val sluttberegningAvslagResultaterV2 =
     listOf(
-        SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name,
-        SluttberegningBarnebidrag::barnetErSelvforsørget.name,
+        Resultatkode.IKKE_OMSORG,
+        Resultatkode.BARNET_ER_SELVFORSØRGET,
     )
 
-// Rekkefølge har ikke noe å si her. Dette er bare konvertering av resultatet til bisyskode.
-private val sluttberegningBisyskodeMap =
-    mapOf(
-        SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name to "AIO",
-        SluttberegningBarnebidrag::barnetErSelvforsørget.name to "5SF",
-        SluttberegningBarnebidrag::bidragJustertForDeltBosted.name to "8DN",
-        SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name to "101",
-        SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name to "102",
-        SluttberegningBarnebidrag::bidragJustertNedTilEvne.name to "6MB",
-        SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name to "7M",
-        SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name to "RFO",
-        SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name to "RFO",
-        "kostnadsberegnet" to "KBB",
-    )
+fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Resultatkode? {
+    val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return null
+    if (sluttberegning.erSluttberegningGammelStruktur()) {
+        val sbInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidrag>()
+        return Resultatkode.fraKode(sbInnhold.bisysResultatkode)
+    }
+    val andelDeltBosted =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragspliktigesAndelDeltBosted>(
+            Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_DELT_BOSTED,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull()
 
-@Deprecated(
-    "Bruk heller SluttberegningBarnebidragV2 og hjelpemetoder for å hente resultatkode og visningsnavn",
-    ReplaceWith("SluttberegningBarnebidragV2"),
-)
-data class SluttberegningBarnebidrag(
-    override val periode: ÅrMånedsperiode,
-    val beregnetBeløp: BigDecimal?,
-    val resultatBeløp: BigDecimal?,
-    @JsonAlias("uminusNettoBarnetilleggBM")
-    val uMinusNettoBarnetilleggBM: BigDecimal,
-    val bruttoBidragEtterBarnetilleggBM: BigDecimal,
-    val nettoBidragEtterBarnetilleggBM: BigDecimal,
-    val bruttoBidragJustertForEvneOg25Prosent: BigDecimal,
-    val bruttoBidragEtterBegrensetRevurdering: BigDecimal = BigDecimal.ZERO,
-    val bruttoBidragEtterBarnetilleggBP: BigDecimal,
-    val nettoBidragEtterSamværsfradrag: BigDecimal,
-    val bpAndelAvUVedDeltBostedFaktor: BigDecimal,
-    val bpAndelAvUVedDeltBostedBeløp: BigDecimal,
-    val løpendeForskudd: BigDecimal? = null,
-    val løpendeBidrag: BigDecimal? = null,
-    val barnetErSelvforsørget: Boolean = false,
-    val bidragJustertForDeltBosted: Boolean = false,
-    val bidragJustertForNettoBarnetilleggBP: Boolean = false,
-    val bidragJustertForNettoBarnetilleggBM: Boolean = false,
-    val bidragJustertNedTilEvne: Boolean = false,
-    val bidragJustertNedTil25ProsentAvInntekt: Boolean = false,
-    val bidragJustertTilForskuddssats: Boolean = false,
-    val bidragJustertManueltTilForskuddssats: Boolean = false,
-    val begrensetRevurderingUtført: Boolean = false,
-    val ikkeOmsorgForBarnet: Boolean = false,
-    // Brukes bare ved overføring av bisys vedtak
-    val tilleggsbidrag: BigDecimal? = null,
-    // Brukes bare ved overføring av bisys vedtak
-    val forsvaretsBarnetillegg: Boolean? = null,
-    // Beregnet evne til BP etter FF
-    val bpEvneVedForholdsmessigFordeling: BigDecimal? = null,
-    // Andel av U basert på fordeling fra FF
-    val bpAndelAvUVedForholdsmessigFordelingFaktor: BigDecimal? = null,
-    val bpSumAndelAvU: BigDecimal? = null,
-) : Sluttberegning {
-    @get:JsonIgnore
-    val resultat
-        get() =
-            // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
-            when {
-                ikkeOmsorgForBarnet -> SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
-                bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
-                bidragJustertManueltTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name
-                bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
-                barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
-                bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
-                bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
-                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+    val bidragTilFordeling =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragTilFordeling>(
+            Grunnlagstype.DELBEREGNING_BIDRAG_TIL_FORDELING,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val andelAvBidragsevne =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningAndelAvBidragsevne>(
+            Grunnlagstype.DELBEREGNING_ANDEL_AV_BIDRAGSEVNE,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val evne25prosentAvInntekt =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningEvne25ProsentAvInntekt>(
+            Grunnlagstype.DELBEREGNING_EVNE_25PROSENTAVINNTEKT,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val bpsBarnetillegg =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragJustertForBPBarnetillegg>(
+            Grunnlagstype.DELBEREGNING_BIDRAG_JUSTERT_FOR_BP_BARNETILLEGG,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val bpsAndel =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragspliktigesAndel>(
+            Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val samværsfradrag =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningSamværsfradrag>(
+            Grunnlagstype.DELBEREGNING_SAMVÆRSFRADRAG,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val nettoBidragEtterBarnetilleggBM = bidragTilFordeling.innhold.bidragTilFordeling.subtract(samværsfradrag.innhold.beløp)
+    val bidragJustertNedTilEvne = !andelAvBidragsevne.innhold.harBPFullEvne
+    val bidragJustertNedTil25ProsentAvInntekt = evne25prosentAvInntekt.innhold.erEvneJustertNedTil25ProsentAvInntekt
+    val bidragJustertForDeltBosted = andelDeltBosted != null
+    return when {
+        // TODO: Hvordan hente informasjom om forskudssats og ikke omsorg for barnet?
+//        ikkeOmsorgForBarnet -> Resultatkode.IKKE_OMSORG
+        bpsBarnetillegg.innhold.erBidragJustertTilNettoBarnetilleggBP -> Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BP
+//        bidragJustertManueltTilForskuddssats -> Resultatkode.BIDRAG_JUSTERT_MANUELT_TIL_FORSKUDDSSATS
+//        bidragJustertTilForskuddssats -> Resultatkode.BIDRAG_JUSTERT_TIL_FORSKUDDSSATS
+        bpsAndel.innhold.barnetErSelvforsørget -> Resultatkode.BARNET_ER_SELVFORSØRGET
+        bidragJustertForDeltBosted && bidragJustertNedTilEvne -> Resultatkode.MANGLER_BIDRAGSEVNE
+        bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
+            Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
 
-                bidragJustertForDeltBosted -> SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
-                bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
-                bidragJustertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
-                bidragJustertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
-                else -> "kostnadsberegnet"
-            }
-
-    @get:JsonIgnore
-    val erResultatAvslag get() = sluttberegningAvslagResultater.contains(resultat)
-
-    @get:JsonIgnore
-    val bisysResultatkode
-        get() = sluttberegningBisyskodeMap[resultat] ?: "KBB"
-
-    @get:JsonIgnore
-    val resultatVisningsnavn get() = lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[resultat]
+        bidragJustertForDeltBosted -> Resultatkode.BIDRAG_JUSTERT_FOR_DELT_BOSTED
+        bidragJustertNedTilEvne -> Resultatkode.MANGLER_BIDRAGSEVNE
+        bidragJustertNedTil25ProsentAvInntekt -> Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
+        bidragTilFordeling.innhold.uMinusNettoBarnetilleggBM == nettoBidragEtterBarnetilleggBM
+        -> Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BM
+        else -> Resultatkode.KOSTNADSBEREGNET_BIDRAG
+    }
 }
+
+fun List<GrunnlagDto>.tilResultatVisningsnavn(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Visningsnavn? =
+    resultatSluttberegning(grunnlagsreferanseListe)?.let { lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[it.name] }
+
+fun List<GrunnlagDto>.tilBisysResultatkode(grunnlagsreferanseListe: List<Grunnlagsreferanse>): String =
+    resultatSluttberegning(grunnlagsreferanseListe)?.legacyKode ?: "KBB"
+
+fun List<GrunnlagDto>.erResultatAvslag(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Boolean =
+    sluttberegningAvslagResultaterV2.contains(resultatSluttberegning(grunnlagsreferanseListe))
 
 data class SluttberegningBarnebidragAldersjustering(
     override val periode: ÅrMånedsperiode,
@@ -393,3 +383,98 @@ data class DelberegningBidragTilFordelingLøpendeBidrag(
     val reduksjonUnderholdskostnad: BigDecimal,
     val bidragTilFordeling: BigDecimal,
 ) : Delberegning
+
+// ---------- Deprekerte verdier. Skal ikke slettes helt til vedtak databasen er konvertert i PROD --------------------------
+
+private val sluttberegningAvslagResultater =
+    listOf(
+        SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name,
+        SluttberegningBarnebidrag::barnetErSelvforsørget.name,
+    )
+
+// Rekkefølge har ikke noe å si her. Dette er bare konvertering av resultatet til bisyskode.
+private val sluttberegningBisyskodeMap =
+    mapOf(
+        SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name to "AIO",
+        SluttberegningBarnebidrag::barnetErSelvforsørget.name to "5SF",
+        SluttberegningBarnebidrag::bidragJustertForDeltBosted.name to "8DN",
+        SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name to "101",
+        SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name to "102",
+        SluttberegningBarnebidrag::bidragJustertNedTilEvne.name to "6MB",
+        SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name to "7M",
+        SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name to "RFO",
+        SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name to "RFO",
+        "kostnadsberegnet" to "KBB",
+    )
+
+@Deprecated(
+    "Bruk heller SluttberegningBarnebidragV2 og hjelpemetoder for å hente resultatkode og visningsnavn",
+    ReplaceWith("SluttberegningBarnebidragV2"),
+)
+data class SluttberegningBarnebidrag(
+    override val periode: ÅrMånedsperiode,
+    val beregnetBeløp: BigDecimal?,
+    val resultatBeløp: BigDecimal?,
+    @JsonAlias("uminusNettoBarnetilleggBM")
+    val uMinusNettoBarnetilleggBM: BigDecimal,
+    val bruttoBidragEtterBarnetilleggBM: BigDecimal,
+    val nettoBidragEtterBarnetilleggBM: BigDecimal,
+    val bruttoBidragJustertForEvneOg25Prosent: BigDecimal,
+    val bruttoBidragEtterBegrensetRevurdering: BigDecimal = BigDecimal.ZERO,
+    val bruttoBidragEtterBarnetilleggBP: BigDecimal,
+    val nettoBidragEtterSamværsfradrag: BigDecimal,
+    val bpAndelAvUVedDeltBostedFaktor: BigDecimal,
+    val bpAndelAvUVedDeltBostedBeløp: BigDecimal,
+    val løpendeForskudd: BigDecimal? = null,
+    val løpendeBidrag: BigDecimal? = null,
+    val barnetErSelvforsørget: Boolean = false,
+    val bidragJustertForDeltBosted: Boolean = false,
+    val bidragJustertForNettoBarnetilleggBP: Boolean = false,
+    val bidragJustertForNettoBarnetilleggBM: Boolean = false,
+    val bidragJustertNedTilEvne: Boolean = false,
+    val bidragJustertNedTil25ProsentAvInntekt: Boolean = false,
+    val bidragJustertTilForskuddssats: Boolean = false,
+    val bidragJustertManueltTilForskuddssats: Boolean = false,
+    val begrensetRevurderingUtført: Boolean = false,
+    val ikkeOmsorgForBarnet: Boolean = false,
+    // Brukes bare ved overføring av bisys vedtak
+    val tilleggsbidrag: BigDecimal? = null,
+    // Brukes bare ved overføring av bisys vedtak
+    val forsvaretsBarnetillegg: Boolean? = null,
+    // Beregnet evne til BP etter FF
+    val bpEvneVedForholdsmessigFordeling: BigDecimal? = null,
+    // Andel av U basert på fordeling fra FF
+    val bpAndelAvUVedForholdsmessigFordelingFaktor: BigDecimal? = null,
+    val bpSumAndelAvU: BigDecimal? = null,
+) : Sluttberegning {
+    @get:JsonIgnore
+    val resultat
+        get() =
+            // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
+            when {
+                ikkeOmsorgForBarnet -> SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
+                bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
+                bidragJustertManueltTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name
+                bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
+                barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
+                bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
+                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+
+                bidragJustertForDeltBosted -> SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                bidragJustertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                bidragJustertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
+                else -> "kostnadsberegnet"
+            }
+
+    @get:JsonIgnore
+    val erResultatAvslag get() = sluttberegningAvslagResultater.contains(resultat)
+
+    @get:JsonIgnore
+    val bisysResultatkode
+        get() = sluttberegningBisyskodeMap[resultat] ?: "KBB"
+
+    @get:JsonIgnore
+    val resultatVisningsnavn get() = lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[resultat]
+}

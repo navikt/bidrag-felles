@@ -348,6 +348,13 @@ enum class Resultatkode(
         ResultatkodeType.BARNEBIDRAG,
         ResultatkodeType.FORSKUDD,
     ),
+
+    // Bisys resultatkoder (ikke brukt i ny løsning)
+    BIDRAG_JUSTERT_FOR_DELT_BOSTED(listOf(BisysResultatkode("8DN"))),
+    BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BP(listOf(BisysResultatkode("101"))),
+    BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BM(listOf(BisysResultatkode("102"))),
+    BIDRAG_JUSTERT_TIL_FORSKUDDSSATS(listOf(BisysResultatkode("RFO"))),
+    BIDRAG_JUSTERT_MANUELT_TIL_FORSKUDDSSATS(listOf(BisysResultatkode("RFO"))),
     ;
 
     val legacyKode get() = bisysKode.firstOrNull()?.resultatKode

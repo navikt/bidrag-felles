@@ -73,11 +73,14 @@ fun GrunnlagDto.hentResultatBeløp(): BigDecimal =
         innholdTilObjekt<SluttberegningBarnebidrag>().resultatBeløp!!
     }
 
-fun GrunnlagDto.erSluttberegningNyStruktur(): Boolean = !erSluttberegningGammelStruktur()
+fun GrunnlagDto.erSluttberegningNyStruktur(): Boolean =
+    type == Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG && !erSluttberegningGammelStruktur()
 
 fun GrunnlagDto.erSluttberegningGammelStruktur(): Boolean =
-    innhold.has("bruttoBidragEtterBarnetilleggBM") ||
-        innhold.has("bruttoBidragJustertForEvneOg25Prosent")
+    type == Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG && (
+        innhold.has("bruttoBidragEtterBarnetilleggBM") ||
+            innhold.has("bruttoBidragJustertForEvneOg25Prosent")
+    )
 
 fun List<GrunnlagDto>.finnSamværsklasse(sluttberegningGrunnlag: GrunnlagDto): Samværsklasse =
     finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SamværsperiodeGrunnlag>(
