@@ -51,6 +51,10 @@ private val sluttberegningBisyskodeMap =
         "kostnadsberegnet" to "KBB",
     )
 
+@Deprecated(
+    "Bruk heller SluttberegningBarnebidragV2 og hjelpemetoder for å hente resultatkode og visningsnavn",
+    ReplaceWith("SluttberegningBarnebidragV2"),
+)
 data class SluttberegningBarnebidrag(
     override val periode: ÅrMånedsperiode,
     val beregnetBeløp: BigDecimal?,

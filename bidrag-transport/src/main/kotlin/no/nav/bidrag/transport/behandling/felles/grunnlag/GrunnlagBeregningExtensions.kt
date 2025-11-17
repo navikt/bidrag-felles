@@ -59,6 +59,26 @@ fun List<GrunnlagDto>.finnTotalInntektForRolleEllerIdent(
         ?: BigDecimal.ZERO
 }
 
+fun GrunnlagDto.hentBeregnetBeløp(): BigDecimal =
+    if (erSluttberegningNyStruktur()) {
+        innholdTilObjekt<SluttberegningBarnebidragV2>().beregnetBeløp
+    } else {
+        innholdTilObjekt<SluttberegningBarnebidrag>().beregnetBeløp!!
+    }
+
+fun GrunnlagDto.hentResultatBeløp(): BigDecimal =
+    if (erSluttberegningNyStruktur()) {
+        innholdTilObjekt<SluttberegningBarnebidragV2>().resultatBeløp
+    } else {
+        innholdTilObjekt<SluttberegningBarnebidrag>().resultatBeløp!!
+    }
+
+fun GrunnlagDto.erSluttberegningNyStruktur(): Boolean = !erSluttberegningGammelStruktur()
+
+fun GrunnlagDto.erSluttberegningGammelStruktur(): Boolean =
+    innhold.has("bruttoBidragEtterBarnetilleggBM") ||
+        innhold.has("bruttoBidragJustertForEvneOg25Prosent")
+
 fun List<GrunnlagDto>.finnSamværsklasse(sluttberegningGrunnlag: GrunnlagDto): Samværsklasse =
     finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SamværsperiodeGrunnlag>(
         Grunnlagstype.SAMVÆRSPERIODE,
@@ -66,7 +86,7 @@ fun List<GrunnlagDto>.finnSamværsklasse(sluttberegningGrunnlag: GrunnlagDto): S
     ).first().innhold.samværsklasse
 
 fun List<GrunnlagDto>.finnBidragTilFordeling(sluttberegningGrunnlag: GrunnlagDto): BigDecimal {
-    if (sluttberegningGrunnlag.type == Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG) {
+    if (sluttberegningGrunnlag.erSluttberegningGammelStruktur()) {
         val sluttberegningObjekt = sluttberegningGrunnlag.innholdTilObjekt<SluttberegningBarnebidrag>()
         return sluttberegningObjekt.bruttoBidragEtterBarnetilleggBM
     }
@@ -77,7 +97,7 @@ fun List<GrunnlagDto>.finnBidragTilFordeling(sluttberegningGrunnlag: GrunnlagDto
 }
 
 fun List<GrunnlagDto>.finnBidragJustertForBarnetilleggBP(sluttberegningGrunnlag: GrunnlagDto): BigDecimal {
-    if (sluttberegningGrunnlag.type == Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG) {
+    if (sluttberegningGrunnlag.erSluttberegningGammelStruktur()) {
         val sluttberegningObjekt = sluttberegningGrunnlag.innholdTilObjekt<SluttberegningBarnebidrag>()
         return sluttberegningObjekt.bruttoBidragEtterBarnetilleggBP
     }
