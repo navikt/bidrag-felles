@@ -306,6 +306,7 @@ fun GrunnlagDto.erGyldigForBarn(
 ): Boolean {
     val gjelderRef = this.gjelderReferanse
     val gjelderBarnRef = this.gjelderBarnReferanse
+    val grunnlagstype = this.type
 
     return when {
         // Gjelder BM og riktig barn (eller ingen barn)
@@ -319,6 +320,12 @@ fun GrunnlagDto.erGyldigForBarn(
 
         // Ingen gjelderReferanse, men gjelderBarnReferanse matcher barn (eller null)
         gjelderRef == null && (gjelderBarnRef == barnRef || gjelderBarnRef == null) -> true
+
+        // BOSTATUS_PERIODE skal være med uansett hvis gjelderReferanse = BP
+        grunnlagstype == Grunnlagstype.BOSTATUS_PERIODE && gjelderRef == bpRef -> true
+
+        // PERSON_SØKNADSBARN skal være med uansett hvis BM matcher (brukes i beregning av tilsynsutgifter)
+        grunnlagstype == Grunnlagstype.PERSON_SØKNADSBARN && this.innhold["bidragsmottaker"]?.asText() == bmRef -> true
 
         else -> false
     }

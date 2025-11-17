@@ -168,4 +168,17 @@ class GrunnlagExtensionsFiltrerGrunnlagTest {
             )
         dto.erGyldigForBarn(bmRef = bmRef1, bpRef = bpRef1, barnRef = barnRef1) shouldBe false
     }
+
+    @Test
+    fun `returnerer true når type er BOSTATUS_PERIODE, gjelderReferanse er riktig BP og gjelderBarnReferanse er feil barn`() {
+        val dto =
+            GrunnlagDto(
+                referanse = "Ref",
+                type = Grunnlagstype.BOSTATUS_PERIODE,
+                innhold = ObjectMapper().createObjectNode(),
+                gjelderReferanse = bpRef1,
+                gjelderBarnReferanse = barnRef2,
+            )
+        dto.erGyldigForBarn(bmRef = bmRef1, bpRef = bpRef1, barnRef = barnRef1) shouldBe true
+    }
 }
