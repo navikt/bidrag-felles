@@ -172,6 +172,8 @@ val Collection<BaseGrunnlag>.barn
             it.type == Grunnlagstype.PERSON_SØKNADSBARN || it.type == Grunnlagstype.PERSON_HUSSTANDSMEDLEM
         }.toSet()
 
+val BaseGrunnlag.bidragsmottakerReferanse get() = personObjekt.bidragsmottaker
+
 val Collection<BaseGrunnlag>.søknadsbarn
     get() =
         filter {
