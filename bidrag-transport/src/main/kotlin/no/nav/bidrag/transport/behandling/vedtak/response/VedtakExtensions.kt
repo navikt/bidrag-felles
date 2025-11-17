@@ -58,6 +58,13 @@ val List<BehandlingsreferanseDto>.søknadKlageRefId get() =
     }?.referanse
         ?.toLong()
 
+val VedtakDto.søknadsider
+    get() =
+        this.behandlingsreferanseListe
+            .filter {
+                it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
+            }.map { it.referanse.toLong() }
+
 val VedtakDto.søknadId get() = behandlingsreferanseListe.søknadsid
 val VedtakDto.søknadKlageRefId get() = behandlingsreferanseListe.søknadKlageRefId
 
