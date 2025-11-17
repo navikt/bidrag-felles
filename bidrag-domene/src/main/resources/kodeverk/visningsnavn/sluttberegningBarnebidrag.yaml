@@ -20,28 +20,3 @@ bidragJustertTilForskuddssats:
   intern: "Bidrag justert til forskuddssats"
 bidragJustertManueltTilForskuddssats:
   intern: "Bidrag justert manuelt til forskuddssats"
-
-BIDRAG_JUSTERT_NED_TIL_25_PROSENT_AV_INNTEKT:
-  intern: "Bidrag redusert til 25 prosent av inntekt"
-BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BP:
-  intern: "Bidrag satt til barnetillegg fra BP"
-BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BM:
-  intern: "Bidrag satt til underholdskostnad minus barnetillegg BM"
-BIDRAG_JUSTERT_NED_TIL_EVNE:
-  intern: "Bidrag redusert til evne"
-BIDRAG_JUSTERT_FOR_DELT_BOSTED:
-  intern: "Bidrag justert for delt bosted"
-BARNET_ER_SELVFORSØRGET:
-  intern: "Barnet er selvforsørget"
-IKKE_OMSORG:
-  intern: "Ikke omsorg for barnet"
-KOSTNADSBEREGNET_BIDRAG:
-  intern: "Kostnadsberegnet bidrag"
-BIDRAG_JUSTERT_TIL_FORSKUDDSSATS:
-  intern: "Bidrag justert til forskuddssats"
-BIDRAG_JUSTERT_MANUELT_TIL_FORSKUDDSSATS:
-  intern: "Bidrag justert manuelt til forskuddssats"
-MANGLER_BIDRAGSEVNE:
-  intern: "Mangler bidragsevne"
-MAKS_25_PROSENT_AV_INNTEKT:
-  intern: "Maks 25 prosent av inntekt"

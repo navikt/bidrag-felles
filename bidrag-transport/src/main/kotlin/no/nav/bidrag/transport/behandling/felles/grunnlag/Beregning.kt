@@ -12,6 +12,7 @@ import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.Visningsnavn
 import no.nav.bidrag.domene.util.lastVisningsnavnFraFil
+import no.nav.bidrag.domene.util.visningsnavn
 import java.math.BigDecimal
 import java.math.MathContext
 import java.time.LocalDate
@@ -105,7 +106,7 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
 }
 
 fun List<GrunnlagDto>.tilResultatVisningsnavn(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Visningsnavn? =
-    resultatSluttberegning(grunnlagsreferanseListe)?.let { lastVisningsnavnFraFil("sluttberegningBarnebidrag.yaml")[it.name] }
+    resultatSluttberegning(grunnlagsreferanseListe)?.visningsnavn
 
 fun List<GrunnlagDto>.tilBisysResultatkode(grunnlagsreferanseListe: List<Grunnlagsreferanse>): String =
     resultatSluttberegning(grunnlagsreferanseListe)?.legacyKode ?: "KBB"
