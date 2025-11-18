@@ -61,12 +61,12 @@ fun List<GrunnlagDto>.finnTotalInntektForRolleEllerIdent(
         ?: BigDecimal.ZERO
 }
 
-fun GrunnlagDto.finnPeriode(sluttberegningGrunnlag: GrunnlagDto): ÅrMånedsperiode =
-    if (sluttberegningGrunnlag.erSluttberegningGammelStruktur()) {
-        val sluttberegningObjekt = sluttberegningGrunnlag.innholdTilObjekt<SluttberegningBarnebidrag>()
+fun GrunnlagDto.sluttberegningPeriode(): ÅrMånedsperiode =
+    if (erSluttberegningGammelStruktur()) {
+        val sluttberegningObjekt = innholdTilObjekt<SluttberegningBarnebidrag>()
         sluttberegningObjekt.periode
     } else {
-        val sluttberegningObjekt = sluttberegningGrunnlag.innholdTilObjekt<SluttberegningBarnebidragV2>()
+        val sluttberegningObjekt = innholdTilObjekt<SluttberegningBarnebidragV2>()
         sluttberegningObjekt.periode
     }
 
