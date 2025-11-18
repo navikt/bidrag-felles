@@ -62,14 +62,14 @@ fun List<GrunnlagDto>.finnTotalInntektForRolleEllerIdent(
 
 fun GrunnlagDto.hentBeregnetBeløp(): BigDecimal =
     if (erSluttberegningNyStruktur()) {
-        innholdTilObjekt<SluttberegningBarnebidragV2>().beregnetBeløp
+        innholdTilObjekt<SluttberegningBarnebidragV2>().beregnetBeløp!!
     } else {
         innholdTilObjekt<SluttberegningBarnebidrag>().beregnetBeløp!!
     }
 
 fun GrunnlagDto.hentResultatBeløp(): BigDecimal =
     if (erSluttberegningNyStruktur()) {
-        innholdTilObjekt<SluttberegningBarnebidragV2>().resultatBeløp
+        innholdTilObjekt<SluttberegningBarnebidragV2>().resultatBeløp!!
     } else {
         innholdTilObjekt<SluttberegningBarnebidrag>().resultatBeløp!!
     }
