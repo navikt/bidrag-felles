@@ -85,13 +85,15 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
     val bidragJustertNedTilEvne = !andelAvBidragsevne.innhold.harBPFullEvne
     val bidragJustertNedTil25ProsentAvInntekt = evne25prosentAvInntekt.innhold.erEvneJustertNedTil25ProsentAvInntekt
     val bidragJustertForDeltBosted = andelDeltBosted != null
+    val sluttberegningInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidragV2>()
     return when {
-        // TODO: Hvordan hente informasjom om forskudssats og ikke omsorg for barnet?
-//        ikkeOmsorgForBarnet -> Resultatkode.IKKE_OMSORG
+        sluttberegningInnhold.ikkeOmsorgForBarnet -> Resultatkode.IKKE_OMSORG
         bpsBarnetillegg.innhold.erBidragJustertTilNettoBarnetilleggBP -> Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BP
+        // TODO: Hvordan hente informasjom om forskudssats?
 //        bidragJustertManueltTilForskuddssats -> Resultatkode.BIDRAG_JUSTERT_MANUELT_TIL_FORSKUDDSSATS
 //        bidragJustertTilForskuddssats -> Resultatkode.BIDRAG_JUSTERT_TIL_FORSKUDDSSATS
-        bpsAndel.innhold.barnetErSelvforsørget -> Resultatkode.BARNET_ER_SELVFORSØRGET
+        bpsAndel.innhold.barnetErSelvforsørget || sluttberegningInnhold.barnetErSelvforsørget
+        -> Resultatkode.BARNET_ER_SELVFORSØRGET
         bidragJustertForDeltBosted && bidragJustertNedTilEvne -> Resultatkode.MANGLER_BIDRAGSEVNE
         bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
             Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
