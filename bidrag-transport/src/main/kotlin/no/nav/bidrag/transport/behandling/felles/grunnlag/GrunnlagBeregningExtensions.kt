@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.POJONode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
+import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
 fun List<GrunnlagDto>.finnDelberegningBidragspliktigesAndelSærbidrag(
@@ -59,6 +60,15 @@ fun List<GrunnlagDto>.finnTotalInntektForRolleEllerIdent(
     return delberegningSumInntektForRolle?.innholdTilObjekt<DelberegningSumInntekt>()?.totalinntekt
         ?: BigDecimal.ZERO
 }
+
+fun GrunnlagDto.finnPeriode(sluttberegningGrunnlag: GrunnlagDto): ÅrMånedsperiode =
+    if (sluttberegningGrunnlag.erSluttberegningGammelStruktur()) {
+        val sluttberegningObjekt = sluttberegningGrunnlag.innholdTilObjekt<SluttberegningBarnebidrag>()
+        sluttberegningObjekt.periode
+    } else {
+        val sluttberegningObjekt = sluttberegningGrunnlag.innholdTilObjekt<SluttberegningBarnebidragV2>()
+        sluttberegningObjekt.periode
+    }
 
 fun GrunnlagDto.hentBeregnetBeløp(): BigDecimal =
     if (erSluttberegningNyStruktur()) {
