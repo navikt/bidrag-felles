@@ -107,6 +107,7 @@ data class BeregningGrunnlagV2(
     val periode: ÅrMånedsperiode,
     val opphørsdato: YearMonth? = null,
     val stønadstype: Stønadstype,
+    val erDirekteAvslag: Boolean = false,
     val omgjøringOrkestratorGrunnlag: OmgjøringOrkestratorGrunnlag? = null,
 )
 
