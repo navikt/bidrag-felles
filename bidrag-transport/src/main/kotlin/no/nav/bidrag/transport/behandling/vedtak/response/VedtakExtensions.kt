@@ -31,6 +31,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdentKonvertert
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedReferanseKonvertert
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
+import no.nav.bidrag.transport.behandling.felles.grunnlag.personObjekt
 import no.nav.bidrag.transport.behandling.vedtak.Stønadsendring
 import no.nav.bidrag.transport.felles.tilVisningsnavn
 import no.nav.bidrag.transport.felles.toYearMonth
@@ -64,6 +65,11 @@ val VedtakDto.søknadsider
             .filter {
                 it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
             }.map { it.referanse.toLong() }
+
+fun VedtakDto.gjelderRevurderingsbarn(stønadsendringDto: StønadsendringDto): Boolean {
+    val barn = grunnlagListe.hentPersonMedIdent(stønadsendringDto.kravhaver.verdi)
+    return barn != null && !barn.personObjekt.delAvOpprinneligBehandling
+}
 
 val VedtakDto.søknadId get() = behandlingsreferanseListe.søknadsid
 val VedtakDto.søknadKlageRefId get() = behandlingsreferanseListe.søknadKlageRefId
