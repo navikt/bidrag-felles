@@ -366,6 +366,7 @@ data class DelberegningAndelAvBidragsevne(
     val andelAvSumBidragTilFordelingFaktor: BigDecimal,
     val andelAvEvneBeløp: BigDecimal,
     val bidragEtterFordeling: BigDecimal,
+    val bruttoBidragJustertForEvneOg25Prosent: BigDecimal = BigDecimal.ZERO,
     val harBPFullEvne: Boolean = true,
 ) : Delberegning
 
