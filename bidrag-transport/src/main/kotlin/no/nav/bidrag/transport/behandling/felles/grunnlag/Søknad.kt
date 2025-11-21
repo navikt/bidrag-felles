@@ -31,6 +31,7 @@ data class SøknadGrunnlag(
     val paragraf35c: Boolean = false,
     val privatAvtale: Boolean = false,
     val innkrevingsgrunnlag: Boolean = false,
+    val forholdsmessigFordeling: Boolean = false,
 ) : GrunnlagInnhold
 
 data class VirkningstidspunktGrunnlag(

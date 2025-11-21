@@ -66,6 +66,12 @@ val VedtakDto.søknadsider
                 it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
             }.map { it.referanse.toLong() }
 
+fun VedtakDto.erVedtakAvvistRevurderingsøknad(): Boolean =
+    stønadsendringListe.all { s ->
+        gjelderRevurderingsbarn(s) &&
+            s.beslutning == Beslutningstype.AVVIST
+    }
+
 fun VedtakDto.gjelderRevurderingsbarn(stønadsendringDto: StønadsendringDto): Boolean {
     val barn = grunnlagListe.hentPersonMedIdent(stønadsendringDto.kravhaver.verdi)
     return barn != null && !barn.personObjekt.delAvOpprinneligBehandling

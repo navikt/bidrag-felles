@@ -95,6 +95,7 @@ data class ResultatVedtak(
 }
 
 data class BidragsberegningOrkestratorRequestV2(
+    @Deprecated("Bruk beregningsperiode per barn i stedet")
     val beregningsperiode: ÅrMånedsperiode,
     val beregningBarn: List<BeregningGrunnlagV2>,
     val grunnlagsliste: List<GrunnlagDto>,
@@ -104,7 +105,10 @@ data class BidragsberegningOrkestratorRequestV2(
 
 data class BeregningGrunnlagV2(
     val søknadsbarnreferanse: Grunnlagsreferanse,
+    @Deprecated("Bruk beregningsperiode for beregning og virkningstidspunkt for vedtaksperiode")
     val periode: ÅrMånedsperiode,
+    val beregningsperiode: ÅrMånedsperiode,
+    val virkningstidspunkt: YearMonth,
     val opphørsdato: YearMonth? = null,
     val stønadstype: Stønadstype,
     val erDirekteAvslag: Boolean = false,
