@@ -425,7 +425,11 @@ data class NotatGebyrDetaljerDto(
         val søktAvType: SøktAvType,
         val behandlingstype: Behandlingstype?,
         val behandlingstema: Behandlingstema?,
-    )
+    ) {
+        val søktAvTypeVisningsnavn get() = toVisningsnavn(søktAvType)
+        val behandlingstypeVisningsnavn get() = behandlingstype?.visningsnavn?.intern
+        val behandlingstemaVisningsnavn get() = toVisningsnavn(behandlingstema)
+    }
 
     data class NotatGebyrInntektDto(
         val skattepliktigInntekt: BigDecimal,
@@ -514,7 +518,10 @@ private fun <T> toVisningsnavn(value: T): String? =
             enum.name.lowercase().replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
             }
-
+        is Behandlingstema ->
+            enum.name.lowercase().replace("_", " ").replace("pluss", "+").replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+            }
         else -> null
     }
 
