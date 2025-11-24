@@ -5,6 +5,7 @@ import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.dokumentmaler.DokumentmalSluttberegningBarnebidragDetaljer
 import java.math.BigDecimal
 
 fun List<GrunnlagDto>.finnDelberegningBidragspliktigesAndelSærbidrag(
@@ -124,4 +125,88 @@ fun List<GrunnlagDto>.finnBidragJustertForBarnetilleggBP(sluttberegningGrunnlag:
         Grunnlagstype.DELBEREGNING_BIDRAG_JUSTERT_FOR_BP_BARNETILLEGG,
         sluttberegningGrunnlag.grunnlagsreferanseListe,
     ).firstOrNull()?.innhold?.bidragJustertForNettoBarnetilleggBP ?: BigDecimal.ZERO
+}
+
+fun List<GrunnlagDto>.byggSluttberegningBarnebidragDetaljer(
+    grunnlagsreferanseListe: List<Grunnlagsreferanse>,
+): DokumentmalSluttberegningBarnebidragDetaljer? {
+    val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return null
+    if (sluttberegning.erSluttberegningGammelStruktur()) {
+        val sbInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidrag>()
+        return DokumentmalSluttberegningBarnebidragDetaljer(
+            bidragJustertNedTilEvne = sbInnhold.bidragJustertNedTilEvne,
+            nettoBidragEtterSamværsfradrag = sbInnhold.nettoBidragEtterSamværsfradrag,
+            uMinusNettoBarnetilleggBM = sbInnhold.uMinusNettoBarnetilleggBM,
+            bpAndelAvUVedDeltBostedBeløp = sbInnhold.bpAndelAvUVedDeltBostedBeløp,
+            bpAndelAvUVedDeltBostedFaktor = sbInnhold.bpAndelAvUVedDeltBostedFaktor,
+            bidragJustertForNettoBarnetilleggBP = sbInnhold.bidragJustertForNettoBarnetilleggBP,
+            bruttoBidragEtterBarnetilleggBP = sbInnhold.bruttoBidragEtterBarnetilleggBP,
+            bidragJustertNedTil25ProsentAvInntekt = sbInnhold.bidragJustertNedTil25ProsentAvInntekt,
+            bruttoBidragJustertForEvneOg25Prosent = sbInnhold.bruttoBidragJustertForEvneOg25Prosent,
+            barnetErSelvforsørget = sbInnhold.barnetErSelvforsørget,
+            beregnetBeløp = sbInnhold.beregnetBeløp,
+            resultatBeløp = sbInnhold.resultatBeløp,
+            nettoBidragEtterBarnetilleggBM = sbInnhold.nettoBidragEtterBarnetilleggBM,
+            bruttoBidragEtterBarnetilleggBM = sbInnhold.bruttoBidragEtterBarnetilleggBM,
+            bidragJustertForNettoBarnetilleggBM = sbInnhold.bidragJustertForNettoBarnetilleggBM,
+            resultat = resultatSluttberegning(grunnlagsreferanseListe),
+            resultatVisningsnavn = sbInnhold.resultatVisningsnavn,
+        )
+    }
+    val beregnetBeløp = sluttberegning.hentBeregnetBeløp()
+    val resultatBeløp = sluttberegning.hentResultatBeløp()
+    val andelDeltBosted =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragspliktigesAndelDeltBosted>(
+            Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_DELT_BOSTED,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull()
+
+    val bidragTilFordeling =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragTilFordeling>(
+            Grunnlagstype.DELBEREGNING_BIDRAG_TIL_FORDELING,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val andelAvBidragsevne =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningAndelAvBidragsevne>(
+            Grunnlagstype.DELBEREGNING_ANDEL_AV_BIDRAGSEVNE,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val bpsBarnetillegg =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragJustertForBPBarnetillegg>(
+            Grunnlagstype.DELBEREGNING_BIDRAG_JUSTERT_FOR_BP_BARNETILLEGG,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val bpsAndel =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragspliktigesAndel>(
+            Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+    val samværsfradrag =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningSamværsfradrag>(
+            Grunnlagstype.DELBEREGNING_SAMVÆRSFRADRAG,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull() ?: return null
+
+    val nettoBidragEtterBarnetilleggBM = bidragTilFordeling.innhold.bidragTilFordeling.subtract(samværsfradrag.innhold.beløp)
+
+    val bidragJustertNedTil25ProsentAvInntekt = erBidragJustertNedTil25ProsentAvInntekt(grunnlagsreferanseListe)
+    return DokumentmalSluttberegningBarnebidragDetaljer(
+        bidragJustertNedTilEvne = !andelAvBidragsevne.innhold.harBPFullEvne,
+        nettoBidragEtterSamværsfradrag = beregnetBeløp ?: BigDecimal.ZERO,
+        uMinusNettoBarnetilleggBM = bidragTilFordeling.innhold.uMinusNettoBarnetilleggBM,
+        bpAndelAvUVedDeltBostedBeløp = andelDeltBosted?.innhold?.bpAndelAvUVedDeltBostedBeløp ?: BigDecimal.ZERO,
+        bpAndelAvUVedDeltBostedFaktor = andelDeltBosted?.innhold?.bpAndelAvUVedDeltBostedFaktor ?: BigDecimal.ZERO,
+        bidragJustertForNettoBarnetilleggBP = bpsBarnetillegg.innhold.erBidragJustertTilNettoBarnetilleggBP,
+        bruttoBidragEtterBarnetilleggBP = bpsBarnetillegg.innhold.bidragJustertForNettoBarnetilleggBP,
+        bidragJustertNedTil25ProsentAvInntekt = bidragJustertNedTil25ProsentAvInntekt,
+        bruttoBidragJustertForEvneOg25Prosent = andelAvBidragsevne.innhold.bruttoBidragJustertForEvneOg25Prosent,
+        barnetErSelvforsørget = bpsAndel.innhold.barnetErSelvforsørget,
+        beregnetBeløp = beregnetBeløp,
+        resultatBeløp = resultatBeløp,
+        nettoBidragEtterBarnetilleggBM = nettoBidragEtterBarnetilleggBM,
+        bruttoBidragEtterBarnetilleggBM = bidragTilFordeling.innhold.bidragTilFordeling,
+        bidragJustertForNettoBarnetilleggBM = bidragTilFordeling.innhold.uMinusNettoBarnetilleggBM == nettoBidragEtterBarnetilleggBM,
+        resultat = resultatSluttberegning(grunnlagsreferanseListe),
+        resultatVisningsnavn = tilResultatVisningsnavn(grunnlagsreferanseListe),
+    )
 }

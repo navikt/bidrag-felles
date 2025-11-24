@@ -1,10 +1,10 @@
 package no.nav.bidrag.transport.dokumentmaler
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erDirekteAvslag
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.rolle.Rolletype
-import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -18,7 +18,6 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspli
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningEndringSjekkGrensePeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUnderholdskostnad
 import no.nav.bidrag.transport.behandling.felles.grunnlag.ResultatFraVedtakGrunnlag
-import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidrag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningIndeksregulering
 import no.nav.bidrag.transport.behandling.vedtak.response.erIndeksEllerAldersjustering
@@ -179,7 +178,7 @@ data class DokumentmalResultatBidragsberegningBarnDto(
             val delberegningBidragsevne: DokumentmalDelberegningBidragsevneDto? = null,
             val samværsfradrag: NotatBeregningsdetaljerSamværsfradrag? = null,
             val endringUnderGrense: DelberegningEndringSjekkGrensePeriode? = null,
-            val sluttberegning: NotatSluttberegningBarnebidragDetaljer? = null,
+            val sluttberegning: DokumentmalSluttberegningBarnebidragDetaljer? = null,
             val delberegningUnderholdskostnad: DelberegningUnderholdskostnad? = null,
             val indeksreguleringDetaljer: IndeksreguleringDetaljer? = null,
             val sluttberegningAldersjustering: SluttberegningBarnebidragAldersjustering? = null,
@@ -206,7 +205,7 @@ data class DokumentmalResultatBidragsberegningBarnDto(
     }
 }
 
-data class NotatSluttberegningBarnebidragDetaljer(
+data class DokumentmalSluttberegningBarnebidragDetaljer(
     val beregnetBeløp: BigDecimal?,
     val resultatBeløp: BigDecimal?,
     val uMinusNettoBarnetilleggBM: BigDecimal = BigDecimal.ZERO,
@@ -236,7 +235,10 @@ data class NotatSluttberegningBarnebidragDetaljer(
     val bpSumAndelAvU: BigDecimal? = null,
     val resultat: Resultatkode?,
     val resultatVisningsnavn: Visningsnavn?,
-)
+) {
+    @get:JsonIgnore
+    val erResultatAvslag get() = listOf(Resultatkode.IKKE_OMSORG, Resultatkode.BARNET_ER_SELVFORSØRGET).contains(resultat)
+}
 
 data class DokumentmalDelberegningBarnetilleggDto(
     val barnetillegg: List<DokumentmalBarnetilleggDetaljerDto> = emptyList(),
