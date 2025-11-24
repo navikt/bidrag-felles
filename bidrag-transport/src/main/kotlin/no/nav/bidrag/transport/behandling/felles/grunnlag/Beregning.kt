@@ -93,11 +93,6 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
             Grunnlagstype.DELBEREGNING_ANDEL_AV_BIDRAGSEVNE,
             sluttberegning.grunnlagsreferanseListe,
         ).firstOrNull() ?: return null
-    val evne25prosentAvInntekt =
-        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningEvne25ProsentAvInntekt>(
-            Grunnlagstype.DELBEREGNING_EVNE_25PROSENTAVINNTEKT,
-            sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return null
     val bpsBarnetillegg =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragJustertForBPBarnetillegg>(
             Grunnlagstype.DELBEREGNING_BIDRAG_JUSTERT_FOR_BP_BARNETILLEGG,

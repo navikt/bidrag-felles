@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.barnetilsyn.Skolealder
 import no.nav.bidrag.domene.enums.barnetilsyn.Tilsynstype
+import no.nav.bidrag.domene.enums.behandling.Behandlingstema
+import no.nav.bidrag.domene.enums.behandling.Behandlingstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvvisning
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
@@ -397,6 +399,7 @@ data class NotatGebyrRolleV2Dto(
 )
 
 data class NotatGebyrDetaljerDto(
+    val søknad: NotatGebyrSøknadDetaljerDto? = null,
     val inntekt: NotatGebyrInntektDto,
     val manueltOverstyrtGebyr: NotatManueltOverstyrGebyrDto? = null,
     val beregnetIlagtGebyr: Boolean,
@@ -413,6 +416,16 @@ data class NotatGebyrDetaljerDto(
             false -> "Fritatt"
             else -> "Ikke valgt"
         }
+
+    data class NotatGebyrSøknadDetaljerDto(
+        val saksnummer: String,
+        val søknadsid: Long,
+        val mottattDato: LocalDate,
+        var søknadFomDato: LocalDate? = null,
+        val søktAvType: SøktAvType,
+        val behandlingstype: Behandlingstype?,
+        val behandlingstema: Behandlingstema?,
+    )
 
     data class NotatGebyrInntektDto(
         val skattepliktigInntekt: BigDecimal,
