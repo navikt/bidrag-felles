@@ -131,6 +131,8 @@ fun List<GrunnlagDto>.byggSluttberegningBarnebidragDetaljer(
     grunnlagsreferanseListe: List<Grunnlagsreferanse>,
 ): DokumentmalSluttberegningBarnebidragDetaljer? {
     val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return null
+    if (sluttberegning.type != Grunnlagstype.SLUTTBEREGNING_BARNEBIDRAG) return null
+
     if (sluttberegning.erSluttberegningGammelStruktur()) {
         val sbInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidrag>()
         return DokumentmalSluttberegningBarnebidragDetaljer(
