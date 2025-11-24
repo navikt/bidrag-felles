@@ -83,7 +83,9 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
         ).firstOrNull() ?: return null
     val nettoBidragEtterBarnetilleggBM = bidragTilFordeling.innhold.bidragTilFordeling.subtract(samværsfradrag.innhold.beløp)
     val bidragJustertNedTilEvne = !andelAvBidragsevne.innhold.harBPFullEvne
-    val bidragJustertNedTil25ProsentAvInntekt = evne25prosentAvInntekt.innhold.erEvneJustertNedTil25ProsentAvInntekt
+    val bidragJustertNedTil25ProsentAvInntekt =
+        evne25prosentAvInntekt.innhold.erEvneJustertNedTil25ProsentAvInntekt &&
+            evne25prosentAvInntekt.innhold.evneJustertFor25ProsentAvInntekt < nettoBidragEtterBarnetilleggBM
     val bidragJustertForDeltBosted = andelDeltBosted != null
     val sluttberegningInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidragV2>()
     return when {
