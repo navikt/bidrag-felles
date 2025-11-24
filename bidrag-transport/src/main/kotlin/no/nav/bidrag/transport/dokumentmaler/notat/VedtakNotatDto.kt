@@ -17,6 +17,7 @@ import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.person.SivilstandskodePDL
 import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
@@ -56,12 +57,13 @@ data class VedtakNotatDto(
     val saksnummer: String,
     val behandling: NotatBehandlingDetaljerDto,
     val saksbehandlerNavn: String?,
-    val virkningstidspunkt: NotatVirkningstidspunktBarnDto,
+    val virkningstidspunkt: NotatVirkningstidspunktDto,
     val virkningstidspunktV2: NotatVirkningstidspunktDto,
     val utgift: NotatSærbidragUtgifterDto?,
     val boforhold: NotatBoforholdDto,
     val samvær: List<NotatSamværDto> = emptyList(),
-    val gebyr: List<NotatGebyrRolleDto>? = null,
+    val gebyr: List<NotatGebyrDetaljerDto>? = null,
+    val gebyrV2: NotatGebyrV2Dto? = null,
     var underholdskostnader: NotatUnderholdDto? = null,
     val personer: List<DokumentmalPersonDto>,
     val privatavtale: List<NotatPrivatAvtaleDto>,
@@ -385,13 +387,23 @@ data class NotatBoforholdTilBMMedSøknadsbarn(
     val perioder: List<OpplysningerFraFolkeregisteret<Bostatuskode>> = emptyList(),
 )
 
-data class NotatGebyrRolleDto(
+data class NotatGebyrV2Dto(
+    val gebyrRoller: List<NotatGebyrRolleV2Dto>,
+)
+
+data class NotatGebyrRolleV2Dto(
+    val gebyrDetaljer: List<NotatGebyrDetaljerDto>,
+    val rolle: DokumentmalPersonDto,
+)
+
+data class NotatGebyrDetaljerDto(
     val inntekt: NotatGebyrInntektDto,
     val manueltOverstyrtGebyr: NotatManueltOverstyrGebyrDto? = null,
     val beregnetIlagtGebyr: Boolean,
     val endeligIlagtGebyr: Boolean,
     val begrunnelse: String? = null,
     val beløpGebyrsats: BigDecimal,
+    @Schema(deprecated = true)
     val rolle: DokumentmalPersonDto,
 ) {
     val erManueltOverstyrt get() = beregnetIlagtGebyr != endeligIlagtGebyr
@@ -574,6 +586,11 @@ data class NotatVedtakDetaljerDto(
     val resultat: List<VedtakResultatInnhold>,
 )
 
+data class PeriodeSlåttUtTilFF(
+    val periode: ÅrMånedsperiode,
+    val erEvneJustertNedTil25ProsentAvInntekt: Boolean,
+)
+
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
     include = JsonTypeInfo.As.PROPERTY,
@@ -658,6 +675,7 @@ data class NotatPrivatAvtaleDto(
     val avtaleDato: LocalDate?,
     val avtaleType: PrivatAvtaleType?,
     val skalIndeksreguleres: Boolean,
+    val utlandsbidrag: Boolean = false,
     val begrunnelse: NotatBegrunnelseDto? = null,
     val perioder: List<NotatPrivatAvtalePeriodeDto> = emptyList(),
     val vedtakslisteUtenInnkreving: List<DokumentmalManuellVedtak> = emptyList(),
@@ -669,6 +687,8 @@ data class NotatPrivatAvtaleDto(
 data class NotatPrivatAvtalePeriodeDto(
     val periode: DatoperiodeDto,
     val beløp: BigDecimal,
+    val samværsklasse: Samværsklasse? = null,
+    val valutakode: Valutakode? = null,
 )
 
 data class NotatBeregnetPrivatAvtalePeriodeDto(

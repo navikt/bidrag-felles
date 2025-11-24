@@ -8,6 +8,7 @@ import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.domene.util.Visningsnavn
 import no.nav.bidrag.domene.util.visningsnavn
 import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.årsbeløpTilMåndesbeløp
@@ -23,6 +24,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningIndeksre
 import no.nav.bidrag.transport.behandling.vedtak.response.erIndeksEllerAldersjustering
 import no.nav.bidrag.transport.dokumentmaler.notat.EndeligOrkestrertVedtak
 import no.nav.bidrag.transport.dokumentmaler.notat.NotatMalType
+import no.nav.bidrag.transport.dokumentmaler.notat.PeriodeSlåttUtTilFF
 import no.nav.bidrag.transport.dokumentmaler.notat.VedtakResultatInnhold
 import no.nav.bidrag.transport.felles.tilVisningsnavn
 import java.math.BigDecimal
@@ -53,6 +55,8 @@ data class DokumentmalResultatBidragsberegningBarnDto(
     val barn: DokumentmalPersonDto,
     val indeksår: Int? = null,
     val innkrevesFraDato: YearMonth? = null,
+    val minstEnPeriodeHarSlåttUtTilFF: Boolean = false,
+    val perioderSlåttUtTilFF: List<PeriodeSlåttUtTilFF> = emptyList(),
     val orkestrertVedtak: EndeligOrkestrertVedtak? = null,
     val perioder: List<ResultatBarnebidragsberegningPeriodeDto>,
 ) : VedtakResultatInnhold(NotatMalType.BIDRAG) {
@@ -175,11 +179,12 @@ data class DokumentmalResultatBidragsberegningBarnDto(
             val delberegningBidragsevne: DokumentmalDelberegningBidragsevneDto? = null,
             val samværsfradrag: NotatBeregningsdetaljerSamværsfradrag? = null,
             val endringUnderGrense: DelberegningEndringSjekkGrensePeriode? = null,
-            val sluttberegning: SluttberegningBarnebidrag? = null,
+            val sluttberegning: NotatSluttberegningBarnebidragDetaljer? = null,
             val delberegningUnderholdskostnad: DelberegningUnderholdskostnad? = null,
             val indeksreguleringDetaljer: IndeksreguleringDetaljer? = null,
             val sluttberegningAldersjustering: SluttberegningBarnebidragAldersjustering? = null,
             val delberegningBidragspliktigesBeregnedeTotalBidrag: DokumentmalDelberegningBidragspliktigesBeregnedeTotalbidragDto? = null,
+            val forholdsmessigFordelingBeregningsdetaljer: DokumentmalForholdsmessigFordelingBeregningsdetaljer? = null,
         ) {
             data class IndeksreguleringDetaljer(
                 val sluttberegning: SluttberegningIndeksregulering?,
@@ -196,10 +201,42 @@ data class DokumentmalResultatBidragsberegningBarnDto(
 
             val deltBosted get() =
                 sluttberegning?.bidragJustertForDeltBosted == true ||
-                    sluttberegning?.resultat == SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                    sluttberegning?.resultat == Resultatkode.BIDRAG_JUSTERT_FOR_DELT_BOSTED
         }
     }
 }
+
+data class NotatSluttberegningBarnebidragDetaljer(
+    val beregnetBeløp: BigDecimal?,
+    val resultatBeløp: BigDecimal?,
+    val uMinusNettoBarnetilleggBM: BigDecimal = BigDecimal.ZERO,
+    val bruttoBidragEtterBarnetilleggBM: BigDecimal = BigDecimal.ZERO,
+    val nettoBidragEtterBarnetilleggBM: BigDecimal = BigDecimal.ZERO,
+    val bruttoBidragJustertForEvneOg25Prosent: BigDecimal = BigDecimal.ZERO,
+    val bruttoBidragEtterBegrensetRevurdering: BigDecimal = BigDecimal.ZERO,
+    val bruttoBidragEtterBarnetilleggBP: BigDecimal = BigDecimal.ZERO,
+    val nettoBidragEtterSamværsfradrag: BigDecimal = BigDecimal.ZERO,
+    val bpAndelAvUVedDeltBostedFaktor: BigDecimal = BigDecimal.ZERO,
+    val bpAndelAvUVedDeltBostedBeløp: BigDecimal = BigDecimal.ZERO,
+    val løpendeForskudd: BigDecimal? = null,
+    val løpendeBidrag: BigDecimal? = null,
+    val barnetErSelvforsørget: Boolean = false,
+    val bidragJustertForDeltBosted: Boolean = false,
+    val bidragJustertForNettoBarnetilleggBP: Boolean = false,
+    val bidragJustertForNettoBarnetilleggBM: Boolean = false,
+    val bidragJustertNedTilEvne: Boolean = false,
+    val bidragJustertNedTil25ProsentAvInntekt: Boolean = false,
+    val bidragJustertTilForskuddssats: Boolean = false,
+    val bidragJustertManueltTilForskuddssats: Boolean = false,
+    val begrensetRevurderingUtført: Boolean = false,
+    val ikkeOmsorgForBarnet: Boolean = false,
+    val bpEvneVedForholdsmessigFordeling: BigDecimal? = null,
+    // Andel av U basert på fordeling fra FF
+    val bpAndelAvUVedForholdsmessigFordelingFaktor: BigDecimal? = null,
+    val bpSumAndelAvU: BigDecimal? = null,
+    val resultat: Resultatkode?,
+    val resultatVisningsnavn: Visningsnavn?,
+)
 
 data class DokumentmalDelberegningBarnetilleggDto(
     val barnetillegg: List<DokumentmalBarnetilleggDetaljerDto> = emptyList(),
@@ -284,4 +321,26 @@ data class DokumentmalPersonDto(
     val innbetaltBeløp: BigDecimal? = null,
     val opphørsdato: LocalDate? = null,
     val virkningstidspunkt: LocalDate? = null,
+    val saksnummer: String? = null,
+    val bidragsmottakerIdent: String? = null,
+)
+
+data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
+    val sumBidragTilFordeling: BigDecimal,
+    val sumPrioriterteBidragTilFordeling: BigDecimal,
+    val bidragTilFordelingForBarnet: BigDecimal,
+    val andelAvSumBidragTilFordelingFaktor: BigDecimal,
+    val andelAvEvneBeløp: BigDecimal,
+    val bidragEtterFordeling: BigDecimal,
+    val harBPFullEvne: Boolean,
+    val erKompletteGrunnlagForAlleLøpendeBidrag: Boolean,
+    val erForholdsmessigFordelt: Boolean,
+    val bidragTilFordelingAlle: List<DokumentmalForholdsmessigFordelingBidragTilFordelingBarn> = emptyList(),
+)
+
+data class DokumentmalForholdsmessigFordelingBidragTilFordelingBarn(
+    val prioritertBidrag: Boolean,
+    val privatAvtale: Boolean,
+    val bidragTilFordeling: BigDecimal,
+    val barn: DokumentmalPersonDto,
 )
