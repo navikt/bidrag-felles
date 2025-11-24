@@ -323,6 +323,7 @@ data class DokumentmalPersonDto(
     val virkningstidspunkt: LocalDate? = null,
     val saksnummer: String? = null,
     val bidragsmottakerIdent: String? = null,
+    val revurdering: Boolean = false,
 )
 
 data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
