@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.vedtak.Behandlingstype
 import no.nav.bidrag.domene.enums.vedtak.BeregnTil
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
@@ -31,7 +32,8 @@ data class SøknadGrunnlag(
     val paragraf35c: Boolean = false,
     val privatAvtale: Boolean = false,
     val innkrevingsgrunnlag: Boolean = false,
-    val forholdsmessigFordeling: Boolean = false,
+    val behandlingstype: Behandlingstype? = null,
+    val søknadsid: Long? = null,
 ) : GrunnlagInnhold
 
 data class VirkningstidspunktGrunnlag(
