@@ -114,23 +114,50 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
     val bidragJustertForDeltBosted = andelDeltBosted != null
     val sluttberegningInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidragV2>()
     return when {
-        sluttberegningInnhold.ikkeOmsorgForBarnet -> Resultatkode.IKKE_OMSORG
-        bpsBarnetillegg.innhold.erBidragJustertTilNettoBarnetilleggBP -> Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BP
+        sluttberegningInnhold.ikkeOmsorgForBarnet -> {
+            Resultatkode.IKKE_OMSORG
+        }
+
+        bpsBarnetillegg.innhold.erBidragJustertTilNettoBarnetilleggBP -> {
+            Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BP
+        }
+
         // TODO: Hvordan hente informasjom om forskudssats?
 //        bidragJustertManueltTilForskuddssats -> Resultatkode.BIDRAG_JUSTERT_MANUELT_TIL_FORSKUDDSSATS
 //        bidragJustertTilForskuddssats -> Resultatkode.BIDRAG_JUSTERT_TIL_FORSKUDDSSATS
         bpsAndel.innhold.barnetErSelvforsørget || sluttberegningInnhold.barnetErSelvforsørget
-        -> Resultatkode.BARNET_ER_SELVFORSØRGET
-        bidragJustertForDeltBosted && bidragJustertNedTilEvne -> Resultatkode.MANGLER_BIDRAGSEVNE
-        bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
-            Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
+        -> {
+            Resultatkode.BARNET_ER_SELVFORSØRGET
+        }
 
-        bidragJustertForDeltBosted -> Resultatkode.BIDRAG_JUSTERT_FOR_DELT_BOSTED
-        bidragJustertNedTilEvne -> Resultatkode.MANGLER_BIDRAGSEVNE
-        bidragJustertNedTil25ProsentAvInntekt -> Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
+        bidragJustertForDeltBosted && bidragJustertNedTilEvne -> {
+            Resultatkode.MANGLER_BIDRAGSEVNE
+        }
+
+        bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt -> {
+            Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
+        }
+
+        bidragJustertForDeltBosted -> {
+            Resultatkode.BIDRAG_JUSTERT_FOR_DELT_BOSTED
+        }
+
+        bidragJustertNedTilEvne -> {
+            Resultatkode.MANGLER_BIDRAGSEVNE
+        }
+
+        bidragJustertNedTil25ProsentAvInntekt -> {
+            Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
+        }
+
         bidragTilFordeling.innhold.uMinusNettoBarnetilleggBM == nettoBidragEtterBarnetilleggBM
-        -> Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BM
-        else -> Resultatkode.KOSTNADSBEREGNET_BIDRAG
+        -> {
+            Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BM
+        }
+
+        else -> {
+            Resultatkode.KOSTNADSBEREGNET_BIDRAG
+        }
     }
 }
 
@@ -485,20 +512,53 @@ data class SluttberegningBarnebidrag(
         get() =
             // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
-                ikkeOmsorgForBarnet -> SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
-                bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
-                bidragJustertManueltTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name
-                bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
-                barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
-                bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
-                bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
-                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                ikkeOmsorgForBarnet -> {
+                    SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
+                }
 
-                bidragJustertForDeltBosted -> SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
-                bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
-                bidragJustertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
-                bidragJustertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
-                else -> "kostnadsberegnet"
+                bidragJustertForNettoBarnetilleggBP -> {
+                    SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
+                }
+
+                bidragJustertManueltTilForskuddssats -> {
+                    SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name
+                }
+
+                bidragJustertTilForskuddssats -> {
+                    SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
+                }
+
+                barnetErSelvforsørget -> {
+                    SluttberegningBarnebidrag::barnetErSelvforsørget.name
+                }
+
+                bidragJustertForDeltBosted && bidragJustertNedTilEvne -> {
+                    SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                }
+
+                bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt -> {
+                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                }
+
+                bidragJustertForDeltBosted -> {
+                    SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                }
+
+                bidragJustertNedTilEvne -> {
+                    SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                }
+
+                bidragJustertNedTil25ProsentAvInntekt -> {
+                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                }
+
+                bidragJustertForNettoBarnetilleggBM -> {
+                    SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
+                }
+
+                else -> {
+                    "kostnadsberegnet"
+                }
             }
 
     @get:JsonIgnore

@@ -402,11 +402,13 @@ val VedtakDto.omgjøringsvedtakErEnesteVedtak get() =
                 }
         }
 val VedtakDto.erOrkestrertVedtak get() =
-    this.grunnlagListe.finnOrkestreringDetaljer() != null || this.stønadsendringListe.isNotEmpty() && !this.erInnkrevingsgrunnlag() &&
-        this.stønadsendringListe.all { se ->
-            se.beslutning != Beslutningstype.DELVEDTAK &&
-                se.periodeListe.isNotEmpty() &&
-                se.periodeListe.all { p ->
-                    this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
-                }
-        }
+    (this.grunnlagListe.finnOrkestreringDetaljer() != null) || (
+        this.stønadsendringListe.isNotEmpty() && !this.erInnkrevingsgrunnlag() &&
+            this.stønadsendringListe.all { se ->
+                se.beslutning != Beslutningstype.DELVEDTAK &&
+                    se.periodeListe.isNotEmpty() &&
+                    se.periodeListe.all { p ->
+                        this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
+                    }
+            }
+    )

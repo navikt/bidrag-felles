@@ -96,10 +96,22 @@ data class DokumentmalResultatBidragsberegningBarnDto(
         fun tilDelvedtakstypeVisningsnavn(): String {
             if (resultatFraVedtak == null) return ""
             return when {
-                erKlagevedtak -> "Klagevedtak"
-                erOmgjøringsvedtak -> "Omgjøringsvedtak"
-                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Aldersjustering"
-                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.INDEKSREGULERING -> "Indeksregulering"
+                erKlagevedtak -> {
+                    "Klagevedtak"
+                }
+
+                erOmgjøringsvedtak -> {
+                    "Omgjøringsvedtak"
+                }
+
+                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.ALDERSJUSTERING -> {
+                    "Aldersjustering"
+                }
+
+                resultatFraVedtak.beregnet && vedtakstype == Vedtakstype.INDEKSREGULERING -> {
+                    "Indeksregulering"
+                }
+
                 klageOmgjøringDetaljer != null &&
                     klageOmgjøringDetaljer.beregnTilDato != null && periode.fom >= klageOmgjøringDetaljer.beregnTilDato
                 -> {
@@ -113,7 +125,8 @@ data class DokumentmalResultatBidragsberegningBarnDto(
                         }
                     "$prefiks (${resultatFraVedtak.vedtakstidspunkt?.toLocalDate().tilVisningsnavn()})"
                 }
-                resultatFraVedtak.vedtaksid == null && resultatKode == Resultatkode.OPPHØR ->
+
+                resultatFraVedtak.vedtaksid == null && resultatKode == Resultatkode.OPPHØR -> {
                     // Betyr at opphør er konsekvens av vedtak (opphør perioder før pga virkningstidspunkt settes framover i tid)
                     if (erKlagevedtak) {
                         "Klagevedtak"
@@ -122,18 +135,31 @@ data class DokumentmalResultatBidragsberegningBarnDto(
                     } else {
                         "Opphør"
                     }
-                vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Aldersjustering"
-                vedtakstype == Vedtakstype.INDEKSREGULERING -> "Indeksregulering"
+                }
+
+                vedtakstype == Vedtakstype.ALDERSJUSTERING -> {
+                    "Aldersjustering"
+                }
+
+                vedtakstype == Vedtakstype.INDEKSREGULERING -> {
+                    "Indeksregulering"
+                }
+
                 resultatFraVedtak.vedtakstidspunkt != null
-                -> "Vedtak (${resultatFraVedtak.vedtakstidspunkt.toLocalDate().tilVisningsnavn()})"
-                else -> "Vedtak"
+                -> {
+                    "Vedtak (${resultatFraVedtak.vedtakstidspunkt.toLocalDate().tilVisningsnavn()})"
+                }
+
+                else -> {
+                    "Vedtak"
+                }
             }
         }
 
         @Suppress("unused")
         fun tilResultatkodeVisningsnavn(): String =
             when {
-                erOpphør ->
+                erOpphør -> {
                     if (beregningsdetaljer?.sluttberegning?.ikkeOmsorgForBarnet == true ||
                         beregningsdetaljer?.sluttberegning?.barnetErSelvforsørget == true
                     ) {
@@ -143,17 +169,29 @@ data class DokumentmalResultatBidragsberegningBarnDto(
                     } else {
                         "Opphør"
                     }
-                vedtakstype == Vedtakstype.INNKREVING -> "Innkreving"
+                }
 
-                vedtakstype == Vedtakstype.ALDERSJUSTERING -> "Aldersjustering"
+                vedtakstype == Vedtakstype.INNKREVING -> {
+                    "Innkreving"
+                }
 
-                vedtakstype == Vedtakstype.INDEKSREGULERING -> "Indeksregulering"
+                vedtakstype == Vedtakstype.ALDERSJUSTERING -> {
+                    "Aldersjustering"
+                }
+
+                vedtakstype == Vedtakstype.INDEKSREGULERING -> {
+                    "Indeksregulering"
+                }
 
                 resultatKode?.erDirekteAvslag() == true ||
                     resultatKode == Resultatkode.INGEN_ENDRING_UNDER_GRENSE ||
-                    resultatKode == Resultatkode.INNVILGET_VEDTAK -> resultatKode.visningsnavnIntern(vedtakstype)
+                    resultatKode == Resultatkode.INNVILGET_VEDTAK -> {
+                    resultatKode.visningsnavnIntern(vedtakstype)
+                }
 
-                else -> beregningsdetaljer?.sluttberegning?.resultatVisningsnavn?.intern ?: ""
+                else -> {
+                    beregningsdetaljer?.sluttberegning?.resultatVisningsnavn?.intern ?: ""
+                }
             }
 
         data class KlageOmgjøringDetaljer(
