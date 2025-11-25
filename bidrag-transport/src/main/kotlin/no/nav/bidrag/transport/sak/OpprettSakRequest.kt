@@ -30,8 +30,9 @@ class OpprettSakRequest(
     val roller: Set<RolleDto> = emptySet(),
 ) {
     fun valider() {
-        val bmHarFnr =  roller.any {
-                it.type == Rolletype.BIDRAGSMOTTAKER &&  !it.fødselsnummer?.verdi.isNullOrBlank()
+        val bmHarFnr =
+            roller.any {
+                it.type == Rolletype.BIDRAGSMOTTAKER && !it.fødselsnummer?.verdi.isNullOrBlank()
             }
 
         if (!bmHarFnr) {

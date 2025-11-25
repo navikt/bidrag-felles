@@ -56,8 +56,10 @@ val VedtakHendelse.typeBehandling get() =
     when {
         !stønadsendringListe.isNullOrEmpty() &&
             stønadsendringListe.first().type == Stønadstype.FORSKUDD -> TypeBehandling.FORSKUDD
+
         !engangsbeløpListe.isNullOrEmpty() &&
             engangsbeløpListe.first().type == Engangsbeløptype.SÆRBIDRAG -> TypeBehandling.SÆRBIDRAG
+
         else -> TypeBehandling.BIDRAG
     }
 

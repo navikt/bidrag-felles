@@ -32,6 +32,7 @@ data class HentDokumentValgRequest(
             -> Engangsbeløptype.SÆRBIDRAG.name
 
             Engangsbeløptype.DIREKTE_OPPGJØR.name, Engangsbeløptype.DIREKTE_OPPGJOR.name -> Engangsbeløptype.DIREKTE_OPPGJØR.name
+
             else -> behandlingType
         }
 }

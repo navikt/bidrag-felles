@@ -133,7 +133,9 @@ fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype? = null) =
             "$prefiks, ${visningsnavn.intern.lowercase().fjernAvslagOpphørPrefiks()}"
         }
 
-        else -> visningsnavn.intern
+        else -> {
+            visningsnavn.intern
+        }
     }
 
 fun String?.fjernAvslagOpphørPrefiks() =

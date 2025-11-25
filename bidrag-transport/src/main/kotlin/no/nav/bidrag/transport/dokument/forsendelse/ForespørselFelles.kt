@@ -16,7 +16,7 @@ typealias JournalpostId = String
 
 val JournalpostId.utenPrefiks get() = this.replace("\\D".toRegex(), "")
 val JournalpostId.harArkivPrefiks get() = this.contains("-")
-val JournalpostId.erForsendelse get() = this.startsWith("BIF") || this.isNumeric && isForsendelse(this)
+val JournalpostId.erForsendelse get() = this.startsWith("BIF") || (this.isNumeric && isForsendelse(this))
 val JournalpostId.arkivsystem
     get(): DokumentArkivSystemDto? =
         if (!harArkivPrefiks) {
