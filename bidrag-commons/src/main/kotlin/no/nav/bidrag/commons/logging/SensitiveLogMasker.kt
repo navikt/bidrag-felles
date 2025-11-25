@@ -1,7 +1,7 @@
 package no.nav.bidrag.commons.logging
 
-import com.fasterxml.jackson.core.JsonStreamContext
 import net.logstash.logback.mask.ValueMasker
+import tools.jackson.core.TokenStreamContext
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -12,7 +12,7 @@ class SensitiveLogMasker : ValueMasker {
     }
 
     override fun mask(
-        p0: JsonStreamContext?,
+        p0: TokenStreamContext?,
         p1: Any?,
     ): Any? =
         (
