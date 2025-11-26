@@ -24,6 +24,7 @@ data class BeregnetBarnebidragResultat(
     var grunnlagListe: List<GrunnlagDto> = emptyList(),
 )
 
+@Schema(description = "Resultatet av en barnebidragsberegning versjon 2")
 data class BeregnetBarnebidragResultatV2(
     val søknadsbarnreferanse: Grunnlagsreferanse,
     val beregnetBarnebidragResultat: BeregnetBarnebidragResultat,
