@@ -33,7 +33,9 @@ data class SøknadGrunnlag(
     val privatAvtale: Boolean = false,
     val innkrevingsgrunnlag: Boolean = false,
     val behandlingstype: Behandlingstype? = null,
+    // Søknadsid og saksnummer er nyttig ved FF hvor vedtak kan inneholde flere søknader
     val søknadsid: Long? = null,
+    val saksnummer: String? = null,
 ) : GrunnlagInnhold
 
 data class VirkningstidspunktGrunnlag(
