@@ -71,18 +71,18 @@ fun GrunnlagDto.sluttberegningPeriode(): ÅrMånedsperiode =
         sluttberegningObjekt.periode
     }
 
-fun GrunnlagDto.hentBeregnetBeløp(): BigDecimal =
+fun GrunnlagDto.hentBeregnetBeløp(): BigDecimal? =
     if (erSluttberegningNyStruktur()) {
-        innholdTilObjekt<SluttberegningBarnebidragV2>().beregnetBeløp ?: BigDecimal.ZERO
+        innholdTilObjekt<SluttberegningBarnebidragV2>().beregnetBeløp
     } else {
-        innholdTilObjekt<SluttberegningBarnebidrag>().beregnetBeløp ?: BigDecimal.ZERO
+        innholdTilObjekt<SluttberegningBarnebidrag>().beregnetBeløp
     }
 
-fun GrunnlagDto.hentResultatBeløp(): BigDecimal =
+fun GrunnlagDto.hentResultatBeløp(): BigDecimal? =
     if (erSluttberegningNyStruktur()) {
-        innholdTilObjekt<SluttberegningBarnebidragV2>().resultatBeløp!!
+        innholdTilObjekt<SluttberegningBarnebidragV2>().resultatBeløp
     } else {
-        innholdTilObjekt<SluttberegningBarnebidrag>().resultatBeløp!!
+        innholdTilObjekt<SluttberegningBarnebidrag>().resultatBeløp
     }
 
 fun GrunnlagDto.erSluttberegningNyStruktur(): Boolean =
