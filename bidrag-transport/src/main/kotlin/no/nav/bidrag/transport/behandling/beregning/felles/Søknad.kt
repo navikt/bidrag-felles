@@ -71,6 +71,7 @@ data class OppdaterBehandlingsidRequest(
 data class OpprettSøknadRequest(
     val saksnummer: String,
     val behandlingstema: Behandlingstema,
+    val behandlingstype: Behandlingstype?,
     val behandlingsid: Long? = null,
     val behandlerenhet: String? = null,
     val søknadFomDato: LocalDate,
