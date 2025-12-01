@@ -6,22 +6,22 @@ import no.nav.bidrag.domene.land.Landkode3
 
 @Schema(
     description =
-        "Representerer kontonummer for en samhandler. For norske kontonummer " +
-            "er det kun norskKontornr som er utfyllt, ellers benyttes de andre feltene for utlandske kontonummer.",
+        "Representerer kontonummer, primært samhandlere spesielt for utenlandske kontonummer. For norske kontonummer " +
+            "er det kun norskKontonummer som er utfyllt, ellers benyttes de andre feltene for utlandske kontonummer.",
 )
 data class KontonummerDto(
-    @Schema(description = "Norsk kontonummer, 11 siffer.")
+    @param:Schema(description = "Norsk kontonummer, 11 siffer.")
     val norskKontonummer: String? = null,
-    @Schema(description = "IBAN angir kontonummeret på et internasjonalt format.")
+    @param:Schema(description = "IBAN angir kontonummeret på et internasjonalt format.")
     val iban: String? = null,
-    @Schema(description = "SWIFT angir banken på et internasjonalt format.")
+    @param:Schema(description = "SWIFT angir banken på et internasjonalt format.")
     val swift: String? = null,
-    @Schema(description = "Bankens navn.")
+    @param:Schema(description = "Bankens navn.")
     val banknavn: String? = null,
-    @Schema(description = "Bankens landkode. ISO 3166-1 alfa-3.")
+    @param:Schema(description = "Bankens landkode. ISO 3166-1 alfa-3.")
     val landkodeBank: Landkode3? = null,
-    @Schema(description = "BankCode. Format varierer.")
+    @param:Schema(description = "BankCode. Format varierer.")
     val bankCode: String? = null,
-    @Schema(description = "Kontoens valuta.")
+    @param:Schema(description = "Kontoens valuta.")
     val valutakode: Valutakode? = null,
 )

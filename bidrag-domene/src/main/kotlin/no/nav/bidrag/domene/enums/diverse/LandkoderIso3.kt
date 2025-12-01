@@ -258,4 +258,13 @@ enum class LandkoderIso3(
     ZAF("SØR-AFRIKA"),
     ZMB("ZAMBIA"),
     ZWE("ZIMBABWE"),
+    ;
+
+    companion object {
+        private val RANDOM = java.util.Random()
+        fun random(): LandkoderIso3 {
+            val landkoder = entries.toTypedArray()
+            return landkoder[RANDOM.nextInt(landkoder.size)]
+        }
+    }
 }
