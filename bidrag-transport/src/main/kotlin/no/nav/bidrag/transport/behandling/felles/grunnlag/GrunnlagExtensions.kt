@@ -328,6 +328,9 @@ fun GrunnlagDto.erGyldigForBarn(
         // BOSTATUS_PERIODE skal være med uansett hvis gjelderReferanse = BP
         grunnlagstype == Grunnlagstype.BOSTATUS_PERIODE && gjelderRef == bpRef -> true
 
+        // FAKTISK_UTGIFT_PERIODE skal være med uansett hvis gjelderReferanse = BP
+        grunnlagstype == Grunnlagstype.FAKTISK_UTGIFT_PERIODE && gjelderRef == bpRef -> true
+
         // PERSON_SØKNADSBARN skal være med uansett hvis BM matcher (brukes i beregning av tilsynsutgifter)
         grunnlagstype == Grunnlagstype.PERSON_SØKNADSBARN && this.innhold["bidragsmottaker"]?.asText() == bmRef -> true
 
