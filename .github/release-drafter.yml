@@ -12,6 +12,9 @@ categories:
   - title: '🛠️ Bidrag commons-test'
     labels:
       - 'bidrag-commons-test'
+  - title: '🛠️ Bidrag generer-testdata'
+    labels:
+      - 'bidrag-generer-testdata'
   - title: '🚀 Features'
     labels:
       - 'feature'
@@ -48,6 +51,9 @@ autolabeler:
   - label: 'bidrag-commons-test'
     files:
       - 'bidrag-commons-test/**'
+  - label: 'bidrag-generer-testdata'
+    files:
+      - 'bidrag-generer-testdata/**'
   - label: 'chore'
     branch:
       - '/chore\/.+/'

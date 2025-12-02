@@ -9,7 +9,8 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>bidrag-generer-testdata</artifactId>
+    <artifactId>bidrag-generer-testdata-felles</artifactId>
+    <name>bidrag-generer-testdata</name>
     <version>${project.parent.version}</version>
     <packaging>jar</packaging>
 

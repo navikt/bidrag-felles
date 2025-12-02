@@ -262,6 +262,7 @@ enum class LandkoderIso3(
 
     companion object {
         private val RANDOM = java.util.Random()
+
         fun random(): LandkoderIso3 {
             val landkoder = entries.toTypedArray()
             return landkoder[RANDOM.nextInt(landkoder.size)]

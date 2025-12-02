@@ -151,6 +151,11 @@
       <artifactId>bidrag-transport-felles</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
+      <dependency>
+          <groupId>no.nav.bidrag</groupId>
+          <artifactId>bidrag-generer-testdata-felles</artifactId>
+          <version>${project.parent.version}</version>
+      </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
