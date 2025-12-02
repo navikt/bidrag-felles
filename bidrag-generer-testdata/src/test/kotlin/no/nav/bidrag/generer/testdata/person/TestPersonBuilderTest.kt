@@ -58,8 +58,7 @@ class TestPersonBuilderTest {
                     foreldre()
                         .mor(Relasjon.SAMME_ETTERNAVN) {
                             fornavn("Kari")
-                        }
-                        .far(Relasjon.SAMME_ETTERNAVN) {
+                        }.far(Relasjon.SAMME_ETTERNAVN) {
                             fornavn("Per")
                         },
                 ).opprett()
@@ -88,8 +87,7 @@ class TestPersonBuilderTest {
                     familie()
                         .partner(Relasjon.SAMME_ETTERNAVN) {
                             fornavn("Kari")
-                        }
-                        .barn(Relasjon.SAMME_ETTERNAVN) {},
+                        }.barn(Relasjon.SAMME_ETTERNAVN) {},
                 ).opprett()
 
         val barn: TestPerson = person.barn(0)

@@ -12,7 +12,7 @@ interface IdentType {
 
     fun generer(): String? =
         generer(
-            RandomTestData.Companion.random().dateBetween(LocalDate.of(1900, 1, 1), LocalDate.now()),
-            Kjønn.entries.random()
+            RandomTestData.random().dateBetween(LocalDate.of(1900, 1, 1), LocalDate.now()),
+            Kjønn.entries.random(),
         )
 }

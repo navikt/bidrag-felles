@@ -92,9 +92,8 @@ class TestSamhandlerBuilder {
         return this
     }
 
-    fun opprett(): TestSamhandler {
-
-        return TestSamhandler(
+    fun opprett(): TestSamhandler =
+        TestSamhandler(
             samhandlerId = samhandlerId,
             navn = navn,
             offentligId = offentligId,
@@ -107,9 +106,8 @@ class TestSamhandlerBuilder {
             kontaktEpost = kontaktEpost,
             kontaktTelefon = kontaktTelefon,
             notat = notat,
-            erOpphørt = erOpphørt
+            erOpphørt = erOpphørt,
         )
-    }
 
     companion object {
         private var samhandlerNr = 0
@@ -118,6 +116,7 @@ class TestSamhandlerBuilder {
     }
 }
 
+@Suppress("unused")
 fun genererSamhandler(): TestSamhandler = TestSamhandlerBuilder.samhandler().opprett()
 
 fun genererSamhandlerId(): SamhandlerId {
@@ -127,6 +126,4 @@ fun genererSamhandlerId(): SamhandlerId {
 
 fun genererSpråk(): Språk = Språk.entries.random()
 
-fun genererTelefonnummer(): String {
-    return Random.nextInt(10_000_000, 100_000_000).toString()
-}
+fun genererTelefonnummer(): String = Random.nextInt(10_000_000, 100_000_000).toString()

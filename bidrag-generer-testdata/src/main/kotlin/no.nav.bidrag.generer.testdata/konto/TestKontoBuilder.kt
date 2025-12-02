@@ -62,14 +62,15 @@ class TestKontoBuilder {
         return this
     }
 
-    fun opprett(): TestKonto {
-        return if (norskKontonummer) {
+    fun opprett(): TestKonto =
+        if (norskKontonummer) {
             TestKonto(
-                norskKontonummer = NorskKontonummerBuilder()
-                    .bankNummer(bankNummer ?: Random.nextInt(10000))
-                    .kontotype(kontotype ?: Random.nextInt(100))
-                    .randomKundenummer()
-                    .toString()
+                norskKontonummer =
+                    NorskKontonummerBuilder()
+                        .bankNummer(bankNummer ?: Random.nextInt(10000))
+                        .kontotype(kontotype ?: Random.nextInt(100))
+                        .randomKundenummer()
+                        .toString(),
             )
         } else {
             val faktiskLandkodeBank = landkodeBank ?: genererLandkodeIso3()
@@ -79,11 +80,9 @@ class TestKontoBuilder {
                 bankNavn = banknavn ?: "BANK OF ${faktiskLandkodeBank.visningsnavn}",
                 landkodeBank = landkodeBank ?: faktiskLandkodeBank,
                 bankCode = bankCode ?: Random.nextInt().toString(),
-                valutakode = valutakode ?: genererValutakode()
+                valutakode = valutakode ?: genererValutakode(),
             )
         }
-
-    }
 
     companion object {
         fun konto(): TestKontoBuilder = TestKontoBuilder()
@@ -91,7 +90,10 @@ class TestKontoBuilder {
 }
 
 @Suppress("unused")
-fun genererNorskKontonummer(bankNummer: Int? = null, kontotype: Int? = null): TestKonto {
+fun genererNorskKontonummer(
+    bankNummer: Int? = null,
+    kontotype: Int? = null,
+): TestKonto {
     val builder = TestKontoBuilder.konto()
     bankNummer?.let { builder.bankNummer(it) }
     kontotype?.let { builder.kontotype(it) }
@@ -117,8 +119,6 @@ fun genererUtenlandsKontonummer(
     return builder.opprett()
 }
 
-fun genererLandkodeIso3(): LandkoderIso3 =
-    LandkoderIso3.entries.random()
+fun genererLandkodeIso3(): LandkoderIso3 = LandkoderIso3.entries.random()
 
-fun genererValutakode(): Valutakode =
-    Valutakode.entries.random()
+fun genererValutakode(): Valutakode = Valutakode.entries.random()

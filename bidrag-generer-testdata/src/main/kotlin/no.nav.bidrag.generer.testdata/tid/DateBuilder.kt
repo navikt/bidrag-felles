@@ -28,13 +28,11 @@ class DateBuilder internal constructor(
     class MaanedBuilder(
         private val dateBuilder: DateBuilder?,
     ) {
-        fun iForrigeMaaned(): AarBuilder =
-            AarBuilder(DateBuilder(Function { d: LocalDate? -> d!!.minusMonths(1) }, dateBuilder, null))
+        fun iForrigeMaaned(): AarBuilder = AarBuilder(DateBuilder(Function { d: LocalDate? -> d!!.minusMonths(1) }, dateBuilder, null))
 
         fun iDenneMaaned(): AarBuilder = AarBuilder(dateBuilder)
 
-        fun iNesteMaaned(): AarBuilder =
-            AarBuilder(DateBuilder(Function { d: LocalDate? -> d!!.plusMonths(1) }, dateBuilder, null))
+        fun iNesteMaaned(): AarBuilder = AarBuilder(DateBuilder(Function { d: LocalDate? -> d!!.plusMonths(1) }, dateBuilder, null))
 
         fun omNMaaneder(antallMaaneder: Int): AarBuilder =
             AarBuilder(
@@ -68,8 +66,7 @@ class DateBuilder internal constructor(
 
     companion object {
         @JvmStatic
-        fun forsteDag(): MaanedBuilder =
-            MaanedBuilder(DateBuilder(Function { d: LocalDate? -> d!!.withDayOfMonth(1) }, null, null))
+        fun forsteDag(): MaanedBuilder = MaanedBuilder(DateBuilder(Function { d: LocalDate? -> d!!.withDayOfMonth(1) }, null, null))
 
         fun denneDag(): MaanedBuilder = MaanedBuilder(DateBuilder(null, null, null))
 
@@ -96,8 +93,7 @@ class DateBuilder internal constructor(
                 ),
             )
 
-        fun dag(dagNr: Int): MaanedBuilder =
-            MaanedBuilder(DateBuilder(Function { d: LocalDate? -> d!!.withDayOfMonth(dagNr) }, null, null))
+        fun dag(dagNr: Int): MaanedBuilder = MaanedBuilder(DateBuilder(Function { d: LocalDate? -> d!!.withDayOfMonth(dagNr) }, null, null))
 
         fun iMorgen(): AarBuilder = AarBuilder(DateBuilder(Function { d: LocalDate? -> d!!.plusDays(1) }, null, null))
     }

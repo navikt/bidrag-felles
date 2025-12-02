@@ -5,7 +5,6 @@ import no.nav.bidrag.generer.testdata.samhandler.TestSamhandlerBuilder.Companion
 import org.junit.jupiter.api.Test
 
 class TestSamhandlerBuilderTest {
-
     @Test
     fun skalOppretteSamhandler() {
         val samhandler = samhandler().opprett()

@@ -58,11 +58,9 @@ class TestAdresseBuilder {
 
     fun somBosted(): AdressetilknytningBuilder = AdressetilknytningBuilder(null, this, Adressetype.BOSTEDSADRESSE)
 
-    fun somOppholdsadresse(): AdressetilknytningBuilder =
-        AdressetilknytningBuilder(null, this, Adressetype.OPPHOLDSADRESSE)
+    fun somOppholdsadresse(): AdressetilknytningBuilder = AdressetilknytningBuilder(null, this, Adressetype.OPPHOLDSADRESSE)
 
-    fun somKontaktadresse(): AdressetilknytningBuilder =
-        AdressetilknytningBuilder(null, this, Adressetype.KONTAKTADRESSE)
+    fun somKontaktadresse(): AdressetilknytningBuilder = AdressetilknytningBuilder(null, this, Adressetype.KONTAKTADRESSE)
 
     fun opprett(): TestAdresse {
         var adresselinje1 = this.adresselinje1
@@ -104,7 +102,7 @@ class TestAdresseBuilder {
     private val isNorskAdresse: Boolean
         get() =
             LandkoderIso3.NOR == land &&
-                    (Adresseformat.UTENLANDSK_ADRESSE != format) && (Adresseformat.UTENLANDSK_ADRESSE_I_FRITT_FORMAT != format)
+                (Adresseformat.UTENLANDSK_ADRESSE != format) && (Adresseformat.UTENLANDSK_ADRESSE_I_FRITT_FORMAT != format)
 
     companion object {
         fun adresse(): TestAdresseBuilder = TestAdresseBuilder()

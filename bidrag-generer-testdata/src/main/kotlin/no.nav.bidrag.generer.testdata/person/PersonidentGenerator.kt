@@ -36,10 +36,8 @@ fun genererFødselsnummer(
 @Suppress("unused")
 fun genererPersonident(
     innsendtFodselsdato: LocalDate? = null,
-    innsendtKjønn: Kjønn? = null
-): Personident {
-    return Personident(genererFødselsnummer(innsendtFodselsdato, innsendtKjønn))
-}
+    innsendtKjønn: Kjønn? = null,
+): Personident = Personident(genererFødselsnummer(innsendtFodselsdato, innsendtKjønn))
 
 private fun opprettIndividnummer(
     fodselsdato: LocalDate,

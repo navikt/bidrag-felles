@@ -563,11 +563,12 @@ private val poststeder =
         Poststed("1704", "SARPSBORG"),
     )
 
-private val husnummer = listOf(
-    "",
-    "A",
-    "B",
-    "C",
-    "D",
-    "E",
-)
+private val husnummer =
+    listOf(
+        "",
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+    )

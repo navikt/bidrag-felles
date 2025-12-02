@@ -50,15 +50,16 @@ class ForeldreBuilder {
         relasjonerMedBarn: Array<out Relasjon>,
         annenForelder: TestPerson?,
         relasjonerMedAnnenForelder: Array<out Relasjon>?,
-    ): TestPerson? {
-        return visitor?.let {
+    ): TestPerson? =
+        visitor?.let {
             val personBuilder =
                 TestPersonBuilder
                     .person()
                     .kjønn(kjønn)
                     .fødtDato(
-                        RandomTestData.random()
-                            .dateBetween(barn.fodselsdato.minusYears(45), barn.fodselsdato.minusYears(18))
+                        RandomTestData
+                            .random()
+                            .dateBetween(barn.fodselsdato.minusYears(45), barn.fodselsdato.minusYears(18)),
                     )
 
             annenForelder?.let { Relasjon.relater(it, personBuilder, relasjonerMedAnnenForelder) }
@@ -66,10 +67,8 @@ class ForeldreBuilder {
 
             personBuilder.apply(it).opprett()
         }
-    }
 
     companion object {
-
         @JvmStatic
         fun foreldre(): ForeldreBuilder = ForeldreBuilder()
     }

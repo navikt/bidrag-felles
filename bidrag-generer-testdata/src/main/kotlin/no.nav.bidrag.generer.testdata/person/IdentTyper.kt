@@ -47,9 +47,8 @@ enum class IdentTyper : IdentType {
         ): String =
             IdentBuffer()
                 .withDate(
-                    RandomTestData.Companion.random().dateBetween(LocalDate.of(1859, 1, 1), LocalDate.of(2040, 1, 1))
-                )
-                .increaseDigit(2, 2)
+                    RandomTestData.random().dateBetween(LocalDate.of(1859, 1, 1), LocalDate.of(2040, 1, 1)),
+                ).increaseDigit(2, 2)
                 .withPersonnummer(kjønn, fodtDato.year)
                 .toString()
     },

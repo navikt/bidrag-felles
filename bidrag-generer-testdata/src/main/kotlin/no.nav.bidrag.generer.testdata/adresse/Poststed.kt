@@ -5,7 +5,5 @@ data class Poststed(
     val postnummer: String,
     val poststed: String,
 ) {
-    override fun toString(): String {
-        return "$postnummer, $poststed"
-    }
+    override fun toString(): String = "$postnummer, $poststed"
 }

@@ -4,11 +4,11 @@ import no.nav.bidrag.domene.enums.adresse.Adressetype
 import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.person.Gradering
 import no.nav.bidrag.generer.testdata.RandomTestData
+import no.nav.bidrag.generer.testdata.adresse.Adressetilknytning
 import no.nav.bidrag.generer.testdata.adresse.AdressetilknytningBuilder
+import no.nav.bidrag.generer.testdata.adresse.TestAdresse
 import no.nav.bidrag.generer.testdata.adresse.TestAdresseBuilder
 import no.nav.bidrag.generer.testdata.adresse.TestAdresseBuilder.Companion.adresse
-import no.nav.bidrag.generer.testdata.adresse.Adressetilknytning
-import no.nav.bidrag.generer.testdata.adresse.TestAdresse
 import no.nav.bidrag.generer.testdata.navn.NavnBuilder
 import no.nav.bidrag.generer.testdata.navn.TestNavn
 import no.nav.bidrag.generer.testdata.tid.DateBuilder
@@ -214,17 +214,19 @@ class TestPersonBuilder {
         kjønn: Kjønn?,
         fodtDato: LocalDate,
     ): List<TestPersonIdent?> {
-        val personIdenter = identtyper.mapIndexed { index, identType ->
-            TestPersonIdent(identType!!.generer(fodtDato, kjønn), index == identtyper.size - 1, false)
-        }
+        val personIdenter =
+            identtyper.mapIndexed { index, identType ->
+                TestPersonIdent(identType!!.generer(fodtDato, kjønn), index == identtyper.size - 1, false)
+            }
 
-        val aktørIder = (0 until antallAktoerIder).map { i ->
-            TestPersonIdent(
-                (100000000000L + RandomTestData.random().nextLong(200000000000L)).toString(),
-                i == 0,
-                true,
-            )
-        }
+        val aktørIder =
+            (0 until antallAktoerIder).map { i ->
+                TestPersonIdent(
+                    (100000000000L + RandomTestData.random().nextLong(200000000000L)).toString(),
+                    i == 0,
+                    true,
+                )
+            }
 
         return personIdenter + aktørIder
     }

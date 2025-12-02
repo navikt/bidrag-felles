@@ -18,8 +18,7 @@ class FamilieBuilder {
         return this
     }
 
-    fun partner(partnerVisitor: TestPersonBuilder.() -> Unit) =
-        partner(relasjoner = emptyArray(), partnerVisitor = partnerVisitor)
+    fun partner(partnerVisitor: TestPersonBuilder.() -> Unit) = partner(relasjoner = emptyArray(), partnerVisitor = partnerVisitor)
 
     fun barn(
         vararg relasjoner: Relasjon,
@@ -31,8 +30,7 @@ class FamilieBuilder {
         return this
     }
 
-    fun barn(barnVisitor: TestPersonBuilder.() -> Unit): FamilieBuilder =
-        barn(relasjoner = emptyArray(), barnVisitor = barnVisitor)
+    fun barn(barnVisitor: TestPersonBuilder.() -> Unit): FamilieBuilder = barn(relasjoner = emptyArray(), barnVisitor = barnVisitor)
 
     fun barnMedRelasjonTilPartner(
         vararg relasjoner: Relasjon,
@@ -52,8 +50,8 @@ class FamilieBuilder {
         barnListe.forEach { it.get(person, partner) }
     }
 
-    private fun getPartner(person: TestPerson): TestPerson? {
-        return partnerVisitor?.let {
+    private fun getPartner(person: TestPerson): TestPerson? =
+        partnerVisitor?.let {
             val builder =
                 TestPersonBuilder
                     .person()
@@ -66,7 +64,6 @@ class FamilieBuilder {
             Relasjon.relater(person, builder, partnerRelasjoner)
             builder.apply(it).opprett()
         }
-    }
 
     private class BarnBuilder(
         private val visitor: TestPersonBuilder.() -> Unit,
@@ -91,9 +88,8 @@ class FamilieBuilder {
                 TestPersonBuilder
                     .person()
                     .fødtDato(
-                        RandomTestData.random().dateBetween(yngsteForeldreFodtDato.plusYears(18), LocalDate.now())
-                    )
-                    .mor(mor)
+                        RandomTestData.random().dateBetween(yngsteForeldreFodtDato.plusYears(18), LocalDate.now()),
+                    ).mor(mor)
                     .far(far)
 
             Relasjon.relater(person, builder, relasjoner)
@@ -104,7 +100,6 @@ class FamilieBuilder {
     }
 
     companion object {
-
         @JvmStatic
         fun familie(): FamilieBuilder = FamilieBuilder()
     }
