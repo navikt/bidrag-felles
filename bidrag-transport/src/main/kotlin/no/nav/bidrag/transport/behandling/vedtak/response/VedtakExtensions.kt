@@ -35,6 +35,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.personObjekt
 import no.nav.bidrag.transport.behandling.vedtak.Stønadsendring
 import no.nav.bidrag.transport.felles.tilVisningsnavn
 import no.nav.bidrag.transport.felles.toYearMonth
+import java.time.LocalDate
 import java.time.YearMonth
 
 val VedtakForStønad.virkningstidspunkt get() = stønadsendring.periodeListe.minOfOrNull { it.periode.fom }
@@ -111,6 +112,13 @@ val VedtakDto.særbidragsperiode get() =
         } else {
             null
         }
+
+val VedtakDto.eldsteVirkningstidspunkt get(): LocalDate? =
+    grunnlagListe
+        .filtrerBasertPåEgenReferanse(Grunnlagstype.VIRKNINGSTIDSPUNKT)
+        .map { it.innholdTilObjekt<VirkningstidspunktGrunnlag>().virkningstidspunkt }
+        .minOfOrNull { it }
+
 val VedtakDto.erDirekteAvslag get(): Boolean {
     val virkningstidspunkt =
         grunnlagListe
