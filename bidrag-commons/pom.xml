@@ -130,6 +130,10 @@
       <artifactId>kotlin-reflect</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib-jdk8</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-registry-prometheus</artifactId>
       <version>${micrometer-registry.version}</version>
@@ -147,6 +151,11 @@
       <artifactId>bidrag-transport-felles</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
+      <dependency>
+          <groupId>no.nav.bidrag</groupId>
+          <artifactId>bidrag-generer-testdata-felles</artifactId>
+          <version>${project.parent.version}</version>
+      </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

@@ -47,6 +47,7 @@
         <module>bidrag-transport</module>
         <module>bidrag-commons</module>
         <module>bidrag-commons-test</module>
+        <module>bidrag-generer-testdata</module>
     </modules>
     <repositories>
         <repository>
