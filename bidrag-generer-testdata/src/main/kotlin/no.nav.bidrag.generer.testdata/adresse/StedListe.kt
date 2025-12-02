@@ -9,9 +9,9 @@ fun genererPoststed(): Poststed = poststeder.random()
 @Suppress("unused")
 fun genererHusnummer(): String = "${(1..999).random()}" + husnummer.random()
 
-fun genererAdresse(): String = "${genererGatenavn()} ${genererHusnummer()}"
+fun genererEnkelAdresse(): String = "${genererGatenavn()} ${genererHusnummer()}"
 
-fun genererAdresseMedPoststed(): String = "${genererAdresse()}, ${genererPoststed()}"
+fun genererEnkelAdresseMedPoststed(): String = "${genererEnkelAdresse()}, ${genererPoststed()}"
 
 private val gatenavn =
     listOf(

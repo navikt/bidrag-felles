@@ -53,8 +53,7 @@ class ForeldreBuilder {
     ): TestPerson? =
         visitor?.let {
             val personBuilder =
-                TestPersonBuilder
-                    .person()
+                genererPerson()
                     .kjønn(kjønn)
                     .fødtDato(
                         RandomTestData

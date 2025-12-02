@@ -8,7 +8,7 @@ import no.nav.bidrag.generer.testdata.adresse.Adressetilknytning
 import no.nav.bidrag.generer.testdata.adresse.AdressetilknytningBuilder
 import no.nav.bidrag.generer.testdata.adresse.TestAdresse
 import no.nav.bidrag.generer.testdata.adresse.TestAdresseBuilder
-import no.nav.bidrag.generer.testdata.adresse.TestAdresseBuilder.Companion.adresse
+import no.nav.bidrag.generer.testdata.adresse.genererAdresse
 import no.nav.bidrag.generer.testdata.navn.NavnBuilder
 import no.nav.bidrag.generer.testdata.navn.TestNavn
 import no.nav.bidrag.generer.testdata.tid.DateBuilder
@@ -244,11 +244,11 @@ class TestPersonBuilder {
     private fun opprettAdressehistorikk(fodtDato: LocalDate): MutableList<Adressetilknytning> {
         if (adresser.isEmpty()) {
             val adresser: MutableList<AdressetilknytningBuilder> = ArrayList()
-            adresser.add(adresse().tilknytning(Adressetype.BOSTEDSADRESSE))
+            adresser.add(genererAdresse().tilknytning(Adressetype.BOSTEDSADRESSE))
             val utflyttingsdato = RandomTestData.random().dateBetween(fodtDato.plusYears(18), fodtDato.plusYears(23))
             if (!utflyttingsdato.isAfter(LocalDate.now())) {
                 adresser.add(
-                    adresse()
+                    genererAdresse()
                         .tilknytning(Adressetype.BOSTEDSADRESSE)
                         .fra(utflyttingsdato),
                 )
@@ -288,12 +288,7 @@ class TestPersonBuilder {
         private val personBuilder: TestPersonBuilder? = null
         private val relasjoner: Array<Relasjon?> = emptyArray()
     }
-
-    companion object {
-        @JvmStatic
-        fun person(): TestPersonBuilder = TestPersonBuilder()
-    }
 }
 
 @Suppress("unused")
-fun genererPerson(): TestPerson = TestPersonBuilder.person().opprett()
+fun genererPerson(): TestPersonBuilder = TestPersonBuilder()

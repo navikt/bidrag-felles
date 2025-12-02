@@ -4,26 +4,26 @@ import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.enums.samhandler.OffentligIdType
 import no.nav.bidrag.domene.enums.samhandler.Områdekode
 import no.nav.bidrag.domene.ident.SamhandlerId
-import no.nav.bidrag.generer.testdata.adresse.genererAdresseMedPoststed
-import no.nav.bidrag.generer.testdata.konto.TestKonto
-import no.nav.bidrag.generer.testdata.konto.genererNorskKontonummer
+import no.nav.bidrag.generer.testdata.adresse.genererEnkelAdresseMedPoststed
+import no.nav.bidrag.generer.testdata.konto.TestKontonummer
+import no.nav.bidrag.generer.testdata.konto.genererKontonummer
 import no.nav.bidrag.generer.testdata.navn.genererEtternavn
 import no.nav.bidrag.generer.testdata.navn.genererFornavn
 import kotlin.random.Random
 
 @Suppress("unused")
 class TestSamhandlerBuilder {
-    private var samhandlerId: SamhandlerId? = genererSamhandlerId()
-    private var navn: String? = genererFornavn() + " " + genererEtternavn()
+    private var samhandlerId: SamhandlerId? = null
+    private var navn: String? = null
     private var offentligId: String? = null
-    private var offentligIdType: OffentligIdType? = OffentligIdType.entries.random()
-    private var områdekode: Områdekode? = Områdekode.entries.random()
-    private var språk: String? = genererSpråk().name
-    private var adresse: String? = genererAdresseMedPoststed()
-    private var kontonummer: TestKonto? = genererNorskKontonummer()
-    private var kontaktperson: String? = genererFornavn() + " " + genererEtternavn()
-    private var kontaktEpost: String? = genererFornavn() + "@" + genererEtternavn() + ".no"
-    private var kontaktTelefon: String? = genererTelefonnummer()
+    private var offentligIdType: OffentligIdType? = null
+    private var områdekode: Områdekode? = null
+    private var språk: String? = null
+    private var adresse: String? = null
+    private var kontonummer: TestKontonummer? = null
+    private var kontaktperson: String? = null
+    private var kontaktEpost: String? = null
+    private var kontaktTelefon: String? = null
     private var notat: String? = null
     private var erOpphørt: Boolean? = false
 
@@ -62,7 +62,7 @@ class TestSamhandlerBuilder {
         return this
     }
 
-    fun medKontonummer(kontonummer: TestKonto?): TestSamhandlerBuilder {
+    fun medKontonummer(kontonummer: TestKontonummer?): TestSamhandlerBuilder {
         this.kontonummer = kontonummer
         return this
     }
@@ -92,32 +92,30 @@ class TestSamhandlerBuilder {
         return this
     }
 
-    fun opprett(): TestSamhandler =
-        TestSamhandler(
-            samhandlerId = samhandlerId,
-            navn = navn,
+    fun opprett(): TestSamhandler {
+        val kontaktFornavn = genererFornavn()
+        val kontaktEtternavn = genererEtternavn()
+        val testSamhandler = TestSamhandler(
+            samhandlerId = samhandlerId ?: genererSamhandlerId(),
+            navn = navn ?: (genererFornavn() + " " + genererEtternavn()),
             offentligId = offentligId,
-            offentligIdType = offentligIdType,
-            områdekode = områdekode,
-            språk = språk,
-            adresse = adresse,
-            kontonummer = kontonummer,
-            kontaktperson = kontaktperson,
-            kontaktEpost = kontaktEpost,
-            kontaktTelefon = kontaktTelefon,
+            offentligIdType = offentligIdType ?: OffentligIdType.entries.random(),
+            områdekode = områdekode ?: Områdekode.entries.random(),
+            språk = språk ?: genererSpråk().name,
+            adresse = adresse ?: genererEnkelAdresseMedPoststed(),
+            kontonummer = kontonummer ?: genererKontonummer().opprett(),
+            kontaktperson = kontaktperson ?: ("$kontaktFornavn $kontaktEtternavn"),
+            kontaktEpost = kontaktEpost ?: ("$kontaktFornavn@$kontaktEtternavn.no"),
+            kontaktTelefon = kontaktTelefon ?: genererTelefonnummer(),
             notat = notat,
-            erOpphørt = erOpphørt,
+            erOpphørt = erOpphørt ?: false,
         )
-
-    companion object {
-        private var samhandlerNr = 0
-
-        fun samhandler(): TestSamhandlerBuilder = TestSamhandlerBuilder()
+        return testSamhandler
     }
 }
 
 @Suppress("unused")
-fun genererSamhandler(): TestSamhandler = TestSamhandlerBuilder.samhandler().opprett()
+fun genererSamhandler(): TestSamhandlerBuilder = TestSamhandlerBuilder()
 
 fun genererSamhandlerId(): SamhandlerId {
     val randomSuffix = Random.nextInt(0, 10_000_000)

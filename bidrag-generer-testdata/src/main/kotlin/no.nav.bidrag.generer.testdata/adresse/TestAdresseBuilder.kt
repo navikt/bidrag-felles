@@ -6,7 +6,7 @@ import kotlin.random.Random
 
 @Suppress("unused")
 class TestAdresseBuilder {
-    private var format: Adresseformat? = null
+    private var adresseformat: Adresseformat? = null
     private var adresselinje1: String? = null
     private var adresselinje2: String? = null
     private var adresselinje3: String? = null
@@ -15,8 +15,8 @@ class TestAdresseBuilder {
     private var bolignummer: String? = null
     private var land: LandkoderIso3? = LandkoderIso3.NOR
 
-    fun format(format: Adresseformat?): TestAdresseBuilder {
-        this.format = format
+    fun format(adresseformat: Adresseformat?): TestAdresseBuilder {
+        this.adresseformat = adresseformat
         return this
     }
 
@@ -71,7 +71,7 @@ class TestAdresseBuilder {
         if (adresselinje1 == null) {
             adresselinje1 =
                 if (this.isNorskAdresse) {
-                    genererGatenavn() + " " + genererHusnummer()
+                    genererEnkelAdresse()
                 } else {
                     Random.nextLong(2000).toString() + " Weebfoot Street"
                 }
@@ -88,7 +88,7 @@ class TestAdresseBuilder {
         }
 
         return TestAdresse(
-            format,
+            adresseformat,
             adresselinje1,
             adresselinje2,
             adresselinje3,
@@ -102,9 +102,8 @@ class TestAdresseBuilder {
     private val isNorskAdresse: Boolean
         get() =
             LandkoderIso3.NOR == land &&
-                (Adresseformat.UTENLANDSK_ADRESSE != format) && (Adresseformat.UTENLANDSK_ADRESSE_I_FRITT_FORMAT != format)
-
-    companion object {
-        fun adresse(): TestAdresseBuilder = TestAdresseBuilder()
-    }
+                (Adresseformat.UTENLANDSK_ADRESSE != adresseformat) && (Adresseformat.UTENLANDSK_ADRESSE_I_FRITT_FORMAT != adresseformat)
 }
+
+fun genererAdresse(): TestAdresseBuilder = TestAdresseBuilder()
+

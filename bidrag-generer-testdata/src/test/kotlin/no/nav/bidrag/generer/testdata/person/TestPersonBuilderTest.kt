@@ -8,50 +8,51 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import no.nav.bidrag.generer.testdata.person.FamilieBuilder.Companion.familie
 import no.nav.bidrag.generer.testdata.person.ForeldreBuilder.Companion.foreldre
-import no.nav.bidrag.generer.testdata.person.TestPersonBuilder.Companion.person
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 
 class TestPersonBuilderTest {
     @Test
     fun testPersonIdent() {
-        val person = person().opprett()
+        val person = genererPerson().opprett()
 
         person shouldNotBe null
         person.personIdent shouldNotBe null
         person.personIdent?.length shouldBe 11
+        println(person)
     }
 
     @Test
     fun testKjønn() {
-        person().opprett().kjønn shouldBeOneOf listOf(Kjønn.KVINNE, Kjønn.MANN)
-        person().kjønn(Kjønn.KVINNE).opprett().kjønn shouldBe Kjønn.KVINNE
-        person().kjønn(Kjønn.MANN).opprett().kjønn shouldBe Kjønn.MANN
+        genererPerson().opprett().kjønn shouldBeOneOf listOf(Kjønn.KVINNE, Kjønn.MANN)
+        genererPerson().kjønn(Kjønn.KVINNE).opprett().kjønn shouldBe Kjønn.KVINNE
+        genererPerson().kjønn(Kjønn.MANN).opprett().kjønn shouldBe Kjønn.MANN
     }
 
     @Test
     fun testFødtDato() {
-        val person = person().alder(10).opprett()
+        val person = genererPerson().alder(10).opprett()
         person.fodselsdato shouldBeAfter LocalDate.now().minusYears(11)
         person.fodselsdato shouldBeLessThanOrEqualTo LocalDate.now().minusYears(10)
+        println(person)
     }
 
     @Test
     fun testFornavn() {
-        person().opprett().fornavn shouldNotBe null
-        person().fornavn("Ola").opprett().fornavn shouldBe "Ola"
+        genererPerson().opprett().fornavn shouldNotBe null
+        genererPerson().fornavn("Ola").opprett().fornavn shouldBe "Ola"
     }
 
     @Test
     fun testEtternavn() {
-        person().opprett().etternavn shouldNotBe null
-        person().etternavn("Nordmann").opprett().etternavn shouldBe "Nordmann"
+        genererPerson().opprett().etternavn shouldNotBe null
+        genererPerson().etternavn("Nordmann").opprett().etternavn shouldBe "Nordmann"
     }
 
     @Test
     fun testForeldre() {
         val person =
-            person()
+            genererPerson()
                 .fornavn("Ola")
                 .etternavn("Nordmann")
                 .med(
@@ -74,12 +75,13 @@ class TestPersonBuilderTest {
         far?.fornavn shouldBe "Per"
         far?.etternavn shouldBe "Nordmann"
         far?.barn(0) shouldBe person
+        println(person)
     }
 
     @Test
     fun testFamilieMedPartner() {
         val person =
-            person()
+            genererPerson()
                 .kjønn(Kjønn.MANN)
                 .fornavn("Ola")
                 .etternavn("Nordmann")
@@ -97,12 +99,13 @@ class TestPersonBuilderTest {
         barn.mor shouldNotBe null
         barn.mor?.fornavn shouldBe "Kari"
         barn.mor?.etternavn shouldBe "Nordmann"
+        println(person)
     }
 
     @Test
     fun testAdresse() {
         val person =
-            person()
+            genererPerson()
                 .alder(24)
                 .opprett()
 
@@ -111,5 +114,6 @@ class TestPersonBuilderTest {
         adressehistorikk shouldHaveSize 2 // Person mellom 18 og 23 kan ha flyttet ut.
         // Barn 24 og eldre har alltid flyttet ut og har derfor 2 innslag i adressehistorikken.
         adressehistorikk[1]?.adresse shouldBe person.boadresse // Aktiv bostedsadresse er siste innslag i historikken
+        println(person)
     }
 }

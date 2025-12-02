@@ -4,7 +4,7 @@ import no.nav.bidrag.domene.enums.diverse.LandkoderIso3
 import no.nav.bidrag.domene.enums.samhandler.Valutakode
 
 @Suppress("unused")
-data class TestKonto(
+data class TestKontonummer(
     val norskKontonummer: String? = null,
     val iban: String? = null,
     val swift: String? = null,

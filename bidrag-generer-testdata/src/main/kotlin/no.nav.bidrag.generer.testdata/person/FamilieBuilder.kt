@@ -18,7 +18,8 @@ class FamilieBuilder {
         return this
     }
 
-    fun partner(partnerVisitor: TestPersonBuilder.() -> Unit) = partner(relasjoner = emptyArray(), partnerVisitor = partnerVisitor)
+    fun partner(partnerVisitor: TestPersonBuilder.() -> Unit) =
+        partner(relasjoner = emptyArray(), partnerVisitor = partnerVisitor)
 
     fun barn(
         vararg relasjoner: Relasjon,
@@ -30,7 +31,8 @@ class FamilieBuilder {
         return this
     }
 
-    fun barn(barnVisitor: TestPersonBuilder.() -> Unit): FamilieBuilder = barn(relasjoner = emptyArray(), barnVisitor = barnVisitor)
+    fun barn(barnVisitor: TestPersonBuilder.() -> Unit): FamilieBuilder =
+        barn(relasjoner = emptyArray(), barnVisitor = barnVisitor)
 
     fun barnMedRelasjonTilPartner(
         vararg relasjoner: Relasjon,
@@ -53,8 +55,7 @@ class FamilieBuilder {
     private fun getPartner(person: TestPerson): TestPerson? =
         partnerVisitor?.let {
             val builder =
-                TestPersonBuilder
-                    .person()
+                genererPerson()
                     .fødtDato(
                         RandomTestData
                             .random()
@@ -85,8 +86,7 @@ class FamilieBuilder {
             val far = if (Kjønn.KVINNE == person.kjønn) partner else person
 
             val builder =
-                TestPersonBuilder
-                    .person()
+                genererPerson()
                     .fødtDato(
                         RandomTestData.random().dateBetween(yngsteForeldreFodtDato.plusYears(18), LocalDate.now()),
                     ).mor(mor)
