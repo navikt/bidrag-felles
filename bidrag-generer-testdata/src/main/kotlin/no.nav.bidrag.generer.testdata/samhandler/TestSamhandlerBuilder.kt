@@ -119,7 +119,7 @@ fun genererSamhandler(): TestSamhandlerBuilder = TestSamhandlerBuilder()
 
 fun genererSamhandlerId(): SamhandlerId {
     val randomSuffix = Random.nextInt(0, 10_000_000)
-    return SamhandlerId("85${randomSuffix.toString().padStart(7, '0')}")
+    return SamhandlerId("85${randomSuffix.toString().padStart(9, '0')}")
 }
 
 fun genererSpråk(): Språk = Språk.entries.random()

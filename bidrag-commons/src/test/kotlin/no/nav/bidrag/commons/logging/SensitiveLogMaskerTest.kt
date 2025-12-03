@@ -1,6 +1,7 @@
 package no.nav.bidrag.commons.logging
 
 import io.kotest.matchers.shouldBe
+import no.nav.bidrag.generer.testdata.person.genererFødselsnummer
 import org.junit.jupiter.api.Test
 
 internal class SensitiveLogMaskerTest {
@@ -29,10 +30,10 @@ internal class SensitiveLogMaskerTest {
     @Test
     fun shouldMaskFNR() {
         val masker = SensitiveLogMasker()
-        val maskedMessage = masker.maskLogMessage("Some message 12345678910 fnr")
+        val maskedMessage = masker.maskLogMessage("Some message ${genererFødselsnummer()} fnr")
         maskedMessage shouldBe "Some message *********** fnr"
 
-        val maskedMessage2 = masker.maskLogMessage("Some message 12345678910 fnr 12345678910")
+        val maskedMessage2 = masker.maskLogMessage("Some message ${genererFødselsnummer()} fnr ${genererFødselsnummer()}")
         maskedMessage2 shouldBe "Some message *********** fnr ***********"
     }
 
