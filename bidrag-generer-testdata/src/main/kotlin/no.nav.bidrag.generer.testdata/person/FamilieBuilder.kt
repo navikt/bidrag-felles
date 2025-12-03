@@ -18,8 +18,7 @@ class FamilieBuilder {
         return this
     }
 
-    fun partner(partnerVisitor: TestPersonBuilder.() -> Unit) =
-        partner(relasjoner = emptyArray(), partnerVisitor = partnerVisitor)
+    fun partner(partnerVisitor: TestPersonBuilder.() -> Unit) = partner(relasjoner = emptyArray(), partnerVisitor = partnerVisitor)
 
     fun barn(
         vararg relasjoner: Relasjon,
@@ -31,8 +30,7 @@ class FamilieBuilder {
         return this
     }
 
-    fun barn(barnVisitor: TestPersonBuilder.() -> Unit): FamilieBuilder =
-        barn(relasjoner = emptyArray(), barnVisitor = barnVisitor)
+    fun barn(barnVisitor: TestPersonBuilder.() -> Unit): FamilieBuilder = barn(relasjoner = emptyArray(), barnVisitor = barnVisitor)
 
     fun barnMedRelasjonTilPartner(
         vararg relasjoner: Relasjon,

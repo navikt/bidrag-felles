@@ -93,7 +93,7 @@ fun genererValutakode(): Valutakode = Valutakode.entries.random()
 
 fun genererIban(
     landkode: LandkoderIso3? = LandkoderIso3.entries.random(),
-    bankCode: String? = genererBankcode()
+    bankCode: String? = genererBankcode(),
 ): String {
     // Simplifisert iban generator. Lager ikke en gyldig checksum.
     val landkodeIso2 = landkode?.visningsnavn?.take(2)
@@ -108,7 +108,7 @@ fun genererBankcode(): String = (1..4).map { ('A'..'Z').random() }.joinToString(
 
 fun genererSwift(
     landkode: LandkoderIso3? = LandkoderIso3.entries.random(),
-    bankCode: String? = genererBankcode()
+    bankCode: String? = genererBankcode(),
 ): String {
     val landkodeIso2 = landkode?.visningsnavn?.take(2)
     val chars = ('A'..'Z') + ('0'..'9')

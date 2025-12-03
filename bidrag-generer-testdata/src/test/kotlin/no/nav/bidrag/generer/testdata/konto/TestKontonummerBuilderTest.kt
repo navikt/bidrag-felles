@@ -4,7 +4,6 @@ import io.kotest.matchers.shouldNotBe
 import org.junit.jupiter.api.Test
 
 class TestKontonummerBuilderTest {
-
     @Test
     fun skalGenerereKontonummer() {
         val kontonummer = genererKontonummer().opprett()
@@ -18,5 +17,4 @@ class TestKontonummerBuilderTest {
         kontonummer shouldNotBe null
         println(kontonummer)
     }
-
 }

@@ -4,9 +4,7 @@ import io.kotest.matchers.shouldNotBe
 import no.nav.bidrag.domene.enums.diverse.LandkoderIso3
 import org.junit.jupiter.api.Test
 
-
 class TestAdresseBuilderTest {
-
     @Test
     fun skalByggeAdresseObjekt() {
         val adresse = genererAdresse().opprett()
@@ -27,9 +25,10 @@ class TestAdresseBuilderTest {
 
     @Test
     fun skalGenerereAdresseMedPostnummerOgSted() {
-        val adresse = genererAdresse()
-            .postnummerOgSted("5000", "Bergen")
-            .opprett()
+        val adresse =
+            genererAdresse()
+                .postnummerOgSted("5000", "Bergen")
+                .opprett()
         adresse shouldNotBe null
         println(adresse)
     }
@@ -40,5 +39,4 @@ class TestAdresseBuilderTest {
         adresse shouldNotBe null
         println(adresse)
     }
-
 }
