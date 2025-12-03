@@ -4,7 +4,7 @@ import java.time.LocalDate
 import java.util.function.Function
 import kotlin.random.Random
 
-//TODO(Skal denne klassen brukes i det hele tatt?)
+// TODO(Skal denne klassen brukes i det hele tatt?)
 @Suppress("unused")
 class DateBuilder internal constructor(
     prepend: Function<in LocalDate?, out LocalDate?>?,

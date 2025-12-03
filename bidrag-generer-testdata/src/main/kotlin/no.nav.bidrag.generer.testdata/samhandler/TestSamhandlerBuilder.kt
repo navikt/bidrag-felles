@@ -95,21 +95,22 @@ class TestSamhandlerBuilder {
     fun opprett(): TestSamhandler {
         val kontaktFornavn = genererFornavn()
         val kontaktEtternavn = genererEtternavn()
-        val testSamhandler = TestSamhandler(
-            samhandlerId = samhandlerId ?: genererSamhandlerId(),
-            navn = navn ?: (genererFornavn() + " " + genererEtternavn()),
-            offentligId = offentligId,
-            offentligIdType = offentligIdType ?: OffentligIdType.entries.random(),
-            områdekode = områdekode ?: Områdekode.entries.random(),
-            språk = språk ?: genererSpråk().name,
-            adresse = adresse ?: genererEnkelAdresseMedPoststed(),
-            kontonummer = kontonummer ?: genererKontonummer().opprett(),
-            kontaktperson = kontaktperson ?: ("$kontaktFornavn $kontaktEtternavn"),
-            kontaktEpost = kontaktEpost ?: ("$kontaktFornavn@$kontaktEtternavn.no"),
-            kontaktTelefon = kontaktTelefon ?: genererTelefonnummer(),
-            notat = notat,
-            erOpphørt = erOpphørt ?: false,
-        )
+        val testSamhandler =
+            TestSamhandler(
+                samhandlerId = samhandlerId ?: genererSamhandlerId(),
+                navn = navn ?: (genererFornavn() + " " + genererEtternavn()),
+                offentligId = offentligId,
+                offentligIdType = offentligIdType ?: OffentligIdType.entries.random(),
+                områdekode = områdekode ?: Områdekode.entries.random(),
+                språk = språk ?: genererSpråk().name,
+                adresse = adresse ?: genererEnkelAdresseMedPoststed(),
+                kontonummer = kontonummer ?: genererKontonummer().opprett(),
+                kontaktperson = kontaktperson ?: ("$kontaktFornavn $kontaktEtternavn"),
+                kontaktEpost = kontaktEpost ?: ("$kontaktFornavn@$kontaktEtternavn.no"),
+                kontaktTelefon = kontaktTelefon ?: genererTelefonnummer(),
+                notat = notat,
+                erOpphørt = erOpphørt ?: false,
+            )
         return testSamhandler
     }
 }

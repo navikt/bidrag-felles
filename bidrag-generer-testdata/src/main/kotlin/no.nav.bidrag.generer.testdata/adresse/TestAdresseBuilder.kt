@@ -106,4 +106,3 @@ class TestAdresseBuilder {
 }
 
 fun genererAdresse(): TestAdresseBuilder = TestAdresseBuilder()
-
