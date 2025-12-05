@@ -2,6 +2,7 @@ package no.nav.bidrag.generer.testdata.adresse
 
 import io.kotest.matchers.shouldNotBe
 import no.nav.bidrag.domene.enums.diverse.LandkoderIso3
+import no.nav.bidrag.generer.testdata.person.genererPerson
 import org.junit.jupiter.api.Test
 
 class TestAdresseBuilderTest {
@@ -9,6 +10,7 @@ class TestAdresseBuilderTest {
     fun skalByggeAdresseObjekt() {
         val adresse = genererAdresse().opprett()
         adresse shouldNotBe null
+        genererPerson()
         println(adresse)
 
         val adresse2 = genererAdresse().bolignummer("5").land(LandkoderIso3.AFG).opprett()

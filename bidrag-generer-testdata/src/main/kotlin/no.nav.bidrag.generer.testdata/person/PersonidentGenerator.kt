@@ -33,6 +33,8 @@ fun genererFødselsnummer(
     return fodselsnummer
 }
 
+fun genererAktørid(): String = genererPerson().opprett().aktoerid!!
+
 @Suppress("unused")
 fun genererPersonident(
     innsendtFodselsdato: LocalDate? = null,
