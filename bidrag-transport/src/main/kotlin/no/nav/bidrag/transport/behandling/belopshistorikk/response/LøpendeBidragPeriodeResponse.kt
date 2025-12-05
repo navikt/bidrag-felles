@@ -21,6 +21,8 @@ data class LøpendeBidrag(
     val type: Stønadstype,
     @param:Schema(description = "Personen som er kravhaver i stønaden")
     val kravhaver: Personident,
+    @param:Schema(description = "Personen som er mottaker i stønaden")
+    val mottaker: Personident? = null,
     @param:Schema(description = "Liste med perioder og beløp")
     val periodeListe: List<BidragPeriode>,
 )
