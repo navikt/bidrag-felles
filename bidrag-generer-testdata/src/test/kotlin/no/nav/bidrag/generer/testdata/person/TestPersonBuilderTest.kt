@@ -14,7 +14,7 @@ import java.time.LocalDate
 class TestPersonBuilderTest {
     @Test
     fun testPersonIdent() {
-        val person = genererPerson().opprett()
+        val person = genererPerson().identType(IdentTyper.FNR).opprett()
 
         person shouldNotBe null
         person.personIdent shouldNotBe null
@@ -115,5 +115,17 @@ class TestPersonBuilderTest {
         // Barn 24 og eldre har alltid flyttet ut og har derfor 2 innslag i adressehistorikken.
         adressehistorikk[1]?.adresse shouldBe person.boadresse // Aktiv bostedsadresse er siste innslag i historikken
         println(person)
+    }
+
+    @Test
+    fun testAktørid() {
+        val aktørid = genererPerson().opprett().aktoerid
+        val aktørid2 = genererAktørid()
+
+        aktørid shouldNotBe null
+        aktørid2 shouldNotBe null
+
+        println(aktørid)
+        println(aktørid2)
     }
 }
