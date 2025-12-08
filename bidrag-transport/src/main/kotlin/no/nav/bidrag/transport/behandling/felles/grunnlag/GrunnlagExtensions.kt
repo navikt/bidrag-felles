@@ -303,6 +303,15 @@ fun List<GrunnlagDto>.finnGyldigeGrunnlagForBarn(
         it.erGyldigForBarn(bmRef, bpRef, barnRef)
     }
 
+fun GrunnlagDto.personBmRef(): String? {
+    if (type != Grunnlagstype.PERSON_SØKNADSBARN) return null
+    return if (innhold is POJONode) {
+        (innhold.pojo as Person).bidragsmottaker
+    } else {
+        innhold["bidragsmottaker"]?.asText()
+    }
+}
+
 // Sjekker om et grunnlag er gyldig for en gitt BM/BP/Barn kombinasjon
 fun GrunnlagDto.erGyldigForBarn(
     bmRef: Grunnlagsreferanse,
@@ -312,12 +321,6 @@ fun GrunnlagDto.erGyldigForBarn(
     val gjelderRef = this.gjelderReferanse
     val gjelderBarnRef = this.gjelderBarnReferanse
     val grunnlagstype = this.type
-    val personBMref =
-        if (innhold is POJONode) {
-            (innhold.pojo as Person).bidragsmottaker
-        } else {
-            innhold["bidragsmottaker"]?.asText()
-        }
     return when {
         // Gjelder BM og riktig barn (eller ingen barn)
         gjelderRef == bmRef && (gjelderBarnRef == barnRef || gjelderBarnRef == null) -> true
@@ -338,7 +341,7 @@ fun GrunnlagDto.erGyldigForBarn(
         grunnlagstype == Grunnlagstype.FAKTISK_UTGIFT_PERIODE && gjelderRef == bmRef -> true
 
         // PERSON_SØKNADSBARN skal være med uansett hvis BM matcher (brukes i beregning av tilsynsutgifter)
-        grunnlagstype == Grunnlagstype.PERSON_SØKNADSBARN && personBMref == bmRef -> true
+        grunnlagstype == Grunnlagstype.PERSON_SØKNADSBARN && personBmRef() == bmRef -> true
 
         else -> false
     }
