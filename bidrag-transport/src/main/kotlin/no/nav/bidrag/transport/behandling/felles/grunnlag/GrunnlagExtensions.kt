@@ -304,7 +304,7 @@ fun List<GrunnlagDto>.finnGyldigeGrunnlagForBarn(
     }
 
 fun GrunnlagDto.personBmRef(): String? {
-    if (type != Grunnlagstype.PERSON_SØKNADSBARN) return null
+    if (!erPerson()) return null
     return if (innhold is POJONode) {
         (innhold.pojo as Person).bidragsmottaker
     } else {
