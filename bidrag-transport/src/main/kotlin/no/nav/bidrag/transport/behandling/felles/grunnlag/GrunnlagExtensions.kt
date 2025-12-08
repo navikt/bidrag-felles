@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.databind.node.POJONode
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
@@ -311,7 +312,12 @@ fun GrunnlagDto.erGyldigForBarn(
     val gjelderRef = this.gjelderReferanse
     val gjelderBarnRef = this.gjelderBarnReferanse
     val grunnlagstype = this.type
-
+    val personBMref =
+        if (innhold is POJONode) {
+            (innhold.pojo as Person).bidragsmottaker
+        } else {
+            innhold["bidragsmottaker"]?.asText()
+        }
     return when {
         // Gjelder BM og riktig barn (eller ingen barn)
         gjelderRef == bmRef && (gjelderBarnRef == barnRef || gjelderBarnRef == null) -> true
@@ -332,7 +338,7 @@ fun GrunnlagDto.erGyldigForBarn(
         grunnlagstype == Grunnlagstype.FAKTISK_UTGIFT_PERIODE && gjelderRef == bmRef -> true
 
         // PERSON_SØKNADSBARN skal være med uansett hvis BM matcher (brukes i beregning av tilsynsutgifter)
-        grunnlagstype == Grunnlagstype.PERSON_SØKNADSBARN && this.innhold["bidragsmottaker"]?.asText() == bmRef -> true
+        grunnlagstype == Grunnlagstype.PERSON_SØKNADSBARN && personBMref == bmRef -> true
 
         else -> false
     }
