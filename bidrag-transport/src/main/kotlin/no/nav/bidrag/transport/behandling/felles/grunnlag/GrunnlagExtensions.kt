@@ -185,9 +185,9 @@ val Collection<BaseGrunnlag>.søknadsbarn
             it.type == Grunnlagstype.PERSON_SØKNADSBARN
         }.toSet()
 
-fun Collection<GrunnlagDto>.hentPerson(ident: String?) = filter { it.erPerson() }.find { it.personIdent == ident }
+fun Collection<GrunnlagDto>.hentPerson(ident: String?) = ident?.let { filter { it.erPerson() }.find { it.personIdent == ident } }
 
-fun Collection<BaseGrunnlag>.hentPersonMedIdent(ident: String?) = hentAllePersoner().find { it.personIdent == ident }
+fun Collection<BaseGrunnlag>.hentPersonMedIdent(ident: String?) = ident?.let { hentAllePersoner().find { it.personIdent == ident } }
 
 fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferanse?) =
     referanse?.let {
