@@ -10,4 +10,7 @@ enum class Stønadstype {
     EKTEFELLEBIDRAG,
     MOTREGNING,
     OPPFOSTRINGSBIDRAG,
+
+    @Deprecated("Bruk engangsbeløp TILBAKREKREVING istedenfor")
+    TILBAKEKREVING,
 }
