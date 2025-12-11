@@ -146,10 +146,18 @@
   {
     "antBarnTom": 1,
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "maksBelopTilsyn": 7266,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:44.941432"
+  },
+  {
+    "antBarnTom": 1,
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "maksBelopTilsyn": 7484,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T01:00:17.712808"
   },
   {
     "antBarnTom": 2,
@@ -298,10 +306,18 @@
   {
     "antBarnTom": 2,
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "maksBelopTilsyn": 9478,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:44.970059"
+  },
+  {
+    "antBarnTom": 2,
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "maksBelopTilsyn": 9763,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T01:00:17.721484"
   },
   {
     "antBarnTom": 99,
@@ -450,9 +466,17 @@
   {
     "antBarnTom": 99,
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "maksBelopTilsyn": 10742,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:44.972187"
+  },
+  {
+    "antBarnTom": 99,
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "maksBelopTilsyn": 11064,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T01:00:17.722858"
   }
 ]

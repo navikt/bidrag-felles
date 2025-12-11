@@ -200,11 +200,20 @@
   {
     "bostatus": "EN",
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopBoutgift": 11708,
     "belopUnderhold": 11634,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:47:34.552144"
+  },
+  {
+    "bostatus": "EN",
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopBoutgift": 11977,
+    "belopUnderhold": 11902,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T01:00:23.814127"
   },
   {
     "bostatus": "GS",
@@ -407,10 +416,19 @@
   {
     "bostatus": "GS",
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopBoutgift": 7391,
     "belopUnderhold": 9852,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:48:11.899633"
+  },
+  {
+    "bostatus": "GS",
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopBoutgift": 7561,
+    "belopUnderhold": 10079,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T01:00:23.822029"
   }
 ]
