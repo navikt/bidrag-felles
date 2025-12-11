@@ -210,10 +210,19 @@
     "typeStonad": "64",
     "typeTilsyn": "DO",
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopBarnetilsyn": 422,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:35.811491"
+  },
+  {
+    "typeStonad": "64",
+    "typeTilsyn": "DO",
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopBarnetilsyn": 408,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:46.077731"
   },
   {
     "typeStonad": "64",
@@ -363,10 +372,19 @@
     "typeStonad": "64",
     "typeTilsyn": "DU",
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopBarnetilsyn": 248,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:35.795716"
+  },
+  {
+    "typeStonad": "64",
+    "typeTilsyn": "DU",
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopBarnetilsyn": 171,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:46.062424"
   },
   {
     "typeStonad": "64",
@@ -570,10 +588,19 @@
     "typeStonad": "64",
     "typeTilsyn": "HO",
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopBarnetilsyn": 686,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:35.791395"
+  },
+  {
+    "typeStonad": "64",
+    "typeTilsyn": "HO",
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopBarnetilsyn": 521,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:46.061089"
   },
   {
     "typeStonad": "64",
@@ -723,10 +750,19 @@
     "typeStonad": "64",
     "typeTilsyn": "HU",
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopBarnetilsyn": 621,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:35.781179"
+  },
+  {
+    "typeStonad": "64",
+    "typeTilsyn": "HU",
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopBarnetilsyn": 428,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:46.053482"
   },
   {
     "typeStonad": "66",

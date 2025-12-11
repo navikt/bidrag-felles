@@ -233,13 +233,24 @@
   {
     "alderTom": 5,
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopForbrukTot": 4717,
     "belopIndivid": 0,
     "belopHusholdning": 0,
     "belopTransport": 0,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:16.976579"
+  },
+  {
+    "alderTom": 5,
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopForbrukTot": 5181,
+    "belopIndivid": 0,
+    "belopHusholdning": 0,
+    "belopTransport": 0,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:13.545471"
   },
   {
     "alderTom": 10,
@@ -486,13 +497,24 @@
   {
     "alderTom": 10,
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopForbrukTot": 6385,
     "belopIndivid": 0,
     "belopHusholdning": 0,
     "belopTransport": 0,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:17.003937"
+  },
+  {
+    "alderTom": 10,
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopForbrukTot": 6948,
+    "belopIndivid": 0,
+    "belopHusholdning": 0,
+    "belopTransport": 0,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:13.553786"
   },
   {
     "alderTom": 14,
@@ -673,13 +695,24 @@
   {
     "alderTom": 14,
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopForbrukTot": 7587,
     "belopIndivid": 0,
     "belopHusholdning": 0,
     "belopTransport": 0,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:17.006772"
+  },
+  {
+    "alderTom": 14,
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopForbrukTot": 8122,
+    "belopIndivid": 0,
+    "belopHusholdning": 0,
+    "belopTransport": 0,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:13.555358"
   },
   {
     "alderTom": 18,
@@ -937,13 +970,24 @@
   {
     "alderTom": 18,
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopForbrukTot": 8692,
     "belopIndivid": 0,
     "belopHusholdning": 0,
     "belopTransport": 0,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:17.018768"
+  },
+  {
+    "alderTom": 18,
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopForbrukTot": 9202,
+    "belopIndivid": 0,
+    "belopHusholdning": 0,
+    "belopTransport": 0,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:13.556783"
   },
   {
     "alderTom": 99,
@@ -1190,12 +1234,23 @@
   {
     "alderTom": 99,
     "datoFom": "2024-07-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-06-30",
     "belopForbrukTot": 8692,
     "belopIndivid": 0,
     "belopHusholdning": 0,
     "belopTransport": 0,
-    "brukerid": "H139831 ",
+    "brukerid": "H139831",
     "tidspktEndret": "2024-06-22T17:45:17.021367"
+  },
+  {
+    "alderTom": 99,
+    "datoFom": "2025-07-01",
+    "datoTom": "9999-12-31",
+    "belopForbrukTot": 9202,
+    "belopIndivid": 0,
+    "belopHusholdning": 0,
+    "belopTransport": 0,
+    "brukerid": "H139831",
+    "tidspktEndret": "2025-06-03T00:59:13.558051"
   }
 ]
