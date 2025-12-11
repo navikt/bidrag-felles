@@ -55,6 +55,7 @@ data class DokumentmalResultatBidragsberegningBarnDto(
     val indeksår: Int? = null,
     val innkrevesFraDato: YearMonth? = null,
     val erAvvistRevurdering: Boolean = false,
+    val erAvvisning: Boolean = false,
     val minstEnPeriodeHarSlåttUtTilFF: Boolean = false,
     val perioderSlåttUtTilFF: List<PeriodeSlåttUtTilFF> = emptyList(),
     val orkestrertVedtak: EndeligOrkestrertVedtak? = null,
