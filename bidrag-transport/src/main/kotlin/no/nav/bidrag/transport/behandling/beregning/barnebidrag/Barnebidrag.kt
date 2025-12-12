@@ -106,6 +106,7 @@ data class BidragsberegningOrkestratorRequestV2(
     val grunnlagsliste: List<GrunnlagDto>,
     val erDirekteAvslag: Boolean = false,
     val beregningstype: Beregningstype = Beregningstype.BIDRAG,
+    val skalHensyntaLøpendeBidrag: Boolean = false,
 )
 
 data class BeregningGrunnlagV2(
