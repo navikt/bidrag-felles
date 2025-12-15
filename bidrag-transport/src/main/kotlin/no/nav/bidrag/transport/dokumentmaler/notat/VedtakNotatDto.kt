@@ -60,7 +60,6 @@ data class VedtakNotatDto(
     val behandling: NotatBehandlingDetaljerDto,
     val saksbehandlerNavn: String?,
     val virkningstidspunkt: NotatVirkningstidspunktDto,
-    val virkningstidspunktV2: NotatVirkningstidspunktDto,
     val utgift: NotatSærbidragUtgifterDto?,
     val boforhold: NotatBoforholdDto,
     val samvær: List<NotatSamværDto> = emptyList(),
@@ -90,16 +89,18 @@ enum class NotatMalType {
 }
 
 data class NotatBehandlingDetaljerDto(
-    val søknadstype: String?,
+    val klageMottattDato: LocalDate? = null,
     val vedtakstype: Vedtakstype?,
     val opprinneligVedtakstype: Vedtakstype? = null,
     val kategori: NotatSærbidragKategoriDto? = null,
     val søktAv: SøktAvType?,
     val mottattDato: LocalDate?,
     val søktFraDato: YearMonth?,
+    val søknadstype: String?,
+    @Deprecated("Hent informasjon fra virkningstidspunkt")
     val virkningstidspunkt: LocalDate?,
+    @Deprecated("Hent informasjon fra virkningstidspunkt")
     val avslag: Resultatkode?,
-    val klageMottattDato: LocalDate? = null,
 ) {
     @get:Schema(name = "erAvvisning")
     val erAvvisning get() = avslag?.erAvvisning() == true
@@ -326,12 +327,18 @@ data class NotatSærbidragKategoriDto(
 )
 
 data class NotatVirkningstidspunktDto(
+    @Schema(description = "Hvis det er likt for alle bruk avslag/årsak fra ett av barna")
     val erLikForAlle: Boolean,
+    val erVirkningstidspunktLikForAlle: Boolean,
+    val erAvslagForAlle: Boolean = false,
+    val eldsteVirkningstidspunkt: YearMonth,
     val barn: List<NotatVirkningstidspunktBarnDto>,
 )
 
 data class NotatVirkningstidspunktBarnDto(
     val rolle: DokumentmalPersonDto,
+    val behandlingstype: Behandlingstype?,
+    @Deprecated("Bruk behandlingstype")
     val søknadstype: String?,
     val vedtakstype: Vedtakstype?,
     val søktAv: SøktAvType?,
@@ -356,12 +363,22 @@ data class NotatVirkningstidspunktBarnDto(
     @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
     val notat: NotatBegrunnelseDto = begrunnelse,
 ) {
+    @get:Schema(name = "behandlingstypeVisningsnavn")
+    val behandlingstypeVisningsnavn get() = behandlingstype?.visningsnavn?.intern
+
     @get:Schema(name = "årsakVisningsnavn")
     val årsakVisningsnavn get() = årsak?.visningsnavn?.intern
 
     @get:Schema(name = "avslagVisningsnavn")
     val avslagVisningsnavn
         get() = vedtakstype?.let { avslag?.visningsnavnIntern(vedtakstype) } ?: avslag?.visningsnavn?.intern
+
+    @get:Schema(name = "erAvvisning")
+    val erAvvisning get() = avslag?.erAvvisning() == true
+
+    @get:Schema(name = "avslagVisningsnavnUtenPrefiks")
+    val avslagVisningsnavnUtenPrefiks
+        get() = avslag?.visningsnavn?.intern
 }
 
 @Schema(description = "Notat begrunnelse skrevet av saksbehandler")
