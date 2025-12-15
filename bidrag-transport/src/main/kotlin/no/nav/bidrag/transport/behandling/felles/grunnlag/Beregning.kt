@@ -45,26 +45,27 @@ fun List<GrunnlagDto>.erBidragJustertNedTil25ProsentAvInntekt(grunnlagsreferanse
         val sbInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidrag>()
         return sbInnhold.bidragJustertNedTil25ProsentAvInntekt
     }
+    val gjelderSøknadsbarnReferanse = sluttberegning.gjelderBarnReferanse
     val evne25prosentAvInntekt =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningEvne25ProsentAvInntekt>(
             Grunnlagstype.DELBEREGNING_EVNE_25PROSENTAVINNTEKT,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return false
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
     val delberegningBidragsevne =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragsevne>(
             Grunnlagstype.DELBEREGNING_BIDRAGSEVNE,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return false
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
     val bidragTilFordeling =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragTilFordeling>(
             Grunnlagstype.DELBEREGNING_BIDRAG_TIL_FORDELING,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return false
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
     val samværsfradrag =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningSamværsfradrag>(
             Grunnlagstype.DELBEREGNING_SAMVÆRSFRADRAG,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return false
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
 
     return evne25prosentAvInntekt.innhold.erEvneJustertNedTil25ProsentAvInntekt &&
         delberegningBidragsevne.innhold.sumInntekt25Prosent <=
@@ -77,37 +78,38 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
         val sbInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidrag>()
         return Resultatkode.fraKode(sbInnhold.bisysResultatkode)
     }
+    val gjelderSøknadsbarnReferanse = sluttberegning.gjelderBarnReferanse
     val andelDeltBosted =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragspliktigesAndelDeltBosted>(
             Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_DELT_BOSTED,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull()
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
 
     val bidragTilFordeling =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragTilFordeling>(
             Grunnlagstype.DELBEREGNING_BIDRAG_TIL_FORDELING,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull()
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val andelAvBidragsevne =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningAndelAvBidragsevne>(
             Grunnlagstype.DELBEREGNING_ANDEL_AV_BIDRAGSEVNE,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull()
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val bpsBarnetillegg =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragJustertForBPBarnetillegg>(
             Grunnlagstype.DELBEREGNING_BIDRAG_JUSTERT_FOR_BP_BARNETILLEGG,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull()
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val bpsAndel =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragspliktigesAndel>(
             Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull()
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val samværsfradrag =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningSamværsfradrag>(
             Grunnlagstype.DELBEREGNING_SAMVÆRSFRADRAG,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull()
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val nettoBidragEtterBarnetilleggBM =
         bidragTilFordeling?.innhold?.bidragTilFordeling?.subtract(samværsfradrag?.innhold?.beløp ?: BigDecimal.ZERO) ?: BigDecimal.ZERO
     val bidragJustertNedTilEvne = andelAvBidragsevne?.innhold?.harBPFullEvne != null && !andelAvBidragsevne.innhold.harBPFullEvne
