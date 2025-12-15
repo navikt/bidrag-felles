@@ -62,7 +62,8 @@ data class VedtakNotatDto(
     val virkningstidspunkt: NotatVirkningstidspunktDto,
     val utgift: NotatSærbidragUtgifterDto?,
     val boforhold: NotatBoforholdDto,
-    val samvær: List<NotatSamværDto> = emptyList(),
+    val samvær: List<NotatSamværBarnDto> = emptyList(),
+    val samværV2: NotatSamværDto? = null,
     val gebyr: List<NotatGebyrDetaljerDto>? = null,
     val gebyrV2: NotatGebyrV2Dto? = null,
     var underholdskostnader: NotatUnderholdDto? = null,
@@ -232,6 +233,11 @@ data class NotatUnderholdBarnDto(
 }
 
 data class NotatSamværDto(
+    val erSammeForAlle: Boolean,
+    val barn: List<NotatSamværBarnDto>,
+)
+
+data class NotatSamværBarnDto(
     val gjelderBarn: DokumentmalPersonDto,
     val begrunnelse: NotatBegrunnelseDto?,
     val perioder: List<NotatSamværsperiodeDto> = emptyList(),
