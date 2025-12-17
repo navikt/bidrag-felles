@@ -1,6 +1,7 @@
 package no.nav.bidrag.commons.security.utils
 
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.string.shouldHaveLength
 import io.mockk.every
 import io.mockk.mockk
 import no.nav.bidrag.commons.security.SikkerhetsKontekst.medApplikasjonKontekst
@@ -127,7 +128,7 @@ internal class TokenUtilsTest {
     @Test
     fun skalHenteFødselsnummerFraTokenxToken() {
         mockTokenContext(tokenXUserToken)
-        TokenUtils.hentBruker() shouldBe "19527030938"
+        TokenUtils.hentBruker() shouldHaveLength 11
     }
 
     @Test

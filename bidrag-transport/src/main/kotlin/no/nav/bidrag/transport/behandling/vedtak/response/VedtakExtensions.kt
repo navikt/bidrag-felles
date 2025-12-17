@@ -35,6 +35,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.personObjekt
 import no.nav.bidrag.transport.behandling.vedtak.Stønadsendring
 import no.nav.bidrag.transport.felles.tilVisningsnavn
 import no.nav.bidrag.transport.felles.toYearMonth
+import java.time.LocalDate
 import java.time.YearMonth
 
 val VedtakForStønad.virkningstidspunkt get() = stønadsendring.periodeListe.minOfOrNull { it.periode.fom }
@@ -65,6 +66,12 @@ val VedtakDto.søknadsider
             .filter {
                 it.kilde == BehandlingsrefKilde.BISYS_SØKNAD
             }.map { it.referanse.toLong() }
+
+fun VedtakDto.erVedtakAvvistRevurderingsøknad(): Boolean =
+    stønadsendringListe.all { s ->
+        gjelderRevurderingsbarn(s) &&
+            s.beslutning == Beslutningstype.AVVIST
+    }
 
 fun VedtakDto.gjelderRevurderingsbarn(stønadsendringDto: StønadsendringDto): Boolean {
     val barn = grunnlagListe.hentPersonMedIdent(stønadsendringDto.kravhaver.verdi)
@@ -105,6 +112,13 @@ val VedtakDto.særbidragsperiode get() =
         } else {
             null
         }
+
+val VedtakDto.eldsteVirkningstidspunkt get(): LocalDate? =
+    grunnlagListe
+        .filtrerBasertPåEgenReferanse(Grunnlagstype.VIRKNINGSTIDSPUNKT)
+        .map { it.innholdTilObjekt<VirkningstidspunktGrunnlag>().virkningstidspunkt }
+        .minOfOrNull { it }
+
 val VedtakDto.erDirekteAvslag get(): Boolean {
     val virkningstidspunkt =
         grunnlagListe
@@ -396,11 +410,13 @@ val VedtakDto.omgjøringsvedtakErEnesteVedtak get() =
                 }
         }
 val VedtakDto.erOrkestrertVedtak get() =
-    this.grunnlagListe.finnOrkestreringDetaljer() != null || this.stønadsendringListe.isNotEmpty() && !this.erInnkrevingsgrunnlag() &&
-        this.stønadsendringListe.all { se ->
-            se.beslutning != Beslutningstype.DELVEDTAK &&
-                se.periodeListe.isNotEmpty() &&
-                se.periodeListe.all { p ->
-                    this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
-                }
-        }
+    (this.grunnlagListe.finnOrkestreringDetaljer() != null) || (
+        this.stønadsendringListe.isNotEmpty() && !this.erInnkrevingsgrunnlag() &&
+            this.stønadsendringListe.all { se ->
+                se.beslutning != Beslutningstype.DELVEDTAK &&
+                    se.periodeListe.isNotEmpty() &&
+                    se.periodeListe.all { p ->
+                        this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
+                    }
+            }
+    )

@@ -1,7 +1,9 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -11,11 +13,14 @@ data class PrivatAvtaleGrunnlag(
     val avtaleInngåttDato: LocalDate,
     val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
     val skalIndeksreguleres: Boolean,
+    val utlandsbidrag: Boolean = false,
 ) : GrunnlagInnhold
 
 data class PrivatAvtalePeriodeGrunnlag(
     override val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
+    val samværsklasse: Samværsklasse? = null,
+    val valutakode: Valutakode? = null,
     override val manueltRegistrert: Boolean = true,
 ) : GrunnlagPeriodeInnhold
 

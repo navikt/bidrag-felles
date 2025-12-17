@@ -14,9 +14,9 @@ import no.nav.bidrag.commons.testdata.DummyMedSaksummerobjekt
 import no.nav.bidrag.commons.testdata.DummyMedSaksummerobjektFørst
 import no.nav.bidrag.commons.testdata.DummyMedString
 import no.nav.bidrag.commons.testdata.DummyMedStringFørst
-import no.nav.bidrag.commons.util.PersonidentGenerator
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
+import no.nav.bidrag.generer.testdata.person.genererFødselsnummer
 import org.aspectj.lang.JoinPoint
 import org.aspectj.lang.reflect.CodeSignature
 import org.junit.jupiter.api.AfterEach
@@ -57,7 +57,7 @@ class TilgangAdviceTest {
     @Test
     fun `sjekkTilgang sjekker tilgang for personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        val fnr = Personident(genererFødselsnummer())
         every { joinPoint.args } returns arrayOf(fnr)
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
@@ -78,7 +78,7 @@ class TilgangAdviceTest {
     @Test
     fun `sjekkTilgang sjekker tilgang for personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        val fnr = Personident(genererFødselsnummer())
         every { joinPoint.args } returns arrayOf(fnr.verdi)
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
@@ -107,7 +107,7 @@ class TilgangAdviceTest {
     @Test
     fun `sjekkTilgang sjekker tilgang for requestBody med personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        val fnr = Personident(genererFødselsnummer())
         every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjektFørst(fnr))
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
@@ -128,7 +128,7 @@ class TilgangAdviceTest {
     @Test
     fun `sjekkTilgang sjekker tilgang for requestBody med personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        val fnr = Personident(genererFødselsnummer())
         every { joinPoint.args } returns arrayOf(DummyMedStringFørst(fnr.verdi))
 
         tilgangAdvice.sjekkTilgang(joinPoint, Tilgangskontroll())
@@ -160,7 +160,7 @@ class TilgangAdviceTest {
     @Test
     fun `sjekkTilgang sjekker tilgang for navngitt personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        val fnr = Personident(genererFødselsnummer())
         every { joinPoint.args } returns arrayOf("sdf", 321, fnr)
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
@@ -187,7 +187,7 @@ class TilgangAdviceTest {
     @Test
     fun `sjekkTilgang sjekker tilgang for navngitt personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        val fnr = Personident(genererFødselsnummer())
         every { joinPoint.args } returns arrayOf("sdf", 321, fnr.verdi)
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
@@ -225,7 +225,7 @@ class TilgangAdviceTest {
     @Test
     fun `sjekkTilgang sjekker tilgang for requestBody med navngitt personIdentobjekt`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = Personident(PersonidentGenerator.genererFødselsnummer())
+        val fnr = Personident(genererFødselsnummer())
         every { joinPoint.args } returns arrayOf(DummyMedPersonIdentobjekt(fnr = fnr))
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")
@@ -252,7 +252,7 @@ class TilgangAdviceTest {
     @Test
     fun `sjekkTilgang sjekker tilgang for requestBody med navngitt personIdentstring`() {
         val joinPoint: JoinPoint = mockk(relaxed = true)
-        val fnr = PersonidentGenerator.genererFødselsnummer()
+        val fnr = genererFødselsnummer()
         every { joinPoint.args } returns arrayOf(DummyMedString(fnr = fnr))
         val codeSignature: CodeSignature = mockk()
         every { codeSignature.parameterNames } returns arrayOf("dill", "dall", "id")

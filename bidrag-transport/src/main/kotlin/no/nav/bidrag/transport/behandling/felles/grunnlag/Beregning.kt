@@ -39,71 +39,127 @@ private val sluttberegningAvslagResultaterV2 =
         Resultatkode.BARNET_ER_SELVFORSØRGET,
     )
 
+fun List<GrunnlagDto>.erBidragJustertNedTil25ProsentAvInntekt(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Boolean {
+    val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return false
+    if (sluttberegning.erSluttberegningGammelStruktur()) {
+        val sbInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidrag>()
+        return sbInnhold.bidragJustertNedTil25ProsentAvInntekt
+    }
+    val gjelderSøknadsbarnReferanse = sluttberegning.gjelderBarnReferanse
+    val evne25prosentAvInntekt =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningEvne25ProsentAvInntekt>(
+            Grunnlagstype.DELBEREGNING_EVNE_25PROSENTAVINNTEKT,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
+    val delberegningBidragsevne =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragsevne>(
+            Grunnlagstype.DELBEREGNING_BIDRAGSEVNE,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
+    val bidragTilFordeling =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragTilFordeling>(
+            Grunnlagstype.DELBEREGNING_BIDRAG_TIL_FORDELING,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
+    val samværsfradrag =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningSamværsfradrag>(
+            Grunnlagstype.DELBEREGNING_SAMVÆRSFRADRAG,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
+
+    return evne25prosentAvInntekt.innhold.erEvneJustertNedTil25ProsentAvInntekt &&
+        delberegningBidragsevne.innhold.sumInntekt25Prosent <=
+        (bidragTilFordeling.innhold.bidragTilFordeling + samværsfradrag.innhold.beløp)
+}
+
 fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Resultatkode? {
     val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return null
     if (sluttberegning.erSluttberegningGammelStruktur()) {
         val sbInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidrag>()
         return Resultatkode.fraKode(sbInnhold.bisysResultatkode)
     }
+    val gjelderSøknadsbarnReferanse = sluttberegning.gjelderBarnReferanse
     val andelDeltBosted =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragspliktigesAndelDeltBosted>(
             Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL_DELT_BOSTED,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull()
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
 
     val bidragTilFordeling =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragTilFordeling>(
             Grunnlagstype.DELBEREGNING_BIDRAG_TIL_FORDELING,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return null
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val andelAvBidragsevne =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningAndelAvBidragsevne>(
             Grunnlagstype.DELBEREGNING_ANDEL_AV_BIDRAGSEVNE,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return null
-    val evne25prosentAvInntekt =
-        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningEvne25ProsentAvInntekt>(
-            Grunnlagstype.DELBEREGNING_EVNE_25PROSENTAVINNTEKT,
-            sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return null
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val bpsBarnetillegg =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragJustertForBPBarnetillegg>(
             Grunnlagstype.DELBEREGNING_BIDRAG_JUSTERT_FOR_BP_BARNETILLEGG,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return null
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val bpsAndel =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragspliktigesAndel>(
             Grunnlagstype.DELBEREGNING_BIDRAGSPLIKTIGES_ANDEL,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return null
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val samværsfradrag =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningSamværsfradrag>(
             Grunnlagstype.DELBEREGNING_SAMVÆRSFRADRAG,
             sluttberegning.grunnlagsreferanseListe,
-        ).firstOrNull() ?: return null
-    val nettoBidragEtterBarnetilleggBM = bidragTilFordeling.innhold.bidragTilFordeling.subtract(samværsfradrag.innhold.beløp)
-    val bidragJustertNedTilEvne = !andelAvBidragsevne.innhold.harBPFullEvne
-    val bidragJustertNedTil25ProsentAvInntekt = evne25prosentAvInntekt.innhold.erEvneJustertNedTil25ProsentAvInntekt
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
+    val nettoBidragEtterBarnetilleggBM =
+        bidragTilFordeling?.innhold?.bidragTilFordeling?.subtract(samværsfradrag?.innhold?.beløp ?: BigDecimal.ZERO) ?: BigDecimal.ZERO
+    val bidragJustertNedTilEvne = andelAvBidragsevne?.innhold?.harBPFullEvne != null && !andelAvBidragsevne.innhold.harBPFullEvne
+    val bidragJustertNedTil25ProsentAvInntekt = erBidragJustertNedTil25ProsentAvInntekt(grunnlagsreferanseListe)
     val bidragJustertForDeltBosted = andelDeltBosted != null
     val sluttberegningInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidragV2>()
     return when {
-        sluttberegningInnhold.ikkeOmsorgForBarnet -> Resultatkode.IKKE_OMSORG
-        bpsBarnetillegg.innhold.erBidragJustertTilNettoBarnetilleggBP -> Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BP
+        sluttberegningInnhold.ikkeOmsorgForBarnet -> {
+            Resultatkode.IKKE_OMSORG
+        }
+
+        bpsBarnetillegg?.innhold?.erBidragJustertTilNettoBarnetilleggBP == true -> {
+            Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BP
+        }
+
         // TODO: Hvordan hente informasjom om forskudssats?
 //        bidragJustertManueltTilForskuddssats -> Resultatkode.BIDRAG_JUSTERT_MANUELT_TIL_FORSKUDDSSATS
 //        bidragJustertTilForskuddssats -> Resultatkode.BIDRAG_JUSTERT_TIL_FORSKUDDSSATS
-        bpsAndel.innhold.barnetErSelvforsørget || sluttberegningInnhold.barnetErSelvforsørget
-        -> Resultatkode.BARNET_ER_SELVFORSØRGET
-        bidragJustertForDeltBosted && bidragJustertNedTilEvne -> Resultatkode.MANGLER_BIDRAGSEVNE
-        bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
-            Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
+        sluttberegningInnhold.barnetErSelvforsørget -> {
+            Resultatkode.BARNET_ER_SELVFORSØRGET
+        }
 
-        bidragJustertForDeltBosted -> Resultatkode.BIDRAG_JUSTERT_FOR_DELT_BOSTED
-        bidragJustertNedTilEvne -> Resultatkode.MANGLER_BIDRAGSEVNE
-        bidragJustertNedTil25ProsentAvInntekt -> Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
-        bidragTilFordeling.innhold.uMinusNettoBarnetilleggBM == nettoBidragEtterBarnetilleggBM
-        -> Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BM
-        else -> Resultatkode.KOSTNADSBEREGNET_BIDRAG
+        bidragJustertForDeltBosted && bidragJustertNedTilEvne -> {
+            Resultatkode.MANGLER_BIDRAGSEVNE
+        }
+
+        bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt -> {
+            Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
+        }
+
+        bidragJustertForDeltBosted -> {
+            Resultatkode.BIDRAG_JUSTERT_FOR_DELT_BOSTED
+        }
+
+        bidragJustertNedTilEvne -> {
+            Resultatkode.MANGLER_BIDRAGSEVNE
+        }
+
+        bidragJustertNedTil25ProsentAvInntekt -> {
+            Resultatkode.MAKS_25_PROSENT_AV_INNTEKT
+        }
+
+        bidragTilFordeling?.innhold?.uMinusNettoBarnetilleggBM == nettoBidragEtterBarnetilleggBM
+        -> {
+            Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BM
+        }
+
+        else -> {
+            Resultatkode.KOSTNADSBEREGNET_BIDRAG
+        }
     }
 }
 
@@ -458,20 +514,53 @@ data class SluttberegningBarnebidrag(
         get() =
             // Rekkefølgen bestemmer hvilken som slår ut for sluttresultatet. Øverste har høyest prioritet.
             when {
-                ikkeOmsorgForBarnet -> SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
-                bidragJustertForNettoBarnetilleggBP -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
-                bidragJustertManueltTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name
-                bidragJustertTilForskuddssats -> SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
-                barnetErSelvforsørget -> SluttberegningBarnebidrag::barnetErSelvforsørget.name
-                bidragJustertForDeltBosted && bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
-                bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt ->
-                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                ikkeOmsorgForBarnet -> {
+                    SluttberegningBarnebidrag::ikkeOmsorgForBarnet.name
+                }
 
-                bidragJustertForDeltBosted -> SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
-                bidragJustertNedTilEvne -> SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
-                bidragJustertNedTil25ProsentAvInntekt -> SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
-                bidragJustertForNettoBarnetilleggBM -> SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
-                else -> "kostnadsberegnet"
+                bidragJustertForNettoBarnetilleggBP -> {
+                    SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBP.name
+                }
+
+                bidragJustertManueltTilForskuddssats -> {
+                    SluttberegningBarnebidrag::bidragJustertManueltTilForskuddssats.name
+                }
+
+                bidragJustertTilForskuddssats -> {
+                    SluttberegningBarnebidrag::bidragJustertTilForskuddssats.name
+                }
+
+                barnetErSelvforsørget -> {
+                    SluttberegningBarnebidrag::barnetErSelvforsørget.name
+                }
+
+                bidragJustertForDeltBosted && bidragJustertNedTilEvne -> {
+                    SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                }
+
+                bidragJustertForDeltBosted && bidragJustertNedTil25ProsentAvInntekt -> {
+                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                }
+
+                bidragJustertForDeltBosted -> {
+                    SluttberegningBarnebidrag::bidragJustertForDeltBosted.name
+                }
+
+                bidragJustertNedTilEvne -> {
+                    SluttberegningBarnebidrag::bidragJustertNedTilEvne.name
+                }
+
+                bidragJustertNedTil25ProsentAvInntekt -> {
+                    SluttberegningBarnebidrag::bidragJustertNedTil25ProsentAvInntekt.name
+                }
+
+                bidragJustertForNettoBarnetilleggBM -> {
+                    SluttberegningBarnebidrag::bidragJustertForNettoBarnetilleggBM.name
+                }
+
+                else -> {
+                    "kostnadsberegnet"
+                }
             }
 
     @get:JsonIgnore

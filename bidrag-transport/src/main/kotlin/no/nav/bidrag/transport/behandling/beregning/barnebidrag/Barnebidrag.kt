@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Beregningstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
-import no.nav.bidrag.domene.enums.vedtak.BeregnTil
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
@@ -23,6 +22,12 @@ data class BeregnetBarnebidragResultat(
     var beregnetBarnebidragPeriodeListe: List<ResultatPeriode> = emptyList(),
     @Schema(description = "Liste over grunnlag brukt i beregning")
     var grunnlagListe: List<GrunnlagDto> = emptyList(),
+)
+
+@Schema(description = "Resultatet av en barnebidragsberegning versjon 2")
+data class BeregnetBarnebidragResultatV2(
+    val søknadsbarnreferanse: Grunnlagsreferanse,
+    val beregnetBarnebidragResultat: BeregnetBarnebidragResultat,
 )
 
 @Schema(description = "Resultatet av en beregning for en gitt periode - barnebidrag")
@@ -95,16 +100,21 @@ data class ResultatVedtak(
 }
 
 data class BidragsberegningOrkestratorRequestV2(
+    @Deprecated("Bruk beregningsperiode per barn i stedet")
     val beregningsperiode: ÅrMånedsperiode,
     val beregningBarn: List<BeregningGrunnlagV2>,
     val grunnlagsliste: List<GrunnlagDto>,
     val erDirekteAvslag: Boolean = false,
     val beregningstype: Beregningstype = Beregningstype.BIDRAG,
+    val skalHensyntaLøpendeBidrag: Boolean = false,
 )
 
 data class BeregningGrunnlagV2(
     val søknadsbarnreferanse: Grunnlagsreferanse,
+    @Deprecated("Bruk beregningsperiode for beregning og virkningstidspunkt for vedtaksperiode")
     val periode: ÅrMånedsperiode,
+    val beregningsperiode: ÅrMånedsperiode,
+    val virkningstidspunkt: YearMonth,
     val opphørsdato: YearMonth? = null,
     val stønadstype: Stønadstype,
     val erDirekteAvslag: Boolean = false,

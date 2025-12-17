@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.databind.node.POJONode
 import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
@@ -80,11 +81,15 @@ fun List<BaseGrunnlag>.filtrerBasertPåFremmedReferanse(
 ): List<BaseGrunnlag> =
     filter { grunnlagType == null || it.type == grunnlagType }
         .filter {
-            referanse.isNullOrEmpty() &&
-                gjelderBarnReferanse.isNullOrEmpty() ||
+            (
+                referanse.isNullOrEmpty() &&
+                    gjelderBarnReferanse.isNullOrEmpty()
+            ) ||
                 it.grunnlagsreferanseListe.contains(referanse) ||
-                (referanse.isNullOrEmpty() || referanse == it.gjelderReferanse) &&
-                (gjelderBarnReferanse.isNullOrEmpty() || gjelderBarnReferanse == it.gjelderBarnReferanse)
+                (
+                    (referanse.isNullOrEmpty() || (referanse == it.gjelderReferanse)) &&
+                        (gjelderBarnReferanse.isNullOrEmpty() || (gjelderBarnReferanse == it.gjelderBarnReferanse))
+                )
         }
 
 fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanse(
@@ -180,9 +185,9 @@ val Collection<BaseGrunnlag>.søknadsbarn
             it.type == Grunnlagstype.PERSON_SØKNADSBARN
         }.toSet()
 
-fun Collection<GrunnlagDto>.hentPerson(ident: String?) = filter { it.erPerson() }.find { it.personIdent == ident }
+fun Collection<GrunnlagDto>.hentPerson(ident: String?) = ident?.let { filter { it.erPerson() }.find { it.personIdent == ident } }
 
-fun Collection<BaseGrunnlag>.hentPersonMedIdent(ident: String?) = hentAllePersoner().find { it.personIdent == ident }
+fun Collection<BaseGrunnlag>.hentPersonMedIdent(ident: String?) = ident?.let { hentAllePersoner().find { it.personIdent == ident } }
 
 fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferanse?) =
     referanse?.let {
@@ -298,6 +303,15 @@ fun List<GrunnlagDto>.finnGyldigeGrunnlagForBarn(
         it.erGyldigForBarn(bmRef, bpRef, barnRef)
     }
 
+fun GrunnlagDto.personBmRef(): String? {
+    if (!erPerson()) return null
+    return if (innhold is POJONode) {
+        (innhold.pojo as Person).bidragsmottaker
+    } else {
+        innhold["bidragsmottaker"]?.asText()
+    }
+}
+
 // Sjekker om et grunnlag er gyldig for en gitt BM/BP/Barn kombinasjon
 fun GrunnlagDto.erGyldigForBarn(
     bmRef: Grunnlagsreferanse,
@@ -307,7 +321,6 @@ fun GrunnlagDto.erGyldigForBarn(
     val gjelderRef = this.gjelderReferanse
     val gjelderBarnRef = this.gjelderBarnReferanse
     val grunnlagstype = this.type
-
     return when {
         // Gjelder BM og riktig barn (eller ingen barn)
         gjelderRef == bmRef && (gjelderBarnRef == barnRef || gjelderBarnRef == null) -> true
@@ -324,8 +337,11 @@ fun GrunnlagDto.erGyldigForBarn(
         // BOSTATUS_PERIODE skal være med uansett hvis gjelderReferanse = BP
         grunnlagstype == Grunnlagstype.BOSTATUS_PERIODE && gjelderRef == bpRef -> true
 
+        // FAKTISK_UTGIFT_PERIODE skal være med uansett hvis gjelderReferanse = BM
+        grunnlagstype == Grunnlagstype.FAKTISK_UTGIFT_PERIODE && gjelderRef == bmRef -> true
+
         // PERSON_SØKNADSBARN skal være med uansett hvis BM matcher (brukes i beregning av tilsynsutgifter)
-        grunnlagstype == Grunnlagstype.PERSON_SØKNADSBARN && this.innhold["bidragsmottaker"]?.asText() == bmRef -> true
+        grunnlagstype == Grunnlagstype.PERSON_SØKNADSBARN && personBmRef() == bmRef -> true
 
         else -> false
     }

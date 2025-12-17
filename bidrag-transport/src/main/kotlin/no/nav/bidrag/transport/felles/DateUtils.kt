@@ -20,4 +20,8 @@ fun YearMonth?.toCompactString(): String = this?.format(formatterCompactYearMont
 
 fun LocalDate.toYearMonth(): YearMonth = YearMonth.of(year, monthValue)
 
+fun YearMonth.toLocalDate(): LocalDate = LocalDate.of(year, monthValue, 1)
+
+fun YearMonth.toLocalDateTime(): LocalDateTime = LocalDateTime.of(year, monthValue, 1, 0, 0, 0, 0)
+
 fun LocalDateTime.toYearMonth(): YearMonth = YearMonth.of(year, monthValue)

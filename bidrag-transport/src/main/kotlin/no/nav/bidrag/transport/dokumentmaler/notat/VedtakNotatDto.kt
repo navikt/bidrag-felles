@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.barnetilsyn.Skolealder
 import no.nav.bidrag.domene.enums.barnetilsyn.Tilsynstype
+import no.nav.bidrag.domene.enums.behandling.Behandlingstema
+import no.nav.bidrag.domene.enums.behandling.Behandlingstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvvisning
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
@@ -17,6 +19,7 @@ import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.person.SivilstandskodePDL
 import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorFerietype
 import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFrekvens
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
@@ -56,12 +59,13 @@ data class VedtakNotatDto(
     val saksnummer: String,
     val behandling: NotatBehandlingDetaljerDto,
     val saksbehandlerNavn: String?,
-    val virkningstidspunkt: NotatVirkningstidspunktBarnDto,
-    val virkningstidspunktV2: NotatVirkningstidspunktDto,
+    val virkningstidspunkt: NotatVirkningstidspunktDto,
     val utgift: NotatSærbidragUtgifterDto?,
     val boforhold: NotatBoforholdDto,
-    val samvær: List<NotatSamværDto> = emptyList(),
-    val gebyr: List<NotatGebyrRolleDto>? = null,
+    val samvær: List<NotatSamværBarnDto> = emptyList(),
+    val samværV2: NotatSamværDto? = null,
+    val gebyr: List<NotatGebyrDetaljerDto>? = null,
+    val gebyrV2: NotatGebyrV2Dto? = null,
     var underholdskostnader: NotatUnderholdDto? = null,
     val personer: List<DokumentmalPersonDto>,
     val privatavtale: List<NotatPrivatAvtaleDto>,
@@ -86,16 +90,18 @@ enum class NotatMalType {
 }
 
 data class NotatBehandlingDetaljerDto(
-    val søknadstype: String?,
+    val klageMottattDato: LocalDate? = null,
     val vedtakstype: Vedtakstype?,
     val opprinneligVedtakstype: Vedtakstype? = null,
     val kategori: NotatSærbidragKategoriDto? = null,
     val søktAv: SøktAvType?,
     val mottattDato: LocalDate?,
     val søktFraDato: YearMonth?,
+    val søknadstype: String?,
+    @Deprecated("Hent informasjon fra virkningstidspunkt")
     val virkningstidspunkt: LocalDate?,
+    @Deprecated("Hent informasjon fra virkningstidspunkt")
     val avslag: Resultatkode?,
-    val klageMottattDato: LocalDate? = null,
 ) {
     @get:Schema(name = "erAvvisning")
     val erAvvisning get() = avslag?.erAvvisning() == true
@@ -227,6 +233,11 @@ data class NotatUnderholdBarnDto(
 }
 
 data class NotatSamværDto(
+    val erSammeForAlle: Boolean,
+    val barn: List<NotatSamværBarnDto>,
+)
+
+data class NotatSamværBarnDto(
     val gjelderBarn: DokumentmalPersonDto,
     val begrunnelse: NotatBegrunnelseDto?,
     val perioder: List<NotatSamværsperiodeDto> = emptyList(),
@@ -322,12 +333,18 @@ data class NotatSærbidragKategoriDto(
 )
 
 data class NotatVirkningstidspunktDto(
+    @Schema(description = "Hvis det er likt for alle bruk avslag/årsak fra ett av barna")
     val erLikForAlle: Boolean,
+    val erVirkningstidspunktLikForAlle: Boolean,
+    val erAvslagForAlle: Boolean = false,
+    val eldsteVirkningstidspunkt: YearMonth,
     val barn: List<NotatVirkningstidspunktBarnDto>,
 )
 
 data class NotatVirkningstidspunktBarnDto(
     val rolle: DokumentmalPersonDto,
+    val behandlingstype: Behandlingstype?,
+    @Deprecated("Bruk behandlingstype")
     val søknadstype: String?,
     val vedtakstype: Vedtakstype?,
     val søktAv: SøktAvType?,
@@ -352,12 +369,22 @@ data class NotatVirkningstidspunktBarnDto(
     @Deprecated("Bruk begrunnelse", replaceWith = ReplaceWith("begrunnelse"))
     val notat: NotatBegrunnelseDto = begrunnelse,
 ) {
+    @get:Schema(name = "behandlingstypeVisningsnavn")
+    val behandlingstypeVisningsnavn get() = behandlingstype?.visningsnavn?.intern
+
     @get:Schema(name = "årsakVisningsnavn")
     val årsakVisningsnavn get() = årsak?.visningsnavn?.intern
 
     @get:Schema(name = "avslagVisningsnavn")
     val avslagVisningsnavn
         get() = vedtakstype?.let { avslag?.visningsnavnIntern(vedtakstype) } ?: avslag?.visningsnavn?.intern
+
+    @get:Schema(name = "erAvvisning")
+    val erAvvisning get() = avslag?.erAvvisning() == true
+
+    @get:Schema(name = "avslagVisningsnavnUtenPrefiks")
+    val avslagVisningsnavnUtenPrefiks
+        get() = avslag?.visningsnavn?.intern
 }
 
 @Schema(description = "Notat begrunnelse skrevet av saksbehandler")
@@ -385,13 +412,24 @@ data class NotatBoforholdTilBMMedSøknadsbarn(
     val perioder: List<OpplysningerFraFolkeregisteret<Bostatuskode>> = emptyList(),
 )
 
-data class NotatGebyrRolleDto(
+data class NotatGebyrV2Dto(
+    val gebyrRoller: List<NotatGebyrRolleV2Dto>,
+)
+
+data class NotatGebyrRolleV2Dto(
+    val gebyrDetaljer: List<NotatGebyrDetaljerDto>,
+    val rolle: DokumentmalPersonDto,
+)
+
+data class NotatGebyrDetaljerDto(
+    val søknad: NotatGebyrSøknadDetaljerDto? = null,
     val inntekt: NotatGebyrInntektDto,
     val manueltOverstyrtGebyr: NotatManueltOverstyrGebyrDto? = null,
     val beregnetIlagtGebyr: Boolean,
     val endeligIlagtGebyr: Boolean,
     val begrunnelse: String? = null,
     val beløpGebyrsats: BigDecimal,
+    @Schema(deprecated = true)
     val rolle: DokumentmalPersonDto,
 ) {
     val erManueltOverstyrt get() = beregnetIlagtGebyr != endeligIlagtGebyr
@@ -401,6 +439,20 @@ data class NotatGebyrRolleDto(
             false -> "Fritatt"
             else -> "Ikke valgt"
         }
+
+    data class NotatGebyrSøknadDetaljerDto(
+        val saksnummer: String,
+        val søknadsid: Long,
+        val mottattDato: LocalDate,
+        var søknadFomDato: LocalDate? = null,
+        val søktAvType: SøktAvType,
+        val behandlingstype: Behandlingstype?,
+        val behandlingstema: Behandlingstema?,
+    ) {
+        val søktAvTypeVisningsnavn get() = toVisningsnavn(søktAvType)
+        val behandlingstypeVisningsnavn get() = behandlingstype?.visningsnavn?.intern
+        val behandlingstemaVisningsnavn get() = toVisningsnavn(behandlingstema)
+    }
 
     data class NotatGebyrInntektDto(
         val skattepliktigInntekt: BigDecimal,
@@ -472,25 +524,59 @@ data class OpplysningerBruktTilBeregning<T>(
 
 private fun <T> toVisningsnavn(value: T): String? =
     when (val enum = value) {
-        is Særbidragskategori -> enum.visningsnavn.intern
-        is Utgiftstype -> enum.visningsnavn.intern
-        is Bostatuskode -> enum.visningsnavn.intern
-        is Inntektsrapportering -> enum.visningsnavn.intern
-        is Resultatkode -> enum.visningsnavn.intern
-        is Sivilstandskode -> enum.visningsnavn.intern
-        is SivilstandskodePDL ->
+        is Særbidragskategori -> {
+            enum.visningsnavn.intern
+        }
+
+        is Utgiftstype -> {
+            enum.visningsnavn.intern
+        }
+
+        is Bostatuskode -> {
+            enum.visningsnavn.intern
+        }
+
+        is Inntektsrapportering -> {
+            enum.visningsnavn.intern
+        }
+
+        is Resultatkode -> {
+            enum.visningsnavn.intern
+        }
+
+        is Sivilstandskode -> {
+            enum.visningsnavn.intern
+        }
+
+        is SivilstandskodePDL -> {
             enum.name.lowercase().replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
             }
+        }
 
-        is Kilde -> enum.name.lowercase().replaceFirstChar { it.uppercase() }
-        is VirkningstidspunktÅrsakstype -> enum.visningsnavn.intern
-        is SøktAvType ->
+        is Kilde -> {
+            enum.name.lowercase().replaceFirstChar { it.uppercase() }
+        }
+
+        is VirkningstidspunktÅrsakstype -> {
+            enum.visningsnavn.intern
+        }
+
+        is SøktAvType -> {
             enum.name.lowercase().replaceFirstChar {
                 if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
             }
+        }
 
-        else -> null
+        is Behandlingstema -> {
+            enum.name.lowercase().replace("_", " ").replace("pluss", "+").replaceFirstChar {
+                if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
+            }
+        }
+
+        else -> {
+            null
+        }
     }
 
 data class NotatInntekterDto(
@@ -572,6 +658,11 @@ data class NotatVedtakDetaljerDto(
     val fattetAvSaksbehandler: String?,
     val fattetTidspunkt: LocalDateTime?,
     val resultat: List<VedtakResultatInnhold>,
+)
+
+data class PeriodeSlåttUtTilFF(
+    val periode: ÅrMånedsperiode,
+    val erEvneJustertNedTil25ProsentAvInntekt: Boolean,
 )
 
 @JsonTypeInfo(
@@ -658,6 +749,7 @@ data class NotatPrivatAvtaleDto(
     val avtaleDato: LocalDate?,
     val avtaleType: PrivatAvtaleType?,
     val skalIndeksreguleres: Boolean,
+    val utlandsbidrag: Boolean = false,
     val begrunnelse: NotatBegrunnelseDto? = null,
     val perioder: List<NotatPrivatAvtalePeriodeDto> = emptyList(),
     val vedtakslisteUtenInnkreving: List<DokumentmalManuellVedtak> = emptyList(),
@@ -669,6 +761,8 @@ data class NotatPrivatAvtaleDto(
 data class NotatPrivatAvtalePeriodeDto(
     val periode: DatoperiodeDto,
     val beløp: BigDecimal,
+    val samværsklasse: Samværsklasse? = null,
+    val valutakode: Valutakode? = null,
 )
 
 data class NotatBeregnetPrivatAvtalePeriodeDto(

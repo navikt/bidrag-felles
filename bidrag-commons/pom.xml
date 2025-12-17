@@ -38,13 +38,13 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- dependencies -->
-    <logback-encoder.version>8.1</logback-encoder.version>
+    <logback-encoder.version>9.0</logback-encoder.version>
     <javax-activation.version>1.1.1</javax-activation.version>
     <spring-retry.version>2.0.5</spring-retry.version>
     <spring-security.version>6.5.2</spring-security.version>
     <spring-expression.version>6.2.9</spring-expression.version>
     <httpclient5.version>5.5.1</httpclient5.version>
-    <token-support.version>5.0.34</token-support.version>
+    <token-support.version>5.0.37</token-support.version>
     <jackson.fasterXml.version>2.16.0</jackson.fasterXml.version>
     <aspectj.version>1.9.24</aspectj.version>
     <micrometer-registry.version>1.15.2</micrometer-registry.version>
@@ -130,6 +130,10 @@
       <artifactId>kotlin-reflect</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.jetbrains.kotlin</groupId>
+      <artifactId>kotlin-stdlib-jdk8</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-registry-prometheus</artifactId>
       <version>${micrometer-registry.version}</version>
@@ -147,6 +151,11 @@
       <artifactId>bidrag-transport-felles</artifactId>
       <version>${project.parent.version}</version>
     </dependency>
+      <dependency>
+          <groupId>no.nav.bidrag</groupId>
+          <artifactId>bidrag-generer-testdata-felles</artifactId>
+          <version>${project.parent.version}</version>
+      </dependency>
     <dependency>
       <groupId>org.springdoc</groupId>
       <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>

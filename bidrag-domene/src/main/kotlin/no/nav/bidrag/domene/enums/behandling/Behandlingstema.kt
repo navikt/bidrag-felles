@@ -66,9 +66,13 @@ fun Behandlingstema.tilStønadstype(): Stønadstype? =
         -> Stønadstype.BIDRAG
 
         Behandlingstema.BIDRAG_18_ÅR, Behandlingstema.BIDRAG_18_ÅR_PLUSS_TILLEGGSBIDRAG -> Stønadstype.BIDRAG18AAR
+
         Behandlingstema.EKTEFELLEBIDRAG -> Stønadstype.EKTEFELLEBIDRAG
+
         Behandlingstema.OPPFOSTRINGSBIDRAG -> Stønadstype.OPPFOSTRINGSBIDRAG
+
         Behandlingstema.MOTREGNING -> Stønadstype.MOTREGNING
+
         Behandlingstema.FORSKUDD -> Stønadstype.FORSKUDD
 
         else -> null
@@ -109,25 +113,63 @@ fun tilBeskrivelseBehandlingstema(
     behandlingstema: Behandlingstema? = null,
 ): String? =
     when (stønadstype) {
-        Stønadstype.FORSKUDD -> "Bidragsforskudd"
-        Stønadstype.BIDRAG -> "Barnebidrag"
-        Stønadstype.BIDRAG18AAR -> "Barnebidrag 18 år"
-        Stønadstype.EKTEFELLEBIDRAG -> "Ektefellebidrag"
-        Stønadstype.OPPFOSTRINGSBIDRAG -> "Oppfostringbidrag"
-        Stønadstype.MOTREGNING -> "Motregning"
-        else ->
+        Stønadstype.FORSKUDD -> {
+            "Bidragsforskudd"
+        }
+
+        Stønadstype.BIDRAG -> {
+            "Barnebidrag"
+        }
+
+        Stønadstype.BIDRAG18AAR -> {
+            "Barnebidrag 18 år"
+        }
+
+        Stønadstype.EKTEFELLEBIDRAG -> {
+            "Ektefellebidrag"
+        }
+
+        Stønadstype.OPPFOSTRINGSBIDRAG -> {
+            "Oppfostringbidrag"
+        }
+
+        Stønadstype.MOTREGNING -> {
+            "Motregning"
+        }
+
+        else -> {
             when (engangsbeløptype) {
-                Engangsbeløptype.SAERTILSKUDD, Engangsbeløptype.SÆRTILSKUDD, Engangsbeløptype.SÆRBIDRAG -> "Særbidrag"
-                Engangsbeløptype.DIREKTE_OPPGJOR, Engangsbeløptype.DIREKTE_OPPGJØR -> "Direkte oppgjør"
-                Engangsbeløptype.ETTERGIVELSE -> "Ettergivelse"
-                Engangsbeløptype.ETTERGIVELSE_TILBAKEKREVING -> "Ettergivelse tilbakekreving"
-                Engangsbeløptype.GEBYR_MOTTAKER, Engangsbeløptype.GEBYR_SKYLDNER -> "Gebyr"
-                Engangsbeløptype.TILBAKEKREVING -> "Tilbakekreving"
-                else ->
+                Engangsbeløptype.SAERTILSKUDD, Engangsbeløptype.SÆRTILSKUDD, Engangsbeløptype.SÆRBIDRAG -> {
+                    "Særbidrag"
+                }
+
+                Engangsbeløptype.DIREKTE_OPPGJOR, Engangsbeløptype.DIREKTE_OPPGJØR -> {
+                    "Direkte oppgjør"
+                }
+
+                Engangsbeløptype.ETTERGIVELSE -> {
+                    "Ettergivelse"
+                }
+
+                Engangsbeløptype.ETTERGIVELSE_TILBAKEKREVING -> {
+                    "Ettergivelse tilbakekreving"
+                }
+
+                Engangsbeløptype.GEBYR_MOTTAKER, Engangsbeløptype.GEBYR_SKYLDNER -> {
+                    "Gebyr"
+                }
+
+                Engangsbeløptype.TILBAKEKREVING -> {
+                    "Tilbakekreving"
+                }
+
+                else -> {
                     behandlingstema
                         ?.name
                         ?.lowercase()
                         ?.replace("_", " ")
                         ?.replaceFirstChar { it.uppercase() }
+                }
             }
+        }
     }
