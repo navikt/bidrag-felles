@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.organisasjon
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.diverse.Tema
 import no.nav.bidrag.domene.enums.sak.Sakskategori
 import no.nav.bidrag.domene.enums.vedtak.Behandlingstype
@@ -13,5 +14,6 @@ data class HentEnhetRequest(
     val sakskategori: Sakskategori? = null,
     val behandlingstype: Behandlingstype? = null,
 ) {
+    @get:JsonIgnore
     val alleIdenter get() = biidenter + ident
 }
