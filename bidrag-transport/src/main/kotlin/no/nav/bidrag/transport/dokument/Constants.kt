@@ -22,6 +22,7 @@ enum class JournalpostStatus(
     DISTRIBUERT("DR"),
     AVBRUTT("A"),
     KLAR_FOR_DISTRIBUSJON("KP"),
+    DOKUMENT_SLETTET("DS"),
     RETUR("RE"),
     FERDIGSTILT("FS"),
     FEILREGISTRERT("F"),
