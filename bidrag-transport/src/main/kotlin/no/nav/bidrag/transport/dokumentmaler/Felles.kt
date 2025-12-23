@@ -7,6 +7,7 @@ import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.ident.Personident
+import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.Visningsnavn
 import no.nav.bidrag.domene.util.visningsnavn
@@ -370,6 +371,10 @@ data class DokumentmalPersonDto(
 
 data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
     val sumBidragTilFordeling: BigDecimal,
+    val finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn: Boolean,
+    val sumBidragTilFordelingSPrioritertBidrag: BigDecimal,
+    val sumBidragTilFordelingSøknadsbarn: BigDecimal,
+    val sumBidragTilFordelingIkkeSøknadsbarn: BigDecimal,
     val sumPrioriterteBidragTilFordeling: BigDecimal,
     val bidragTilFordelingForBarnet: BigDecimal,
     val andelAvSumBidragTilFordelingFaktor: BigDecimal,
@@ -384,6 +389,20 @@ data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
 data class DokumentmalForholdsmessigFordelingBidragTilFordelingBarn(
     val prioritertBidrag: Boolean,
     val privatAvtale: Boolean,
+    val erSøknadsbarn: Boolean,
+    val beregnetBidrag: BeregnetBidragBarnDto? = null,
     val bidragTilFordeling: BigDecimal,
     val barn: DokumentmalPersonDto,
-)
+) {
+    data class BeregnetBidragBarnDto(
+        val saksnummer: Saksnummer,
+        val løpendeBeløp: BigDecimal,
+        val valutakode: String = "NOK",
+        val samværsklasse: Samværsklasse,
+        val samværsfradrag: BigDecimal,
+        val beregnetBeløp: BigDecimal,
+        val faktiskBeløp: BigDecimal,
+        val reduksjonUnderholdskostnad: BigDecimal,
+        val beregnetBidrag: BigDecimal,
+    )
+}
