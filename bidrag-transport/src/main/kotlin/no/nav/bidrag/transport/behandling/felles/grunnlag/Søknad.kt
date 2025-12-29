@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.behandling.Behandlingstema
 import no.nav.bidrag.domene.enums.behandling.Behandlingstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
@@ -33,6 +34,7 @@ data class SøknadGrunnlag(
     val privatAvtale: Boolean = false,
     val innkrevingsgrunnlag: Boolean = false,
     val behandlingstype: Behandlingstype? = null,
+    val behandlingstema: Behandlingstema? = null,
     // Søknadsid og saksnummer er nyttig ved FF hvor vedtak kan inneholde flere søknader
     val søknadsid: Long? = null,
     val saksnummer: String? = null,
