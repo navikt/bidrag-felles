@@ -49,3 +49,7 @@ data class VirkningstidspunktGrunnlag(
     val avslag: Resultatkode? = null,
     val beregnTil: BeregnTil? = null,
 ) : GrunnlagInnhold
+
+data class BehandlingDetaljerGrunnlag(
+    val opprettetForholdsmessigFordeling: Boolean,
+) : GrunnlagInnhold
