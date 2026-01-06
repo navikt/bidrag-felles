@@ -47,7 +47,7 @@ data class VedtakDto(
     val opprettetAv: String,
     @Schema(description = "Saksbehandlers navn")
     val opprettetAvNavn: String?,
-    @Schema(description = "Navn på applikasjon som vedtaket er opprettet i")
+    @Schema(description = "Navn på applikasjon som vedtaket er opprettet i. Skal være i lowercase.")
     val kildeapplikasjon: String,
     @Schema(description = "Tidspunkt/timestamp når vedtaket er fattet. Er null for vedtaksforslag")
     val vedtakstidspunkt: LocalDateTime?,
