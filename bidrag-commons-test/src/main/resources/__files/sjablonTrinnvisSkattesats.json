@@ -249,7 +249,7 @@
   },
   {
     "datoFom": "2025-01-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-12-31",
     "inntektgrense": 217400,
     "sats": 1.7,
     "brukerid": "H139831 ",
@@ -257,7 +257,7 @@
   },
   {
     "datoFom": "2025-01-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-12-31",
     "inntektgrense": 306050,
     "sats": 4,
     "brukerid": "H139831 ",
@@ -265,7 +265,7 @@
   },
   {
     "datoFom": "2025-01-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-12-31",
     "inntektgrense": 697150,
     "sats": 13.7,
     "brukerid": "H139831 ",
@@ -273,7 +273,7 @@
   },
   {
     "datoFom": "2025-01-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-12-31",
     "inntektgrense": 942400,
     "sats": 16.7,
     "brukerid": "H139831 ",
@@ -281,9 +281,50 @@
   },
   {
     "datoFom": "2025-01-01",
-    "datoTom": "9999-12-31",
+    "datoTom": "2025-12-31",
     "inntektgrense": 1410750,
     "sats": 17.7,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2025-01-01T00:00:00"
+  },
+
+  {
+    "datoFom": "2026-01-01",
+    "datoTom": "9999-12-31",
+    "inntektgrense": 226100,
+    "sats": 1.7,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2025-01-01T00:00:00"
+  },
+  {
+    "datoFom": "2026-01-01",
+    "datoTom": "9999-12-31",
+    "inntektgrense": 318300,
+    "sats": 4,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2025-01-01T00:00:00"
+  },
+  {
+    "datoFom": "2026-01-01",
+    "datoTom": "9999-12-31",
+    "inntektgrense": 725050,
+    "sats": 13.7,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2025-01-01T00:00:00"
+  },
+  {
+    "datoFom": "2026-01-01",
+    "datoTom": "9999-12-31",
+    "inntektgrense": 980100,
+    "sats": 16.8,
+    "brukerid": "H139831 ",
+    "tidspktEndret": "2025-01-01T00:00:00"
+  },
+  {
+    "datoFom": "2026-01-01",
+    "datoTom": "9999-12-31",
+    "inntektgrense": 1467200,
+    "sats": 17.8,
     "brukerid": "H139831 ",
     "tidspktEndret": "2025-01-01T00:00:00"
   }
