@@ -1,5 +1,5 @@
 # Bidrag felles
-Felles biblioteker som brukes av applikasjoner utviklet av bidrag
+Felles biblioteker som brukes av applikasjoner utviklet av bidrag.
 
 [![Release Drafter](https://github.com/navikt/bidrag-felles/actions/workflows/release-draft.yaml/badge.svg?branch=main)](https://github.com/navikt/bidrag-felles/actions/workflows/release-draft.yaml)
 [![Publish](https://github.com/navikt/bidrag-felles/actions/workflows/publish.yaml/badge.svg?branch=main)](https://github.com/navikt/bidrag-felles/actions/workflows/publish.yaml)
