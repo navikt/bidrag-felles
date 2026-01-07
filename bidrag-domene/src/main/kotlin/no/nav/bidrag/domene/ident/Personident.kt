@@ -7,7 +7,6 @@ import no.nav.bidrag.domene.felles.Verdiobjekt
 import no.nav.bidrag.domene.util.trimToNull
 import org.springframework.core.convert.converter.Converter
 import java.time.LocalDate
-import java.time.Period
 
 class Personident(
     override val verdi: String,
@@ -46,15 +45,6 @@ class Personident(
             individnummer in 500..999 && år >= 0 && år <= 39 -> return datoUtenÅrhundre.plusYears(2000)
         }
         throw IllegalArgumentException()
-    }
-
-    /**
-     * Beregner alder basert på fødselsdato.
-     * Kaster IllegalArgumentException hvis fødselsdato ikke kan bestemmes.
-     */
-    fun beregnAlder(): Int {
-        val fødselsdato = fødselsdato()
-        return Period.between(fødselsdato, LocalDate.now()).years
     }
 
     fun harVerdi() = verdi.isNotBlank()

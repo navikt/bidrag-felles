@@ -60,34 +60,6 @@ data class RolleDto(
     @Deprecated("Bruk rolletype", ReplaceWith("type"))
     val rolleType: Rolletype = type,
 ) {
-    fun valider() {
-        fødselsnummer?.let {
-            require(it.harVerdi()) { "Fødselsnummer kan ikke være tom streng." }
-            require(it.gyldig()) { "Ugyldig fødselsnummer for rolle av type $type." }
-        }
-
-        require(type == Rolletype.BARN || !harRM()) {
-            "Reell mottaker (RM) kan kun registreres på barn (BA)."
-        }
-
-        if (type == Rolletype.BARN) {
-            val alder =
-                fødselsnummer?.let { fnr ->
-                    runCatching { fnr.beregnAlder() }
-                        .onFailure { throw IllegalArgumentException("Kunne ikke beregne alder for barn med fødselsnummer ${fnr.verdi}.") }
-                        .getOrNull()
-                }
-
-            if (alder != null && alder >= 18) {
-                require(harRM()) {
-                    "Hvis barnet er myndig, må reell mottaker (RM) være satt."
-                }
-            }
-        }
-    }
-
-    fun erBMmedFnr() = type == Rolletype.BIDRAGSMOTTAKER && (fødselsnummer?.harVerdi() == true)
-
     fun rmErSamhandlerId() = reellMottaker?.ident?.erSamhandlerId() ?: reellMottager?.erSamhandlerId() ?: false
 
     fun rmErVerge() = reellMottaker?.verge ?: false

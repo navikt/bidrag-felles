@@ -1,10 +1,8 @@
 package no.nav.bidrag.transport.sak
 
 import io.swagger.v3.oas.annotations.media.Schema
-import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.sak.Konvensjon
 import no.nav.bidrag.domene.enums.sak.Sakskategori
-import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.land.Landkode
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 import java.time.LocalDate
@@ -28,26 +26,4 @@ class OpprettSakRequest(
                 "Hvis BM mangler, må alle barn (BA) ha reell mottaker (RM).",
     )
     val roller: Set<RolleDto> = emptySet(),
-) {
-    fun valider() {
-        val bmHarFnr =
-            roller.any {
-                it.type == Rolletype.BIDRAGSMOTTAKER && !it.fødselsnummer?.verdi.isNullOrBlank()
-            }
-
-        if (!bmHarFnr) {
-            val alleBarnHarRm =
-                roller
-                    .filter { it.type == Rolletype.BARN }
-                    .all { it.harRM() }
-
-            require(alleBarnHarRm) {
-                "Når bidragsmottaker (BM) mangler, må alle barn (BA) ha reell mottaker (RM)."
-            }
-        }
-
-        roller.forEach {
-            it.valider()
-        }
-    }
-}
+)
