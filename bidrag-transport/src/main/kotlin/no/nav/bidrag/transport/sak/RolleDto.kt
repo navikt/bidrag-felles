@@ -68,7 +68,11 @@ data class RolleDto(
 
     fun rmFødselsnummer() = reellMottaker?.ident?.personIdent() ?: reellMottager?.personIdent()
 
-    fun harRM() = (rmFødselsnummer() != null || rmSamhandlerId() != null)
+    fun harRM(): Boolean =
+        listOf(
+            rmFødselsnummer()?.verdi,
+            rmSamhandlerId()?.verdi,
+        ).any { !it.isNullOrBlank() }
 }
 
 data class ReellMottakerDto(
