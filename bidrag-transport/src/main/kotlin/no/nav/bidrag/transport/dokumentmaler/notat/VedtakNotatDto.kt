@@ -66,6 +66,7 @@ data class VedtakNotatDto(
     val samværV2: NotatSamværDto? = null,
     val gebyr: List<NotatGebyrDetaljerDto>? = null,
     val gebyrV2: NotatGebyrV2Dto? = null,
+    val gebyrV3: NotatGebyrV3Dto? = null,
     var underholdskostnader: NotatUnderholdDto? = null,
     val personer: List<DokumentmalPersonDto>,
     val privatavtale: List<NotatPrivatAvtaleDto>,
@@ -412,8 +413,23 @@ data class NotatBoforholdTilBMMedSøknadsbarn(
     val perioder: List<OpplysningerFraFolkeregisteret<Bostatuskode>> = emptyList(),
 )
 
+data class NotatGebyrV3Dto(
+    val saker: List<NotatGebyrSakDto>,
+)
+
+data class NotatGebyrSakDto(
+    val saksnummer: String,
+    val gebyrRoller: List<NotatGebyrDetaljerDto>,
+    val gebyr18År: List<NotatGebyrDetaljerDto>,
+)
+
 data class NotatGebyrV2Dto(
     val gebyrRoller: List<NotatGebyrRolleV2Dto>,
+)
+
+data class NotatGebyrRolleV3Dto(
+    val gebyrDetaljer: NotatGebyrDetaljerDto,
+    val rolle: DokumentmalPersonDto,
 )
 
 data class NotatGebyrRolleV2Dto(
