@@ -5,12 +5,14 @@ import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
 import no.nav.bidrag.domene.enums.sak.Sakskategori
 import no.nav.bidrag.domene.enums.samhandler.Valutakode
-import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.LocalDate
 
-@Schema(description = "Privat avtale i bidragssaken")
+@Deprecated(
+    "Skal erstattes av PrivatAvtaleGrunnlagV2",
+    ReplaceWith("PrivatAvtaleGrunnlagV2"),
+)
 data class PrivatAvtaleGrunnlag(
     val avtaleInngåttDato: LocalDate,
     val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
@@ -27,8 +29,8 @@ data class PrivatAvtalePeriodeGrunnlag(
 ) : GrunnlagPeriodeInnhold
 
 @Deprecated(
-    "Skal erstattes av DelberegningPrivatAvtaleV2",
-    ReplaceWith("DelberegningPrivatAvtaleV2"),
+    "Skal erstattes av DelberegningIndeksreguleringPrivatAvtaleV2",
+    ReplaceWith("DelberegningIndeksreguleringPrivatAvtaleV2"),
 )
 data class DelberegningPrivatAvtale(
     val nesteIndeksreguleringsår: BigDecimal? = null,
@@ -36,8 +38,8 @@ data class DelberegningPrivatAvtale(
 ) : DelberegningUtenPeriode
 
 @Deprecated(
-    "Skal erstattes av DelberegningPrivatAvtalePeriodeV2",
-    ReplaceWith("DelberegningPrivatAvtalePeriodeV2"),
+    "Skal erstattes av DelberegningIndeksreguleringPrivatAvtaleV2",
+    ReplaceWith("DelberegningIndeksreguleringPrivatAvtaleV2"),
 )
 data class DelberegningPrivatAvtalePeriode(
     override val periode: ÅrMånedsperiode,
@@ -45,18 +47,25 @@ data class DelberegningPrivatAvtalePeriode(
     val beløp: BigDecimal,
 ) : Delberegning
 
-data class DelberegningPrivatAvtaleV2(
-    val nesteIndeksreguleringsår: BigDecimal? = null,
-    val valutakode: Valutakode = Valutakode.NOK,
-    val stønadstype: Stønadstype = Stønadstype.BIDRAG,
+@Schema(description = "Privat avtale i bidragssaken")
+data class PrivatAvtaleGrunnlagV2(
+    val avtaleInngåttDato: LocalDate,
+    val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
+    val skalIndeksreguleres: Boolean,
     val sakskategori: Sakskategori = Sakskategori.N,
-) : DelberegningUtenPeriode
+) : GrunnlagInnhold
 
-data class DelberegningPrivatAvtalePeriodeV2(
+data class DelberegningIndeksreguleringPrivatAvtale(
     override val periode: ÅrMånedsperiode,
+    val nesteIndeksreguleringsår: BigDecimal? = null,
     val indeksreguleringFaktor: BigDecimal? = null,
+    val valutakode: Valutakode = Valutakode.NOK,
     val indeksregulertBeløp: BigDecimal,
-    val samværsklasse: Samværsklasse? = null,
+) : Delberegning
+
+data class DelberegningBidragTilFordelingPrivatAvtale(
+    override val periode: ÅrMånedsperiode,
+    val indeksregulertBeløp: BigDecimal,
     val samværsfradrag: BigDecimal,
     val bidragTilFordeling: BigDecimal,
 ) : Delberegning
