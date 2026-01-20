@@ -66,6 +66,6 @@ data class DelberegningIndeksreguleringPrivatAvtale(
 data class DelberegningBidragTilFordelingPrivatAvtale(
     override val periode: ÅrMånedsperiode,
     val indeksregulertBeløp: BigDecimal,
-    val samværsfradrag: BigDecimal,
+    val samværsfradrag: BigDecimal?,
     val bidragTilFordeling: BigDecimal,
 ) : Delberegning
