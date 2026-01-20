@@ -10,7 +10,6 @@ import no.nav.bidrag.domene.enums.regnskap.Transaksjonskode
 import org.junit.jupiter.api.Test
 
 class EnumutilsTest {
-
     @Test
     fun `skal hente enum-verdi basert på navn`() {
         val resultat = Transaksjonskode.entries.valueOfOrNull("A1")

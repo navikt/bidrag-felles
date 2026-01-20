@@ -30,25 +30,12 @@ data class TransaksjonskodeDto(
     val beskrivelse: String,
 )
 
-@Schema(
-    name = "TransaksjonskodeListeDto",
-    description = "Liste med informasjon om alle transaksjonskoder.",
-)
-data class TransaksjonskodeListeDto(
-    @field:Schema(
-        description = "Liste med transaksjonskoder.",
-    )
-    val transaksjonskoder: List<TransaksjonskodeDto>,
-)
+fun List<Transaksjonskode>.tilDto(): List<TransaksjonskodeDto> = this.map { it.tilDto() }
 
-fun List<Transaksjonskode>.tilDto(): TransaksjonskodeListeDto {
-    return TransaksjonskodeListeDto(
-        transaksjonskoder = this.map { transaksjon ->
-            TransaksjonskodeDto(
-                kode = transaksjon.name,
-                korreksjonskode = transaksjon.korreksjonskode,
-                beskrivelse = transaksjon.beskrivelse
-            )
-        }
+fun Transaksjonskode.tilDto(): TransaksjonskodeDto {
+    return TransaksjonskodeDto(
+        kode = this.name,
+        korreksjonskode = this.korreksjonskode,
+        beskrivelse = this.beskrivelse
     )
 }
