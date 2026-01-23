@@ -16,13 +16,11 @@ data class TransaksjonskodeDto(
         example = "A1",
     )
     val kode: String,
-
     @field:Schema(
         description = "Korreksjonskode for transaksjonskoden, hvis det finnes.",
         example = "A3",
     )
     val korreksjonskode: String?,
-
     @field:Schema(
         description = "Beskrivelse av transaksjonskoden.",
         example = "Bidragsforskudd",
@@ -32,10 +30,9 @@ data class TransaksjonskodeDto(
 
 fun List<Transaksjonskode>.tilDto(): List<TransaksjonskodeDto> = this.map { it.tilDto() }
 
-fun Transaksjonskode.tilDto(): TransaksjonskodeDto {
-    return TransaksjonskodeDto(
+fun Transaksjonskode.tilDto(): TransaksjonskodeDto =
+    TransaksjonskodeDto(
         kode = this.name,
         korreksjonskode = this.korreksjonskode,
-        beskrivelse = this.beskrivelse
+        beskrivelse = this.beskrivelse,
     )
-}
