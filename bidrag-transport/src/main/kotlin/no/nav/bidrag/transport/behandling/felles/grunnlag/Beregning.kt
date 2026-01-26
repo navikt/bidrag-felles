@@ -358,7 +358,8 @@ data class FaktiskUtgiftPeriode(
 
 data class TilleggsstønadPeriode(
     override val periode: ÅrMånedsperiode,
-    val beløpDagsats: BigDecimal,
+    val beløpDagsats: BigDecimal? = null,
+    val beløpMåned: BigDecimal? = null,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold
 
