@@ -3,11 +3,13 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.beløp.Beløp
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.Visningsnavn
@@ -443,8 +445,15 @@ data class SluttberegningBarnebidragV2(
 
 data class DelberegningBidragTilFordelingLøpendeBidrag(
     override val periode: ÅrMånedsperiode,
+    val valutakode: Valutakode = Valutakode.NOK,
+    @Schema(description = "Reduksjon underhgoldskostnad i valuta")
     val reduksjonUnderholdskostnad: BigDecimal,
+    @Schema(description = "Samværsfradrag i NOK")
+    val samværsfradrag: BigDecimal? = null,
+    @Schema(description = "Indeksregulert beløp i valuta")
     val bidragTilFordeling: BigDecimal,
+    @Schema(description = "Bidrag til fordeling i NOK")
+    val bidragTilFordelingNOK: BigDecimal = bidragTilFordeling,
 ) : Delberegning
 
 // ---------- Deprekerte verdier. Skal ikke slettes helt til vedtak databasen er konvertert i PROD --------------------------
