@@ -65,7 +65,13 @@ data class DelberegningIndeksreguleringPrivatAvtale(
 
 data class DelberegningBidragTilFordelingPrivatAvtale(
     override val periode: ÅrMånedsperiode,
+    val valutakode: Valutakode = Valutakode.NOK,
+    @Schema(description = "Indeksregulert beløp i valuta")
     val indeksregulertBeløp: BigDecimal,
-    val samværsfradrag: BigDecimal?,
+    @Schema(description = "Samværsfradrag i NOK")
+    val samværsfradrag: BigDecimal? = null,
+    @Schema(description = "Bidrag til fordeling i valuta")
     val bidragTilFordeling: BigDecimal,
+    @Schema(description = "Bidrag til fordeling i NOK")
+    val bidragTilFordelingNOK: BigDecimal = bidragTilFordeling,
 ) : Delberegning
