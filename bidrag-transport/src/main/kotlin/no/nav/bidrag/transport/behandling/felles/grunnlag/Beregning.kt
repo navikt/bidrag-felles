@@ -422,6 +422,7 @@ data class DelberegningEvne25ProsentAvInntekt(
 
 data class DelberegningAndelAvBidragsevne(
     override val periode: ÅrMånedsperiode,
+    val sumBidragTilFordelingJustertForPrioriterteBidrag: BigDecimal = BigDecimal.ZERO,
     val andelAvSumBidragTilFordelingFaktor: BigDecimal,
     val andelAvEvneBeløp: BigDecimal,
     val bidragEtterFordeling: BigDecimal,
