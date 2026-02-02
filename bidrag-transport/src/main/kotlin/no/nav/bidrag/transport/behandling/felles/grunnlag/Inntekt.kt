@@ -45,7 +45,9 @@ data class InntektsrapporteringPeriode(
     )
 }
 
+@Schema(enumAsRef = true)
 enum class InntektBeløpType {
+    @Schema(name = "ÅRSBELØP", description = "Beløp er et årsbeløp")
     ÅRSBELØP,
     MÅNEDSBELØP,
     DAGSATS,
