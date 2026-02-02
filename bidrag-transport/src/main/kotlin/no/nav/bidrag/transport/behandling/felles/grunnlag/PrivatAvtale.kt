@@ -74,4 +74,6 @@ data class DelberegningBidragTilFordelingPrivatAvtale(
     val bidragTilFordeling: BigDecimal,
     @Schema(description = "Bidrag til fordeling i NOK")
     val bidragTilFordelingNOK: BigDecimal = bidragTilFordeling,
+    @Schema(description = "Er dette et norsk bidrag?")
+    val erNorskBidrag: Boolean = true,
 ) : Delberegning
