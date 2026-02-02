@@ -40,7 +40,15 @@ data class InntektsrapporteringPeriode(
         val inntektstype: Inntektstype? = null,
         @Schema(description = "Beløp som utgjør inntektsposten", example = "60000")
         val beløp: BigDecimal,
+        @Schema(description = "Typen på beløp. For barnetillegg så kan det være måndesbeløp eller dagsats", example = "60000")
+        val type: InntektBeløpType = InntektBeløpType.ÅRSBELØP,
     )
+}
+
+enum class InntektBeløpType {
+    ÅRSBELØP,
+    MÅNEDSBELØP,
+    DAGSATS,
 }
 
 @Schema(description = "Inntekt beregnet av bidrag-inntekt basert på data fra bidrag-grunnlag")
