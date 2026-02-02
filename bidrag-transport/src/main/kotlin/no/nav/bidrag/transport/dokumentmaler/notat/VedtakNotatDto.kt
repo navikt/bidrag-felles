@@ -217,7 +217,8 @@ data class NotatUnderholdBarnDto(
 
     data class NotatTilleggsstønadDto(
         val periode: DatoperiodeDto,
-        val dagsats: BigDecimal,
+        val dagsats: BigDecimal?,
+        val måndesbeløp: BigDecimal?,
         val total: BigDecimal,
     )
 
