@@ -363,9 +363,7 @@ data class TilleggsstønadPeriode(
     override val periode: ÅrMånedsperiode,
     @Deprecated("Bruk beløp og beløpstype", replaceWith = ReplaceWith("beløp"))
     val beløpDagsats: BigDecimal? = null,
-    @Deprecated("Bruk beløp og beløpstype", replaceWith = ReplaceWith("beløp"))
-    val beløpMåned: BigDecimal? = null,
-    val beløp: BigDecimal? = beløpDagsats ?: beløpMåned,
+    val beløp: BigDecimal = beløpDagsats ?: BigDecimal.ZERO,
     val beløpstype: InntektBeløpstype = InntektBeløpstype.DAGSATS,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold
