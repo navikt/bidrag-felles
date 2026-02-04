@@ -38,6 +38,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspli
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
+import no.nav.bidrag.transport.behandling.felles.grunnlag.InntektBeløpType
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalDelberegningBidragsevneDto
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalDelberegningBidragspliktigesBeregnedeTotalbidragDto
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalManuellVedtak
@@ -667,6 +668,7 @@ data class NotatInntektspostDto(
     val kode: String?,
     val inntektstype: Inntektstype?,
     val beløp: BigDecimal,
+    val beløpstype: InntektBeløpType = InntektBeløpType.ÅRSBELØP,
     val visningsnavn: String? = inntektstype?.visningsnavn?.intern,
 )
 
