@@ -11,6 +11,7 @@ import no.nav.bidrag.domene.enums.behandling.Behandlingstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvvisning
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.diverse.InntektBeløpstype
 import no.nav.bidrag.domene.enums.diverse.Kilde
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
@@ -38,7 +39,6 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBidragspli
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningBoforhold
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningUtgift
-import no.nav.bidrag.transport.behandling.felles.grunnlag.InntektBeløpType
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalDelberegningBidragsevneDto
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalDelberegningBidragspliktigesBeregnedeTotalbidragDto
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalManuellVedtak
@@ -220,6 +220,8 @@ data class NotatUnderholdBarnDto(
         val periode: DatoperiodeDto,
         val dagsats: BigDecimal?,
         val måndesbeløp: BigDecimal?,
+        val beløp: BigDecimal? = dagsats ?: måndesbeløp,
+        val beløpstype: InntektBeløpstype = InntektBeløpstype.DAGSATS,
         val total: BigDecimal,
     )
 
@@ -668,7 +670,7 @@ data class NotatInntektspostDto(
     val kode: String?,
     val inntektstype: Inntektstype?,
     val beløp: BigDecimal,
-    val beløpstype: InntektBeløpType = InntektBeløpType.ÅRSBELØP,
+    val beløpstype: InntektBeløpstype = InntektBeløpstype.ÅRSBELØP,
     val visningsnavn: String? = inntektstype?.visningsnavn?.intern,
 )
 

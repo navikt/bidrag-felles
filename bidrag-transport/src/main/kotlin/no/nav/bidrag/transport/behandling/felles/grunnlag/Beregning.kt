@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.beløp.Beløp
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.diverse.InntektBeløpstype
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
 import no.nav.bidrag.domene.enums.samhandler.Valutakode
@@ -360,8 +361,12 @@ data class FaktiskUtgiftPeriode(
 
 data class TilleggsstønadPeriode(
     override val periode: ÅrMånedsperiode,
+    @Deprecated("Bruk beløp og beløpstype", replaceWith = ReplaceWith("beløp"))
     val beløpDagsats: BigDecimal? = null,
+    @Deprecated("Bruk beløp og beløpstype", replaceWith = ReplaceWith("beløp"))
     val beløpMåned: BigDecimal? = null,
+    val beløp: BigDecimal? = beløpDagsats ?: beløpMåned,
+    val beløpstype: InntektBeløpstype = InntektBeløpstype.DAGSATS,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold
 
