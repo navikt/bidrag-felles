@@ -27,7 +27,7 @@ data class RollehistorikkDto(
     val reellMottaker: ReellMottakerDto? = null,
     @field:Schema(
         description =
-            "Beskrivelse av hva slags type endring som er gjort på rolle",
+            "Beskrivelse av hva slags type endring som er gjort for rolle",
     )
     val typeEndring: String? = null,
 )
