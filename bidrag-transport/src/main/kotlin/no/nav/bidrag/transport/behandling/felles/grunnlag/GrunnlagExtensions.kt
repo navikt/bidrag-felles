@@ -38,16 +38,18 @@ fun List<BaseGrunnlag>.finnGrunnlagSomErReferertFraGrunnlagsreferanseListe(
     grunnlagsreferanseListe: List<Grunnlagsreferanse>,
 ): Set<BaseGrunnlag> {
     val grunnlag = filtrerBasertPåEgenReferanser(type, grunnlagsreferanseListe)
-    if (grunnlag.isEmpty()) {
-        return grunnlagsreferanseListe
+
+    // Traverser også rekursivt gjennom alle refererte grunnlag for å finne transitive referanser
+    val indirekteGrunnlag =
+        grunnlagsreferanseListe
             .flatMap { referanse ->
                 filtrerBasertPåEgenReferanse(null, referanse)
                     .flatMap {
                         finnGrunnlagSomErReferertAv(type, it)
                     }
-            }.toSet()
-    }
-    return grunnlag.toSet()
+            }
+
+    return (grunnlag + indirekteGrunnlag).toSet()
 }
 
 fun List<BaseGrunnlag>.finnGrunnlagSomErReferertAv(
@@ -55,16 +57,18 @@ fun List<BaseGrunnlag>.finnGrunnlagSomErReferertAv(
     fraGrunnlag: BaseGrunnlag,
 ): Set<BaseGrunnlag> {
     val grunnlag = filtrerBasertPåEgenReferanser(type, fraGrunnlag.grunnlagsreferanseListe)
-    if (grunnlag.isEmpty()) {
-        return fraGrunnlag.grunnlagsreferanseListe
+
+    // Traverser også rekursivt gjennom alle refererte grunnlag for å finne transitive referanser
+    val indirekteGrunnlag =
+        fraGrunnlag.grunnlagsreferanseListe
             .flatMap { referanse ->
                 filtrerBasertPåEgenReferanse(null, referanse)
                     .flatMap {
                         finnGrunnlagSomErReferertAv(type, it)
                     }
-            }.toSet()
-    }
-    return grunnlag.toSet()
+            }
+
+    return (grunnlag + indirekteGrunnlag).toSet()
 }
 
 fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanser(
