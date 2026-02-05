@@ -42,7 +42,7 @@ data class InntektsrapporteringPeriode(
         @Schema(description = "Beløp som utgjør inntektsposten", example = "60000")
         val beløp: BigDecimal,
         @Schema(description = "Typen på beløp. For barnetillegg så kan det være måndesbeløp eller dagsats", example = "60000")
-        val type: InntektBeløpstype = InntektBeløpstype.ÅRSBELØP,
+        val beløpstype: InntektBeløpstype = InntektBeløpstype.ÅRSBELØP,
     )
 }
 
