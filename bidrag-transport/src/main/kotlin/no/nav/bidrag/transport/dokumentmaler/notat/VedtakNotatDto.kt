@@ -649,11 +649,56 @@ data class NotatInntektDto(
     val historisk: Boolean = false,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
+    val beløpstypeVisningsnavn get() =
+        when (beløpstype) {
+            InntektBeløpstype.MÅNEDSBELØP_11_MÅNEDER, InntektBeløpstype.MÅNEDSBELØP -> "Måned"
+            InntektBeløpstype.DAGSATS -> "Dagsats"
+            InntektBeløpstype.ÅRSBELØP -> "Dagsats"
+            else -> ""
+        }
+    val beløpstype get() =
+        if (type == Inntektsrapportering.BARNETILLEGG) {
+            if (inntektsposter.firstOrNull()?.beløpstype == null ||
+                inntektsposter.firstOrNull()?.beløpstype == InntektBeløpstype.ÅRSBELØP
+            ) {
+                InntektBeløpstype.MÅNEDSBELØP
+            } else {
+                inntektsposter.firstOrNull()?.beløpstype
+            }
+        } else {
+            InntektBeløpstype.ÅRSBELØP
+        }
+
+    @get:Schema(description = "Avrundet månedsbeløp for barnetillegg")
+    val beløpMånedDagsats: BigDecimal?
+        get() =
+            when (beløpstype) {
+                InntektBeløpstype.MÅNEDSBELØP -> månedsbeløp
+                InntektBeløpstype.DAGSATS -> dagsats
+                else -> null
+            }
+
     @get:Schema(description = "Avrundet månedsbeløp for barnetillegg")
     val månedsbeløp: BigDecimal?
         get() =
-            if (Inntektsrapportering.BARNETILLEGG == type) {
-                beløp.divide(BigDecimal(12), 0, RoundingMode.HALF_UP)
+            run {
+                val beløpstype = inntektsposter.firstOrNull()?.beløpstype
+                if (Inntektsrapportering.BARNETILLEGG == type && beløpstype == InntektBeløpstype.MÅNEDSBELØP) {
+                    inntektsposter.first().beløp
+                } else if (Inntektsrapportering.BARNETILLEGG == type &&
+                    (beløpstype == null || beløpstype == InntektBeløpstype.ÅRSBELØP)
+                ) {
+                    beløp.divide(BigDecimal(12), 0, RoundingMode.HALF_UP)
+                } else {
+                    null
+                }
+            }
+
+    @get:Schema(description = "Avrundet dagsats for barnetillegg")
+    val dagsats: BigDecimal?
+        get() =
+            if (Inntektsrapportering.BARNETILLEGG == type && beløpstype == InntektBeløpstype.DAGSATS) {
+                inntektsposter.first().beløp
             } else {
                 null
             }
