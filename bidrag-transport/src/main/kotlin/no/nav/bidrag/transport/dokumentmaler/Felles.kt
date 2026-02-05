@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erDirekteAvslag
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.diverse.InntektBeløpstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.ident.Personident
@@ -408,3 +409,11 @@ data class DokumentmalForholdsmessigFordelingBidragTilFordelingBarn(
         val beregnetBidrag: BigDecimal,
     )
 }
+
+fun InntektBeløpstype?.tilVisningsnavn() =
+    when (this) {
+        InntektBeløpstype.MÅNEDSBELØP_11_MÅNEDER, InntektBeløpstype.MÅNEDSBELØP -> "Måned"
+        InntektBeløpstype.DAGSATS -> "Dagsats"
+        InntektBeløpstype.ÅRSBELØP -> "Dagsats"
+        else -> ""
+    }

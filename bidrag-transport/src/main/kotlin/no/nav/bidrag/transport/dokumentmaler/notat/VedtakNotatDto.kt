@@ -45,6 +45,7 @@ import no.nav.bidrag.transport.dokumentmaler.DokumentmalManuellVedtak
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalPersonDto
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalResultatBeregningInntekterDto
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalResultatBidragsberegningBarnDto
+import no.nav.bidrag.transport.dokumentmaler.tilVisningsnavn
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
@@ -193,7 +194,11 @@ data class NotatUnderholdBarnDto(
     data class NotatTilsynsutgiftBarn(
         val gjelderBarn: DokumentmalPersonDto,
         val totalTilsynsutgift: BigDecimal,
+        val faktiskUtgiftBeregnet: BigDecimal,
         val beløp: BigDecimal,
+        val tilleggsstønadDagsats: BigDecimal? = null,
+        val tilleggsstønadBeløp: BigDecimal? = null,
+        val beløpstype: InntektBeløpstype? = null,
         val kostpenger: BigDecimal? = null,
         val tilleggsstønad: BigDecimal? = null,
     )
@@ -219,11 +224,12 @@ data class NotatUnderholdBarnDto(
     data class NotatTilleggsstønadDto(
         val periode: DatoperiodeDto,
         val dagsats: BigDecimal?,
-        val måndesbeløp: BigDecimal?,
-        val beløp: BigDecimal? = dagsats ?: måndesbeløp,
+        val beløp: BigDecimal? = dagsats,
         val beløpstype: InntektBeløpstype = InntektBeløpstype.DAGSATS,
         val total: BigDecimal,
-    )
+    ) {
+        val beløpstypeVisningsnavn get() = beløpstype.tilVisningsnavn()
+    }
 
     data class NotatUnderholdskostnadBeregningDto(
         val periode: DatoperiodeDto,
@@ -649,13 +655,8 @@ data class NotatInntektDto(
     val historisk: Boolean = false,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
-    val beløpstypeVisningsnavn get() =
-        when (beløpstype) {
-            InntektBeløpstype.MÅNEDSBELØP_11_MÅNEDER, InntektBeløpstype.MÅNEDSBELØP -> "Måned"
-            InntektBeløpstype.DAGSATS -> "Dagsats"
-            InntektBeløpstype.ÅRSBELØP -> "Dagsats"
-            else -> ""
-        }
+    val beløpstypeVisningsnavn get() = beløpstype.tilVisningsnavn()
+
     val beløpstype get() =
         if (type == Inntektsrapportering.BARNETILLEGG) {
             if (inntektsposter.firstOrNull()?.beløpstype == null ||
