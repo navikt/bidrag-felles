@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.sak.Sakskategori
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -36,5 +37,6 @@ data class LøpendeBidragPeriode(
     val samværsklasse: Samværsklasse,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
+    val sakskategori: Sakskategori = Sakskategori.N,
     override val manueltRegistrert: Boolean = false,
 ) : GrunnlagPeriodeInnhold
