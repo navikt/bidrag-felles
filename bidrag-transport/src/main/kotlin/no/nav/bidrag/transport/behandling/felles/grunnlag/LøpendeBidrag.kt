@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.sak.Sakskategori
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -33,7 +34,7 @@ data class LøpendeBidragPeriode(
     val saksnummer: Saksnummer,
     val stønadstype: Stønadstype,
     val løpendeBeløp: BigDecimal,
-    val valutakode: String = "NOK",
+    val valutakode: Valutakode = Valutakode.NOK,
     val samværsklasse: Samværsklasse,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
