@@ -30,6 +30,8 @@ data class BidragssakDto(
     val avsluttet: Boolean = false,
     @Schema(description = "Rollene som saken inneholder")
     val roller: List<RolleDto> = emptyList(),
+    @Schema(description = "Rollehistorikk for sak. Returneres kun hvis det er angitt i requestparameter")
+    val rollehistorikk: List<RollehistorikkDto> = emptyList(),
 )
 
 data class SamhandlerSakerDto(
