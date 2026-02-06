@@ -460,6 +460,8 @@ data class DelberegningBidragTilFordelingLøpendeBidrag(
     val bidragTilFordelingNOK: BigDecimal = bidragTilFordeling,
     @Schema(description = "Er dette et norsk bidrag?")
     val erNorskBidrag: Boolean = true,
+    @Schema(description = "Er dette et oppfostringsbidrag?")
+    val erOppfostringsbidrag: Boolean = false,
 ) : Delberegning
 
 // ---------- Deprekerte verdier. Skal ikke slettes helt til vedtak databasen er konvertert i PROD --------------------------
