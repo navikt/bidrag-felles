@@ -57,9 +57,9 @@ fun opprettSluttberegningreferanse(
 fun opprettDelberegningreferanse(
     type: Grunnlagstype,
     periode: ÅrMånedsperiode,
-    søknadsbarnReferanse: Grunnlagsreferanse,
+    søknadsbarnReferanse: Grunnlagsreferanse? = null,
     gjelderReferanse: Grunnlagsreferanse? = null,
-) = "delberegning_${type}${gjelderReferanse?.let { "_$it" } ?: ""}_$søknadsbarnReferanse" +
+) = "delberegning_${type}${gjelderReferanse?.let { "_$it" } ?: ""}${søknadsbarnReferanse?.let { "_$it" } ?: ""}" +
     "_${periode.fom.toCompactString()}${periode.til?.let { "_${it.toCompactString()}" } ?: ""}"
 
 fun opprettSjablonreferanse(
