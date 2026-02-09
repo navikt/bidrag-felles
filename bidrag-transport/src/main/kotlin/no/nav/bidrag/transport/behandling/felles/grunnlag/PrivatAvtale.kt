@@ -53,6 +53,8 @@ data class PrivatAvtaleGrunnlagV2(
     val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
     val skalIndeksreguleres: Boolean,
     val sakskategori: Sakskategori = Sakskategori.N,
+    @Schema(description = "Vedtaksid når vedtak fra NAV er valgt som avtaletype")
+    val vedtaksid: Int? = null,
 ) : GrunnlagInnhold
 
 data class DelberegningIndeksreguleringPrivatAvtale(
