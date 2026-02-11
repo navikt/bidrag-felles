@@ -450,9 +450,9 @@ data class SluttberegningBarnebidragV2(
 data class DelberegningBidragTilFordelingLøpendeBidrag(
     override val periode: ÅrMånedsperiode,
     val valutakode: Valutakode = Valutakode.NOK,
-    @Schema(description = "Reduksjon underhgoldskostnad i valuta")
+    @Schema(description = "Reduksjon underholdskostnad i valuta")
     val reduksjonUnderholdskostnad: BigDecimal,
-    @Schema(description = "Samværsfradrag i NOK")
+    @Schema(description = "Samværsfradrag i valuta")
     val samværsfradrag: BigDecimal? = null,
     @Schema(description = "Indeksregulert beløp i valuta")
     val bidragTilFordeling: BigDecimal,

@@ -70,7 +70,7 @@ data class DelberegningBidragTilFordelingPrivatAvtale(
     val valutakode: Valutakode = Valutakode.NOK,
     @Schema(description = "Indeksregulert beløp i valuta")
     val indeksregulertBeløp: BigDecimal,
-    @Schema(description = "Samværsfradrag i NOK")
+    @Schema(description = "Samværsfradrag i valuta")
     val samværsfradrag: BigDecimal? = null,
     @Schema(description = "Bidrag til fordeling i valuta")
     val bidragTilFordeling: BigDecimal,
