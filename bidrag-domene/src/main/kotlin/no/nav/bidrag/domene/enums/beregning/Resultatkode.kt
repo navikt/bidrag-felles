@@ -79,6 +79,14 @@ enum class Resultatkode(
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
     ),
+    PARTENE_BOR_SAMMEN(
+        listOf(BisysResultatkode("PBS")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.FORSKUDD,
+        ResultatkodeType.OPPHØR,
+        ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+    ),
 
     @JsonAlias("BARNET_ER_DØD")
     BARNET_ER_DØDT(

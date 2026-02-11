@@ -126,6 +126,9 @@ AVSLUTTET_SKOLEGANG:
 IKKE_OMSORG_FOR_BARNET:
   intern: "Ikke omsorg for barnet"
 
+PARTENE_BOR_SAMMEN:
+  intern: "Partene bor sammen"
+
 BARNET_ER_DØDT:
   intern: "Barnet er dødt"
 
