@@ -6,6 +6,7 @@ import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erDirekteAvsl
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.diverse.InntektBeløpstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
@@ -373,10 +374,10 @@ data class DokumentmalPersonDto(
 data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
     val sumBidragTilFordeling: BigDecimal,
     val finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn: Boolean,
-    val sumBidragTilFordelingSPrioritertBidrag: BigDecimal,
     val sumBidragTilFordelingSøknadsbarn: BigDecimal,
     val sumBidragTilFordelingIkkeSøknadsbarn: BigDecimal,
     val sumBidragTilFordelingPrivatAvtale: BigDecimal,
+    val sumBidragSomIkkeKanFordeles: BigDecimal,
     val sumPrioriterteBidragTilFordeling: BigDecimal,
     val bidragTilFordelingForBarnet: BigDecimal,
     val andelAvSumBidragTilFordelingFaktor: BigDecimal,
@@ -389,17 +390,21 @@ data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
 )
 
 data class DokumentmalForholdsmessigFordelingBidragTilFordelingBarn(
-    val prioritertBidrag: Boolean,
+    val utenlandskbidrag: Boolean = false,
+    val oppfostringsbidrag: Boolean = false,
     val privatAvtale: Boolean,
     val erSøknadsbarn: Boolean,
     val beregnetBidrag: BeregnetBidragBarnDto? = null,
     val bidragTilFordeling: BigDecimal,
     val barn: DokumentmalPersonDto,
 ) {
+    val erBidragSomIkkeKanFordeles get() = utenlandskbidrag || oppfostringsbidrag
+
     data class BeregnetBidragBarnDto(
         val saksnummer: Saksnummer,
         val løpendeBeløp: BigDecimal,
-        val valutakode: String = "NOK",
+        val valutakode: Valutakode = Valutakode.NOK,
+        val valutakurs: BigDecimal = BigDecimal.ONE,
         val samværsklasse: Samværsklasse,
         val samværsfradrag: BigDecimal,
         val beregnetBeløp: BigDecimal,

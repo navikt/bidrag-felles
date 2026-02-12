@@ -17,7 +17,7 @@ data class PrivatAvtaleGrunnlag(
     val avtaleInngåttDato: LocalDate,
     val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
     val skalIndeksreguleres: Boolean,
-    val utlandsbidrag: Boolean = false,
+    val utenlandskbidrag: Boolean = false,
 ) : GrunnlagInnhold
 
 data class PrivatAvtalePeriodeGrunnlag(
