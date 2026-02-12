@@ -26,6 +26,7 @@ import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFre
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
 import no.nav.bidrag.domene.enums.vedtak.BeregnTil
+import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
@@ -98,6 +99,7 @@ data class NotatBehandlingDetaljerDto(
     val opprinneligVedtakstype: Vedtakstype? = null,
     val kategori: NotatSærbidragKategoriDto? = null,
     val søktAv: SøktAvType?,
+    val innkreving: Boolean = true,
     val mottattDato: LocalDate?,
     val søktFraDato: YearMonth?,
     val søknadstype: String?,
@@ -358,6 +360,7 @@ data class NotatVirkningstidspunktBarnDto(
     @Deprecated("Bruk behandlingstype")
     val søknadstype: String?,
     val vedtakstype: Vedtakstype?,
+    val innkreving: Boolean = true,
     val søktAv: SøktAvType?,
     @Schema(type = "string", format = "date", example = "01.12.2025")
     @JsonFormat(pattern = "yyyy-MM-dd")
