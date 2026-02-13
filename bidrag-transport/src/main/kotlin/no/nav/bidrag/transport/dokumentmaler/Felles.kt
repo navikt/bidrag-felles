@@ -378,6 +378,8 @@ data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
     val sumBidragTilFordelingIkkeSøknadsbarn: BigDecimal,
     val sumBidragTilFordelingPrivatAvtale: BigDecimal,
     val sumBidragSomIkkeKanFordeles: BigDecimal,
+    val sumBidragTilFordelingJustertForPrioriterteBidrag: BigDecimal,
+    val evneJustertForPrioriterteBidrag: BigDecimal,
     val sumPrioriterteBidragTilFordeling: BigDecimal,
     val bidragTilFordelingForBarnet: BigDecimal,
     val andelAvSumBidragTilFordelingFaktor: BigDecimal,
