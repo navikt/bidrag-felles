@@ -57,8 +57,10 @@ data class RolleDto(
         description = "Tidligere brukt felt for rolletype. Erstattes av 'type'.",
         deprecated = true,
     )
-    @Deprecated("Bruk rolletype", ReplaceWith("type"))
+    @Deprecated("Bruk type", ReplaceWith("type"))
     val rolleType: Rolletype = type,
+    @field:Schema(description = "Rollehistorikk for sak. Returneres kun hvis det er angitt i requestparameter")
+    val rollehistorikk: List<RollehistorikkDto> = emptyList(),
 ) {
     fun rmErSamhandlerId() = reellMottaker?.ident?.erSamhandlerId() ?: reellMottager?.erSamhandlerId() ?: false
 
