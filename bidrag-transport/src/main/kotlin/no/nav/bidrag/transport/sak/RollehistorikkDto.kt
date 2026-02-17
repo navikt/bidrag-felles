@@ -30,4 +30,9 @@ data class RollehistorikkDto(
             "Beskrivelse av hva slags type endring som er gjort for rolle",
     )
     val typeEndring: String? = null,
+    @field:Schema(
+        description =
+            "Rollen er oppdatert av angitt saksbehandler eller applikasjon ",
+    )
+    val opprettetAv: String? = null,
 )
