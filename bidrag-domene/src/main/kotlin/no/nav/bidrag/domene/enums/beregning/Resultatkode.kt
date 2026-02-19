@@ -80,9 +80,8 @@ enum class Resultatkode(
         ResultatkodeType.DIREKTE_AVSLAG,
     ),
     PARTENE_BOR_SAMMEN(
-        listOf(BisysResultatkode("PBS")),
+        listOf(BisysResultatkode("APB", BisysResultatkodeType.AVSLAG), BisysResultatkode("OPS", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.BARNEBIDRAG,
-        ResultatkodeType.FORSKUDD,
         ResultatkodeType.OPPHØR,
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
@@ -216,8 +215,11 @@ enum class Resultatkode(
         ResultatkodeType.SÆRBIDRAG,
         ResultatkodeType.FORSKUDD,
     ),
-    PÅ_GRUNN_AV_SAMMENFLYTTING(
+
+    @JsonAlias("PÅ_GRUNN_AV_SAMMENFLYTTING")
+    BARNET_BOR_SAMMEN_MED_BEGGE_FORELDRE(
         listOf(BisysResultatkode("ASA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OSA", BisysResultatkodeType.OPPHØR)),
+        ResultatkodeType.OPPHØR,
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
         ResultatkodeType.FORSKUDD,
@@ -234,11 +236,15 @@ enum class Resultatkode(
         ResultatkodeType.DIREKTE_AVSLAG,
         ResultatkodeType.FORSKUDD,
     ),
+
+    // Også for 18 år
     AVSLAG_PRIVAT_AVTALE_BIDRAG(
         listOf(BisysResultatkode("APA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OPA", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.OPPHØR,
         ResultatkodeType.DIREKTE_AVSLAG,
         ResultatkodeType.FORSKUDD,
+        ResultatkodeType.BARNEBIDRAG,
     ),
 
     // I tilfeller når BP bor i Lugano-land og BM søker kun om forskudd, så har vi ikke hjemmel til å ta bidragssaken opp av eget tiltak etter forskotteringsloven.
