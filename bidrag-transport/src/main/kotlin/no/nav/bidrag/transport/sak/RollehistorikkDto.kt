@@ -3,6 +3,7 @@ package no.nav.bidrag.transport.sak
 import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.rolle.Rolletype
+import no.nav.bidrag.domene.enums.rolle.TypeEndring
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.ident.ReellMottaker
 
@@ -29,7 +30,7 @@ data class RollehistorikkDto(
         description =
             "Beskrivelse av hva slags type endring som er gjort for rolle",
     )
-    val typeEndring: String? = null,
+    val typeEndring: TypeEndring? = null,
     @field:Schema(
         description =
             "Rollen er oppdatert av angitt saksbehandler eller applikasjon ",
