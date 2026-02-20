@@ -6,6 +6,7 @@ import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.TypeEndring
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.ident.ReellMottaker
+import java.time.LocalDateTime
 
 data class RollehistorikkDto(
     @field:Schema(
@@ -36,4 +37,9 @@ data class RollehistorikkDto(
             "Rollen er oppdatert av angitt saksbehandler eller applikasjon ",
     )
     val opprettetAv: String? = null,
+    @field:Schema(
+        description =
+            "Tidspunkt rollen ble endret ",
+    )
+    val opprettetTidspunkt: LocalDateTime = LocalDateTime.now(),
 )
