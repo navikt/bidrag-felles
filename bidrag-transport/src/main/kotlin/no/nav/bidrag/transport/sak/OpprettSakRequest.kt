@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.sak
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.sak.Arbeidsfordeling
 import no.nav.bidrag.domene.enums.sak.Konvensjon
 import no.nav.bidrag.domene.enums.sak.Sakskategori
 import no.nav.bidrag.domene.land.Landkode
@@ -20,6 +21,7 @@ class OpprettSakRequest(
     val konvensjonsdato: LocalDate? = null,
     val ffuReferansenr: String? = null,
     val land: Landkode? = null,
+    val arbeidsfordeling: Arbeidsfordeling = Arbeidsfordeling.EEN,
     @field:Schema(
         description =
             "Rollene som skal opprettes i saken. " +
