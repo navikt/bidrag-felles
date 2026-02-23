@@ -36,4 +36,5 @@ data class Barnetillegg(
     val barnetilleggType: Inntektstype,
     val bruttoBarnetillegg: BigDecimal,
     val nettoBarnetillegg: BigDecimal,
+    val skattefaktor: BigDecimal,
 )
