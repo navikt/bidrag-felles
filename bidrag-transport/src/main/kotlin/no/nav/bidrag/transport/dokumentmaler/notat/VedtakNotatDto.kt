@@ -720,6 +720,7 @@ data class NotatInntektspostDto(
     val inntektstype: Inntektstype?,
     val beløp: BigDecimal,
     val beløpstype: InntektBeløpstype = InntektBeløpstype.ÅRSBELØP,
+    val skattefaktor: BigDecimal? = null,
     val visningsnavn: String? = inntektstype?.visningsnavn?.intern,
 )
 
