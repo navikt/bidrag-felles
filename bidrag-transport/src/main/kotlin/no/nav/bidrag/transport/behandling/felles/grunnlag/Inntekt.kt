@@ -43,6 +43,8 @@ data class InntektsrapporteringPeriode(
         val beløp: BigDecimal,
         @Schema(description = "Typen på beløp. For barnetillegg så kan det være måndesbeløp eller dagsats", example = "60000")
         val beløpstype: InntektBeløpstype = InntektBeløpstype.ÅRSBELØP,
+        @Schema(description = "Skattefaktor på barnetillegget. Brukes ved beregning av netto barnetillegg", example = "0.05")
+        val skattefaktor: BigDecimal? = null,
     )
 }
 
