@@ -293,6 +293,7 @@ data class DokumentmalDelberegningBarnetilleggDto(
     data class DokumentmalBarnetilleggDetaljerDto(
         val bruttoBeløp: BigDecimal,
         val nettoBeløp: BigDecimal,
+        val skattefaktor: BigDecimal? = null,
         val visningsnavn: String,
     )
 }
