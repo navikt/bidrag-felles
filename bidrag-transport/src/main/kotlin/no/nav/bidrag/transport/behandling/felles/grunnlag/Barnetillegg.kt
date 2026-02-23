@@ -10,6 +10,7 @@ data class BarnetilleggPeriode(
     override val periode: ÅrMånedsperiode,
     val type: Inntektstype,
     val beløp: BigDecimal,
+    val skattefaktor: BigDecimal? = null,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold
 
