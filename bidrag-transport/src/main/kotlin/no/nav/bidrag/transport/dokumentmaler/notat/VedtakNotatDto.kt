@@ -660,6 +660,12 @@ data class NotatInntektDto(
 ) {
     val beløpstypeVisningsnavn get() = beløpstype.tilVisningsnavn()
 
+    val skattefaktor get() =
+        if (type == Inntektsrapportering.BARNETILLEGG) {
+            inntektsposter.firstOrNull()?.skattefaktor ?: BigDecimal.ZERO
+        } else {
+            null
+        }
     val beløpstype get() =
         if (type == Inntektsrapportering.BARNETILLEGG) {
             if (inntektsposter.firstOrNull()?.beløpstype == null ||
