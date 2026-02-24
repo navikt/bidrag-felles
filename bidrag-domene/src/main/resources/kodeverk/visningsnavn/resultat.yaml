@@ -84,8 +84,8 @@ IKKE_OPPHOLD_I_RIKET:
 MANGLENDE_DOKUMENTASJON:
   intern: "Manglende dokumentasjon"
 
-BARNET_BOR_SAMMEN_MED_BEGGE_FORELDRE:
-  intern: "Barnet bor sammen med begge foreldre"
+BARNET_ANSES_Å_BO_SAMMEN_MED_BEGGE_FORELDRE:
+  intern: "Barnet anses å bo sammen med begge foreldrene"
 
 OPPHOLD_I_UTLANDET:
   intern: "Opphold i utlandet"

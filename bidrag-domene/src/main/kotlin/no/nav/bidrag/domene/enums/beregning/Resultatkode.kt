@@ -216,8 +216,8 @@ enum class Resultatkode(
         ResultatkodeType.FORSKUDD,
     ),
 
-    @JsonAlias("PÅ_GRUNN_AV_SAMMENFLYTTING")
-    BARNET_BOR_SAMMEN_MED_BEGGE_FORELDRE(
+    @JsonAlias("PÅ_GRUNN_AV_SAMMENFLYTTING", "BARNET_BOR_SAMMEN_MED_BEGGE_FORELDRE")
+    BARNET_ANSES_Å_BO_SAMMEN_MED_BEGGE_FORELDRE(
         listOf(BisysResultatkode("ASA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OSA", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.OPPHØR,
         ResultatkodeType.AVSLAG,
