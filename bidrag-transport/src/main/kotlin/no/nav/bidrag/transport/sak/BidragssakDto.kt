@@ -29,7 +29,7 @@ data class BidragssakDto(
     val ukjentPart: Boolean,
     val vedtakssperre: Boolean = false,
     val avsluttet: Boolean = false,
-    val arbeidsfordeling: Arbeidsfordeling,
+    val arbeidsfordeling: Arbeidsfordeling = Arbeidsfordeling.EEN,
     @Schema(description = "Rollene som saken inneholder")
     val roller: List<RolleDto> = emptyList(),
 )
