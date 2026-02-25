@@ -10,6 +10,7 @@ import no.nav.bidrag.domene.util.visningsnavnIntern
 val konverterteVerdier =
     mapOf(
         "DIREKTE_OPPJØR" to Resultatkode.DIREKTE_OPPGJØR,
+        "PÅ_GRUNN_AV_SAMMENFLYTTING" to Resultatkode.BARNET_ANSES_Å_BO_SAMMEN_MED_BEGGE_FORELDRE,
     )
 
 @Schema(enumAsRef = true, name = "Resultatkode")
