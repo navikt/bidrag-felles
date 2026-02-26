@@ -382,12 +382,14 @@ enum class Resultatkode(
                 konverterteVerdier[kode]
             }
 
-        fun Resultatkode.tilBisysResultatkode(vedtakstype: Vedtakstype? = null) =
-            if (vedtakstype == Vedtakstype.OPPHØR) {
-                bisysKode.find { it.type == BisysResultatkodeType.OPPHØR }?.resultatKode ?: bisysKode.firstOrNull()?.resultatKode
-            } else {
-                bisysKode.firstOrNull()?.resultatKode
-            }
+        fun Resultatkode.tilBisysResultatkode(
+            vedtakstype: Vedtakstype? = null,
+            løperBidragEllerForskudd: Boolean? = null,
+        ) = if (vedtakstype == Vedtakstype.OPPHØR || (løperBidragEllerForskudd != null && løperBidragEllerForskudd)) {
+            bisysKode.find { it.type == BisysResultatkodeType.OPPHØR }?.resultatKode ?: bisysKode.firstOrNull()?.resultatKode
+        } else {
+            bisysKode.firstOrNull()?.resultatKode
+        }
 
         fun fraVisningsnavn(
             visningsnavn: String,
