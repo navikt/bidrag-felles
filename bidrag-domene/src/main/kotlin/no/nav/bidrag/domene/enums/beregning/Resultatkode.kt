@@ -382,6 +382,8 @@ enum class Resultatkode(
                 konverterteVerdier[kode]
             }
 
+        fun Resultatkode.tilBisysResultatkode() = tilBisysResultatkode(null)
+
         fun Resultatkode.tilBisysResultatkode(vedtakstype: Vedtakstype? = null) = tilBisysResultatkode(vedtakstype, false)
 
         fun Resultatkode.tilBisysResultatkode(

@@ -45,7 +45,14 @@ data class InntektsrapporteringPeriode(
         val beløpstype: InntektBeløpstype = InntektBeløpstype.ÅRSBELØP,
         @Schema(description = "Skattefaktor på barnetillegget. Brukes ved beregning av netto barnetillegg", example = "0.05")
         val skattefaktor: BigDecimal? = null,
-    )
+    ) {
+        constructor(
+            kode: String,
+            inntektstype: Inntektstype,
+            beløp: BigDecimal,
+            beløpstype: InntektBeløpstype,
+        ) : this(kode, inntektstype, beløp, beløpstype, null)
+    }
 }
 
 @Schema(description = "Inntekt beregnet av bidrag-inntekt basert på data fra bidrag-grunnlag")
