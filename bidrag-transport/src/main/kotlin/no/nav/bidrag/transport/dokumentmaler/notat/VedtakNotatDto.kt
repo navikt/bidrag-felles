@@ -356,6 +356,7 @@ data class NotatVirkningstidspunktDto(
 
 data class NotatVirkningstidspunktBarnDto(
     val rolle: DokumentmalPersonDto,
+    val stønadstype: Stønadstype?,
     val behandlingstype: Behandlingstype?,
     @Deprecated("Bruk behandlingstype")
     val søknadstype: String?,
@@ -391,7 +392,18 @@ data class NotatVirkningstidspunktBarnDto(
 
     @get:Schema(name = "avslagVisningsnavn")
     val avslagVisningsnavn
-        get() = vedtakstype?.let { avslag?.visningsnavnIntern(vedtakstype) } ?: avslag?.visningsnavn?.intern
+        get() =
+            vedtakstype?.let {
+                avslag?.visningsnavnIntern(
+                    vedtakstype,
+                    if (stønadstype == Stønadstype.FORSKUDD) {
+                        rolle.harLøpendeForskudd == true
+                    } else {
+                        rolle.harLøpendeBidrag == true
+                    },
+                )
+            }
+                ?: avslag?.visningsnavn?.intern
 
     @get:Schema(name = "erAvvisning")
     val erAvvisning get() = avslag?.erAvvisning() == true

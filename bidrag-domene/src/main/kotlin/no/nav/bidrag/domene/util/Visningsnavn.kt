@@ -122,21 +122,25 @@ val Resultatkode.visningsnavn get() = lastVisningsnavnFraFil("resultat.yaml")[na
 val OffentligIdType.visningsnavn get() = lastVisningsnavnFraFil("offentligidtype.yaml")[name] ?: visningsnavnMangler(name)
 val Områdekode.visningsnavn get() = lastVisningsnavnFraFil("områdekode.yaml")[name] ?: visningsnavnMangler(name)
 
-fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype? = null) =
-    when {
-        this.erAvslag() -> {
-            val prefiks =
-                when (vedtakstype) {
-                    Vedtakstype.OPPHØR -> "Opphør"
-                    else -> "Avslag"
-                }
-            "$prefiks, ${visningsnavn.intern.lowercase().fjernAvslagOpphørPrefiks()}"
-        }
+fun Resultatkode.visningsnavnIntern(vedtakstype: Vedtakstype? = null) = visningsnavnIntern(vedtakstype, null)
 
-        else -> {
-            visningsnavn.intern
-        }
+fun Resultatkode.visningsnavnIntern(
+    vedtakstype: Vedtakstype? = null,
+    løperStønad: Boolean? = null,
+) = when {
+    this.erAvslag() -> {
+        val prefiks =
+            when {
+                (løperStønad != null && løperStønad) || vedtakstype == Vedtakstype.OPPHØR -> "Opphør"
+                else -> "Avslag"
+            }
+        "$prefiks, ${visningsnavn.intern.lowercase().fjernAvslagOpphørPrefiks()}"
     }
+
+    else -> {
+        visningsnavn.intern
+    }
+}
 
 fun String?.fjernAvslagOpphørPrefiks() =
     this
