@@ -370,6 +370,8 @@ data class DokumentmalPersonDto(
     val saksnummer: String? = null,
     val bidragsmottakerIdent: String? = null,
     val revurdering: Boolean = false,
+    val harLøpendeForskudd: Boolean? = false,
+    val harLøpendeBidrag: Boolean? = false,
 )
 
 data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
