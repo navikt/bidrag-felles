@@ -28,5 +28,5 @@ enum class ArbeidsfordelingV2(
     FARSKAP("FRS", "ab0322"),
     SETTEKONTOR("INH", null),
     OPPFOSTRINGSSAK("OPS", "ab0324"),
-    REISEKOSTNADSAK("OPS", "ab0129"),
+    REISEKOSTNADSAK("RKS", "ab0129"),
 }
