@@ -3,6 +3,11 @@ package no.nav.bidrag.transport.organisasjon
 import no.nav.bidrag.domene.enums.diverse.Enhetsstatus
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 
+data class EnhetBrukerDto(
+    val navIdent: String,
+    val navn: String,
+)
+
 data class EnhetDto(
     val nummer: Enhetsnummer,
     val navn: String? = null,
