@@ -61,6 +61,7 @@ data class EnhetspostadresseDto(
 data class EnhetDetaljerDto(
     val enhetId: String,
     val navn: String?,
+    val settekontorEnhetId: String?,
     val telefonnummer: String? = null,
     val postadresse: Map<Språk, EnhetspostadresseDto>? = null,
 )
