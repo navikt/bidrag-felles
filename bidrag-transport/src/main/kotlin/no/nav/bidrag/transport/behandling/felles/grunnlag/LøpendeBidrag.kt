@@ -10,7 +10,7 @@ import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 
-//TODO Bytte ut med LøpendeBidragPeriode?
+// TODO Bytte ut med LøpendeBidragPeriode?
 @Schema(description = "Informasjon om BPs løpende bidragssaker og nyeste manuelle beregning")
 data class LøpendeBidragGrunnlag(
     val løpendeBidragListe: List<LøpendeBidrag>,
@@ -21,9 +21,9 @@ data class LøpendeBidrag(
     @JsonAlias("stønadstype")
     val type: Stønadstype,
     val løpendeBeløp: BigDecimal,
-    //TODO Bytte ut String med Valutakode
+    // TODO Bytte ut String med Valutakode
     val valutakode: String = "NOK",
-    //TODO Gjøre nullable
+    // TODO Gjøre nullable
     val samværsklasse: Samværsklasse,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,

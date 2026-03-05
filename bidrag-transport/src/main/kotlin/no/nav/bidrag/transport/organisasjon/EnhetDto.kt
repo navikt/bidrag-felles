@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.organisasjon
 
 import no.nav.bidrag.domene.enums.diverse.Enhetsstatus
+import no.nav.bidrag.domene.enums.diverse.Språk
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 
 data class EnhetBrukerDto(
@@ -47,10 +48,28 @@ data class EnhetKontaktinfoDto(
 }
 
 data class EnhetspostadresseDto(
+    val navn: String? = null,
     val postnummer: String? = null,
     val adresselinje1: String? = null,
     val adresselinje2: String? = null,
     val poststed: String? = null,
+    val postnr: String? = null,
     val land: String? = null,
     val kommunenr: String? = null,
+)
+
+data class EnhetDetaljerDto(
+    val enhetId: String,
+    val navn: String?,
+    val telefonnummer: String? = null,
+    val postadresse: Map<Språk, EnhetspostadresseDto>? = null,
+)
+
+data class EnheterGruppeDto(
+    val gruppeNavn: String,
+    val enheter: List<EnhetDetaljerDto>,
+)
+
+data class BidragEnheterResponsDto(
+    val grupper: List<EnheterGruppeDto>,
 )
