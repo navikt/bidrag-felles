@@ -4,4 +4,5 @@ enum class Tema(
     val verdi: String,
 ) {
     TEMA_BIDRAG("BID"),
+    TEMA_FARSKAP("FAR"),
 }

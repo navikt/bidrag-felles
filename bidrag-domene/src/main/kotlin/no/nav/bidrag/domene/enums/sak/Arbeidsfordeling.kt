@@ -2,31 +2,42 @@
 
 package no.nav.bidrag.domene.enums.sak
 
+import com.fasterxml.jackson.annotation.JsonAlias
+import com.fasterxml.jackson.annotation.JsonProperty
 import io.swagger.v3.oas.annotations.media.Schema
 
 @Schema(enumAsRef = true)
 enum class Arbeidsfordeling(
-    private val beskrivelse: String,
+    val visningsnavn: String,
+    val bisysKode: String,
     val behandlingstema: String?,
 ) {
-    BBF("Barnebortføring", "ab0323"),
-    EEN("Eierenhet", null),
-    EFS("Ektefellesak", "ab0325"),
-    FRS("Farskap", "ab0322"),
-    INH("Settekontor", null),
-    OPS("Oppfostringssak", "ab0324"),
-}
+    // Full descriptive enum values (preferred)
+    @JsonProperty("BBF")
+    @JsonAlias("BARNEBORTFØRING")
+    BARNEBORTFØRING("Barnebortføring", "BBF", "ab0323"),
 
-@Schema(enumAsRef = true)
-enum class ArbeidsfordelingV2(
-    private val bisysKode: String,
-    val behandlingstema: String?,
-) {
-    BARNEBORTFØRING("BBF", "ab0323"),
-    EIERENHET("EEN", null),
-    EKTEFELLLESAK("EFS", "ab0325"),
-    FARSKAP("FRS", "ab0322"),
-    SETTEKONTOR("INH", null),
-    OPPFOSTRINGSSAK("OPS", "ab0324"),
-    REISEKOSTNADSAK("RKS", "ab0129"),
+    @JsonProperty("EEN")
+    @JsonAlias("EIERENHET")
+    EIERENHET("Eierenhet", "EEN", null),
+
+    @JsonProperty("EFS")
+    @JsonAlias("EKTEFELLLESAK")
+    EKTEFELLLESAK("Ektefellesak", "EFS", "ab0325"),
+
+    @JsonProperty("FRS")
+    @JsonAlias("FARSKAP")
+    FARSKAP("Farskap", "FRS", "ab0322"),
+
+    @JsonProperty("INH")
+    @JsonAlias("SETTEKONTOR")
+    SETTEKONTOR("Settekontor", "INH", null),
+
+    @JsonProperty("OPS")
+    @JsonAlias("OPPFOSTRINGSSAK")
+    OPPFOSTRINGSSAK("Settekontor", "OPS", "ab0324"),
+
+    @JsonProperty("RKS")
+    @JsonAlias("REISEKOSTNADSAK")
+    REISEKOSTNADSAK("Reisekostnadsak", "RKS", "ab0129"),
 }

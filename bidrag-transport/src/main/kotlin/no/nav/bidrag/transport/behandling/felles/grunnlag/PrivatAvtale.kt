@@ -54,7 +54,7 @@ data class PrivatAvtaleGrunnlagV2(
     val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
     val stønadstype: Stønadstype = Stønadstype.BIDRAG,
     val skalIndeksreguleres: Boolean,
-    val sakskategori: Sakskategori = Sakskategori.N,
+    val sakskategori: Sakskategori = Sakskategori.NASJONAL,
     @Schema(description = "Vedtaksid når vedtak fra NAV er valgt som avtaletype")
     val vedtaksid: Int? = null,
 ) : GrunnlagInnhold

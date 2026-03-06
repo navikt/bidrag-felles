@@ -11,7 +11,7 @@ import java.time.LocalDate
 class OpprettSakRequest(
     @field:Schema(description = "Sakens eierfogd (enhetsnummeret som får tilgang til saken).")
     val eierfogd: Enhetsnummer,
-    val kategori: Sakskategori = Sakskategori.N,
+    val kategori: Sakskategori = Sakskategori.NASJONAL,
     val ansatt: Boolean = false,
     val inhabilitet: Boolean = false,
     val levdeAdskilt: Boolean = false,
@@ -21,7 +21,7 @@ class OpprettSakRequest(
     val konvensjonsdato: LocalDate? = null,
     val ffuReferansenr: String? = null,
     val land: Landkode? = null,
-    val arbeidsfordeling: Arbeidsfordeling = Arbeidsfordeling.EEN,
+    val arbeidsfordeling: Arbeidsfordeling = Arbeidsfordeling.EIERENHET,
     @field:Schema(
         description =
             "Rollene som skal opprettes i saken. " +

@@ -27,7 +27,7 @@ data class EnhetKontaktinfoDto(
     @Deprecated("bruk navn", ReplaceWith("navn"))
     val enhetNavn: String? = navn,
     val telefonnummer: String? = null,
-    val postadresse: EnhetspostadresseDto? = null,
+    val postadresse: EnhetPostadresseDto? = null,
 ) {
     companion object {
         fun medStandardadresse(enhetsnummer: Enhetsnummer) =
@@ -36,7 +36,7 @@ data class EnhetKontaktinfoDto(
                 navn = "Nav Familie- og pensjonsytelser",
                 telefonnummer = "55553333",
                 postadresse =
-                    EnhetspostadresseDto(
+                    EnhetPostadresseDto(
                         postnummer = "0603",
                         adresselinje1 = "Postboks 6215 Etterstad",
                         poststed = "Oslo",
@@ -47,7 +47,7 @@ data class EnhetKontaktinfoDto(
     }
 }
 
-data class EnhetspostadresseDto(
+data class EnhetPostadresseDto(
     val navn: String? = null,
     val postnummer: String? = null,
     val adresselinje1: String? = null,
@@ -63,7 +63,7 @@ data class EnhetDetaljerDto(
     val navn: String?,
     val settekontorEnhetId: String?,
     val telefonnummer: String? = null,
-    val postadresse: Map<Språk, EnhetspostadresseDto>? = null,
+    val postadresse: Map<Språk, EnhetPostadresseDto> = emptyMap(),
 )
 
 data class EnheterGruppeDto(

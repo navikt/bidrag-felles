@@ -41,6 +41,6 @@ data class LøpendeBidragPeriode(
     val samværsklasse: Samværsklasse? = null,
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
-    val sakskategori: Sakskategori = Sakskategori.N,
+    val sakskategori: Sakskategori = Sakskategori.NASJONAL,
     override val manueltRegistrert: Boolean = false,
 ) : GrunnlagPeriodeInnhold

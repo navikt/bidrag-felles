@@ -19,7 +19,7 @@ data class OppdaterSakResponse(
     val levdeAdskilt: Boolean,
     val paragraf19: Boolean,
     val sanertDato: LocalDate?,
-    val arbeidsfordeling: Arbeidsfordeling = Arbeidsfordeling.EEN,
+    val arbeidsfordeling: Arbeidsfordeling = Arbeidsfordeling.EIERENHET,
     val landkode: Landkode?,
     val konvensjonskode: Konvensjon?,
     val konvensjonsdato: LocalDate?,
