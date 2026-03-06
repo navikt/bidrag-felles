@@ -54,7 +54,6 @@ data class EnhetPostadresseDto(
     val adresselinje1: String? = null,
     val adresselinje2: String? = null,
     val poststed: String? = null,
-    val postnr: String? = null,
     val land: String? = null,
     val kommunenr: String? = null,
 )

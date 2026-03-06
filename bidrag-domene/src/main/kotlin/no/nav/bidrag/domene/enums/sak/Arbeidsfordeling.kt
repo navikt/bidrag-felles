@@ -35,7 +35,7 @@ enum class Arbeidsfordeling(
 
     @JsonProperty("OPS")
     @JsonAlias("OPPFOSTRINGSSAK")
-    OPPFOSTRINGSSAK("Settekontor", "OPS", "ab0324"),
+    OPPFOSTRINGSSAK("Oppfostringssak", "OPS", "ab0324"),
 
     @JsonProperty("RKS")
     @JsonAlias("REISEKOSTNADSAK")
