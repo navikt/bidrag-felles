@@ -100,6 +100,7 @@ data class HentSøknad(
     val søknadMottattDato: LocalDate,
     val søknadFomDato: LocalDate? = null,
     val behandlingstema: Behandlingstema,
+    val behandlingstype: Behandlingstype = Behandlingstype.SØKNAD,
     val behandlerenhet: String? = null,
     val saksnummer: String,
     val behandlingsid: Long? = null,
