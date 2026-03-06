@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.organisasjon
 
 import no.nav.bidrag.domene.enums.diverse.Enhetsstatus
 import no.nav.bidrag.domene.enums.diverse.Språk
+import no.nav.bidrag.domene.enums.sak.Sakskategori
 import no.nav.bidrag.domene.organisasjon.Enhetsnummer
 
 data class EnhetBrukerDto(
@@ -61,6 +62,7 @@ data class EnhetPostadresseDto(
 data class EnhetDetaljerDto(
     val enhetId: String,
     val navn: String?,
+    val sakskategori: Sakskategori = Sakskategori.NASJONAL,
     val settekontorEnhetId: String?,
     val telefonnummer: String? = null,
     val postadresse: Map<Språk, EnhetPostadresseDto> = emptyMap(),
