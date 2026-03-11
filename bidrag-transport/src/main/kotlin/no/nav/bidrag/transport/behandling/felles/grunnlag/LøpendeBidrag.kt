@@ -16,6 +16,26 @@ data class LøpendeBidragGrunnlag(
     val løpendeBidragListe: List<LøpendeBidrag>,
 ) : GrunnlagInnhold
 
+@Schema(description = "Informasjon om BPs løpende bidragssaker når FF ble opprettet")
+data class LøpendeBidragForholdsmessigFordelingGrunnlag(
+    val løpendeBidragListe: List<LøpendeBidragForholdsmessigFordeling>,
+) : GrunnlagInnhold
+
+data class LøpendeBidragForholdsmessigFordeling(
+    val saksnummer: Saksnummer,
+    val løpendeBeløp: BigDecimal,
+    val indeksreguleringFaktor: BigDecimal? = null,
+    val valutakode: Valutakode = Valutakode.NOK,
+    val valutakurs: BigDecimal = BigDecimal.ONE,
+    val samværsklasse: Samværsklasse,
+    val samværsfradrag: BigDecimal,
+    val beregnetBeløp: BigDecimal,
+    val faktiskBeløp: BigDecimal,
+    val stønadstype: Stønadstype,
+    val reduksjonUnderholdskostnad: BigDecimal,
+    val beregnetBidrag: BigDecimal,
+) : GrunnlagInnhold
+
 data class LøpendeBidrag(
     val saksnummer: Saksnummer,
     @JsonAlias("stønadstype")
