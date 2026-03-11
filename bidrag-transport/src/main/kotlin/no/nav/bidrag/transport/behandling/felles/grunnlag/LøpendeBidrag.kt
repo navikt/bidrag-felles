@@ -22,9 +22,9 @@ data class LøpendeBidragForholdsmessigFordelingGrunnlag(
 ) : GrunnlagInnhold
 
 data class LøpendeBidragForholdsmessigFordeling(
+    val periode: ÅrMånedsperiode,
     val saksnummer: Saksnummer,
     val løpendeBeløp: BigDecimal,
-    val indeksreguleringFaktor: BigDecimal? = null,
     val valutakode: Valutakode = Valutakode.NOK,
     val valutakurs: BigDecimal = BigDecimal.ONE,
     val samværsklasse: Samværsklasse,
