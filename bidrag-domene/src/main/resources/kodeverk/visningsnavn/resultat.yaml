@@ -154,7 +154,7 @@ PARTEN_BER_OM_OPPHØR:
   intern: "Parten ber om opphør"
 
 OPPHØR:
-  intern: "Annet opphør"
+  intern: "Opphør"
 
 INGEN_ENDRING_UNDER_GRENSE:
   intern: "Ingen endring under grense"
