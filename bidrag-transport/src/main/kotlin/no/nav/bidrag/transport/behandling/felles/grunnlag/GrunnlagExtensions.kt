@@ -5,6 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
@@ -168,6 +169,7 @@ fun BaseGrunnlag.erPerson(): Boolean = type.name.startsWith("PERSON_")
 
 val BaseGrunnlag.personObjekt get() = commonObjectmapper.treeToValue(innhold, Person::class.java)!!
 val BaseGrunnlag.personIdent get() = personObjekt.ident?.verdi
+val BaseGrunnlag.stønadstype get() = personObjekt.stønadstype
 val Collection<BaseGrunnlag>.bidragspliktig
     get() =
         find { it.type == Grunnlagstype.PERSON_BIDRAGSPLIKTIG }
@@ -189,9 +191,25 @@ val Collection<BaseGrunnlag>.søknadsbarn
             it.type == Grunnlagstype.PERSON_SØKNADSBARN
         }.toSet()
 
-fun Collection<GrunnlagDto>.hentPerson(ident: String?) = ident?.let { filter { it.erPerson() }.find { it.personIdent == ident } }
+fun Collection<GrunnlagDto>.hentPerson(
+    ident: String?,
+    stønadstype: Stønadstype? = null,
+) = ident?.let {
+    filter { it.erPerson() }.find {
+        it.personIdent == ident &&
+            (stønadstype == null || it.stønadstype == null || stønadstype == it.stønadstype)
+    }
+}
 
-fun Collection<BaseGrunnlag>.hentPersonMedIdent(ident: String?) = ident?.let { hentAllePersoner().find { it.personIdent == ident } }
+fun Collection<BaseGrunnlag>.hentPersonMedIdent(
+    ident: String?,
+    stønadstype: Stønadstype? = null,
+) = ident?.let {
+    hentAllePersoner().find {
+        it.personIdent == ident &&
+            (stønadstype == null || it.stønadstype == null || stønadstype == it.stønadstype)
+    }
+}
 
 fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferanse?) =
     referanse?.let {
@@ -200,11 +218,14 @@ fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferans
             .firstOrNull()
     }
 
-fun Collection<BaseGrunnlag>.hentPersonMedIdentKonvertert(ident: String?) =
-    hentAllePersoner()
-        .find {
-            it.personIdent == ident
-        }?.innholdTilObjekt<Person>()
+fun Collection<BaseGrunnlag>.hentPersonMedIdentKonvertert(
+    ident: String?,
+    stønadstype: Stønadstype? = null,
+) = hentAllePersoner()
+    .find {
+        it.personIdent == ident &&
+            (stønadstype == null || it.stønadstype == null || stønadstype == it.stønadstype)
+    }?.innholdTilObjekt<Person>()
 
 fun Collection<BaseGrunnlag>.hentPersonMedReferanseKonvertert(referanse: Grunnlagsreferanse?) =
     referanse?.let {
