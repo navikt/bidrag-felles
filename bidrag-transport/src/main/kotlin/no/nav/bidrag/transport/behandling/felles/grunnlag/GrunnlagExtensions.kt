@@ -219,7 +219,20 @@ fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferans
             .firstOrNull()
     }
 
-fun Collection<BaseGrunnlag>.hentSøknadForKravhaver(
+fun Collection<BaseGrunnlag>.hentSøknadsiderForPerson(
+    personident: Personident,
+    stønadstype: Stønadstype?,
+): List<Long> {
+    val person = hentPersonMedIdent(personident.verdi, stønadstype) ?: return emptyList()
+    return toList()
+        .filtrerOgKonverterBasertPåFremmedReferanse<SøknadGrunnlag>(
+            Grunnlagstype.SØKNAD,
+            gjelderBarnReferanse = person.referanse,
+        ).map { it.innhold }
+        .mapNotNull { it.søknadsid }
+}
+
+fun Collection<BaseGrunnlag>.hentSøknadForPerson(
     personident: Personident,
     stønadstype: Stønadstype?,
 ): SøknadGrunnlag? {
