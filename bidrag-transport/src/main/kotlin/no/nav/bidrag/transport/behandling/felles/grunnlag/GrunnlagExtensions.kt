@@ -6,6 +6,7 @@ import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
+import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
@@ -217,6 +218,19 @@ fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferans
             .filtrerBasertPåEgenReferanse(referanse = referanse)
             .firstOrNull()
     }
+
+fun Collection<BaseGrunnlag>.hentSøknadForKravhaver(
+    personident: Personident,
+    stønadstype: Stønadstype?,
+): SøknadGrunnlag? {
+    val person = hentPersonMedIdent(personident.verdi, stønadstype) ?: return null
+    return toList()
+        .filtrerOgKonverterBasertPåFremmedReferanse<SøknadGrunnlag>(
+            Grunnlagstype.SØKNAD,
+            gjelderBarnReferanse = person.referanse,
+        ).firstOrNull()
+        ?.innhold
+}
 
 fun Collection<BaseGrunnlag>.hentPersonMedIdentKonvertert(
     ident: String?,
