@@ -8,6 +8,7 @@ import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåFremmedReferanse
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
 val Grunnlagstype.erIndeksEllerAldersjustering get() =
@@ -211,6 +212,14 @@ fun Collection<BaseGrunnlag>.hentPersonMedIdent(
             (stønadstype == null || it.stønadstype == null || stønadstype == it.stønadstype)
     }
 }
+
+fun Collection<BaseGrunnlag>.hentSøknadFraGrunnlagsreferanseListe(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =
+    toList()
+        .finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SøknadGrunnlag>(
+            Grunnlagstype.SØKNAD,
+            grunnlagsreferanseListe = grunnlagsreferanseListe,
+        ).firstOrNull()
+        ?.innhold
 
 fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferanse?) =
     referanse?.let {
