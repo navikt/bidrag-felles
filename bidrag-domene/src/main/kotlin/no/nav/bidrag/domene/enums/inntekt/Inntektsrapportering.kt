@@ -62,6 +62,23 @@ enum class Inntektsrapportering(
             ),
     ),
 
+    AINNTEKT_BEREGNET_LAVESTE_MÅNEDSINNTEKT_SISTE_3MND(
+        hentesAutomatisk = true,
+        kanLeggesInnManuelt = false,
+        inneholderInntektstypeListe =
+            listOf(
+                Inntektstype.AAP,
+                Inntektstype.DAGPENGER,
+                Inntektstype.FORELDREPENGER,
+                Inntektstype.INTRODUKSJONSSTØNAD,
+                Inntektstype.KVALIFISERINGSSTØNAD,
+                Inntektstype.LØNNSINNTEKT,
+                Inntektstype.OVERGANGSSTØNAD,
+                Inntektstype.PENSJON,
+                Inntektstype.SYKEPENGER,
+            ),
+    ),
+
     AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
