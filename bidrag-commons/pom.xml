@@ -48,8 +48,9 @@
     <jackson.fasterXml.version>2.16.0</jackson.fasterXml.version>
     <aspectj.version>1.9.24</aspectj.version>
     <micrometer-registry.version>1.15.2</micrometer-registry.version>
+    <slack-api.version>1.48.0</slack-api.version>
 
-    <!-- language -->
+      <!-- language -->
     <kotlin.code.style>official</kotlin.code.style>
 
     <java.version>21</java.version>
@@ -103,7 +104,11 @@
       <artifactId>kotlinx-coroutines-core-jvm</artifactId>
       <version>1.10.2</version>
     </dependency>
-
+      <dependency>
+          <groupId>com.slack.api</groupId>
+          <artifactId>slack-api-client</artifactId>
+          <version>${slack-api.version}</version>
+      </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents.client5</groupId>
       <artifactId>httpclient5</artifactId>
