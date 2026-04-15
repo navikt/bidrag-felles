@@ -14,7 +14,7 @@ AINNTEKT_BEREGNET_12MND:
     NB: "Opplysninger fra arbeidsgiver"
     EN: "Personal income reported by employer"
 AINNTEKT_BEREGNET_LAVESTE_MÅNEDSINNTEKT_SISTE_3MND:
-  intern: "A-inntekt laveste månedsinntekt siste 3 måneder"
+  intern: "A-inntekt laveste månedsinntekt siste 3 måneder ganget med 12"
   bruker:
     NB: "Opplysninger fra arbeidsgiver"
     EN: "Personal income reported by employer"

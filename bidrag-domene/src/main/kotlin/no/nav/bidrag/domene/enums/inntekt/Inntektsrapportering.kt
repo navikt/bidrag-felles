@@ -62,7 +62,7 @@ enum class Inntektsrapportering(
             ),
     ),
 
-    AINNTEKT_BEREGNET_LAVESTE_MÅNEDSINNTEKT_SISTE_3MND(
+    AINNTEKT_BEREGNET_LAVESTE_MÅNEDSINNTEKT_SISTE_3MND_GANGET_TOLV(
         hentesAutomatisk = true,
         kanLeggesInnManuelt = false,
         inneholderInntektstypeListe =
