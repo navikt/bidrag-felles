@@ -76,6 +76,7 @@ data class OpprettSøknadRequest(
     val behandlerenhet: String? = null,
     val søknadFomDato: LocalDate,
     val innkreving: Boolean,
+    val hovedsøknadsid: Long? = null,
     val barnListe: List<Barn> = emptyList(),
 )
 
