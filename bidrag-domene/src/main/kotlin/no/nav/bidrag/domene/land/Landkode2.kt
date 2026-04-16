@@ -13,14 +13,15 @@ class Landkode2(
     override fun gyldig() = verdi.length == 2
 }
 
-class Landkode2ReadingConverter : Converter<String, Landkode2> {
+class Landkode2ReadingConverter : Converter<String, Landkode2?> {
     override fun convert(source: String) = source.trimToNull()?.let { Landkode2(source) }
 }
 
-class Landkode2WritingConverter : Converter<Landkode2, String> {
+class Landkode2WritingConverter : Converter<Landkode2, String?> {
     override fun convert(source: Landkode2) = source.verdi
 }
 
+@jakarta.persistence.Converter
 class Landkode2Converter : AttributeConverter<Landkode2, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Landkode2(source) }
 
