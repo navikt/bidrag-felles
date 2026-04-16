@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - main
+      - 'q1/spring-boot-4'
   pull_request:
     types: [opened, reopened, synchronize]
 
