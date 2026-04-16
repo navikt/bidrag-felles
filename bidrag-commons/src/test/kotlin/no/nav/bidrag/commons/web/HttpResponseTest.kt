@@ -41,7 +41,7 @@ internal class HttpResponseTest {
                 .clearContentHeaders()
                 .responseEntity
         responseEntity.body shouldBe 101
-        responseEntity.headers shouldHaveSize 1
+        responseEntity.headers.size() shouldBe 1
         responseEntity.headers.getFirst(HttpHeaders.WARNING) shouldBe "high tide"
         responseEntity.statusCode shouldBe HttpStatus.I_AM_A_TEAPOT
     }
