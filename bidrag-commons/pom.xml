@@ -10,8 +10,7 @@
 
   <artifactId>bidrag-commons-felles</artifactId>
   <name>bidrag-commons</name>
-  <version>${project.parent.version}</version>
-  <packaging>jar</packaging>
+    <packaging>jar</packaging>
 
   <licenses>
     <license>

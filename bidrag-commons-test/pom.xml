@@ -9,7 +9,6 @@
 
   <artifactId>bidrag-commons-test-felles</artifactId>
   <name>bidrag-commons-test</name>
-  <version>${project.parent.version}</version>
   <packaging>jar</packaging>
 
 
