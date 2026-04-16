@@ -12,7 +12,7 @@ import no.nav.bidrag.commons.CorrelationId
 import no.nav.bidrag.commons.cache.InvaliderCacheFørStartenAvArbeidsdag
 import no.nav.bidrag.domene.util.Visningsnavn
 import org.slf4j.LoggerFactory
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.getForEntity
 import java.time.LocalDate
