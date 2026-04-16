@@ -37,9 +37,9 @@ data class ÅpenSøknadDto(
     val søknadMottattDato: LocalDate,
     val søknadFomDato: LocalDate? = null,
     val søktAvType: SøktAvType,
-    val referertSøknadsid: Long? = null,
-    val referertBehandlingsid: Long? = null,
-    val referertVedtaksid: Int? = null,
+    val refSøknadsid: Long? = null,
+    val refBehandlingsid: Long? = null,
+    val refVedtaksid: Int? = null,
     val partISøknadListe: List<PartISøknad> = emptyList(),
 )
 
@@ -73,6 +73,7 @@ data class OpprettSøknadRequest(
     val behandlingstema: Behandlingstema,
     val behandlingstype: Behandlingstype?,
     val behandlingsid: Long? = null,
+    val refVedtaksid: Int? = null,
     val behandlerenhet: String? = null,
     val søknadFomDato: LocalDate,
     val innkreving: Boolean,
@@ -105,6 +106,9 @@ data class HentSøknad(
     val behandlerenhet: String? = null,
     val saksnummer: String,
     val behandlingsid: Long? = null,
+    val refVedtaksid: Int? = null,
+    val refSøknadsid: Long? = null,
+    val vedtaksid: Int? = null,
     val behandlingStatusType: BehandlingStatusType,
     val partISøknadListe: List<PartISøknad> = emptyList(),
 )
