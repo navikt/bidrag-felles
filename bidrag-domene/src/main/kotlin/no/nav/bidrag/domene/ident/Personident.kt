@@ -86,14 +86,15 @@ class Personident(
     override fun toString(): String = verdi.mapIndexed { index, c -> if (index % 2 != 0) c else '*' }.joinToString("")
 }
 
-class PersonIdentReadingConverter : Converter<String, Personident> {
+class PersonIdentReadingConverter : Converter<String, Personident?> {
     override fun convert(source: String) = source.trimToNull()?.let { Personident(source) }
 }
 
-class PersonIdentWritingConverter : Converter<Personident, String> {
+class PersonIdentWritingConverter : Converter<Personident, String?> {
     override fun convert(source: Personident) = source.verdi.trimToNull()
 }
 
+@jakarta.persistence.Converter
 class PersonIdentConverter : AttributeConverter<Personident, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Personident(source) }
 
