@@ -1,6 +1,7 @@
 package no.nav.bidrag.commons.service
 
 import org.springframework.beans.BeansException
+import org.springframework.beans.factory.getBean
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.stereotype.Component
@@ -16,11 +17,11 @@ class AppContext : ApplicationContextAware {
         var applicationContext: ApplicationContext? = null
             private set
 
-        fun <T> getBean(clazz: Class<T>): T = applicationContext!!.getBean(clazz)
+        fun <T> getBean(clazz: Class<T>): T = applicationContext!!.getBean(clazz) as T
 
         fun <T> getBean(
             name: String,
             clazz: Class<T>,
-        ): T = applicationContext!!.getBean(name, clazz)
+        ): T = applicationContext!!.getBean(name, clazz) as T
     }
 }
