@@ -17,14 +17,15 @@ class SamhandlerId(
     }
 }
 
-class SamhandlerIdReadingConverter : Converter<String, SamhandlerId> {
+class SamhandlerIdReadingConverter : Converter<String, SamhandlerId?> {
     override fun convert(source: String) = source.trimToNull()?.let { SamhandlerId(source) }
 }
 
-class SamhandlerIdWritingConverter : Converter<SamhandlerId, String> {
+class SamhandlerIdWritingConverter : Converter<SamhandlerId, String?> {
     override fun convert(source: SamhandlerId) = source.verdi.trimToNull()
 }
 
+@jakarta.persistence.Converter
 class SamhandlerIdConverter : AttributeConverter<SamhandlerId, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { SamhandlerId(source) }
 
