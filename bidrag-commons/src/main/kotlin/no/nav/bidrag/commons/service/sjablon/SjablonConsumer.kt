@@ -6,7 +6,7 @@ import no.nav.bidrag.commons.service.AppContext
 import no.nav.bidrag.commons.service.retryTemplateSynchronous
 import no.nav.bidrag.commons.util.secureLogger
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.cache.annotation.Cacheable
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpMethod
