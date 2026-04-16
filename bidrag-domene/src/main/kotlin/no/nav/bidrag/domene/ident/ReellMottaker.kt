@@ -21,14 +21,15 @@ class ReellMottaker(
     fun samhandlerId() = if (erSamhandlerId()) SamhandlerId(verdi) else null
 }
 
-class ReellMottagerReadingConverter : Converter<String, ReellMottaker> {
+class ReellMottagerReadingConverter : Converter<String, ReellMottaker?> {
     override fun convert(source: String) = source.trimToNull()?.let { ReellMottaker(source) }
 }
 
-class ReellMottagerWritingConverter : Converter<ReellMottaker, String> {
+class ReellMottagerWritingConverter : Converter<ReellMottaker, String?> {
     override fun convert(source: ReellMottaker) = source.verdi.trimToNull()
 }
 
+@jakarta.persistence.Converter
 class ReellMottagerConverter : AttributeConverter<ReellMottaker, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { ReellMottaker(source) }
 
