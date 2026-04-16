@@ -38,14 +38,15 @@ class Organisasjonsnummer(
     }
 }
 
-class OrganisasjonsnummerReadingConverter : Converter<String, Organisasjonsnummer> {
+class OrganisasjonsnummerReadingConverter : Converter<String, Organisasjonsnummer?> {
     override fun convert(source: String) = source.trimToNull()?.let { Organisasjonsnummer(source) }
 }
 
-class OrganisasjonsnummerWritingConverter : Converter<Organisasjonsnummer, String> {
+class OrganisasjonsnummerWritingConverter : Converter<Organisasjonsnummer, String?> {
     override fun convert(source: Organisasjonsnummer) = source.verdi.trimToNull()
 }
 
+@jakarta.persistence.Converter
 class OrganisasjonsnummerConverter : AttributeConverter<Organisasjonsnummer, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Organisasjonsnummer(source) }
 
