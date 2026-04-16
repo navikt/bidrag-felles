@@ -17,14 +17,15 @@ class Saksnummer(
     }
 }
 
-class SaksnummerReadingConverter : Converter<String, Saksnummer> {
+class SaksnummerReadingConverter : Converter<String, Saksnummer?> {
     override fun convert(source: String) = source.trimToNull()?.let { Saksnummer(source) }
 }
 
-class SaksnummerWritingConverter : Converter<Saksnummer, String> {
+class SaksnummerWritingConverter : Converter<Saksnummer, String?> {
     override fun convert(source: Saksnummer) = source.verdi.trimToNull()
 }
 
+@jakarta.persistence.Converter
 class SaksnummerConverter : AttributeConverter<Saksnummer, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Saksnummer(source) }
 
