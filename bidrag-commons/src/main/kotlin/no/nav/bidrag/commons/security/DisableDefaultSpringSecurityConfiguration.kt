@@ -1,6 +1,6 @@
 package no.nav.bidrag.commons.security
 
-import org.springframework.boot.autoconfigure.security.ConditionalOnDefaultWebSecurity
+import org.springframework.boot.security.autoconfigure.web.servlet.ConditionalOnDefaultWebSecurity
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
