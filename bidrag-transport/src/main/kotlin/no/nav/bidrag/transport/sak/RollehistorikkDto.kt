@@ -5,7 +5,6 @@ import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.TypeEndring
 import no.nav.bidrag.domene.ident.Personident
-import no.nav.bidrag.domene.ident.ReellMottaker
 import java.time.LocalDateTime
 
 data class RollehistorikkDto(
