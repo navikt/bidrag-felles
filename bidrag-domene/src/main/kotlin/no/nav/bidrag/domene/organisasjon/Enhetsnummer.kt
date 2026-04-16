@@ -17,14 +17,15 @@ class Enhetsnummer(
     }
 }
 
-class EnhetsnummerReadingConverter : Converter<String, Enhetsnummer> {
+class EnhetsnummerReadingConverter : Converter<String, Enhetsnummer?> {
     override fun convert(source: String) = source.trimToNull()?.let { Enhetsnummer(source) }
 }
 
-class EnhetsnummerWritingConverter : Converter<Enhetsnummer, String> {
+class EnhetsnummerWritingConverter : Converter<Enhetsnummer, String?> {
     override fun convert(source: Enhetsnummer) = source.verdi.trimToNull()
 }
 
+@jakarta.persistence.Converter
 class EnhetsnummerConverter : AttributeConverter<Enhetsnummer, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Enhetsnummer(source) }
 
