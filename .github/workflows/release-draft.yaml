@@ -21,4 +21,5 @@ jobs:
     uses: navikt/bidrag-workflow/.github/workflows/maven_release_drafter.yaml@main
     secrets: inherit
     with:
-      publish: ${{github.ref == 'refs/heads/main' && !startsWith(github.ref, 'refs/dependabot')}}
+      publish: true
+      suffix: "-SB4"
