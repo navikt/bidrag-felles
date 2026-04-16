@@ -14,7 +14,7 @@ class BrukerCacheNøkkelGenerator(
     override fun generate(
         target: Any,
         method: Method,
-        vararg params: Any,
+        vararg params: Any?,
     ): Any = tilBrukerCacheKey(super.generate(target, method, *params))
 
     private fun tilBrukerCacheKey(key: Any): BrukerCacheNøkkel {
