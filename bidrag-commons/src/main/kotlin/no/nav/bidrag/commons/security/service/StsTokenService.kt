@@ -7,7 +7,7 @@ import no.nav.security.token.support.client.core.OAuth2CacheFactory
 import no.nav.security.token.support.client.core.oauth2.OAuth2AccessTokenResponse
 import org.slf4j.LoggerFactory
 import org.springframework.boot.context.properties.EnableConfigurationProperties
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
@@ -31,8 +31,8 @@ class StsTokenService(
             ).build()
 
     companion object {
-        private val PARAMETERS: LinkedMultiValueMap<String?, String?> =
-            object : LinkedMultiValueMap<String?, String?>(2) {
+        private val PARAMETERS: LinkedMultiValueMap<String, String> =
+            object : LinkedMultiValueMap<String, String>(2) {
                 init {
                     add("grant_type", "client_credentials")
                     add("scope", "openid")
