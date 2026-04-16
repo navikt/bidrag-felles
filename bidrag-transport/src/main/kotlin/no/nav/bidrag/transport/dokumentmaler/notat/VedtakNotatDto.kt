@@ -11,6 +11,7 @@ import no.nav.bidrag.domene.enums.behandling.Behandlingstype
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erAvvisning
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.diverse.InntektBeløpstype
 import no.nav.bidrag.domene.enums.diverse.Kilde
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
@@ -25,6 +26,7 @@ import no.nav.bidrag.domene.enums.samværskalkulator.SamværskalkulatorNetterFre
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
 import no.nav.bidrag.domene.enums.særbidrag.Utgiftstype
 import no.nav.bidrag.domene.enums.vedtak.BeregnTil
+import no.nav.bidrag.domene.enums.vedtak.Innkrevingstype
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
@@ -44,6 +46,7 @@ import no.nav.bidrag.transport.dokumentmaler.DokumentmalManuellVedtak
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalPersonDto
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalResultatBeregningInntekterDto
 import no.nav.bidrag.transport.dokumentmaler.DokumentmalResultatBidragsberegningBarnDto
+import no.nav.bidrag.transport.dokumentmaler.tilVisningsnavn
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.time.LocalDate
@@ -96,6 +99,7 @@ data class NotatBehandlingDetaljerDto(
     val opprinneligVedtakstype: Vedtakstype? = null,
     val kategori: NotatSærbidragKategoriDto? = null,
     val søktAv: SøktAvType?,
+    val innkreving: Boolean = true,
     val mottattDato: LocalDate?,
     val søktFraDato: YearMonth?,
     val søknadstype: String?,
@@ -192,7 +196,11 @@ data class NotatUnderholdBarnDto(
     data class NotatTilsynsutgiftBarn(
         val gjelderBarn: DokumentmalPersonDto,
         val totalTilsynsutgift: BigDecimal,
+        val faktiskUtgiftBeregnet: BigDecimal,
         val beløp: BigDecimal,
+        val tilleggsstønadDagsats: BigDecimal? = null,
+        val tilleggsstønadBeløp: BigDecimal? = null,
+        val beløpstype: InntektBeløpstype? = null,
         val kostpenger: BigDecimal? = null,
         val tilleggsstønad: BigDecimal? = null,
     )
@@ -217,9 +225,13 @@ data class NotatUnderholdBarnDto(
 
     data class NotatTilleggsstønadDto(
         val periode: DatoperiodeDto,
-        val dagsats: BigDecimal,
+        val dagsats: BigDecimal?,
+        val beløp: BigDecimal? = dagsats,
+        val beløpstype: InntektBeløpstype = InntektBeløpstype.DAGSATS,
         val total: BigDecimal,
-    )
+    ) {
+        val beløpstypeVisningsnavn get() = beløpstype.tilVisningsnavn()
+    }
 
     data class NotatUnderholdskostnadBeregningDto(
         val periode: DatoperiodeDto,
@@ -344,10 +356,12 @@ data class NotatVirkningstidspunktDto(
 
 data class NotatVirkningstidspunktBarnDto(
     val rolle: DokumentmalPersonDto,
+    val stønadstype: Stønadstype?,
     val behandlingstype: Behandlingstype?,
     @Deprecated("Bruk behandlingstype")
     val søknadstype: String?,
     val vedtakstype: Vedtakstype?,
+    val innkreving: Boolean = true,
     val søktAv: SøktAvType?,
     @Schema(type = "string", format = "date", example = "01.12.2025")
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -378,7 +392,18 @@ data class NotatVirkningstidspunktBarnDto(
 
     @get:Schema(name = "avslagVisningsnavn")
     val avslagVisningsnavn
-        get() = vedtakstype?.let { avslag?.visningsnavnIntern(vedtakstype) } ?: avslag?.visningsnavn?.intern
+        get() =
+            vedtakstype?.let {
+                avslag?.visningsnavnIntern(
+                    vedtakstype,
+                    if (stønadstype == Stønadstype.FORSKUDD) {
+                        rolle.harLøpendeForskudd == true
+                    } else {
+                        rolle.harLøpendeBidrag == true
+                    },
+                )
+            }
+                ?: avslag?.visningsnavn?.intern
 
     @get:Schema(name = "erAvvisning")
     val erAvvisning get() = avslag?.erAvvisning() == true
@@ -645,11 +670,57 @@ data class NotatInntektDto(
     val historisk: Boolean = false,
     val inntektsposter: List<NotatInntektspostDto> = emptyList(),
 ) {
+    val beløpstypeVisningsnavn get() = beløpstype.tilVisningsnavn()
+
+    val skattefaktor get() =
+        if (type == Inntektsrapportering.BARNETILLEGG) {
+            inntektsposter.firstOrNull()?.skattefaktor ?: BigDecimal.ZERO
+        } else {
+            null
+        }
+    val beløpstype get() =
+        if (type == Inntektsrapportering.BARNETILLEGG) {
+            if (inntektsposter.firstOrNull()?.beløpstype == null ||
+                inntektsposter.firstOrNull()?.beløpstype == InntektBeløpstype.ÅRSBELØP
+            ) {
+                InntektBeløpstype.MÅNEDSBELØP
+            } else {
+                inntektsposter.firstOrNull()?.beløpstype
+            }
+        } else {
+            InntektBeløpstype.ÅRSBELØP
+        }
+
+    @get:Schema(description = "Avrundet månedsbeløp for barnetillegg")
+    val beløpMånedDagsats: BigDecimal?
+        get() =
+            when (beløpstype) {
+                InntektBeløpstype.MÅNEDSBELØP -> månedsbeløp
+                InntektBeløpstype.DAGSATS -> dagsats
+                else -> null
+            }
+
     @get:Schema(description = "Avrundet månedsbeløp for barnetillegg")
     val månedsbeløp: BigDecimal?
         get() =
-            if (Inntektsrapportering.BARNETILLEGG == type) {
-                beløp.divide(BigDecimal(12), 0, RoundingMode.HALF_UP)
+            run {
+                val beløpstype = inntektsposter.firstOrNull()?.beløpstype
+                if (Inntektsrapportering.BARNETILLEGG == type && beløpstype == InntektBeløpstype.MÅNEDSBELØP) {
+                    inntektsposter.first().beløp
+                } else if (Inntektsrapportering.BARNETILLEGG == type &&
+                    (beløpstype == null || beløpstype == InntektBeløpstype.ÅRSBELØP)
+                ) {
+                    beløp.divide(BigDecimal(12), 0, RoundingMode.HALF_UP)
+                } else {
+                    null
+                }
+            }
+
+    @get:Schema(description = "Avrundet dagsats for barnetillegg")
+    val dagsats: BigDecimal?
+        get() =
+            if (Inntektsrapportering.BARNETILLEGG == type && beløpstype == InntektBeløpstype.DAGSATS) {
+                inntektsposter.first().beløp
             } else {
                 null
             }
@@ -666,6 +737,8 @@ data class NotatInntektspostDto(
     val kode: String?,
     val inntektstype: Inntektstype?,
     val beløp: BigDecimal,
+    val beløpstype: InntektBeløpstype = InntektBeløpstype.ÅRSBELØP,
+    val skattefaktor: BigDecimal? = null,
     val visningsnavn: String? = inntektstype?.visningsnavn?.intern,
 )
 

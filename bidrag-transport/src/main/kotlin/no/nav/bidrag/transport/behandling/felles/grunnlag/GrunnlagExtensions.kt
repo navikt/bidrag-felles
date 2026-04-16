@@ -5,7 +5,10 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import com.fasterxml.jackson.module.kotlin.treeToValue
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
+import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåFremmedReferanse
 import no.nav.bidrag.transport.felles.commonObjectmapper
 
 val Grunnlagstype.erIndeksEllerAldersjustering get() =
@@ -38,16 +41,18 @@ fun List<BaseGrunnlag>.finnGrunnlagSomErReferertFraGrunnlagsreferanseListe(
     grunnlagsreferanseListe: List<Grunnlagsreferanse>,
 ): Set<BaseGrunnlag> {
     val grunnlag = filtrerBasertPåEgenReferanser(type, grunnlagsreferanseListe)
-    if (grunnlag.isEmpty()) {
-        return grunnlagsreferanseListe
+
+    // Traverser også rekursivt gjennom alle refererte grunnlag for å finne transitive referanser
+    val indirekteGrunnlag =
+        grunnlagsreferanseListe
             .flatMap { referanse ->
                 filtrerBasertPåEgenReferanse(null, referanse)
                     .flatMap {
                         finnGrunnlagSomErReferertAv(type, it)
                     }
-            }.toSet()
-    }
-    return grunnlag.toSet()
+            }
+
+    return (grunnlag + indirekteGrunnlag).toSet()
 }
 
 fun List<BaseGrunnlag>.finnGrunnlagSomErReferertAv(
@@ -55,16 +60,18 @@ fun List<BaseGrunnlag>.finnGrunnlagSomErReferertAv(
     fraGrunnlag: BaseGrunnlag,
 ): Set<BaseGrunnlag> {
     val grunnlag = filtrerBasertPåEgenReferanser(type, fraGrunnlag.grunnlagsreferanseListe)
-    if (grunnlag.isEmpty()) {
-        return fraGrunnlag.grunnlagsreferanseListe
+
+    // Traverser også rekursivt gjennom alle refererte grunnlag for å finne transitive referanser
+    val indirekteGrunnlag =
+        fraGrunnlag.grunnlagsreferanseListe
             .flatMap { referanse ->
                 filtrerBasertPåEgenReferanse(null, referanse)
                     .flatMap {
                         finnGrunnlagSomErReferertAv(type, it)
                     }
-            }.toSet()
-    }
-    return grunnlag.toSet()
+            }
+
+    return (grunnlag + indirekteGrunnlag).toSet()
 }
 
 fun List<BaseGrunnlag>.filtrerBasertPåEgenReferanser(
@@ -164,6 +171,7 @@ fun BaseGrunnlag.erPerson(): Boolean = type.name.startsWith("PERSON_")
 
 val BaseGrunnlag.personObjekt get() = commonObjectmapper.treeToValue(innhold, Person::class.java)!!
 val BaseGrunnlag.personIdent get() = personObjekt.ident?.verdi
+val BaseGrunnlag.stønadstype get() = personObjekt.stønadstype
 val Collection<BaseGrunnlag>.bidragspliktig
     get() =
         find { it.type == Grunnlagstype.PERSON_BIDRAGSPLIKTIG }
@@ -185,9 +193,33 @@ val Collection<BaseGrunnlag>.søknadsbarn
             it.type == Grunnlagstype.PERSON_SØKNADSBARN
         }.toSet()
 
-fun Collection<GrunnlagDto>.hentPerson(ident: String?) = ident?.let { filter { it.erPerson() }.find { it.personIdent == ident } }
+fun Collection<GrunnlagDto>.hentPerson(
+    ident: String?,
+    stønadstype: Stønadstype? = null,
+) = ident?.let {
+    filter { it.erPerson() }.find {
+        it.personIdent == ident &&
+            (stønadstype == null || it.stønadstype == null || stønadstype == it.stønadstype)
+    }
+}
 
-fun Collection<BaseGrunnlag>.hentPersonMedIdent(ident: String?) = ident?.let { hentAllePersoner().find { it.personIdent == ident } }
+fun Collection<BaseGrunnlag>.hentPersonMedIdent(
+    ident: String?,
+    stønadstype: Stønadstype? = null,
+) = ident?.let {
+    hentAllePersoner().find {
+        it.personIdent == ident &&
+            (stønadstype == null || it.stønadstype == null || stønadstype == it.stønadstype)
+    }
+}
+
+fun Collection<BaseGrunnlag>.hentSøknadFraGrunnlagsreferanseListe(grunnlagsreferanseListe: List<Grunnlagsreferanse>) =
+    toList()
+        .finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<SøknadGrunnlag>(
+            Grunnlagstype.SØKNAD,
+            grunnlagsreferanseListe = grunnlagsreferanseListe,
+        ).firstOrNull()
+        ?.innhold
 
 fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferanse?) =
     referanse?.let {
@@ -196,11 +228,40 @@ fun Collection<BaseGrunnlag>.hentPersonMedReferanse(referanse: Grunnlagsreferans
             .firstOrNull()
     }
 
-fun Collection<BaseGrunnlag>.hentPersonMedIdentKonvertert(ident: String?) =
-    hentAllePersoner()
-        .find {
-            it.personIdent == ident
-        }?.innholdTilObjekt<Person>()
+fun Collection<BaseGrunnlag>.hentSøknadsiderForPerson(
+    personident: Personident,
+    stønadstype: Stønadstype?,
+): List<Long> {
+    val person = hentPersonMedIdent(personident.verdi, stønadstype) ?: return emptyList()
+    return toList()
+        .filtrerOgKonverterBasertPåFremmedReferanse<SøknadGrunnlag>(
+            Grunnlagstype.SØKNAD,
+            gjelderBarnReferanse = person.referanse,
+        ).map { it.innhold }
+        .mapNotNull { it.søknadsid }
+}
+
+fun Collection<BaseGrunnlag>.hentSøknadForPerson(
+    personident: Personident,
+    stønadstype: Stønadstype?,
+): SøknadGrunnlag? {
+    val person = hentPersonMedIdent(personident.verdi, stønadstype) ?: return null
+    return toList()
+        .filtrerOgKonverterBasertPåFremmedReferanse<SøknadGrunnlag>(
+            Grunnlagstype.SØKNAD,
+            gjelderBarnReferanse = person.referanse,
+        ).firstOrNull()
+        ?.innhold
+}
+
+fun Collection<BaseGrunnlag>.hentPersonMedIdentKonvertert(
+    ident: String?,
+    stønadstype: Stønadstype? = null,
+) = hentAllePersoner()
+    .find {
+        it.personIdent == ident &&
+            (stønadstype == null || it.stønadstype == null || stønadstype == it.stønadstype)
+    }?.innholdTilObjekt<Person>()
 
 fun Collection<BaseGrunnlag>.hentPersonMedReferanseKonvertert(referanse: Grunnlagsreferanse?) =
     referanse?.let {

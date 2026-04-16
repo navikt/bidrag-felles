@@ -10,6 +10,7 @@ import no.nav.bidrag.domene.util.visningsnavnIntern
 val konverterteVerdier =
     mapOf(
         "DIREKTE_OPPJØR" to Resultatkode.DIREKTE_OPPGJØR,
+        "PÅ_GRUNN_AV_SAMMENFLYTTING" to Resultatkode.BARNET_ANSES_Å_BO_SAMMEN_MED_BEGGE_FORELDRE,
     )
 
 @Schema(enumAsRef = true, name = "Resultatkode")
@@ -74,6 +75,13 @@ enum class Resultatkode(
     ),
     IKKE_OMSORG_FOR_BARNET(
         listOf(BisysResultatkode("IOB")),
+        ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.OPPHØR,
+        ResultatkodeType.AVSLAG,
+        ResultatkodeType.DIREKTE_AVSLAG,
+    ),
+    PARTENE_BOR_SAMMEN(
+        listOf(BisysResultatkode("APB", BisysResultatkodeType.AVSLAG), BisysResultatkode("OPS", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.BARNEBIDRAG,
         ResultatkodeType.OPPHØR,
         ResultatkodeType.AVSLAG,
@@ -208,8 +216,11 @@ enum class Resultatkode(
         ResultatkodeType.SÆRBIDRAG,
         ResultatkodeType.FORSKUDD,
     ),
-    PÅ_GRUNN_AV_SAMMENFLYTTING(
+
+    @JsonAlias("PÅ_GRUNN_AV_SAMMENFLYTTING", "BARNET_BOR_SAMMEN_MED_BEGGE_FORELDRE")
+    BARNET_ANSES_Å_BO_SAMMEN_MED_BEGGE_FORELDRE(
         listOf(BisysResultatkode("ASA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OSA", BisysResultatkodeType.OPPHØR)),
+        ResultatkodeType.OPPHØR,
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
         ResultatkodeType.FORSKUDD,
@@ -226,11 +237,15 @@ enum class Resultatkode(
         ResultatkodeType.DIREKTE_AVSLAG,
         ResultatkodeType.FORSKUDD,
     ),
+
+    // Også for 18 år
     AVSLAG_PRIVAT_AVTALE_BIDRAG(
         listOf(BisysResultatkode("APA", BisysResultatkodeType.AVSLAG), BisysResultatkode("OPA", BisysResultatkodeType.OPPHØR)),
         ResultatkodeType.AVSLAG,
+        ResultatkodeType.OPPHØR,
         ResultatkodeType.DIREKTE_AVSLAG,
         ResultatkodeType.FORSKUDD,
+        ResultatkodeType.BARNEBIDRAG,
     ),
 
     // I tilfeller når BP bor i Lugano-land og BM søker kun om forskudd, så har vi ikke hjemmel til å ta bidragssaken opp av eget tiltak etter forskotteringsloven.
@@ -367,12 +382,18 @@ enum class Resultatkode(
                 konverterteVerdier[kode]
             }
 
-        fun Resultatkode.tilBisysResultatkode(vedtakstype: Vedtakstype? = null) =
-            if (vedtakstype == Vedtakstype.OPPHØR) {
-                bisysKode.find { it.type == BisysResultatkodeType.OPPHØR }?.resultatKode ?: bisysKode.firstOrNull()?.resultatKode
-            } else {
-                bisysKode.firstOrNull()?.resultatKode
-            }
+        fun Resultatkode.tilBisysResultatkode() = tilBisysResultatkode(null)
+
+        fun Resultatkode.tilBisysResultatkode(vedtakstype: Vedtakstype? = null) = tilBisysResultatkode(vedtakstype, false)
+
+        fun Resultatkode.tilBisysResultatkode(
+            vedtakstype: Vedtakstype? = null,
+            løperBidragEllerForskudd: Boolean? = null,
+        ) = if (vedtakstype == Vedtakstype.OPPHØR || (løperBidragEllerForskudd != null && løperBidragEllerForskudd)) {
+            bisysKode.find { it.type == BisysResultatkodeType.OPPHØR }?.resultatKode ?: bisysKode.firstOrNull()?.resultatKode
+        } else {
+            bisysKode.firstOrNull()?.resultatKode
+        }
 
         fun fraVisningsnavn(
             visningsnavn: String,

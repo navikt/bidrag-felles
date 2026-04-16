@@ -12,7 +12,11 @@ import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadDto
+import no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadPeriodeDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetaljerGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.BeløpshistorikkGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.BeløpshistorikkPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnholdMedReferanse
@@ -24,6 +28,7 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.VedtakOrkestreringDeta
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåEgenReferanse
+import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåFremmedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragGrunnlagIReferanser
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentAldersjusteringDetaljerGrunnlag
@@ -292,6 +297,13 @@ fun List<GrunnlagDto>.finnSøknadGrunnlag(): SøknadGrunnlag? =
         Grunnlagstype.SØKNAD,
     ).firstOrNull()?.innhold
 
+fun List<GrunnlagDto>.finnSøknadGrunnlagForBarn(søknadsbarnreferanse: String): SøknadGrunnlag? =
+    filtrerOgKonverterBasertPåFremmedReferanse<SøknadGrunnlag>(
+        Grunnlagstype.SØKNAD,
+        gjelderBarnReferanse = søknadsbarnreferanse,
+    ).firstOrNull()
+        ?.innhold ?: finnSøknadGrunnlag()
+
 fun VedtakDto.erInnkrevingsgrunnlag(): Boolean {
     val søknad = this.grunnlagListe.finnSøknadGrunnlag()
     return søknad != null && søknad.innkrevingsgrunnlag
@@ -420,3 +432,45 @@ val VedtakDto.erOrkestrertVedtak get() =
                     }
             }
     )
+
+fun List<GrunnlagDto>.hentGrunnlagBeløpshistorikkForRolle(stønadsid: Stønadsid) =
+    when (stønadsid.type) {
+        Stønadstype.FORSKUDD -> {
+            filtrerOgKonverterBasertPåFremmedReferanse<BeløpshistorikkGrunnlag>(
+                Grunnlagstype.BELØPSHISTORIKK_FORSKUDD,
+                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi)?.referanse,
+            )
+        }
+
+        Stønadstype.BIDRAG -> {
+            filtrerOgKonverterBasertPåFremmedReferanse<BeløpshistorikkGrunnlag>(
+                Grunnlagstype.BELØPSHISTORIKK_BIDRAG,
+                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi)?.referanse,
+            )
+        }
+
+        Stønadstype.BIDRAG18AAR -> {
+            filtrerOgKonverterBasertPåFremmedReferanse<BeløpshistorikkGrunnlag>(
+                Grunnlagstype.BELØPSHISTORIKK_BIDRAG_18_ÅR,
+                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi)?.referanse,
+            )
+        }
+
+        else -> {
+            null
+        }
+    }
+
+fun VedtakDto.finnSistePeriodeLøpendePeriodeInnenforVirkningstidspunkt(stønadsid: Stønadsid): `BeløpshistorikkPeriode`? {
+    val virkningstidspunkt = finnVirkningstidspunktForStønad(stønadsid) ?: return null
+    val stønad = grunnlagListe.hentGrunnlagBeløpshistorikkForRolle(stønadsid)?.firstOrNull()?.innhold ?: return null
+    val sistePeriode = stønad.beløpshistorikk.maxByOrNull { it.periode.fom } ?: return null
+    return if (sistePeriode.periode.til == null || sistePeriode.periode.til!! > YearMonth.from(virkningstidspunkt)) {
+        sistePeriode
+    } else {
+        null
+    }
+}
+
+fun VedtakDto.løpteBidragEllerForskuddFraVirkningstidspunkt(stønadsid: Stønadsid): Boolean =
+    finnSistePeriodeLøpendePeriodeInnenforVirkningstidspunkt(stønadsid) != null

@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erDirekteAvslag
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.diverse.InntektBeløpstype
 import no.nav.bidrag.domene.enums.rolle.Rolletype
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.sak.Saksnummer
@@ -291,6 +293,7 @@ data class DokumentmalDelberegningBarnetilleggDto(
     data class DokumentmalBarnetilleggDetaljerDto(
         val bruttoBeløp: BigDecimal,
         val nettoBeløp: BigDecimal,
+        val skattefaktor: BigDecimal? = null,
         val visningsnavn: String,
     )
 }
@@ -367,15 +370,19 @@ data class DokumentmalPersonDto(
     val saksnummer: String? = null,
     val bidragsmottakerIdent: String? = null,
     val revurdering: Boolean = false,
+    val harLøpendeForskudd: Boolean? = false,
+    val harLøpendeBidrag: Boolean? = false,
 )
 
 data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
     val sumBidragTilFordeling: BigDecimal,
     val finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn: Boolean,
-    val sumBidragTilFordelingSPrioritertBidrag: BigDecimal,
     val sumBidragTilFordelingSøknadsbarn: BigDecimal,
     val sumBidragTilFordelingIkkeSøknadsbarn: BigDecimal,
     val sumBidragTilFordelingPrivatAvtale: BigDecimal,
+    val sumBidragSomIkkeKanFordeles: BigDecimal,
+    val sumBidragTilFordelingJustertForPrioriterteBidrag: BigDecimal,
+    val evneJustertForPrioriterteBidrag: BigDecimal,
     val sumPrioriterteBidragTilFordeling: BigDecimal,
     val bidragTilFordelingForBarnet: BigDecimal,
     val andelAvSumBidragTilFordelingFaktor: BigDecimal,
@@ -388,17 +395,21 @@ data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
 )
 
 data class DokumentmalForholdsmessigFordelingBidragTilFordelingBarn(
-    val prioritertBidrag: Boolean,
+    val utenlandskbidrag: Boolean = false,
+    val oppfostringsbidrag: Boolean = false,
     val privatAvtale: Boolean,
     val erSøknadsbarn: Boolean,
     val beregnetBidrag: BeregnetBidragBarnDto? = null,
     val bidragTilFordeling: BigDecimal,
     val barn: DokumentmalPersonDto,
 ) {
+    val erBidragSomIkkeKanFordeles get() = utenlandskbidrag || oppfostringsbidrag
+
     data class BeregnetBidragBarnDto(
         val saksnummer: Saksnummer,
         val løpendeBeløp: BigDecimal,
-        val valutakode: String = "NOK",
+        val valutakode: Valutakode = Valutakode.NOK,
+        val valutakurs: BigDecimal = BigDecimal.ONE,
         val samværsklasse: Samværsklasse,
         val samværsfradrag: BigDecimal,
         val beregnetBeløp: BigDecimal,
@@ -408,3 +419,11 @@ data class DokumentmalForholdsmessigFordelingBidragTilFordelingBarn(
         val beregnetBidrag: BigDecimal,
     )
 }
+
+fun InntektBeløpstype?.tilVisningsnavn() =
+    when (this) {
+        InntektBeløpstype.MÅNEDSBELØP_11_MÅNEDER, InntektBeløpstype.MÅNEDSBELØP -> "Måned"
+        InntektBeløpstype.DAGSATS -> "Dagsats"
+        InntektBeløpstype.ÅRSBELØP -> "Dagsats"
+        else -> ""
+    }

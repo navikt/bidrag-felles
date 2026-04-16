@@ -12,13 +12,14 @@ typealias BisysSøknadstype = Behandlingstype
 enum class Behandlingstype(
     val bisysKode: String,
     val bisysDekode: String,
-    val erKlage: Boolean,
+    val erKlageEllerOmgjøring: Boolean,
 ) {
     ENDRING("EN", "Endring", false),
     EGET_TILTAK("ET", "Eget tiltak", false),
     SØKNAD("FA", "Søknad", false),
     INNKREVINGSGRUNNLAG("IG", "Innkr.grunnlag", false),
     FORHOLDSMESSIG_FORDELING("FF", "Forholdsmessig fordeling", false),
+    FORHOLDSMESSIG_FORDELING_KLAGE("FK", "Forholdsmessig fordeling klage", true),
     ALDERSJUSTERING("AJ", "Aldersjustering", false),
     INDEKSREGULERING("IR", "Indeksregulering", false),
     KLAGE_BEGRENSET_SATS("KB", "Klage begr sats", true),
@@ -46,7 +47,7 @@ enum class Behandlingstype(
             SØKNAD -> Vedtakstype.FASTSETTELSE
             INNKREVINGSGRUNNLAG, PRIVAT_AVTALE -> Vedtakstype.INNKREVING
             KLAGE_BEGRENSET_SATS, KLAGE, FØLGER_KLAGE -> Vedtakstype.KLAGE
-            REVURDERING, FORHOLDSMESSIG_FORDELING -> Vedtakstype.REVURDERING
+            REVURDERING, FORHOLDSMESSIG_FORDELING, FORHOLDSMESSIG_FORDELING_KLAGE -> Vedtakstype.REVURDERING
             else -> Vedtakstype.ENDRING
         }
 

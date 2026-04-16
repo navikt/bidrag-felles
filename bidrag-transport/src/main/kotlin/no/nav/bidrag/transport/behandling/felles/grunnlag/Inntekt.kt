@@ -2,6 +2,7 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 
 import com.fasterxml.jackson.annotation.JsonAlias
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.diverse.InntektBeløpstype
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -40,7 +41,18 @@ data class InntektsrapporteringPeriode(
         val inntektstype: Inntektstype? = null,
         @Schema(description = "Beløp som utgjør inntektsposten", example = "60000")
         val beløp: BigDecimal,
-    )
+        @Schema(description = "Typen på beløp. For barnetillegg så kan det være måndesbeløp eller dagsats", example = "60000")
+        val beløpstype: InntektBeløpstype = InntektBeløpstype.ÅRSBELØP,
+        @Schema(description = "Skattefaktor på barnetillegget. Brukes ved beregning av netto barnetillegg", example = "0.05")
+        val skattefaktor: BigDecimal? = null,
+    ) {
+        constructor(
+            kode: String,
+            inntektstype: Inntektstype,
+            beløp: BigDecimal,
+            beløpstype: InntektBeløpstype,
+        ) : this(kode, inntektstype, beløp, beløpstype, null)
+    }
 }
 
 @Schema(description = "Inntekt beregnet av bidrag-inntekt basert på data fra bidrag-grunnlag")

@@ -84,8 +84,8 @@ IKKE_OPPHOLD_I_RIKET:
 MANGLENDE_DOKUMENTASJON:
   intern: "Manglende dokumentasjon"
 
-PÅ_GRUNN_AV_SAMMENFLYTTING:
-  intern: "På grunn av sammenflytting"
+BARNET_ANSES_Å_BO_SAMMEN_MED_BEGGE_FORELDRE:
+  intern: "Barnet anses å bo sammen med begge foreldrene"
 
 OPPHOLD_I_UTLANDET:
   intern: "Opphold i utlandet"
@@ -126,6 +126,9 @@ AVSLUTTET_SKOLEGANG:
 IKKE_OMSORG_FOR_BARNET:
   intern: "Ikke omsorg for barnet"
 
+PARTENE_BOR_SAMMEN:
+  intern: "Partene bor sammen"
+
 BARNET_ER_DØDT:
   intern: "Barnet er dødt"
 
@@ -151,7 +154,7 @@ PARTEN_BER_OM_OPPHØR:
   intern: "Parten ber om opphør"
 
 OPPHØR:
-  intern: "Annet opphør"
+  intern: "Opphør"
 
 INGEN_ENDRING_UNDER_GRENSE:
   intern: "Ingen endring under grense"

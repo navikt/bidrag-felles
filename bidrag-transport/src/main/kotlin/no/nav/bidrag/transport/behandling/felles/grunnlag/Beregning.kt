@@ -3,11 +3,14 @@ package no.nav.bidrag.transport.behandling.felles.grunnlag
 import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
+import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.beløp.Beløp
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
+import no.nav.bidrag.domene.enums.diverse.InntektBeløpstype
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
 import no.nav.bidrag.domene.enums.person.AldersgruppeForskudd
+import no.nav.bidrag.domene.enums.samhandler.Valutakode
 import no.nav.bidrag.domene.sak.Saksnummer
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.Visningsnavn
@@ -358,7 +361,10 @@ data class FaktiskUtgiftPeriode(
 
 data class TilleggsstønadPeriode(
     override val periode: ÅrMånedsperiode,
-    val beløpDagsats: BigDecimal,
+    @Deprecated("Bruk beløp og beløpstype", replaceWith = ReplaceWith("beløp"))
+    val beløpDagsats: BigDecimal? = null,
+    val beløp: BigDecimal = beløpDagsats ?: BigDecimal.ZERO,
+    val beløpstype: InntektBeløpstype = InntektBeløpstype.DAGSATS,
     override val manueltRegistrert: Boolean,
 ) : GrunnlagPeriodeInnhold
 
@@ -419,6 +425,8 @@ data class DelberegningEvne25ProsentAvInntekt(
 
 data class DelberegningAndelAvBidragsevne(
     override val periode: ÅrMånedsperiode,
+    val sumBidragTilFordelingJustertForPrioriterteBidrag: BigDecimal = BigDecimal.ZERO,
+    val evneJustertForPrioriterteBidrag: BigDecimal = BigDecimal.ZERO,
     val andelAvSumBidragTilFordelingFaktor: BigDecimal,
     val andelAvEvneBeløp: BigDecimal,
     val bidragEtterFordeling: BigDecimal,
@@ -442,8 +450,19 @@ data class SluttberegningBarnebidragV2(
 
 data class DelberegningBidragTilFordelingLøpendeBidrag(
     override val periode: ÅrMånedsperiode,
+    val valutakode: Valutakode = Valutakode.NOK,
+    @Schema(description = "Reduksjon underholdskostnad i valuta")
     val reduksjonUnderholdskostnad: BigDecimal,
+    @Schema(description = "Samværsfradrag i valuta")
+    val samværsfradrag: BigDecimal? = null,
+    @Schema(description = "Indeksregulert beløp i valuta")
     val bidragTilFordeling: BigDecimal,
+    @Schema(description = "Bidrag til fordeling i NOK")
+    val bidragTilFordelingNOK: BigDecimal = bidragTilFordeling,
+    @Schema(description = "Er dette et norsk bidrag?")
+    val erNorskBidrag: Boolean = true,
+    @Schema(description = "Er dette et oppfostringsbidrag?")
+    val erOppfostringsbidrag: Boolean = false,
 ) : Delberegning
 
 // ---------- Deprekerte verdier. Skal ikke slettes helt til vedtak databasen er konvertert i PROD --------------------------

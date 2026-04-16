@@ -1,24 +1,20 @@
 package no.nav.bidrag.transport.sak
 
-import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.ident.ReellMottaker
-import no.nav.bidrag.domene.ident.SamhandlerId
 import no.nav.bidrag.domene.sak.Saksnummer
 
-data class Sakshendelse(
+data class SakHendelse(
     val saksnummer: Saksnummer,
     val hendelsestype: SakKafkaHendelsestype,
-    val roller: List<Saksrolle> = emptyList(),
-    val sporingId: String,
+    val bidragspliktig: Personident? = null,
+    val bidragsmottaker: Personident? = null,
+    val barn: List<BarnISak> = emptyList(),
 )
 
-data class Saksrolle(
+data class BarnISak(
     val ident: Personident? = null,
-    val type: Rolletype,
-    val samhandlerId: SamhandlerId? = null,
-    val reelMottager: ReellMottaker? = null,
-    val ukjent: Boolean = false,
+    val reellMottaker: ReellMottaker? = null,
 )
 
 enum class SakKafkaHendelsestype {

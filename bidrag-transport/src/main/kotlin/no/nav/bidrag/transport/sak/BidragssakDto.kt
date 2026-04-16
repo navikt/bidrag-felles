@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.sak
 
 import io.swagger.v3.oas.annotations.media.Schema
+import no.nav.bidrag.domene.enums.sak.Arbeidsfordeling
 import no.nav.bidrag.domene.enums.sak.Bidragssakstatus
 import no.nav.bidrag.domene.enums.sak.Fogdårsak
 import no.nav.bidrag.domene.enums.sak.Sakskategori
@@ -28,6 +29,7 @@ data class BidragssakDto(
     val ukjentPart: Boolean,
     val vedtakssperre: Boolean = false,
     val avsluttet: Boolean = false,
+    val arbeidsfordeling: Arbeidsfordeling = Arbeidsfordeling.EIERENHET,
     @Schema(description = "Rollene som saken inneholder")
     val roller: List<RolleDto> = emptyList(),
 )

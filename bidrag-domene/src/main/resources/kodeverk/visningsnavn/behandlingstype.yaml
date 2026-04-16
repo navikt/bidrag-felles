@@ -82,3 +82,6 @@ KONVERTERING:
   intern: "Konvertering"
 FORHOLDSMESSIG_FORDELING:
   intern: "Forholdsmessig fordeling"
+
+FORHOLDSMESSIG_FORDELING_KLAGE:
+  intern: "Forholdsmessig fordeling klage"

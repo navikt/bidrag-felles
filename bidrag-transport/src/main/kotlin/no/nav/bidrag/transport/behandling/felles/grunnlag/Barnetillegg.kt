@@ -10,8 +10,16 @@ data class BarnetilleggPeriode(
     override val periode: ÅrMånedsperiode,
     val type: Inntektstype,
     val beløp: BigDecimal,
+    val skattefaktor: BigDecimal? = null,
     override val manueltRegistrert: Boolean,
-) : GrunnlagPeriodeInnhold
+) : GrunnlagPeriodeInnhold {
+    constructor(
+        periode: ÅrMånedsperiode,
+        type: Inntektstype,
+        beløp: BigDecimal,
+        manueltRegistrert: Boolean,
+    ) : this(periode, type, beløp, null, manueltRegistrert)
+}
 
 data class DelberegningBarnetilleggSkattesats(
     override val periode: ÅrMånedsperiode,
@@ -35,4 +43,11 @@ data class Barnetillegg(
     val barnetilleggType: Inntektstype,
     val bruttoBarnetillegg: BigDecimal,
     val nettoBarnetillegg: BigDecimal,
-)
+    val skattefaktor: BigDecimal? = null,
+) {
+    constructor(
+        barnetilleggType: Inntektstype,
+        bruttoBarnetillegg: BigDecimal,
+        nettoBarnetillegg: BigDecimal,
+    ) : this(barnetilleggType, bruttoBarnetillegg, nettoBarnetillegg, null)
+}

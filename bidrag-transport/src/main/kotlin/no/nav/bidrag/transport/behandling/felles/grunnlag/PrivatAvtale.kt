@@ -5,6 +5,7 @@ import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.privatavtale.PrivatAvtaleType
 import no.nav.bidrag.domene.enums.sak.Sakskategori
 import no.nav.bidrag.domene.enums.samhandler.Valutakode
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -17,7 +18,7 @@ data class PrivatAvtaleGrunnlag(
     val avtaleInngåttDato: LocalDate,
     val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
     val skalIndeksreguleres: Boolean,
-    val utlandsbidrag: Boolean = false,
+    val utenlandskbidrag: Boolean = false,
 ) : GrunnlagInnhold
 
 data class PrivatAvtalePeriodeGrunnlag(
@@ -51,8 +52,11 @@ data class DelberegningPrivatAvtalePeriode(
 data class PrivatAvtaleGrunnlagV2(
     val avtaleInngåttDato: LocalDate,
     val avtaleType: PrivatAvtaleType = PrivatAvtaleType.PRIVAT_AVTALE,
+    val stønadstype: Stønadstype = Stønadstype.BIDRAG,
     val skalIndeksreguleres: Boolean,
-    val sakskategori: Sakskategori = Sakskategori.N,
+    val sakskategori: Sakskategori = Sakskategori.NASJONAL,
+    @Schema(description = "Vedtaksid når vedtak fra NAV er valgt som avtaletype")
+    val vedtaksid: Int? = null,
 ) : GrunnlagInnhold
 
 data class DelberegningIndeksreguleringPrivatAvtale(
@@ -65,7 +69,15 @@ data class DelberegningIndeksreguleringPrivatAvtale(
 
 data class DelberegningBidragTilFordelingPrivatAvtale(
     override val periode: ÅrMånedsperiode,
+    val valutakode: Valutakode = Valutakode.NOK,
+    @Schema(description = "Indeksregulert beløp i valuta")
     val indeksregulertBeløp: BigDecimal,
-    val samværsfradrag: BigDecimal?,
+    @Schema(description = "Samværsfradrag i valuta")
+    val samværsfradrag: BigDecimal? = null,
+    @Schema(description = "Bidrag til fordeling i valuta")
     val bidragTilFordeling: BigDecimal,
+    @Schema(description = "Bidrag til fordeling i NOK")
+    val bidragTilFordelingNOK: BigDecimal = bidragTilFordeling,
+    @Schema(description = "Er dette et norsk bidrag?")
+    val erNorskBidrag: Boolean = true,
 ) : Delberegning

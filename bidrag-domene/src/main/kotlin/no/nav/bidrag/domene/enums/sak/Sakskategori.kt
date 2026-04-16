@@ -2,6 +2,8 @@
 
 package no.nav.bidrag.domene.enums.sak
 
+import com.fasterxml.jackson.annotation.JsonAlias
+import com.fasterxml.jackson.annotation.JsonProperty
 import no.nav.bidrag.domene.enums.vedtak.Behandlingstype
 
 enum class Sakskategori(
@@ -11,8 +13,14 @@ enum class Sakskategori(
     private val behandlingstypeSøknad: String,
     val behandlingstype: String,
 ) {
-    N("Nasjonal", null, "ae0058", "ae0003", "ae0118"),
-    U("Utland", "ae0106", "ae0108", "ae0110", "ae0106"),
+    @JsonProperty("U")
+    @JsonAlias("UTLAND")
+    UTLAND("Utland", "ae0106", "ae0108", "ae0110", "ae0106"),
+
+    @JsonProperty("N")
+    @JsonAlias("NASJONAL")
+    NASJONAL("Nasjonal", null, "ae0058", "ae0003", "ae0118"),
+
     ;
 
     override fun toString(): String = beskrivelse

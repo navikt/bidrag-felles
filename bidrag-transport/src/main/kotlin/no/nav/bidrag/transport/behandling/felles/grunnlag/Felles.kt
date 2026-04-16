@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.grunnlag.GrunnlagDatakilde
 import no.nav.bidrag.domene.enums.grunnlag.Grunnlagstype
+import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -120,4 +121,6 @@ data class Person(
     val fødselsdato: LocalDate = LocalDate.parse("2000-01-01"),
     val bidragsmottaker: Grunnlagsreferanse? = null,
     val delAvOpprinneligBehandling: Boolean = true,
+    @Schema(description = "Stønadstype personen tilhører. Brukes når samme person har både ordinær og 18 års bidrag i samme vedtak")
+    val stønadstype: Stønadstype? = null,
 ) : GrunnlagInnhold
