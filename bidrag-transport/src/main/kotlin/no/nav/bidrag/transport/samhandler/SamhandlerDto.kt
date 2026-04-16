@@ -17,9 +17,9 @@ data class SamhandlerDto(
     @param:Schema(
         description =
             "Type offentlig id. " +
-                    "F.eks ORG for norske organisasjonsnummere, " +
-                    "UTOR for utenlandske organisasjonsnummere, " +
-                    "FNR for norske personnummer.",
+                "F.eks ORG for norske organisasjonsnummere, " +
+                "UTOR for utenlandske organisasjonsnummere, " +
+                "FNR for norske personnummer.",
     )
     val offentligIdType: OffentligIdType? = null,
     @param:Schema(description = "Definerer hvilket område samhandleren er knyttet til.")
