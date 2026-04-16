@@ -118,7 +118,12 @@ internal class HttpHeaderTestRestTemplateTest {
 
         @Test
         fun `exchange skal inititalisere ny HttpEntity når argument er null`() {
-            httpHeaderTestRestTemplate.exchange<List<Any>>("somewhere", HttpMethod.GET, null, ParameterizedTypeReference.forType(Any::class.java))
+            httpHeaderTestRestTemplate.exchange<List<Any>>(
+                "somewhere",
+                HttpMethod.GET,
+                null,
+                ParameterizedTypeReference.forType(Any::class.java),
+            )
             val entityCaptor = CapturingSlot<HttpEntity<*>>()
             verify {
                 testRestTemplateMock.exchange(
