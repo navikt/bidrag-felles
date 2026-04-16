@@ -44,14 +44,15 @@ enum class Identtype {
     Ukjent,
 }
 
-class IdentReadingConverter : Converter<String, Ident> {
+class IdentReadingConverter : Converter<String, Ident?> {
     override fun convert(source: String) = source.trimToNull()?.let { Ident(source) }
 }
 
-class IdentWritingConverter : Converter<Ident, String> {
+class IdentWritingConverter : Converter<Ident, String?> {
     override fun convert(source: Ident) = source.verdi.trimToNull()
 }
 
+@jakarta.persistence.Converter
 class IdentConverter : AttributeConverter<Ident, String> {
     override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Ident(source) }
 
