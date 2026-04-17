@@ -12,7 +12,6 @@
 
   <artifactId>bidrag-transport-felles</artifactId>
   <name>bidrag-transport</name>
-  <version>${project.parent.version}</version>
   <packaging>jar</packaging>
 
   <properties>
