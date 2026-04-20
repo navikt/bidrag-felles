@@ -43,7 +43,7 @@
 <!--    <spring-security.version>7.0.4</spring-security.version>-->
 <!--    <spring-expression.version>7.0.4</spring-expression.version>-->
     <httpclient5.version>5.5.1</httpclient5.version>
-    <token-support.version>5.0.37</token-support.version>
+    <token-support.version>6.0.5</token-support.version>
     <jackson.fasterXml.version>2.16.0</jackson.fasterXml.version>
     <aspectj.version>1.9.24</aspectj.version>
     <micrometer-registry.version>1.15.2</micrometer-registry.version>
