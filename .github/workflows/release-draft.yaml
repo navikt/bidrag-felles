@@ -5,11 +5,12 @@ on:
   push:
     branches:
       - main
+      - 'q1/spring-boot-4'
   pull_request:
     types: [opened, reopened, synchronize]
 
 env:
-  publish: ${{github.ref == 'refs/heads/main' && !startsWith(github.ref, 'refs/dependabot')}}
+  publish: ${{ (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/q1/spring-boot-4') && !startsWith(github.ref, 'refs/dependabot') }}
 
 permissions:
   contents: write
@@ -24,3 +25,4 @@ jobs:
     secrets: inherit
     with:
       publish: true
+      suffix: "-SB4"

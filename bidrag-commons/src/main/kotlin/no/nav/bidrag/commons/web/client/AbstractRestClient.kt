@@ -147,7 +147,7 @@ abstract class AbstractRestClient(
             )
         }
 
-    private fun <T> validerOgPakkUt(
+    private fun <T : Any> validerOgPakkUt(
         respons: ResponseEntity<T>,
         uri: URI,
     ): T? {
@@ -164,7 +164,7 @@ abstract class AbstractRestClient(
         return respons.body
     }
 
-    protected fun <T> executeMedMetrics(
+    protected fun <T : Any> executeMedMetrics(
         uri: URI,
         function: () -> ResponseEntity<T>,
     ): T? {

@@ -6,7 +6,6 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
 import org.springframework.http.client.ClientHttpRequestFactory
 import org.springframework.http.converter.HttpMessageConverter
-import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RequestCallback
 import org.springframework.web.client.RestTemplate
 import java.lang.reflect.Type
@@ -44,7 +43,7 @@ open class HttpHeaderRestTemplate : RestTemplate {
     private fun <T : Any> newEntityWithAdditionalHttpHeaders(o: Any?): HttpEntity<T> {
         if (o != null) {
             val httpEntity = mapToHttpEntity<T>(o)
-            val headerNames: Set<String> = HashSet(httpEntity.headers.keys)
+            val headerNames: Set<String> = HashSet(httpEntity.headers.headerNames())
             if (!headerNames.isEmpty()) {
                 log.debug("Existing header(s): %s".format(headerNames))
             }
@@ -60,7 +59,7 @@ open class HttpHeaderRestTemplate : RestTemplate {
             HttpEntity(o as T)
         }
 
-    private fun combineHeaders(existingHeaders: HttpHeaders): MultiValueMap<String, String> {
+    private fun combineHeaders(existingHeaders: HttpHeaders): HttpHeaders {
         val allHeaders = HttpHeaders()
         existingHeaders.forEach { name: String, listValue: List<String> ->
             listValue.forEach { value: String ->
