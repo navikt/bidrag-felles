@@ -336,7 +336,7 @@ fun List<GrunnlagDto>.erResultatEndringUnderGrenseForPeriode(
     if (erIndeksreguleringEllerAldersjustering) {
         return false
     }
-    val delberegningGrense = finnDelberegningSjekkGrensePeriode(periode, søknadsbarnReferanse)
+    val delberegningGrense = finnDelberegningSjekkGrenseForPeriode(periode, søknadsbarnReferanse)
     return delberegningGrense?.innhold?.endringErOverGrense == false
 }
 
@@ -347,6 +347,14 @@ fun List<GrunnlagDto>.finnDelberegningSjekkGrensePeriode(
     Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE_PERIODE,
     gjelderBarnReferanse = søknadsbarnReferanse,
 ).find { it.innhold.periode == periode }
+
+fun List<GrunnlagDto>.finnDelberegningSjekkGrenseForPeriode(
+    periode: ÅrMånedsperiode,
+    søknadsbarnReferanse: String?,
+) = filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrense>(
+    Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE,
+    gjelderBarnReferanse = søknadsbarnReferanse,
+).find { it.innhold.periode.inneholder(periode) }
 
 fun List<GrunnlagDto>.finnDelberegningSjekkGrense(søknadsbarnReferanse: String) =
     filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrense>(
