@@ -23,9 +23,10 @@ data class HentBPsÅpneSøknaderRequest(
 )
 
 data class HentBPsÅpneSøknaderResponse(
-    val åpneSøknader: List<ÅpenSøknadDto> = emptyList(),
+    val åpneSøknader: List<HentSøknad> = emptyList(),
 )
 
+@Deprecated("Bruk heller HentSøknad")
 data class ÅpenSøknadDto(
     val søknadsid: Long,
     val behandlingstype: Behandlingstype,
@@ -55,6 +56,7 @@ data class PartISøknad(
 data class LeggTilBarnIFFSøknadRequest(
     val søknadsid: Long,
     val personidentBarn: String,
+    val innbetaltBeløp: BigDecimal? = null,
 )
 
 data class OppdaterBehandlerenhetRequest(
@@ -74,8 +76,11 @@ data class OpprettSøknadRequest(
     val behandlingstype: Behandlingstype?,
     val behandlingsid: Long? = null,
     val refVedtaksid: Int? = null,
+    val refSøknadsid: Long? = null,
+    val søktAv: SøktAvType? = null,
     val behandlerenhet: String? = null,
     val søknadFomDato: LocalDate,
+    val søknadMottattDato: LocalDate = LocalDate.now(),
     val innkreving: Boolean,
     val hovedsøknadsid: Long? = null,
     val barnListe: List<Barn> = emptyList(),
@@ -83,6 +88,7 @@ data class OpprettSøknadRequest(
 
 data class Barn(
     val personident: String,
+    val innbetaltBeløp: BigDecimal? = null,
 )
 
 data class OpprettSøknadResponse(
@@ -107,6 +113,8 @@ data class HentSøknad(
     val saksnummer: String,
     val behandlingsid: Long? = null,
     val refVedtaksid: Int? = null,
+    val innkreving: Boolean,
+    val søktAvType: SøktAvType,
     val refSøknadsid: Long? = null,
     val vedtaksid: Int? = null,
     val behandlingStatusType: BehandlingStatusType,
