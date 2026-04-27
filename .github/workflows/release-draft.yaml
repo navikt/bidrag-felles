@@ -8,8 +8,6 @@ on:
   pull_request:
     types: [opened, reopened, synchronize]
 
-env:
-  publish: ${{github.ref == 'refs/heads/main' && !startsWith(github.ref, 'refs/dependabot')}}
 
 permissions:
   contents: write
@@ -23,4 +21,4 @@ jobs:
     uses: navikt/bidrag-workflow/.github/workflows/maven_release_drafter.yaml@main
     secrets: inherit
     with:
-      publish: ${{ env.publish }}
+      publish: ${{github.ref == 'refs/heads/main' && !startsWith(github.ref, 'refs/dependabot')}}
