@@ -346,7 +346,7 @@ fun List<GrunnlagDto>.finnDelberegningSjekkGrensePeriode(
 ) = filtrerOgKonverterBasertPåFremmedReferanse<DelberegningEndringSjekkGrensePeriode>(
     Grunnlagstype.DELBEREGNING_ENDRING_SJEKK_GRENSE_PERIODE,
     gjelderBarnReferanse = søknadsbarnReferanse,
-).find { it.innhold.periode == periode }
+).find { it.innhold.periode.inneholder(periode) }
 
 fun List<GrunnlagDto>.finnDelberegningSjekkGrenseForPeriode(
     periode: ÅrMånedsperiode,
