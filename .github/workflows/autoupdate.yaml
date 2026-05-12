@@ -7,6 +7,9 @@ jobs:
   autoupdate:
     name: autoupdate
     runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: write
+      contents: write
     steps:
       - uses: docker://chinthakagodawita/autoupdate-action:v1
         env:

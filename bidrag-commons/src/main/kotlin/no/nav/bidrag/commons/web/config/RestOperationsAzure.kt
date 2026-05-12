@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
+import org.springframework.http.HttpInputMessage
+import org.springframework.http.HttpOutputMessage
 import org.springframework.http.MediaType
 import org.springframework.http.converter.AbstractHttpMessageConverter
 import org.springframework.http.converter.HttpMessageConverter
@@ -69,11 +71,11 @@ class RestOperationsAzure {
 
         override fun supports(clazz: Class<*>): Boolean = true
 
-        override fun readInternal(clazz: Class<out Any>, inputMessage: org.springframework.http.HttpInputMessage): Any {
+        override fun readInternal(clazz: Class<out Any>, inputMessage: HttpInputMessage): Any {
             return objectMapper.readValue(inputMessage.body, clazz)
         }
 
-        override fun writeInternal(obj: Any, outputMessage: org.springframework.http.HttpOutputMessage) {
+        override fun writeInternal(obj: Any, outputMessage: HttpOutputMessage) {
             outputMessage.body.use { os ->
                 objectMapper.writeValue(os, obj)
             }
