@@ -37,6 +37,7 @@ data class LøpendeBidragForholdsmessigFordeling(
     val vedtaksid: Int? = null,
     val uMinusNettoBarnetilleggBM: BigDecimal? = null,
     val bidragJustertForNettoBarnetilleggBP: BigDecimal? = null,
+    val erVedtakKildeBBM: Boolean = true,
 ) : GrunnlagInnhold
 
 data class LøpendeBidrag(
@@ -55,6 +56,7 @@ data class LøpendeBidrag(
     val vedtaksid: Int? = null,
     val uMinusNettoBarnetilleggBM: BigDecimal? = null,
     val bidragJustertForNettoBarnetilleggBP: BigDecimal? = null,
+    val erVedtakKildeBBM: Boolean = true,
 ) : GrunnlagInnhold
 
 @Schema(description = "Løpende bidrag periodisert")
