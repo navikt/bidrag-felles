@@ -23,5 +23,6 @@ data class BidragBeregningResponsDto(
         val vedtaksid: Int? = null,
         val uMinusNettoBarnetilleggBM: BigDecimal? = null,
         val bidragJustertForNettoBarnetilleggBP: BigDecimal? = null,
+        val erVedtakKildeBBM: Boolean = true,
     )
 }
