@@ -34,6 +34,7 @@ data class LøpendeBidragForholdsmessigFordeling(
     val stønadstype: Stønadstype,
     val reduksjonUnderholdskostnad: BigDecimal,
     val beregnetBidrag: BigDecimal,
+    val vedtaksid: Int? = null,
 ) : GrunnlagInnhold
 
 data class LøpendeBidrag(
@@ -49,6 +50,7 @@ data class LøpendeBidrag(
     val faktiskBeløp: BigDecimal,
     @Schema(description = "Referanse til barnet det løpende bidraget gjelder for")
     val gjelderBarn: Grunnlagsreferanse,
+    val vedtaksid: Int? = null,
 ) : GrunnlagInnhold
 
 @Schema(description = "Løpende bidrag periodisert")
