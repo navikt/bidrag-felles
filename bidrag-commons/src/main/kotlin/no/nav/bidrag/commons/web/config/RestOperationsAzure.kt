@@ -1,5 +1,6 @@
 package no.nav.bidrag.commons.web.config
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import no.nav.bidrag.commons.web.interceptor.BearerTokenClientInterceptor
 import no.nav.bidrag.commons.web.interceptor.ServiceUserAuthTokenInterceptor
 import no.nav.bidrag.transport.felles.commonObjectmapper
@@ -8,8 +9,9 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
+import org.springframework.http.MediaType
+import org.springframework.http.converter.AbstractHttpMessageConverter
+import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.web.client.RestTemplate
 
 @Suppress("SpringFacetCodeInspection")
@@ -22,12 +24,10 @@ class RestOperationsAzure {
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: BearerTokenClientInterceptor,
     ): RestTemplate {
-        val restTemplate =
-            restTemplateBuilder
-                .additionalInterceptors(bearerTokenClientInterceptor)
-                .build()
-        configureJackson(restTemplate)
-        return restTemplate
+        return restTemplateBuilder
+            .additionalInterceptors(bearerTokenClientInterceptor)
+            .messageConverters(createMessageConverters())
+            .build()
     }
 
     @Bean("azureService")
@@ -36,27 +36,47 @@ class RestOperationsAzure {
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: ServiceUserAuthTokenInterceptor,
     ): RestTemplate {
-        val restTemplate =
-            restTemplateBuilder
-                .additionalInterceptors(bearerTokenClientInterceptor)
-                .build()
-        configureJackson(restTemplate)
-        return restTemplate
+        return restTemplateBuilder
+            .additionalInterceptors(bearerTokenClientInterceptor)
+            .messageConverters(createMessageConverters())
+            .build()
     }
 
-    private fun configureJackson(restTemplate: RestTemplate) {
-        restTemplate.messageConverters
-            .stream()
-            .filter { obj -> MappingJackson2HttpMessageConverter::class.java.isInstance(obj) }
-            .map { obj -> MappingJackson2HttpMessageConverter::class.java.cast(obj) }
-            .findFirst()
-            .ifPresent { converter: MappingJackson2HttpMessageConverter ->
-                converter.objectMapper = commonObjectmapper
-            }
+    /**
+     * Creates a list of message converters with the common ObjectMapper.
+     * This ensures all REST calls use consistent Jackson configuration.
+     */
+    private fun createMessageConverters(): List<HttpMessageConverter<*>> {
+        return listOf(
+            CustomJacksonHttpMessageConverter(commonObjectmapper),
+        )
+    }
 
-        restTemplate.messageConverters =
-            restTemplate.messageConverters
-                .filter { obj -> !MappingJackson2XmlHttpMessageConverter::class.java.isInstance(obj) }
-                .toMutableList()
+    /**
+     * Custom JSON message converter that uses the shared ObjectMapper configuration.
+     * This avoids ClassLoader/version conflicts by ensuring all deserialization
+     * uses the same ObjectMapper instance.
+     */
+    private class CustomJacksonHttpMessageConverter(private val objectMapper: ObjectMapper) :
+        AbstractHttpMessageConverter<Any>(MediaType.APPLICATION_JSON) {
+
+        init {
+            setSupportedMediaTypes(listOf(
+                MediaType.APPLICATION_JSON,
+                MediaType("application", "*+json"),
+            ))
+        }
+
+        override fun supports(clazz: Class<*>): Boolean = true
+
+        override fun readInternal(clazz: Class<out Any>, inputMessage: org.springframework.http.HttpInputMessage): Any {
+            return objectMapper.readValue(inputMessage.body, clazz)
+        }
+
+        override fun writeInternal(obj: Any, outputMessage: org.springframework.http.HttpOutputMessage) {
+            outputMessage.body.use { os ->
+                objectMapper.writeValue(os, obj)
+            }
+        }
     }
 }
