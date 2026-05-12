@@ -21,7 +21,7 @@ data class BidragBeregningResponsDto(
         val stønadstype: Stønadstype = Stønadstype.BIDRAG,
         val samværsklasse: Samværsklasse? = null,
         val vedtaksid: Int? = null,
-        val uMinusNettoBarnetilleggBM: BigDecimal? = null,
+        val bruttoBidragEtterBarnetilleggBM: BigDecimal? = null,
         val bidragJustertForNettoBarnetilleggBP: BigDecimal? = null,
         val erVedtakKildeBBM: Boolean = true,
     )
