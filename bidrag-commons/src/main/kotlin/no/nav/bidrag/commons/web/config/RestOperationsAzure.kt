@@ -14,6 +14,7 @@ import org.springframework.http.HttpOutputMessage
 import org.springframework.http.MediaType
 import org.springframework.http.converter.AbstractHttpMessageConverter
 import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.http.converter.StringHttpMessageConverter
 import org.springframework.web.client.RestTemplate
 
 @Suppress("SpringFacetCodeInspection")
@@ -25,57 +26,61 @@ class RestOperationsAzure {
     fun restOperationsJwtBearer(
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: BearerTokenClientInterceptor,
-    ): RestTemplate {
-        return restTemplateBuilder
+    ): RestTemplate =
+        restTemplateBuilder
             .additionalInterceptors(bearerTokenClientInterceptor)
             .messageConverters(createMessageConverters())
             .build()
-    }
 
     @Bean("azureService")
     @Scope("prototype")
     fun restOperationsServiceJwtBearer(
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: ServiceUserAuthTokenInterceptor,
-    ): RestTemplate {
-        return restTemplateBuilder
+    ): RestTemplate =
+        restTemplateBuilder
             .additionalInterceptors(bearerTokenClientInterceptor)
             .messageConverters(createMessageConverters())
             .build()
-    }
 
     /**
      * Creates a list of message converters with the common ObjectMapper.
      * This ensures all REST calls use consistent Jackson configuration.
      */
-    private fun createMessageConverters(): List<HttpMessageConverter<*>> {
-        return listOf(
+    private fun createMessageConverters(): List<HttpMessageConverter<*>> =
+        listOf(
             CustomJacksonHttpMessageConverter(commonObjectmapper),
+            StringHttpMessageConverter(),
         )
-    }
 
     /**
      * Custom JSON message converter that uses the shared ObjectMapper configuration.
      * This avoids ClassLoader/version conflicts by ensuring all deserialization
      * uses the same ObjectMapper instance.
      */
-    private class CustomJacksonHttpMessageConverter(private val objectMapper: ObjectMapper) :
-        AbstractHttpMessageConverter<Any>(MediaType.APPLICATION_JSON) {
-
+    private class CustomJacksonHttpMessageConverter(
+        private val objectMapper: ObjectMapper,
+    ) : AbstractHttpMessageConverter<Any>(MediaType.APPLICATION_JSON) {
         init {
-            setSupportedMediaTypes(listOf(
-                MediaType.APPLICATION_JSON,
-                MediaType("application", "*+json"),
-            ))
+            setSupportedMediaTypes(
+                listOf(
+                    MediaType.APPLICATION_JSON,
+                    MediaType("application", "*+json"),
+                ),
+            )
         }
 
         override fun supports(clazz: Class<*>): Boolean = true
 
-        override fun readInternal(clazz: Class<out Any>, inputMessage: HttpInputMessage): Any {
-            return objectMapper.readValue(inputMessage.body, clazz)
-        }
+        override fun readInternal(
+            clazz: Class<out Any>,
+            inputMessage: HttpInputMessage,
+        ): Any = objectMapper.readValue(inputMessage.body, clazz)
 
-        override fun writeInternal(obj: Any, outputMessage: HttpOutputMessage) {
+        override fun writeInternal(
+            obj: Any,
+            outputMessage: HttpOutputMessage,
+        ) {
             outputMessage.body.use { os ->
                 objectMapper.writeValue(os, obj)
             }
