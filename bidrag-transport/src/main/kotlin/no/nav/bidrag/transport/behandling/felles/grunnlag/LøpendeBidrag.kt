@@ -72,5 +72,10 @@ data class LøpendeBidragPeriode(
     val beregnetBeløp: BigDecimal,
     val faktiskBeløp: BigDecimal,
     val sakskategori: Sakskategori = Sakskategori.NASJONAL,
+    val vedtaksid: Int? = null,
+    val bidragJustertForNettoBarnetilleggBP: Boolean? = false,
+    val bruttoBidragEtterBarnetilleggBM: BigDecimal? = null,
+    val bruttoBidragEtterBarnetilleggBP: BigDecimal? = null,
+    val erVedtakKildeBBM: Boolean = true,
     override val manueltRegistrert: Boolean = false,
 ) : GrunnlagPeriodeInnhold
