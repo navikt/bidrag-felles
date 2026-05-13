@@ -418,8 +418,9 @@ data class DokumentmalForholdsmessigFordelingBidragTilFordelingBarn(
         val reduksjonUnderholdskostnad: BigDecimal,
         val beregnetBidrag: BigDecimal,
         val vedtaksid: Int? = null,
+        val bidragJustertForNettoBarnetilleggBP: Boolean? = false,
         val bruttoBidragEtterBarnetilleggBM: BigDecimal? = null,
-        val bidragJustertForNettoBarnetilleggBP: BigDecimal? = null,
+        val bruttoBidragEtterBarnetilleggBP: BigDecimal? = null,
         val erVedtakKildeBBM: Boolean = true,
     )
 }
