@@ -12,10 +12,11 @@ import org.springframework.context.annotation.Scope
 import org.springframework.http.HttpInputMessage
 import org.springframework.http.HttpOutputMessage
 import org.springframework.http.MediaType
-import org.springframework.http.converter.AbstractHttpMessageConverter
+import org.springframework.http.converter.AbstractGenericHttpMessageConverter
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.StringHttpMessageConverter
 import org.springframework.web.client.RestTemplate
+import java.lang.reflect.Type
 
 @Suppress("SpringFacetCodeInspection")
 @Configuration
@@ -60,17 +61,17 @@ class RestOperationsAzure {
      */
     private class CustomJacksonHttpMessageConverter(
         private val objectMapper: ObjectMapper,
-    ) : AbstractHttpMessageConverter<Any>(MediaType.APPLICATION_JSON) {
-        init {
-            setSupportedMediaTypes(
-                listOf(
-                    MediaType.APPLICATION_JSON,
-                    MediaType("application", "*+json"),
-                ),
-            )
-        }
-
+    ) : AbstractGenericHttpMessageConverter<Any>(
+            MediaType.APPLICATION_JSON,
+            MediaType("application", "*+json"),
+        ) {
         override fun supports(clazz: Class<*>): Boolean = true
+
+        override fun read(
+            type: Type,
+            contextClass: Class<*>?,
+            inputMessage: HttpInputMessage,
+        ): Any = objectMapper.readValue(inputMessage.body, objectMapper.constructType(type))
 
         override fun readInternal(
             clazz: Class<out Any>,
@@ -79,10 +80,15 @@ class RestOperationsAzure {
 
         override fun writeInternal(
             obj: Any,
+            type: Type?,
             outputMessage: HttpOutputMessage,
         ) {
             outputMessage.body.use { os ->
-                objectMapper.writeValue(os, obj)
+                if (type == null) {
+                    objectMapper.writeValue(os, obj)
+                } else {
+                    objectMapper.writerFor(objectMapper.constructType(type)).writeValue(os, obj)
+                }
             }
         }
     }
