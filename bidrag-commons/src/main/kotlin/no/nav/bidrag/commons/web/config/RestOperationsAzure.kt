@@ -13,8 +13,12 @@ import org.springframework.http.HttpInputMessage
 import org.springframework.http.HttpOutputMessage
 import org.springframework.http.MediaType
 import org.springframework.http.converter.AbstractGenericHttpMessageConverter
+import org.springframework.http.converter.ByteArrayHttpMessageConverter
+import org.springframework.http.converter.FormHttpMessageConverter
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.converter.StringHttpMessageConverter
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter
 import org.springframework.web.client.RestTemplate
 import java.lang.reflect.Type
 
@@ -50,8 +54,12 @@ class RestOperationsAzure {
      */
     private fun createMessageConverters(): List<HttpMessageConverter<*>> =
         listOf(
+            ByteArrayHttpMessageConverter(),
             CustomJacksonHttpMessageConverter(commonObjectmapper),
             StringHttpMessageConverter(),
+            Jaxb2RootElementHttpMessageConverter(),
+            MarshallingHttpMessageConverter(),
+            FormHttpMessageConverter(),
         )
 
     /**
@@ -65,7 +73,12 @@ class RestOperationsAzure {
             MediaType.APPLICATION_JSON,
             MediaType("application", "*+json"),
         ) {
-        override fun supports(clazz: Class<*>): Boolean = true
+        override fun supports(clazz: Class<*>): Boolean {
+            // Don't handle primitive types, strings, or byte arrays
+            return !clazz.isPrimitive &&
+                clazz != String::class.java &&
+                clazz != ByteArray::class.java
+        }
 
         override fun read(
             type: Type,
