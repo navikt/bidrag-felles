@@ -31,7 +31,7 @@ class RestOperationsAzure {
     ): RestTemplate =
         restTemplateBuilder
             .additionalInterceptors(bearerTokenClientInterceptor)
-            .additionalMessageConverters(createMessageConverters())
+            .messageConverters(createMessageConverters())
             .build()
 
     @Bean("azureService")
@@ -42,12 +42,17 @@ class RestOperationsAzure {
     ): RestTemplate =
         restTemplateBuilder
             .additionalInterceptors(bearerTokenClientInterceptor)
-            .additionalMessageConverters(createMessageConverters())
+            .messageConverters(createMessageConverters())
             .build()
 
     /**
-     * Creates a list of message converters with the common ObjectMapper.
-     * This ensures all REST calls use consistent Jackson configuration.
+     * Creates a complete list of message converters that replaces Spring defaults.
+     * Order matters — more specific converters (ByteArray, String) must come before
+     * the JSON converter to avoid [CustomJacksonHttpMessageConverter] intercepting
+     * binary/string responses it cannot handle.
+     *
+     * [ByteArrayHttpMessageConverter] is configured to also accept [MediaType.APPLICATION_PDF]
+     * so that PDF responses can be consumed as raw bytes.
      */
     private fun createMessageConverters(): List<HttpMessageConverter<*>> =
         listOf(
