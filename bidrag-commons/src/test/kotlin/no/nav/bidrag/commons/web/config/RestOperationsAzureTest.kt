@@ -2,6 +2,7 @@ package no.nav.bidrag.commons.web.config
 
 import io.kotest.matchers.collections.shouldHaveSize
 import io.kotest.matchers.shouldBe
+import no.nav.bidrag.commons.util.CustomJacksonHttpMessageConverter
 import org.junit.jupiter.api.Test
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpHeaders
@@ -16,10 +17,7 @@ class RestOperationsAzureTest {
     @Suppress("UNCHECKED_CAST")
     @Test
     fun `custom jackson converter deserializes generic list response`() {
-        val converters = invokeCreateMessageConverters()
-        val converter =
-            converters.firstOrNull { it is GenericHttpMessageConverter<*> } as? GenericHttpMessageConverter<Any>
-                ?: error("Expected a GenericHttpMessageConverter in message converters")
+        val converter = CustomJacksonHttpMessageConverter()
         val listType = object : ParameterizedTypeReference<List<TestDto>>() {}.type
         val body = """[{"id":"1"},{"id":"2"}]"""
 
@@ -31,8 +29,6 @@ class RestOperationsAzureTest {
         result[0] shouldBe TestDto("1")
         result[1] shouldBe TestDto("2")
     }
-
-    private fun invokeCreateMessageConverters() = (createMessageConvertersMethod.invoke(RestOperationsAzure()) as List<*>)
 
     private data class TestDto(
         val id: String,
@@ -52,12 +48,5 @@ class RestOperationsAzureTest {
         override fun getHeaders(): HttpHeaders = headers
 
         override fun getBody(): InputStream = ByteArrayInputStream(bodyBytes)
-    }
-
-    companion object {
-        private val createMessageConvertersMethod: Method =
-            RestOperationsAzure::class.java.getDeclaredMethod("createMessageConverters").apply {
-                isAccessible = true
-            }
     }
 }

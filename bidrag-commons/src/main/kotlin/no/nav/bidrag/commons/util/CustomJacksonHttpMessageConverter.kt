@@ -1,6 +1,7 @@
 package no.nav.bidrag.commons.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import no.nav.bidrag.transport.felles.commonObjectmapper
 import org.springframework.http.HttpInputMessage
 import org.springframework.http.HttpOutputMessage
 import org.springframework.http.MediaType
@@ -13,7 +14,7 @@ import java.lang.reflect.Type
  * uses the same ObjectMapper instance.
  */
 class CustomJacksonHttpMessageConverter(
-    private val objectMapper: ObjectMapper,
+    private val objectMapper: ObjectMapper = commonObjectmapper,
 ) : AbstractGenericHttpMessageConverter<Any>(
         MediaType.APPLICATION_JSON,
         MediaType("application", "*+json"),
