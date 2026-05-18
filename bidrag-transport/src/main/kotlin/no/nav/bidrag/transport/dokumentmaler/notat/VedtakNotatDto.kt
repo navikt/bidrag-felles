@@ -377,7 +377,7 @@ data class NotatVirkningstidspunktBarnDto(
     @JsonFormat(pattern = "yyyy-MM-dd")
     val virkningstidspunkt: LocalDate?,
     val avslag: Resultatkode?,
-    @Schema(name = "årsak", enumAsRef = true)
+    @get:Schema(name = "årsak", enumAsRef = true)
     val årsak: VirkningstidspunktÅrsakstype?,
     val begrunnelse: NotatBegrunnelseDto,
     val begrunnelseVurderingAvSkolegang: NotatBegrunnelseDto? = null,
@@ -417,7 +417,7 @@ data class NotatVirkningstidspunktBarnDto(
 data class NotatBegrunnelseDto(
     val innhold: String?,
     val innholdFraOmgjortVedtak: String?,
-    @Schema(name = "intern", deprecated = true)
+    @get:Schema(name = "intern", deprecated = true)
     val intern: String? = innhold,
     val gjelder: DokumentmalPersonDto? = null,
 )
@@ -631,7 +631,7 @@ data class NotatInntekterDto(
 data class InntekterPerRolle(
     val gjelder: DokumentmalPersonDto,
     val arbeidsforhold: List<Arbeidsforhold> = emptyList(),
-    @Schema(name = "årsinntekter")
+    @get:Schema(name = "årsinntekter")
     val årsinntekter: List<NotatInntektDto> = emptyList(),
     val barnetillegg: List<NotatInntektDto> = emptyList(),
     val utvidetBarnetrygd: List<NotatInntektDto> = emptyList(),
