@@ -9,6 +9,14 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
+import org.springframework.http.converter.ByteArrayHttpMessageConverter
+import org.springframework.http.converter.FormHttpMessageConverter
+import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.http.converter.ResourceHttpMessageConverter
+import org.springframework.http.converter.StringHttpMessageConverter
+import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter
 import org.springframework.web.client.RestTemplate
 
 @Suppress("SpringFacetCodeInspection")
@@ -23,9 +31,8 @@ class RestOperationsAzure {
     ): RestTemplate =
         restTemplateBuilder
             .additionalInterceptors(bearerTokenClientInterceptor)
-            .additionalMessageConverters(
-                CustomJacksonHttpMessageConverter(commonObjectmapper),
-            ).build()
+            .additionalMessageConverters(createMessageConverters())
+            .build()
 
     @Bean("azureService")
     @Scope("prototype")
@@ -35,7 +42,22 @@ class RestOperationsAzure {
     ): RestTemplate =
         restTemplateBuilder
             .additionalInterceptors(bearerTokenClientInterceptor)
-            .additionalMessageConverters(
-                CustomJacksonHttpMessageConverter(commonObjectmapper),
-            ).build()
+            .additionalMessageConverters(createMessageConverters())
+            .build()
+
+    /**
+     * Creates a list of message converters with the common ObjectMapper.
+     * This ensures all REST calls use consistent Jackson configuration.
+     */
+    private fun createMessageConverters(): List<HttpMessageConverter<*>> =
+        listOf(
+            ByteArrayHttpMessageConverter(),
+            StringHttpMessageConverter(),
+            ResourceHttpMessageConverter(false),
+            AllEncompassingFormHttpMessageConverter(),
+            CustomJacksonHttpMessageConverter(commonObjectmapper),
+            Jaxb2RootElementHttpMessageConverter(),
+            MarshallingHttpMessageConverter(),
+            FormHttpMessageConverter(),
+        )
 }
