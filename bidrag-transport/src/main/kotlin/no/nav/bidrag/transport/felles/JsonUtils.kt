@@ -19,23 +19,5 @@ val commonObjectmapper =
         .configure(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_USING_DEFAULT_VALUE, true)
         .configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false)
         .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        .setDefaultPropertyInclusion(
-            JsonInclude.Value.construct(
-                JsonInclude.Include.NON_NULL,
-                JsonInclude.Include.NON_NULL,
-            ),
-        ).registerModules(
-            KotlinModule.Builder().build(),
-            JavaTimeModule()
-                .addDeserializer(
-                    YearMonth::class.java,
-                    // Denne trengs for å parse år over 9999 riktig.
-                    YearMonthDeserializer(DateTimeFormatter.ofPattern("u-MM")),
-                ).addSerializer(
-                    LocalDate::class.java,
-                    // Denne trengs for å skrive ut år over 9999 riktig.
-                    LocalDateSerializer(DateTimeFormatter.ofPattern("yyyy-MM-dd")),
-                ),
-        )
 
 fun tilJsonString(value: Any): String = commonObjectmapper.writeValueAsString(value)
