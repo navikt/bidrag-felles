@@ -17,7 +17,7 @@ class AppContext : ApplicationContextAware {
         var applicationContext: ApplicationContext? = null
             private set
 
-        fun <T> getBean(clazz: Class<T>): T = applicationContext!!.getBean(clazz) as T
+        fun <T> getBean(clazz: Class<T>): T = applicationContext!!.getBean(clazz.simpleName.replaceFirstChar { it.lowercase() }, clazz) as T
 
         fun <T> getBean(
             name: String,

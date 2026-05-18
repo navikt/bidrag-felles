@@ -1,0 +1,53 @@
+package no.nav.bidrag.commons.util
+
+import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.http.HttpInputMessage
+import org.springframework.http.HttpOutputMessage
+import org.springframework.http.MediaType
+import org.springframework.http.converter.AbstractGenericHttpMessageConverter
+import java.lang.reflect.Type
+
+/**
+ * Custom JSON message converter that uses the shared ObjectMapper configuration.
+ * This avoids ClassLoader/version conflicts by ensuring all deserialization
+ * uses the same ObjectMapper instance.
+ */
+class CustomJacksonHttpMessageConverter(
+    private val objectMapper: ObjectMapper,
+) : AbstractGenericHttpMessageConverter<Any>(
+        MediaType.APPLICATION_JSON,
+        MediaType("application", "*+json"),
+    ) {
+    override fun supports(clazz: Class<*>): Boolean {
+        // Don't handle primitive types, strings, or byte arrays
+        return !clazz.isPrimitive &&
+            clazz != Int::class.java &&
+            clazz != String::class.java &&
+            clazz != ByteArray::class.java
+    }
+
+    override fun read(
+        type: Type,
+        contextClass: Class<*>?,
+        inputMessage: HttpInputMessage,
+    ): Any = objectMapper.readValue(inputMessage.body, objectMapper.constructType(type))
+
+    override fun readInternal(
+        clazz: Class<out Any>,
+        inputMessage: HttpInputMessage,
+    ): Any = objectMapper.readValue(inputMessage.body, clazz)
+
+    override fun writeInternal(
+        obj: Any,
+        type: Type?,
+        outputMessage: HttpOutputMessage,
+    ) {
+        outputMessage.body.use { os ->
+            if (type == null) {
+                objectMapper.writeValue(os, obj)
+            } else {
+                objectMapper.writerFor(objectMapper.constructType(type)).writeValue(os, obj)
+            }
+        }
+    }
+}
