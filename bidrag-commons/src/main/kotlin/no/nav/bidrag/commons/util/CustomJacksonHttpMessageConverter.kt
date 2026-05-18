@@ -46,8 +46,17 @@ class CustomJacksonHttpMessageConverter(
         outputMessage.body.use { os ->
             if (type == null) {
                 objectMapper.writeValue(os, obj)
-            } else {
-                objectMapper.writerFor(objectMapper.constructType(type)).writeValue(os, obj)
+                return
+            }
+            // Guard against Spring-internal types like ResolvableType$EmptyType that
+            // Jackson's TypeFactory does not know how to handle.
+            try {
+                val jacksonType = objectMapper.constructType(type)
+                objectMapper.writerFor(jacksonType).writeValue(os, obj)
+            } catch (_: IllegalArgumentException) {
+                // Type is not resolvable by Jackson (e.g. ResolvableType$EmptyType);
+                // fall back to untyped serialisation which uses the runtime class.
+                objectMapper.writeValue(os, obj)
             }
         }
     }
