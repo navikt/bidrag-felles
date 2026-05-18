@@ -1,6 +1,7 @@
 package no.nav.bidrag.transport.dokumentmaler.notat
 
 import com.fasterxml.jackson.annotation.JsonFormat
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.fasterxml.jackson.annotation.JsonSubTypes
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import io.swagger.v3.oas.annotations.media.Schema
@@ -378,6 +379,7 @@ data class NotatVirkningstidspunktBarnDto(
     val virkningstidspunkt: LocalDate?,
     val avslag: Resultatkode?,
     @get:Schema(name = "årsak", enumAsRef = true)
+    @get:JsonProperty("årsak")
     val årsak: VirkningstidspunktÅrsakstype?,
     val begrunnelse: NotatBegrunnelseDto,
     val begrunnelseVurderingAvSkolegang: NotatBegrunnelseDto? = null,
@@ -388,6 +390,7 @@ data class NotatVirkningstidspunktBarnDto(
     val behandlingstypeVisningsnavn get() = behandlingstype?.visningsnavn?.intern
 
     @get:Schema(name = "årsakVisningsnavn")
+    @get:JsonProperty("årsakVisningsnavn")
     val årsakVisningsnavn get() = årsak?.visningsnavn?.intern
 
     @get:Schema(name = "avslagVisningsnavn")
@@ -632,6 +635,7 @@ data class InntekterPerRolle(
     val gjelder: DokumentmalPersonDto,
     val arbeidsforhold: List<Arbeidsforhold> = emptyList(),
     @get:Schema(name = "årsinntekter")
+    @get:JsonProperty("årsinntekter")
     val årsinntekter: List<NotatInntektDto> = emptyList(),
     val barnetillegg: List<NotatInntektDto> = emptyList(),
     val utvidetBarnetrygd: List<NotatInntektDto> = emptyList(),
