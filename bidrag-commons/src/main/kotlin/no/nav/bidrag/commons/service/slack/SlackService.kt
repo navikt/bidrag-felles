@@ -30,6 +30,7 @@ class SlackService(
     fun sendMelding(
         melding: String,
         threadTs: String? = null,
+        markdownTekst: String? = null,
     ): SlackMelding =
         try {
             val response =
@@ -38,6 +39,8 @@ class SlackService(
                         .channel(channel)
                         .threadTs(threadTs)
                         .text(melding)
+                        .markdownText(markdownTekst)
+                        .mrkdwn(markdownTekst != null)
                 }
 
             if (response.isOk) {
