@@ -3,9 +3,9 @@ package no.nav.bidrag.commons.web.config
 import no.nav.bidrag.commons.web.interceptor.ConsumerIdClientInterceptor
 import no.nav.bidrag.commons.web.interceptor.MdcValuesPropagatingClientInterceptor
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.actuate.metrics.web.client.ObservationRestTemplateCustomizer
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
+import org.springframework.boot.restclient.observation.ObservationRestTemplateCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
@@ -30,8 +30,8 @@ class RestTemplateBuilderBean {
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
         observationRestTemplateCustomizer: ObservationRestTemplateCustomizer,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        @Value("\${bidrag.rest.read.timeout.seconds:15}") readTimeoutSeconds: Long,
-        @Value("\${bidrag.rest.connect.timeout.seconds:15}") connectTimeoutSeconds: Long,
+        @Value($$"${bidrag.rest.read.timeout.seconds:15}") readTimeoutSeconds: Long,
+        @Value($$"${bidrag.rest.connect.timeout.seconds:15}") connectTimeoutSeconds: Long,
     ) = RestTemplateBuilder()
         .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
         .additionalCustomizers(observationRestTemplateCustomizer)
@@ -53,10 +53,10 @@ class RestTemplateBuilderBean {
     )
     fun restTemplateBuilderNoProxy(
         consumerIdClientInterceptor: ConsumerIdClientInterceptor,
-        observationRestTemplateCustomizer: ObservationRestTemplateCustomizer,
         mdcValuesPropagatingClientInterceptor: MdcValuesPropagatingClientInterceptor,
-        @Value("\${bidrag.rest.read.timeout.seconds:15}") readTimeoutSeconds: Long,
-        @Value("\${bidrag.rest.connect.timeout.seconds:15}") connectTimeoutSeconds: Long,
+        observationRestTemplateCustomizer: ObservationRestTemplateCustomizer,
+        @Value($$"${bidrag.rest.read.timeout.seconds:15}") readTimeoutSeconds: Long,
+        @Value($$"${bidrag.rest.connect.timeout.seconds:15}") connectTimeoutSeconds: Long,
     ): RestTemplateBuilder =
         RestTemplateBuilder()
             .additionalInterceptors(consumerIdClientInterceptor, mdcValuesPropagatingClientInterceptor)
