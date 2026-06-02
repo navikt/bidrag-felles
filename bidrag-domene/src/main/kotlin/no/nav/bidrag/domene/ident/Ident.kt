@@ -2,10 +2,7 @@
 
 package no.nav.bidrag.domene.ident
 
-import jakarta.persistence.AttributeConverter
 import no.nav.bidrag.domene.felles.Verdiobjekt
-import no.nav.bidrag.domene.util.trimToNull
-import org.springframework.core.convert.converter.Converter
 
 class Ident(
     override val verdi: String,
@@ -42,18 +39,4 @@ enum class Identtype {
     Organisasjonsnummer,
     SamhandlerId,
     Ukjent,
-}
-
-class IdentReadingConverter : Converter<String, Ident> {
-    override fun convert(source: String) = source.trimToNull()?.let { Ident(source) }
-}
-
-class IdentWritingConverter : Converter<Ident, String> {
-    override fun convert(source: Ident) = source.verdi.trimToNull()
-}
-
-class IdentConverter : AttributeConverter<Ident, String> {
-    override fun convertToEntityAttribute(source: String?) = source?.trimToNull()?.let { Ident(source) }
-
-    override fun convertToDatabaseColumn(source: Ident?) = source?.verdi.trimToNull()
 }

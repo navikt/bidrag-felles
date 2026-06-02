@@ -79,7 +79,7 @@ fun VedtakDto.erVedtakAvvistRevurderingsøknad(): Boolean =
     }
 
 fun VedtakDto.gjelderRevurderingsbarn(stønadsendringDto: StønadsendringDto): Boolean {
-    val barn = grunnlagListe.hentPersonMedIdent(stønadsendringDto.kravhaver.verdi)
+    val barn = grunnlagListe.hentPersonMedIdent(stønadsendringDto.kravhaver.verdi, stønadsendringDto.type)
     return barn != null && !barn.personObjekt.delAvOpprinneligBehandling
 }
 
@@ -169,7 +169,7 @@ fun tilAldersjusteringResultattekst(
             val person =
                 vedtak.grunnlagListe
                     .hentPersonMedReferanseKonvertert(aldersjusteringDetaljerGrunnlag.gjelderBarnReferanse)
-                    ?: vedtak.grunnlagListe.hentPersonMedIdentKonvertert(stønadsendring.kravhaver.verdi)
+                    ?: vedtak.grunnlagListe.hentPersonMedIdentKonvertert(stønadsendring.kravhaver.verdi, stønadsendring.type)
 
             val stønadstype = if (stønadsendring.type == Stønadstype.FORSKUDD) "Forskuddet" else "Bidraget"
             return if (aldersjusteringDetaljerGrunnlag.innhold.aldersjustertManuelt) {
@@ -287,7 +287,7 @@ val VedtakDto.typeBehandling get() =
 
 fun StønadsendringDto.finnSøknadsbarnReferanse(grunnlagListe: List<GrunnlagDto>): String {
     val kravhaverIdent = kravhaver.verdi
-    return grunnlagListe.hentPersonMedIdent(kravhaverIdent)!!.referanse
+    return grunnlagListe.hentPersonMedIdent(kravhaverIdent, type)!!.referanse
 }
 
 fun VedtakDto.erVedtaksforslag() = vedtakstidspunkt == null
@@ -438,21 +438,21 @@ fun List<GrunnlagDto>.hentGrunnlagBeløpshistorikkForRolle(stønadsid: Stønadsi
         Stønadstype.FORSKUDD -> {
             filtrerOgKonverterBasertPåFremmedReferanse<BeløpshistorikkGrunnlag>(
                 Grunnlagstype.BELØPSHISTORIKK_FORSKUDD,
-                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi)?.referanse,
+                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi, stønadsid.type)?.referanse,
             )
         }
 
         Stønadstype.BIDRAG -> {
             filtrerOgKonverterBasertPåFremmedReferanse<BeløpshistorikkGrunnlag>(
                 Grunnlagstype.BELØPSHISTORIKK_BIDRAG,
-                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi)?.referanse,
+                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi, stønadsid.type)?.referanse,
             )
         }
 
         Stønadstype.BIDRAG18AAR -> {
             filtrerOgKonverterBasertPåFremmedReferanse<BeløpshistorikkGrunnlag>(
                 Grunnlagstype.BELØPSHISTORIKK_BIDRAG_18_ÅR,
-                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi)?.referanse,
+                gjelderBarnReferanse = hentPersonMedIdent(stønadsid.kravhaver.verdi, stønadsid.type)?.referanse,
             )
         }
 

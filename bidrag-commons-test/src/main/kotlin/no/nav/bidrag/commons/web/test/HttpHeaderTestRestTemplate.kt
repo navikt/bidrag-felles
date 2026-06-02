@@ -1,7 +1,6 @@
 package no.nav.bidrag.commons.web.test
 
-import org.springframework.boot.test.web.client.TestRestTemplate
-import org.springframework.boot.test.web.client.exchange
+import org.springframework.boot.resttestclient.TestRestTemplate
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpHeaders
@@ -17,81 +16,81 @@ class HttpHeaderTestRestTemplate(
     private val headersForSingleCallbacks = Stack<Pair<String, String>>()
     private val valueGenerators: MutableMap<String, ValueGenerator> = HashMap()
 
-    fun <T> exchange(
-        url: String?,
-        httpMethod: HttpMethod?,
+    fun <T : Any> exchange(
+        url: String,
+        httpMethod: HttpMethod,
         httpEntity: HttpEntity<*>,
-        responseClass: Class<T>?,
+        responseClass: Class<T>,
     ): ResponseEntity<T> = testRestTemplate.exchange(url, httpMethod, newEntityWithAddedHeaders(httpEntity), responseClass)
 
-    fun <T> exchange(
-        url: String?,
-        httpMethod: HttpMethod?,
+    fun <T : Any> exchange(
+        url: String,
+        httpMethod: HttpMethod,
         httpEntity: HttpEntity<*>?,
-        typeReference: ParameterizedTypeReference<T>?,
+        typeReference: ParameterizedTypeReference<T>,
     ): ResponseEntity<T> = testRestTemplate.exchange(url, httpMethod, newEntityWithAddedHeaders(httpEntity), typeReference)
 
-    fun <T> postForEntity(
-        url: String?,
+    fun <T : Any> postForEntity(
+        url: String,
         httpEntity: HttpEntity<*>,
-        responseClass: Class<T>?,
+        responseClass: Class<T>,
     ): ResponseEntity<T> = testRestTemplate.postForEntity(url, newEntityWithAddedHeaders(httpEntity), responseClass)
 
     inline fun <reified T : Any> getForEntity(
         uri: URI,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.GET, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.GET, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> putForEntity(
         uri: URI,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.PUT, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.PUT, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> postForEntity(
         uri: URI,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.POST, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.POST, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> patchForEntity(
         uri: URI,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.PATCH, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.PATCH, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> optionsForEntity(
         uri: URI,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.OPTIONS, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.OPTIONS, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> delete(uri: URI): ResponseEntity<T> =
-        testRestTemplate.exchange(uri, HttpMethod.DELETE, newEntityWithAddedHeaders())
+        testRestTemplate.exchange(uri, HttpMethod.DELETE, newEntityWithAddedHeaders(), T::class.java)
 
     inline fun <reified T : Any> getForEntity(
         uri: String,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.GET, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.GET, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> putForEntity(
         uri: String,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.PUT, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.PUT, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> postForEntity(
         uri: String,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.POST, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.POST, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> patchForEntity(
         uri: String,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.PATCH, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.PATCH, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> optionsForEntity(
         uri: String,
         request: Any? = null,
-    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.OPTIONS, newEntityWithAddedHeaders(request))
+    ): ResponseEntity<T> = testRestTemplate.exchange(uri, HttpMethod.OPTIONS, newEntityWithAddedHeaders(request), T::class.java)
 
     inline fun <reified T : Any> delete(uri: String): ResponseEntity<T> =
-        testRestTemplate.exchange(uri, HttpMethod.DELETE, newEntityWithAddedHeaders())
+        testRestTemplate.exchange(uri, HttpMethod.DELETE, newEntityWithAddedHeaders(), T::class.java)
 
     fun newEntityWithAddedHeaders(request: Any? = null): HttpEntity<*> {
         val tempHeaders =

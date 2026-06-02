@@ -10,8 +10,7 @@
 
   <artifactId>bidrag-commons-felles</artifactId>
   <name>bidrag-commons</name>
-  <version>${project.parent.version}</version>
-  <packaging>jar</packaging>
+    <packaging>jar</packaging>
 
   <licenses>
     <license>
@@ -41,10 +40,8 @@
     <logback-encoder.version>9.0</logback-encoder.version>
     <javax-activation.version>1.1.1</javax-activation.version>
     <spring-retry.version>2.0.5</spring-retry.version>
-    <spring-security.version>6.5.2</spring-security.version>
-    <spring-expression.version>6.2.9</spring-expression.version>
     <httpclient5.version>5.5.1</httpclient5.version>
-    <token-support.version>5.0.37</token-support.version>
+    <token-support.version>6.0.5</token-support.version>
     <jackson.fasterXml.version>2.16.0</jackson.fasterXml.version>
     <aspectj.version>1.9.24</aspectj.version>
     <micrometer-registry.version>1.15.2</micrometer-registry.version>
@@ -64,22 +61,29 @@
 
     <!-- spring -->
     <dependency>
-      <groupId>org.springframework.retry</groupId>
-      <artifactId>spring-retry</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.springframework.security</groupId>
       <artifactId>spring-security-config</artifactId>
-      <version>${spring-security.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-expression</artifactId>
-      <version>${spring-expression.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-restclient</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.retry</groupId>
+        <artifactId>spring-retry</artifactId>
+        <version>${spring-retry.version}</version>
     </dependency>
     <dependency>
       <groupId>no.nav.security</groupId>
@@ -108,6 +112,12 @@
           <groupId>com.slack.api</groupId>
           <artifactId>slack-api-client</artifactId>
           <version>${slack-api.version}</version>
+          <exclusions>
+              <exclusion>
+                  <groupId>com.squareup.okhttp3</groupId>
+                  <artifactId>okhttp</artifactId>
+              </exclusion>
+          </exclusions>
       </dependency>
     <dependency>
       <groupId>org.apache.httpcomponents.client5</groupId>

@@ -1,15 +1,22 @@
 package no.nav.bidrag.commons.web.config
 
+import no.nav.bidrag.commons.util.CustomJacksonHttpMessageConverter
 import no.nav.bidrag.commons.web.interceptor.BearerTokenClientInterceptor
 import no.nav.bidrag.commons.web.interceptor.ServiceUserAuthTokenInterceptor
 import no.nav.bidrag.transport.felles.commonObjectmapper
-import org.springframework.boot.web.client.RestTemplateBuilder
+import org.springframework.boot.restclient.RestTemplateBuilder
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter
-import org.springframework.http.converter.xml.MappingJackson2XmlHttpMessageConverter
+import org.springframework.http.converter.ByteArrayHttpMessageConverter
+import org.springframework.http.converter.FormHttpMessageConverter
+import org.springframework.http.converter.HttpMessageConverter
+import org.springframework.http.converter.ResourceHttpMessageConverter
+import org.springframework.http.converter.StringHttpMessageConverter
+import org.springframework.http.converter.support.AllEncompassingFormHttpMessageConverter
+import org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter
+import org.springframework.http.converter.xml.MarshallingHttpMessageConverter
 import org.springframework.web.client.RestTemplate
 
 @Suppress("SpringFacetCodeInspection")
@@ -21,42 +28,41 @@ class RestOperationsAzure {
     fun restOperationsJwtBearer(
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: BearerTokenClientInterceptor,
-    ): RestTemplate {
-        val restTemplate =
-            restTemplateBuilder
-                .additionalInterceptors(bearerTokenClientInterceptor)
-                .build()
-        configureJackson(restTemplate)
-        return restTemplate
-    }
+    ): RestTemplate =
+        restTemplateBuilder
+            .additionalInterceptors(bearerTokenClientInterceptor)
+            .messageConverters(createMessageConverters())
+            .build()
 
     @Bean("azureService")
     @Scope("prototype")
     fun restOperationsServiceJwtBearer(
         restTemplateBuilder: RestTemplateBuilder,
         bearerTokenClientInterceptor: ServiceUserAuthTokenInterceptor,
-    ): RestTemplate {
-        val restTemplate =
-            restTemplateBuilder
-                .additionalInterceptors(bearerTokenClientInterceptor)
-                .build()
-        configureJackson(restTemplate)
-        return restTemplate
-    }
+    ): RestTemplate =
+        restTemplateBuilder
+            .additionalInterceptors(bearerTokenClientInterceptor)
+            .messageConverters(createMessageConverters())
+            .build()
 
-    private fun configureJackson(restTemplate: RestTemplate) {
-        restTemplate.messageConverters
-            .stream()
-            .filter { obj -> MappingJackson2HttpMessageConverter::class.java.isInstance(obj) }
-            .map { obj -> MappingJackson2HttpMessageConverter::class.java.cast(obj) }
-            .findFirst()
-            .ifPresent { converter: MappingJackson2HttpMessageConverter ->
-                converter.objectMapper = commonObjectmapper
-            }
-
-        restTemplate.messageConverters =
-            restTemplate.messageConverters
-                .filter { obj -> !MappingJackson2XmlHttpMessageConverter::class.java.isInstance(obj) }
-                .toMutableList()
-    }
+    /**
+     * Creates a complete list of message converters that replaces Spring defaults.
+     * Order matters — more specific converters (ByteArray, String) must come before
+     * the JSON converter to avoid [CustomJacksonHttpMessageConverter] intercepting
+     * binary/string responses it cannot handle.
+     *
+     * [ByteArrayHttpMessageConverter] is configured to also accept [MediaType.APPLICATION_PDF]
+     * so that PDF responses can be consumed as raw bytes.
+     */
+    private fun createMessageConverters(): List<HttpMessageConverter<*>> =
+        listOf(
+            ByteArrayHttpMessageConverter(),
+            StringHttpMessageConverter(),
+            ResourceHttpMessageConverter(false),
+            AllEncompassingFormHttpMessageConverter(),
+            CustomJacksonHttpMessageConverter(commonObjectmapper),
+            Jaxb2RootElementHttpMessageConverter(),
+            MarshallingHttpMessageConverter(),
+            FormHttpMessageConverter(),
+        )
 }

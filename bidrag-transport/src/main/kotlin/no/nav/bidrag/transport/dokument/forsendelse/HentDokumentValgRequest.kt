@@ -15,6 +15,7 @@ data class HentDokumentValgRequest(
     val erVedtakIkkeTilbakekreving: Boolean? = false,
     val vedtakId: String? = null,
     val behandlingId: String? = null,
+    val soknadId: String? = null,
     val enhet: String? = null,
     val inneholderAldersjustering: Boolean? = false,
     val erOrkestrertVedtak: Boolean? = false,
