@@ -56,6 +56,7 @@ private fun hentMapping(path: String): List<MappingPoster> {
     try {
         val objectMapper = ObjectMapper(YAMLFactory())
         objectMapper.findAndRegisterModules()
+        objectMapper.registerKotlinModule()
         val pathKapsfil = ClassPathResource(path).inputStream
         val mapping: Map<Post, List<PostKonfig>> = objectMapper.readValue(pathKapsfil)
         return mapping.flatMap { (post, postKonfigs) ->
