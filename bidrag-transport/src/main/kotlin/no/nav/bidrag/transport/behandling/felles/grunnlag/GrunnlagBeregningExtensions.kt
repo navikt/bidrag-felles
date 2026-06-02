@@ -203,7 +203,7 @@ fun List<GrunnlagDto>.byggSluttberegningBarnebidragDetaljer(
     val sluttberegningInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidragV2>()
     val bidragJustertForDeltBosted = andelDeltBosted != null
     return DokumentmalSluttberegningBarnebidragDetaljer(
-        bidragJustertNedTilEvne = andelAvBidragsevne?.innhold?.harBPFullEvne != null && !andelAvBidragsevne.innhold.harBPFullEvne,
+        bidragJustertNedTilEvne = erBidragJusterNedTilEvne(grunnlagsreferanseListe),
         nettoBidragEtterSamværsfradrag = beregnetBeløp ?: BigDecimal.ZERO,
         uMinusNettoBarnetilleggBM = bidragTilFordeling?.innhold?.uMinusNettoBarnetilleggBM ?: BigDecimal.ZERO,
         bpAndelAvUVedDeltBostedBeløp = andelDeltBosted?.innhold?.bpAndelAvUVedDeltBostedBeløp ?: BigDecimal.ZERO,
