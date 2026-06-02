@@ -42,7 +42,7 @@ private val sluttberegningAvslagResultaterV2 =
         Resultatkode.BARNET_ER_SELVFORSØRGET,
     )
 
-fun List<GrunnlagDto>.erBidragJusterNedTilEvne(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Boolean {
+fun List<GrunnlagDto>.erBidragJustertNedTilEvne(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Boolean {
     val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return false
     if (sluttberegning.erSluttberegningGammelStruktur()) {
         val sbInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidrag>()
@@ -54,13 +54,13 @@ fun List<GrunnlagDto>.erBidragJusterNedTilEvne(grunnlagsreferanseListe: List<Gru
             Grunnlagstype.DELBEREGNING_ANDEL_AV_BIDRAGSEVNE,
             sluttberegning.grunnlagsreferanseListe,
         ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
-    val bidragsevne =
+    val delberegningBidragsevne =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragsevne>(
             Grunnlagstype.DELBEREGNING_BIDRAGSEVNE,
             sluttberegning.grunnlagsreferanseListe,
         ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
     return !andelAvBidragsevne.innhold.harBPFullEvne &&
-        bidragsevne.innhold.beløp <= bidragsevne.innhold.sumInntekt25Prosent
+        delberegningBidragsevne.innhold.beløp <= delberegningBidragsevne.innhold.sumInntekt25Prosent
 }
 
 fun List<GrunnlagDto>.erBidragJustertNedTil25ProsentAvInntekt(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Boolean {
@@ -81,7 +81,7 @@ fun List<GrunnlagDto>.erBidragJustertNedTil25ProsentAvInntekt(grunnlagsreferanse
             sluttberegning.grunnlagsreferanseListe,
         ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse } ?: return false
     return !andelAvBidragsevne.innhold.harBPFullEvne && evne25prosentAvInntekt.innhold.erEvneJustertNedTil25ProsentAvInntekt &&
-        !erBidragJusterNedTilEvne(grunnlagsreferanseListe)
+        !erBidragJustertNedTilEvne(grunnlagsreferanseListe)
 }
 
 fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Resultatkode? {
@@ -124,7 +124,7 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
         ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
     val nettoBidragEtterBarnetilleggBM =
         bidragTilFordeling?.innhold?.bidragTilFordeling?.subtract(samværsfradrag?.innhold?.beløp ?: BigDecimal.ZERO) ?: BigDecimal.ZERO
-    val bidragJustertNedTilEvne = erBidragJusterNedTilEvne(grunnlagsreferanseListe)
+    val bidragJustertNedTilEvne = erBidragJustertNedTilEvne(grunnlagsreferanseListe)
     val bidragJustertNedTil25ProsentAvInntekt = erBidragJustertNedTil25ProsentAvInntekt(grunnlagsreferanseListe)
     val bidragJustertForDeltBosted = andelDeltBosted != null
     val sluttberegningInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidragV2>()
