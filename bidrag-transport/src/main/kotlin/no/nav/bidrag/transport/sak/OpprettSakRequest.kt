@@ -15,7 +15,6 @@ class OpprettSakRequest(
     val ansatt: Boolean = false,
     val inhabilitet: Boolean = false,
     val levdeAdskilt: Boolean = false,
-    val paragraf19: Boolean = false,
     @field:Schema(description = "Kovensjonskode tilsvarende kodene i T_KODE_KONVENSJON.")
     val konvensjon: Konvensjon? = null,
     val konvensjonsdato: LocalDate? = null,

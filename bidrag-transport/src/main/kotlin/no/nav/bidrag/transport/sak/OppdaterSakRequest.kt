@@ -22,7 +22,6 @@ data class OppdaterSakRequest(
     val ansatt: Boolean? = null,
     val inhabilitet: Boolean? = null,
     val levdeAdskilt: Boolean? = null,
-    val paragraf19: Boolean? = null,
     val sanertDato: LocalDate? = null,
     val arbeidsfordeling: Arbeidsfordeling? = null,
     val kategorikode: Sakskategori? = null,
