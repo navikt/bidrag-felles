@@ -2,6 +2,8 @@ package no.nav.bidrag.commons.service.slack
 
 import com.slack.api.Slack
 import com.slack.api.methods.MethodsClient
+import com.slack.api.model.block.Blocks.section
+import com.slack.api.model.block.composition.BlockCompositions.markdownText
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
@@ -34,13 +36,17 @@ class SlackService(
     ): SlackMelding =
         try {
             val response =
-                client.chatPostMessage {
-                    it
-                        .channel(channel)
-                        .threadTs(threadTs)
-                        .text(melding)
-                        .markdownText(markdownTekst)
-                        .mrkdwn(markdownTekst != null)
+                client.chatPostMessage { req ->
+                    req.channel(channel).threadTs(threadTs).text(melding).also {
+                        if (markdownTekst != null) {
+                            it.blocks(
+                                listOf(
+                                    section { s -> s.text(markdownText(melding)) },
+                                    section { s -> s.text(markdownText(markdownTekst)) },
+                                ),
+                            )
+                        }
+                    }
                 }
 
             if (response.isOk) {
