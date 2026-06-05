@@ -17,7 +17,6 @@ data class OppdaterSakResponse(
     val ansatt: Boolean,
     val inhabilitet: Boolean,
     val levdeAdskilt: Boolean,
-    val paragraf19: Boolean,
     val sanertDato: LocalDate?,
     val arbeidsfordeling: Arbeidsfordeling = Arbeidsfordeling.EIERENHET,
     val landkode: Landkode?,

@@ -19,8 +19,6 @@ data class BidragssakDto(
     val saksstatus: Bidragssakstatus,
     @Schema(description = "Kategorikode: 'N' eller 'U'")
     val kategori: Sakskategori,
-    @Schema(description = "Om saken omhandler paragraf 19")
-    val erParagraf19: Boolean = false,
     @Schema(description = "Om saken inneholder personer med diskresjonskode")
     val begrensetTilgang: Boolean = false,
     val opprettetDato: LocalDate,
