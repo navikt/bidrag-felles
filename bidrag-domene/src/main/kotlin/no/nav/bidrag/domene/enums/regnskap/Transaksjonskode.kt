@@ -14,7 +14,7 @@ enum class Transaksjonskode(
     A4(null, false, "Forskudd utbetaling"),
     A5(null, false, "Forskudd feilutbetaling"),
     A6(null, false, "Forskudd erstatningsutbetaling"),
-    A7(null, false, "Forskudd returføring utbetalin"),
+    A7(null, false, "Forskudd returføring utbetaling"),
     A10(null, false, "Midlertidig forskuddsats"),
     B1("B3", false, "Underholdsbidrag (m/u tilleggsbidrag)"),
     B2(null, false, "Privat bidrag korrigering"),
