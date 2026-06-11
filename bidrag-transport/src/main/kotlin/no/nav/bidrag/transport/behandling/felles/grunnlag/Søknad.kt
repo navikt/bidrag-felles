@@ -52,4 +52,5 @@ data class VirkningstidspunktGrunnlag(
 
 data class BehandlingDetaljerGrunnlag(
     val opprettetForholdsmessigFordeling: Boolean,
+    val ikkeFattetVedtakForRevurderingsbarnBegrunnelse: String? = null,
 ) : GrunnlagInnhold
