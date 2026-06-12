@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.behandling.Behandlingstema
 import no.nav.bidrag.domene.enums.behandling.Behandlingstype
@@ -52,5 +53,19 @@ data class VirkningstidspunktGrunnlag(
 
 data class BehandlingDetaljerGrunnlag(
     val opprettetForholdsmessigFordeling: Boolean,
-    val ikkeFattetVedtakForRevurderingsbarnBegrunnelse: String? = null,
+    val fatteVedtakRevurderingsbarn: FatteVedtakRevurderingsbarn? = null,
 ) : GrunnlagInnhold
+
+data class FatteVedtakRevurderingsbarn(
+    val foreslåttFatteVedtak: Boolean = false,
+    val manueltOverstyrtForslagBegrunnelse: String? = null,
+) {
+    @get:JsonIgnore
+    val skalFatteVedtakForRevurderingsbarn get() =
+        if (foreslåttFatteVedtak) {
+            manueltOverstyrtForslagBegrunnelse == null
+        } else {
+            manueltOverstyrtForslagBegrunnelse !=
+                null
+        }
+}
