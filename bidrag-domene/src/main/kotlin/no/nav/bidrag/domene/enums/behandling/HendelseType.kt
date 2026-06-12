@@ -1,11 +1,12 @@
 package no.nav.bidrag.domene.enums.behandling
 
 import io.swagger.v3.oas.annotations.media.Schema
+import kotlin.enums.enumEntries
 
 // Enum verdier av tabellen T_KODE_HEND_TYPE i bisys
 @Schema(enumAsRef = true)
 enum class HendelseType(
-    val bisysKode: String,
+    val kode: String,
     val gyldig: Boolean = true,
 ) {
     AVSLUTTET("ASLU"),
@@ -128,7 +129,7 @@ enum class HendelseType(
     companion object {
         fun fraKode(kode: String): HendelseType? =
             try {
-                enumValues<HendelseType>().find { res -> res.bisysKode == kode } ?: HendelseType.valueOf(kode)
+                HendelseType.entries.find { it.kode == kode } ?: HendelseType.valueOf(kode)
             } catch (e: Exception) {
                 null
             }
