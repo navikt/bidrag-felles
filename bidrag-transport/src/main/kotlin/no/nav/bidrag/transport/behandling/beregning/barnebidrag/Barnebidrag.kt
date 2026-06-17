@@ -131,6 +131,7 @@ data class BidragsberegningResultatBarnV2(
     val resultatVedtakListe: List<ResultatVedtakV2> = emptyList(),
     @Deprecated("Skal ikke brukes. Erstatt med avvisning")
     val beregningsfeil: Exception? = null,
+    val fatteVedtakAnbefalt: Boolean = false,
 )
 
 data class ResultatVedtakV2(
