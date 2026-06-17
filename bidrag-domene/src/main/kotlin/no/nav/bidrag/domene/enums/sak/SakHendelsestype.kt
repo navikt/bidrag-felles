@@ -2,6 +2,11 @@
 
 package no.nav.bidrag.domene.enums.sak
 
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonValue
+import io.swagger.v3.oas.annotations.media.Schema
+
+@Schema(enumAsRef = true)
 enum class SakHendelsestype(
     private val beskrivelse: String,
     val gyldig: Boolean,
@@ -109,6 +114,20 @@ enum class SakHendelsestype(
     VEUM("Vedtak Utl.myndigh.", true),
     VEVE("Vedtak Verge", true),
     ;
+
+    @get:JsonValue
+    val enumName: String
+        get() {
+            return this.name
+        }
+
+    companion object {
+        @JsonCreator
+        fun parse(kode: String): SakHendelsestype =
+            requireNotNull(entries.find { it.name == kode }) {
+                "${SakHendelsestype::class.java.simpleName}: inneholder ikke $kode"
+            }
+    }
 
     override fun toString(): String = beskrivelse
 }
