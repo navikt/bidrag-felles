@@ -29,8 +29,7 @@ data class BeregnetBarnebidragResultatV2(
     val søknadsbarnreferanse: Grunnlagsreferanse,
     val beregnetBarnebidragResultat: BeregnetBarnebidragResultat,
     val fatteVedtakAnbefalt: Boolean = false,
-
-    )
+)
 
 @Schema(description = "Resultatet av en beregning for en gitt periode - barnebidrag")
 data class ResultatPeriode(
