@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.vedtak.response
 
+import no.nav.bidrag.domene.enums.behandling.Behandlingstype
 import no.nav.bidrag.domene.enums.behandling.TypeBehandling
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.beregning.Resultatkode.Companion.erDirekteAvslag
@@ -15,12 +16,14 @@ import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadDto
 import no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadPeriodeDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetaljerGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.BehandlingDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BeløpshistorikkGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BeløpshistorikkPeriode
 import no.nav.bidrag.transport.behandling.felles.grunnlag.GrunnlagDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.Grunnlagsreferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.InnholdMedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.ResultatFraVedtakGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.SamværsperiodeGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningBarnebidragAldersjustering
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningIndeksregulering
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SøknadGrunnlag
@@ -39,10 +42,16 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.personObjekt
 import no.nav.bidrag.transport.behandling.vedtak.Stønadsendring
 import no.nav.bidrag.transport.felles.tilVisningsnavn
+import no.nav.bidrag.transport.felles.toLocalDate
 import no.nav.bidrag.transport.felles.toYearMonth
 import java.time.LocalDate
 import java.time.YearMonth
 
+val Behandlingstype.erForholdsmessigFordeling get() =
+    listOf(
+        Behandlingstype.FORHOLDSMESSIG_FORDELING,
+        Behandlingstype.FORHOLDSMESSIG_FORDELING_KLAGE,
+    ).contains(this)
 val VedtakForStønad.virkningstidspunkt get() = stønadsendring.periodeListe.minOfOrNull { it.periode.fom }
 val Vedtakstype.erIndeksEllerAldersjustering get() = listOf(Vedtakstype.ALDERSJUSTERING, Vedtakstype.INDEKSREGULERING).contains(this)
 val VedtakDto.saksnummer get() = stønadsendringListe.firstOrNull()?.sak?.verdi ?: engangsbeløpListe.firstOrNull()?.sak?.verdi
@@ -474,3 +483,34 @@ fun VedtakDto.finnSistePeriodeLøpendePeriodeInnenforVirkningstidspunkt(stønads
 
 fun VedtakDto.løpteBidragEllerForskuddFraVirkningstidspunkt(stønadsid: Stønadsid): Boolean =
     finnSistePeriodeLøpendePeriodeInnenforVirkningstidspunkt(stønadsid) != null
+
+internal fun List<GrunnlagDto>.hentBehandlingDetaljer(): BehandlingDetaljerGrunnlag? =
+    filtrerOgKonverterBasertPåEgenReferanse<BehandlingDetaljerGrunnlag>(Grunnlagstype.BEHANDLING_DETALJER).firstOrNull()?.innhold
+
+internal fun List<GrunnlagDto>.hentSøknader(gjelderReferanse: String? = null): List<SøknadGrunnlag> =
+    filtrerBasertPåEgenReferanse(Grunnlagstype.SØKNAD)
+        .filter {
+            gjelderReferanse.isNullOrEmpty() || it.gjelderBarnReferanse == gjelderReferanse || it.gjelderReferanse == gjelderReferanse
+        }.map { it.innholdTilObjekt<SøknadGrunnlag>() }
+
+internal fun List<GrunnlagDto>.hentSamvær(gjelderReferanse: String): List<SamværsperiodeGrunnlag> =
+    filtrerBasertPåEgenReferanse(Grunnlagstype.SAMVÆRSPERIODE)
+        .filter {
+            it.gjelderBarnReferanse == gjelderReferanse || it.gjelderReferanse == gjelderReferanse
+        }.map { it.innholdTilObjekt<SamværsperiodeGrunnlag>() }
+
+fun List<GrunnlagDto>.harOpprettetForholdsmessigFordeling(): Boolean =
+    hentBehandlingDetaljer()?.opprettetForholdsmessigFordeling == true ||
+        // Opprettet FF
+        hentSøknader().any {
+            it.behandlingstype?.erForholdsmessigFordeling == true
+        } ||
+        // Opprett FF når alle barna er i samme søknad. Tilfelle hvor det er valgt ulik virkningstidspunkt for barna
+        filtrerOgKonverterBasertPåEgenReferanse<VirkningstidspunktGrunnlag>(Grunnlagstype.VIRKNINGSTIDSPUNKT).any {
+            if (it.gjelderBarnReferanse == null) return@any false
+            val minsteSamværsperiode = hentSamvær(it.gjelderBarnReferanse!!).minOfOrNull { it.periode.fom } ?: return@any false
+            it.innhold.virkningstidspunkt < minsteSamværsperiode.toLocalDate()
+        } ||
+        // Flere søknader = Opprettet FF vanligvis
+        // TODO: Sjekk om dette gir er fortsatt gyldig i fremtiden? Hvis det skal være mulig å behandle flere søknader i samme behandling feks
+        hentSøknader().size > 1
