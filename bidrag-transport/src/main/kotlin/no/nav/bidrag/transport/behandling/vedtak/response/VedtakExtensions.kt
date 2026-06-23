@@ -306,7 +306,7 @@ fun List<GrunnlagDto>.finnSøknadGrunnlagForBarn(søknadsbarnreferanse: String):
 
 fun VedtakDto.erInnkrevingsgrunnlag(): Boolean {
     val søknad = this.grunnlagListe.finnSøknadGrunnlag()
-    return søknad != null && søknad.innkrevingsgrunnlag
+    return (søknad != null && søknad.innkrevingsgrunnlag)
 }
 
 fun List<GrunnlagDto>.finnOrkestreringDetaljer(
@@ -374,6 +374,17 @@ val VedtakDto.referertVedtaksid get() =
             se.periodeListe.firstNotNullOfOrNull { p ->
                 val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
                 if (resultatFraAnnenVedtak?.omgjøringsvedtak == true) resultatFraAnnenVedtak.vedtaksid else null
+            }
+        } ?: run {
+            if (type == Vedtakstype.INNKREVING) {
+                stønadsendringListe.firstNotNullOfOrNull { se ->
+                    se.periodeListe.firstNotNullOfOrNull { p ->
+                        val resultatFraAnnenVedtak = this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe)
+                        resultatFraAnnenVedtak?.vedtaksid
+                    }
+                }
+            } else {
+                null
             }
         }
     } else if (erDelvedtak) {
