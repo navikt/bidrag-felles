@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Import
 import org.springframework.context.annotation.Scope
+import java.time.Duration
 
 @Configuration
 @Import(
@@ -18,5 +19,8 @@ class RestOperationsMaskinporten {
     fun restOperationsMaskinporten(
         restTemplateBuilder: RestTemplateBuilder,
         maskinportenBearerTokenClientInterceptor: MaskinportenBearerTokenClientInterceptor,
-    ) = restTemplateBuilder.additionalInterceptors(maskinportenBearerTokenClientInterceptor).build()
+    ) = restTemplateBuilder
+        .additionalInterceptors(maskinportenBearerTokenClientInterceptor)
+        .readTimeout(Duration.ofMinutes(1))
+        .build()
 }
