@@ -58,6 +58,9 @@ data class BehandlingDetaljerGrunnlag(
 
 data class FatteVedtakRevurderingsbarn(
     val foreslåttFatteVedtak: Boolean = false,
+    // Tilfeller hvor BP har full evne i alle perioder.
+    // Da skal ikke saksbehandler få valg om å fatte vedtak for revurderingsbarn fordi det ikke gjøres noe beregning for revurderingsbarn
+    val kunneFatteVedtak: Boolean = true,
     val manueltOverstyrtForslagBegrunnelse: String? = null,
 ) {
     @get:JsonIgnore
