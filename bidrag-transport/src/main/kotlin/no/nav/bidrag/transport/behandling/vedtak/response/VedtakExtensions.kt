@@ -12,8 +12,6 @@ import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.sak.Stønadsid
 import no.nav.bidrag.domene.tid.Datoperiode
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
-import no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadDto
-import no.nav.bidrag.transport.behandling.belopshistorikk.response.StønadPeriodeDto
 import no.nav.bidrag.transport.behandling.felles.grunnlag.AldersjusteringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BeløpshistorikkGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.BeløpshistorikkPeriode
@@ -26,15 +24,18 @@ import no.nav.bidrag.transport.behandling.felles.grunnlag.SluttberegningIndeksre
 import no.nav.bidrag.transport.behandling.felles.grunnlag.SøknadGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VedtakOrkestreringDetaljerGrunnlag
 import no.nav.bidrag.transport.behandling.felles.grunnlag.VirkningstidspunktGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.erRevurderingsbarn
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåEgenReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.filtrerOgKonverterBasertPåFremmedReferanse
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe
 import no.nav.bidrag.transport.behandling.felles.grunnlag.finnSluttberegningBarnebidragGrunnlagIReferanser
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentAldersjusteringDetaljerGrunnlag
+import no.nav.bidrag.transport.behandling.felles.grunnlag.hentBehandlingDetaljer
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdent
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedIdentKonvertert
 import no.nav.bidrag.transport.behandling.felles.grunnlag.hentPersonMedReferanseKonvertert
+import no.nav.bidrag.transport.behandling.felles.grunnlag.hentSøknadForPerson
 import no.nav.bidrag.transport.behandling.felles.grunnlag.innholdTilObjekt
 import no.nav.bidrag.transport.behandling.felles.grunnlag.personObjekt
 import no.nav.bidrag.transport.behandling.vedtak.Stønadsendring
@@ -483,5 +484,30 @@ fun VedtakDto.finnSistePeriodeLøpendePeriodeInnenforVirkningstidspunkt(stønads
     }
 }
 
+fun VedtakDto.hentStønadsendringForSøknad(søknadsid: Long?) =
+    stønadsendringListe.filter {
+        val søknad = grunnlagListe.hentSøknadForPerson(it.kravhaver, it.type)
+        søknad == null || søknadsid == null || søknadsid == søknad.søknadsid
+    }
+
 fun VedtakDto.løpteBidragEllerForskuddFraVirkningstidspunkt(stønadsid: Stønadsid): Boolean =
     finnSistePeriodeLøpendePeriodeInnenforVirkningstidspunkt(stønadsid) != null
+
+fun VedtakDto.tilhørerRevurderingsbarn(stønadsendring: StønadsendringDto): Boolean {
+    val person = grunnlagListe.hentPersonMedIdent(stønadsendring.kravhaver.verdi, stønadsendring.type)
+    return person != null && person.erRevurderingsbarn
+}
+
+fun VedtakDto.erTrukketFFRevurdering(søknadsid: Long?): Boolean {
+    val stønadsendringerSøknad = hentStønadsendringForSøknad(søknadsid).filter { tilhørerRevurderingsbarn(it) }
+    return stønadsendringerSøknad.isNotEmpty() &&
+        stønadsendringerSøknad.all {
+            it.beslutning == Beslutningstype.AVVIST
+        }
+}
+
+val VedtakDto.inneholderRevurderingsbarn get() =
+    stønadsendringListe.isNotEmpty() &&
+        stønadsendringListe.any {
+            tilhørerRevurderingsbarn(it)
+        }

@@ -172,6 +172,7 @@ fun BaseGrunnlag.erPerson(): Boolean = type.name.startsWith("PERSON_")
 val BaseGrunnlag.personObjekt get() = commonObjectmapper.treeToValue(innhold, Person::class.java)!!
 val BaseGrunnlag.personIdent get() = personObjekt.ident?.verdi
 val BaseGrunnlag.stønadstype get() = personObjekt.stønadstype
+val BaseGrunnlag.erRevurderingsbarn get() = !personObjekt.delAvOpprinneligBehandling
 val Collection<BaseGrunnlag>.bidragspliktig
     get() =
         find { it.type == Grunnlagstype.PERSON_BIDRAGSPLIKTIG }
@@ -430,3 +431,6 @@ fun List<BaseGrunnlag>.hentAldersjusteringDetaljerGrunnlag(grunnlagsreferanseLis
         Grunnlagstype.ALDERSJUSTERING_DETALJER,
         grunnlagsreferanseListe = grunnlagsreferanseListe,
     ).firstOrNull()
+
+fun List<BaseGrunnlag>.hentBehandlingDetaljer(): BehandlingDetaljerGrunnlag? =
+    filtrerOgKonverterBasertPåEgenReferanse<BehandlingDetaljerGrunnlag>(Grunnlagstype.BEHANDLING_DETALJER).firstOrNull()?.innhold
