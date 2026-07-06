@@ -498,12 +498,22 @@ fun VedtakDto.tilhørerRevurderingsbarn(stønadsendring: StønadsendringDto): Bo
     return person != null && person.erRevurderingsbarn
 }
 
+/**
+ * Om det er trukkett FF revurdering enten for det var full evne i alle perioder
+ * Eller fordi saksbehandler manuelt overstyrte å ikke fatte vedtak for revurderingsbarna
+ */
 fun VedtakDto.erTrukketFFRevurdering(søknadsid: Long?): Boolean {
     val stønadsendringerSøknad = hentStønadsendringForSøknad(søknadsid).filter { tilhørerRevurderingsbarn(it) }
-    return stønadsendringerSøknad.isNotEmpty() &&
-        stønadsendringerSøknad.all {
-            it.beslutning == Beslutningstype.AVVIST
-        }
+    val behandlingsdetaljer = grunnlagListe.hentBehandlingDetaljer()
+    return if (behandlingsdetaljer?.fatteVedtakRevurderingsbarn != null) {
+        behandlingsdetaljer.fatteVedtakRevurderingsbarn.bleFFTrukket ||
+            !behandlingsdetaljer.fatteVedtakRevurderingsbarn.skalFatteVedtakForRevurderingsbarn
+    } else {
+        stønadsendringerSøknad.isNotEmpty() &&
+            stønadsendringerSøknad.all {
+                it.beslutning == Beslutningstype.AVVIST
+            }
+    }
 }
 
 val VedtakDto.inneholderRevurderingsbarn get() =
