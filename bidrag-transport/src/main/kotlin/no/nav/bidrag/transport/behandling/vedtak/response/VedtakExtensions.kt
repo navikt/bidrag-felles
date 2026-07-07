@@ -503,14 +503,18 @@ fun VedtakDto.tilhørerRevurderingsbarn(stønadsendring: StønadsendringDto): Bo
  * Eller fordi saksbehandler manuelt overstyrte å ikke fatte vedtak for revurderingsbarna
  */
 fun VedtakDto.erTrukketFFRevurdering(søknadsid: Long?): Boolean {
-    val stønadsendringerSøknad = hentStønadsendringForSøknad(søknadsid).filter { tilhørerRevurderingsbarn(it) }
+    val stønadsendringerRevurderingsbarn = hentStønadsendringForSøknad(søknadsid).filter { tilhørerRevurderingsbarn(it) }
+    if (stønadsendringerRevurderingsbarn.isEmpty() && søknadsid != null) {
+        return false
+    }
+
     val behandlingsdetaljer = grunnlagListe.hentBehandlingDetaljer()
-    return if (behandlingsdetaljer?.fatteVedtakRevurderingsbarn != null) {
+    return if (søknadsid != null && behandlingsdetaljer?.fatteVedtakRevurderingsbarn != null) {
         behandlingsdetaljer.fatteVedtakRevurderingsbarn.bleFFTrukket ||
             !behandlingsdetaljer.fatteVedtakRevurderingsbarn.skalFatteVedtakForRevurderingsbarn
     } else {
-        stønadsendringerSøknad.isNotEmpty() &&
-            stønadsendringerSøknad.all {
+        stønadsendringerRevurderingsbarn.isNotEmpty() &&
+            stønadsendringerRevurderingsbarn.all {
                 it.beslutning == Beslutningstype.AVVIST
             }
     }
