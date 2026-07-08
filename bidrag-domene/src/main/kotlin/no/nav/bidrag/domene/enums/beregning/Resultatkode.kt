@@ -104,6 +104,7 @@ enum class Resultatkode(
     BIDRAGSPLIKTIG_ER_DØD(
         listOf(BisysResultatkode("BPD")),
         ResultatkodeType.BARNEBIDRAG,
+        ResultatkodeType.OPPHØR,
         ResultatkodeType.AVSLAG,
         ResultatkodeType.DIREKTE_AVSLAG,
     ),

@@ -29,6 +29,7 @@ data class BeregnetBarnebidragResultatV2(
     val søknadsbarnreferanse: Grunnlagsreferanse,
     val beregnetBarnebidragResultat: BeregnetBarnebidragResultat,
     val fatteVedtakAnbefalt: Boolean = false,
+    val avvistRevurderingsbarn: Boolean = false,
 )
 
 @Schema(description = "Resultatet av en beregning for en gitt periode - barnebidrag")
@@ -133,6 +134,7 @@ data class BidragsberegningResultatBarnV2(
     @Deprecated("Skal ikke brukes. Erstatt med avvisning")
     val beregningsfeil: Exception? = null,
     val fatteVedtakAnbefalt: Boolean = false,
+    val avvistRevurderingsbarn: Boolean = false,
 )
 
 data class ResultatVedtakV2(

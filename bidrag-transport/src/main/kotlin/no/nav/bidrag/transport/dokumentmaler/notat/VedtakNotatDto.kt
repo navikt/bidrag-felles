@@ -750,6 +750,9 @@ data class NotatVedtakDetaljerDto(
     val erFattet: Boolean,
     val fattetAvSaksbehandler: String?,
     val fattetTidspunkt: LocalDateTime?,
+    val kanFatteVedtakForRevurderingsbarn: Boolean = false,
+    val skalFatteVedtakForRevurderingsbarn: Boolean = false,
+    val manueltOverstyrtFatteVedtakRevurderingsbarnBegrunnelse: String? = null,
     val resultat: List<VedtakResultatInnhold>,
 )
 

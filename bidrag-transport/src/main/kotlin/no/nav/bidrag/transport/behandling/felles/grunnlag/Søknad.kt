@@ -1,5 +1,6 @@
 package no.nav.bidrag.transport.behandling.felles.grunnlag
 
+import com.fasterxml.jackson.annotation.JsonAlias
 import com.fasterxml.jackson.annotation.JsonIgnore
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.behandling.Behandlingstema
@@ -58,8 +59,15 @@ data class BehandlingDetaljerGrunnlag(
 
 data class FatteVedtakRevurderingsbarn(
     val foreslåttFatteVedtak: Boolean = false,
+    // Tilfeller hvor BP har full evne i alle perioder.
+    // Da skal ikke saksbehandler få valg om å fatte vedtak for revurderingsbarn fordi det ikke gjøres noe beregning for revurderingsbarn
+    @get:JsonAlias("kunneFatteVedtak")
+    val bleFFTrukket: Boolean = true,
     val manueltOverstyrtForslagBegrunnelse: String? = null,
 ) {
+    @get:JsonIgnore
+    val kunneFatteVedtak get() = !bleFFTrukket
+
     @get:JsonIgnore
     val skalFatteVedtakForRevurderingsbarn get() =
         if (foreslåttFatteVedtak) {

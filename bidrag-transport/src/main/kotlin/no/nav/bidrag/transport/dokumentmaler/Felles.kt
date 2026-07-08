@@ -66,6 +66,7 @@ data class DokumentmalResultatBidragsberegningBarnDto(
 ) : VedtakResultatInnhold(NotatMalType.BIDRAG) {
     data class ResultatBarnebidragsberegningPeriodeDto(
         val periode: ÅrMånedsperiode,
+        val erSistePeriode: Boolean = false,
         val underholdskostnad: BigDecimal = BigDecimal.ZERO,
         val bpsAndelU: BigDecimal = BigDecimal.ZERO,
         val bpsAndelBeløp: BigDecimal = BigDecimal.ZERO,
@@ -375,15 +376,10 @@ data class DokumentmalPersonDto(
 )
 
 data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
-    val sumBidragTilFordeling: BigDecimal,
-    val finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn: Boolean,
-    val sumBidragTilFordelingSøknadsbarn: BigDecimal,
-    val sumBidragTilFordelingIkkeSøknadsbarn: BigDecimal,
-    val sumBidragTilFordelingPrivatAvtale: BigDecimal,
-    val sumBidragSomIkkeKanFordeles: BigDecimal,
+    val beregningFordelingAvBidragSjekkEvnesprekk: DokumentmalForholdsmessigFordelingBidragTilFordeling?,
+    val beregningFordelingAvBidrag: DokumentmalForholdsmessigFordelingBidragTilFordeling,
     val sumBidragTilFordelingJustertForPrioriterteBidrag: BigDecimal,
     val evneJustertForPrioriterteBidrag: BigDecimal,
-    val sumPrioriterteBidragTilFordeling: BigDecimal,
     val bidragTilFordelingForBarnet: BigDecimal,
     val andelAvSumBidragTilFordelingFaktor: BigDecimal,
     val andelAvEvneBeløp: BigDecimal,
@@ -391,6 +387,17 @@ data class DokumentmalForholdsmessigFordelingBeregningsdetaljer(
     val harBPFullEvne: Boolean,
     val erKompletteGrunnlagForAlleLøpendeBidrag: Boolean,
     val erForholdsmessigFordelt: Boolean,
+    val bidragTilFordelingAlle: List<DokumentmalForholdsmessigFordelingBidragTilFordelingBarn> = emptyList(),
+)
+
+data class DokumentmalForholdsmessigFordelingBidragTilFordeling(
+    val sumBidragTilFordeling: BigDecimal,
+    val sumBidragTilFordelingSøknadsbarn: BigDecimal,
+    val sumBidragTilFordelingIkkeSøknadsbarn: BigDecimal,
+    val sumBidragTilFordelingPrivatAvtale: BigDecimal,
+    val sumBidragSomIkkeKanFordeles: BigDecimal,
+    val sumPrioriterteBidragTilFordeling: BigDecimal,
+    val finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn: Boolean,
     val bidragTilFordelingAlle: List<DokumentmalForholdsmessigFordelingBidragTilFordelingBarn> = emptyList(),
 )
 
