@@ -71,6 +71,8 @@ data class OmgjøringOrkestratorGrunnlag(
     // Om det skal innkreves. Utfører ikke aldersjustering/indeksregulering hvis ingen innkreving
     val skalInnkreves: Boolean,
     val erBeregningsperiodeLøpende: Boolean,
+    // Hvis null så er det beregningen som bestemmer om det skal fattes vedtak
+    val skalFatteVedtakForRevurderingsbarn: Boolean? = null,
 )
 
 data class OmgjøringorkestratorManuellAldersjustering(
