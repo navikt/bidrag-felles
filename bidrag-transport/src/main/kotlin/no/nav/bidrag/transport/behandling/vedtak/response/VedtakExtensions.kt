@@ -433,17 +433,19 @@ val VedtakDto.omgjøringsvedtakErEnesteVedtak get() =
                     resultatFraVedtak != null && resultatFraVedtak.omgjøringsvedtak
                 }
         }
-val VedtakDto.erOrkestrertVedtak get() =
-    (this.grunnlagListe.finnOrkestreringDetaljer() != null) || (
-        this.stønadsendringListe.isNotEmpty() && !this.erInnkrevingsgrunnlag() &&
-            this.stønadsendringListe.all { se ->
-                se.beslutning != Beslutningstype.DELVEDTAK &&
-                    se.periodeListe.isNotEmpty() &&
-                    se.periodeListe.all { p ->
-                        this.grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
-                    }
-            }
-    )
+val VedtakDto.erOrkestrertVedtak get(): Boolean {
+    if (erTrukketFFRevurdering()) return false
+    if (grunnlagListe.finnOrkestreringDetaljer() != null) return true
+    return stønadsendringListe.isNotEmpty() &&
+        !erInnkrevingsgrunnlag() &&
+        stønadsendringListe.all { se ->
+            se.beslutning != Beslutningstype.DELVEDTAK &&
+                se.periodeListe.isNotEmpty() &&
+                se.periodeListe.all { p ->
+                    grunnlagListe.finnResultatFraAnnenVedtak(p.grunnlagReferanseListe) != null
+                }
+        }
+}
 
 fun List<GrunnlagDto>.hentGrunnlagBeløpshistorikkForRolle(stønadsid: Stønadsid) =
     when (stønadsid.type) {
@@ -502,7 +504,7 @@ fun VedtakDto.tilhørerRevurderingsbarn(stønadsendring: StønadsendringDto): Bo
  * Om det er trukkett FF revurdering enten for det var full evne i alle perioder
  * Eller fordi saksbehandler manuelt overstyrte å ikke fatte vedtak for revurderingsbarna
  */
-fun VedtakDto.erTrukketFFRevurdering(søknadsid: Long?): Boolean {
+fun VedtakDto.erTrukketFFRevurdering(søknadsid: Long? = null): Boolean {
     val stønadsendringerRevurderingsbarn = hentStønadsendringForSøknad(søknadsid).filter { tilhørerRevurderingsbarn(it) }
     if (stønadsendringerRevurderingsbarn.isEmpty() && søknadsid != null) {
         return false
@@ -514,9 +516,12 @@ fun VedtakDto.erTrukketFFRevurdering(søknadsid: Long?): Boolean {
             !behandlingsdetaljer.fatteVedtakRevurderingsbarn.skalFatteVedtakForRevurderingsbarn
     } else {
         stønadsendringerRevurderingsbarn.isNotEmpty() &&
-            stønadsendringerRevurderingsbarn.all {
-                it.beslutning == Beslutningstype.AVVIST
-            }
+            (
+                stønadsendringerRevurderingsbarn.all {
+                    it.beslutning == Beslutningstype.AVVIST
+                } || // Hvis alle tilhører R-barn så betyr det at vedtaket er splittet pga trukket FF
+                    stønadsendringListe.all { tilhørerRevurderingsbarn(it) }
+            )
     }
 }
 
