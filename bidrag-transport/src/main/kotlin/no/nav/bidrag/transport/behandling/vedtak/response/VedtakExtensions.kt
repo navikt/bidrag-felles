@@ -293,6 +293,11 @@ fun StønadsendringDto.finnSøknadsbarnReferanse(grunnlagListe: List<GrunnlagDto
 
 fun VedtakDto.erVedtaksforslag() = vedtakstidspunkt == null
 
+fun List<GrunnlagDto>.finnSøknadGrunnlagForSøknadsid(søknadsid: Long): SøknadGrunnlag? =
+    filtrerOgKonverterBasertPåEgenReferanse<SøknadGrunnlag>(
+        Grunnlagstype.SØKNAD,
+    ).find { it.innhold.søknadsid == søknadsid }?.innhold
+
 fun List<GrunnlagDto>.finnSøknadGrunnlag(): SøknadGrunnlag? =
     filtrerOgKonverterBasertPåEgenReferanse<SøknadGrunnlag>(
         Grunnlagstype.SØKNAD,
@@ -494,6 +499,12 @@ fun VedtakDto.hentStønadsendringForSøknad(søknadsid: Long?) =
 
 fun VedtakDto.løpteBidragEllerForskuddFraVirkningstidspunkt(stønadsid: Stønadsid): Boolean =
     finnSistePeriodeLøpendePeriodeInnenforVirkningstidspunkt(stønadsid) != null
+
+fun VedtakDto.søknadGjelderRevurdering(søknadsId: Long?): Boolean {
+    if (søknadsId == null) return false
+    val søknad = grunnlagListe.finnSøknadGrunnlagForSøknadsid(søknadsId) ?: return false
+    return søknad.behandlingstype?.erForholdsmessigFordeling() ?: false
+}
 
 fun VedtakDto.tilhørerRevurderingsbarn(stønadsendring: StønadsendringDto): Boolean {
     val person = grunnlagListe.hentPersonMedIdent(stønadsendring.kravhaver.verdi, stønadsendring.type)
