@@ -440,6 +440,7 @@ val VedtakDto.omgjøringsvedtakErEnesteVedtak get() =
         }
 val VedtakDto.erOrkestrertVedtak get(): Boolean {
     if (erTrukketFFRevurdering()) return false
+    if (grunnlagListe.finnOrkestreringDetaljer() != null) return true
     return stønadsendringListe.isNotEmpty() &&
         !erInnkrevingsgrunnlag() &&
         stønadsendringListe.all { se ->
