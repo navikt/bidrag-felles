@@ -60,6 +60,12 @@ enum class Behandlingstype(
             BEGRENSET_REVURDERING,
         ).contains(this)
 
+    fun erForholdsmessigFordeling() =
+        listOf(
+            FORHOLDSMESSIG_FORDELING,
+            FORHOLDSMESSIG_FORDELING_KLAGE,
+        ).contains(this)
+
     companion object {
         fun fraKode(kode: String): Behandlingstype? =
             try {
