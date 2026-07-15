@@ -59,6 +59,13 @@ data class BehandlingInfoResponseDto(
     val behandlingType: BehandlingType? = null,
     val erFattet: Boolean? = null,
     val barnIBehandling: List<String>? = null,
+    val barnIBehandlingDetaljer: List<ForsendelseBarnIBehandlingDto> = emptyList(),
+)
+
+data class ForsendelseBarnIBehandlingDto(
+    val ident: String,
+    val erRevurderingsbarn: Boolean = false,
+    val erBidrag18År: Boolean = false,
 )
 
 @Schema(description = "Metadata om forsendelse")
