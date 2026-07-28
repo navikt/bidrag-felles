@@ -58,13 +58,14 @@ data class BidragsberegningOrkestratorRequest(
 
 @Schema(description = "Grunnlag for orkestrering av aldersjustering")
 data class OmgjøringOrkestratorGrunnlag(
-    @Schema(description = "Id til stønad")
+    @get:Schema(description = "Id til stønad")
     val stønad: Stønadsid,
-    @Schema(description = "Vedtaksid til påklaget vedtak")
-    @JsonAlias("påklagetVedtakId")
+    @get:Schema(description = "Vedtaksid til originale vedtak som ble fattet")
     val omgjørVedtakId: Int,
+    @get:Schema(description = "Vedtaksid til påklaget vedtak")
+    val påklagetVedtakId: Int,
     val manuellAldersjustering: List<OmgjøringorkestratorManuellAldersjustering> = emptyList(),
-    @Schema(description = "Om behandlingen gjelder paragraf35c")
+    @get:Schema(description = "Om behandlingen gjelder paragraf35c")
     val gjelderParagraf35c: Boolean = false,
     // Om det er klage eller en omgjøring. Bestemmer hvilken vedtakstype som skal brukes i delvedtakene
     val gjelderKlage: Boolean = false,

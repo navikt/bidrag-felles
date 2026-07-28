@@ -40,6 +40,7 @@ data class SøknadGrunnlag(
     // Søknadsid og saksnummer er nyttig ved FF hvor vedtak kan inneholde flere søknader
     val søknadsid: Long? = null,
     val saksnummer: String? = null,
+    val behandlerenhet: String? = null,
 ) : GrunnlagInnhold
 
 data class VirkningstidspunktGrunnlag(
