@@ -15,6 +15,8 @@ import java.net.http.HttpClient
 import java.net.http.HttpRequest
 import java.net.http.HttpRequest.BodyPublishers.ofString
 import java.net.http.HttpResponse.BodyHandlers.ofString
+import java.net.http.HttpTimeoutException
+import java.time.Duration
 
 /**
  * Maskinporten brukes for å sikre autentisering og tilgangskontroll for datautveksling mellom ulike virksomheter.
@@ -49,7 +51,11 @@ class MaskinportenClient(
 
     private val maskinportenTokenGenerator = MaskinportenTokenGenerator(maskinportenConfig)
 
-    private val httpClient = HttpClient.newBuilder().build()
+    private val httpClient =
+        HttpClient
+            .newBuilder()
+            .connectTimeout(Duration.ofSeconds(maskinportenConfig.connectTimeoutInSeconds))
+            .build()
     private val objectMapper = ObjectMapper().registerModule(KotlinModule.Builder().build())
 
     private val maskinportenTokenCache: LoadingCache<String, MaskinportenTokenCache> =
@@ -61,10 +67,7 @@ class MaskinportenClient(
         val cache =
             maskinportenTokenCache.get(scope) { nyttScope: String ->
                 MaskinportenTokenCache(hentNyttJwtToken(nyttScope))
-            } ?: error(
-                "Feil ved henting eller opprettelse av cached scope for maskinporten-token! " +
-                    "Scope: $scope, cache content: $maskinportenTokenCache",
-            )
+            }
         return cache.run {
             maskinportenToken ?: renew(hentNyttJwtToken(scope))
         }
@@ -74,10 +77,7 @@ class MaskinportenClient(
         val cache =
             maskinportenTokenCache.get(maskinportenConfig.scope) { nyttScope: String ->
                 MaskinportenTokenCache(hentNyttJwtToken(nyttScope))
-            } ?: error(
-                "Feil ved henting eller opprettelse av cached scope for maskinporten-token! " +
-                    "Scope: ${maskinportenConfig.scope}, cache content: $maskinportenTokenCache",
-            )
+            }
         return cache.run {
             maskinportenToken ?: renew(hentNyttJwtToken(maskinportenConfig.scope))
         }
@@ -89,13 +89,17 @@ class MaskinportenClient(
         backoff = Backoff(delay = 2000),
     )
     private fun hentNyttJwtToken(scope: String): String =
-        httpClient.send(opprettMaskinportenTokenRequest(scope), ofString()).run {
-            if (statusCode() != 200) {
-                throw MaskinportenClientException(
-                    "Feil ved henting av token: Status: ${statusCode()} , Body: ${body()}",
-                )
+        try {
+            httpClient.send(opprettMaskinportenTokenRequest(scope), ofString()).run {
+                if (statusCode() != 200) {
+                    throw MaskinportenClientException(
+                        "Feil ved henting av token: Status: ${statusCode()} , Body: ${body()}",
+                    )
+                }
+                mapTilMaskinportenResponseBody(body()).access_token
             }
-            mapTilMaskinportenResponseBody(body()).access_token
+        } catch (e: HttpTimeoutException) {
+            throw MaskinportenClientException("Timeout ved henting av token fra maskinporten: ${e.message}")
         }
 
     private fun mapTilMaskinportenResponseBody(body: String): MaskinportenTokenResponse =
@@ -109,6 +113,7 @@ class MaskinportenClient(
         HttpRequest
             .newBuilder()
             .uri(URI.create(maskinportenConfig.tokenUrl))
+            .timeout(Duration.ofSeconds(maskinportenConfig.requestTimeoutInSeconds))
             .header("Content-Type", CONTENT_TYPE)
             .POST(ofString(opprettRequestBody(maskinportenTokenGenerator.genererJwtToken(scope))))
             .build()

@@ -13,4 +13,6 @@ data class MaskinportenConfig
         val scope: String,
         val privateKey: String,
         val validInSeconds: Int,
+        val connectTimeoutInSeconds: Long = 30,
+        val requestTimeoutInSeconds: Long = 60,
     )
