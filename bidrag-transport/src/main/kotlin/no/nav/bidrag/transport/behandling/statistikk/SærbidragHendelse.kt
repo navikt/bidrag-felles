@@ -15,6 +15,7 @@ data class SærbidragHendelse(
     val skyldner: String,
     val kravhaver: String,
     val mottaker: String,
+    val referanse: String,
     val beløp: BigDecimal?, // Skyldners andel av godkjent beløp
     val valutakode: String?,
     val resultat: String,
@@ -23,6 +24,7 @@ data class SærbidragHendelse(
     val historiskVedtak: Boolean,
     val kravbeløp: BigDecimal?, // Beløpet mottaker ba om
     val godkjentBeløp: BigDecimal?, // Beløpet som ble godkjent av saksbehandler
+    val betaltBeløp: BigDecimal?, // Beløpet som eventuelt er betalt tidligere av skyldner
     val bPInntektListe: List<Inntekt>?,
     val bMInntektListe: List<Inntekt>?,
 )
