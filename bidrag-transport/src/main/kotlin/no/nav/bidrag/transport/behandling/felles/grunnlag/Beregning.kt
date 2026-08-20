@@ -42,15 +42,15 @@ private val sluttberegningAvslagResultaterV2 =
         Resultatkode.BARNET_ER_SELVFORSØRGET,
     )
 
-fun List<GrunnlagDto>.finnBPsEvne(grunnlagsreferanseListe: List<Grunnlagsreferanse>): BigDecimal {
-    val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return BigDecimal.ZERO
+fun List<GrunnlagDto>.finnBPsEvne(grunnlagsreferanseListe: List<Grunnlagsreferanse>): BigDecimal? {
+    val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return null
     val gjelderSøknadsbarnReferanse = sluttberegning.gjelderBarnReferanse
     val delberegningBidragsevne =
         finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragsevne>(
             Grunnlagstype.DELBEREGNING_BIDRAGSEVNE,
             sluttberegning.grunnlagsreferanseListe,
         ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
-            ?: return BigDecimal.ZERO
+            ?: return null
     return delberegningBidragsevne.innhold.beløp
 }
 
@@ -169,7 +169,7 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
             Resultatkode.BIDRAG_JUSTERT_FOR_DELT_BOSTED
         }
 
-        bpsEvne <= BigDecimal.ZERO -> {
+        bpsEvne != null && bpsEvne <= BigDecimal.ZERO -> {
             Resultatkode.INGEN_BIDRAGSEVNE
         }
 
