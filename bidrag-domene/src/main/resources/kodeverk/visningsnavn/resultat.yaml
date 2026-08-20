@@ -186,6 +186,8 @@ MAKS_25_PROSENT_AV_INNTEKT:
   intern: "Maks 25 prosent av inntekt"
 MANGLER_BIDRAGSEVNE:
     intern: "Mangler bidragsevne"
+INGEN_BIDRAGSEVNE:
+    intern: "Ingen bidragsevne"
 KOSTNADSBEREGNET_BIDRAG:
   intern: "Kostnadsberegnet bidrag"
 

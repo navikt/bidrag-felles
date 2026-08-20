@@ -350,6 +350,10 @@ enum class Resultatkode(
         listOf(BisysResultatkode("6MB")),
         ResultatkodeType.BARNEBIDRAG,
     ),
+    INGEN_BIDRAGSEVNE(
+        listOf(BisysResultatkode("0MB")),
+        ResultatkodeType.BARNEBIDRAG,
+    ),
     KOSTNADSBEREGNET_BIDRAG(
         listOf(BisysResultatkode("KBB")),
         ResultatkodeType.BARNEBIDRAG,
