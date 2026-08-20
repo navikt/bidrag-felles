@@ -42,6 +42,18 @@ private val sluttberegningAvslagResultaterV2 =
         Resultatkode.BARNET_ER_SELVFORSØRGET,
     )
 
+fun List<GrunnlagDto>.finnBPsEvne(grunnlagsreferanseListe: List<Grunnlagsreferanse>): BigDecimal {
+    val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return BigDecimal.ZERO
+    val gjelderSøknadsbarnReferanse = sluttberegning.gjelderBarnReferanse
+    val delberegningBidragsevne =
+        finnOgKonverterGrunnlagSomErReferertFraGrunnlagsreferanseListe<DelberegningBidragsevne>(
+            Grunnlagstype.DELBEREGNING_BIDRAGSEVNE,
+            sluttberegning.grunnlagsreferanseListe,
+        ).firstOrNull { gjelderSøknadsbarnReferanse == null || it.gjelderBarnReferanse == gjelderSøknadsbarnReferanse }
+            ?: return BigDecimal.ZERO
+    return delberegningBidragsevne.innhold.beløp
+}
+
 fun List<GrunnlagDto>.erBidragJustertNedTilEvne(grunnlagsreferanseListe: List<Grunnlagsreferanse>): Boolean {
     val sluttberegning = finnSluttberegningIReferanser(grunnlagsreferanseListe) ?: return false
     if (sluttberegning.erSluttberegningGammelStruktur()) {
@@ -125,6 +137,7 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
     val nettoBidragEtterBarnetilleggBM =
         bidragTilFordeling?.innhold?.bidragTilFordeling?.subtract(samværsfradrag?.innhold?.beløp ?: BigDecimal.ZERO) ?: BigDecimal.ZERO
     val bidragJustertNedTilEvne = erBidragJustertNedTilEvne(grunnlagsreferanseListe)
+    val bpsEvne = finnBPsEvne(grunnlagsreferanseListe)
     val bidragJustertNedTil25ProsentAvInntekt = erBidragJustertNedTil25ProsentAvInntekt(grunnlagsreferanseListe)
     val bidragJustertForDeltBosted = andelDeltBosted != null
     val sluttberegningInnhold = sluttberegning.innholdTilObjekt<SluttberegningBarnebidragV2>()
@@ -154,6 +167,10 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
 
         bidragJustertForDeltBosted -> {
             Resultatkode.BIDRAG_JUSTERT_FOR_DELT_BOSTED
+        }
+
+        bpsEvne <= BigDecimal.ZERO -> {
+            Resultatkode.INGEN_BIDRAGSEVNE
         }
 
         bidragJustertNedTilEvne -> {
