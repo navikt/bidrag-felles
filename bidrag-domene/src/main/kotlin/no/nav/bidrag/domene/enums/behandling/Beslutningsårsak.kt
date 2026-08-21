@@ -157,6 +157,7 @@ enum class Beslutningsårsak(
     TRUKKET_FORHOLDSMESSIG_FORDELING("AFF", "Trukket forholdsmessig fordeling"),
     AVSLAG_PARTENE_BOR_SAMMEN("APB", "Avslag, partene bor sammen"),
     OPPHØR_PARTENE_BOR_SAMMEN("OPS", "Opphør, partene bor sammen"),
+    INGEN_EVNE("0MB", "Ingen evne"),
     ;
 
     companion object {
