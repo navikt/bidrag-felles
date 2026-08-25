@@ -1,8 +1,6 @@
 package no.nav.bidrag.transport.behandling.statistikk
 
 import no.nav.bidrag.domene.enums.særbidrag.Særbidragskategori
-import no.nav.bidrag.domene.enums.vedtak.Engangsbeløptype
-import no.nav.bidrag.domene.enums.vedtak.Stønadstype
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
@@ -25,6 +23,7 @@ data class SærbidragHendelse(
     val kravbeløp: BigDecimal?, // Beløpet mottaker ba om
     val godkjentBeløp: BigDecimal?, // Beløpet som ble godkjent av saksbehandler
     val betaltBeløp: BigDecimal?, // Beløpet som eventuelt er betalt tidligere av skyldner
-    val bPInntektListe: List<Inntekt>?,
-    val bMInntektListe: List<Inntekt>?,
+    val skyldnerInntektListe: List<Inntekt>?,
+    val mottakerInntektListe: List<Inntekt>?,
+    val kravhaverInntektListe: List<Inntekt>?,
 )
