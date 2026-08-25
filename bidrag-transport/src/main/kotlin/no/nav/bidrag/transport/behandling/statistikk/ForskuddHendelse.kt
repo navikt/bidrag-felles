@@ -23,6 +23,7 @@ data class ForskuddPeriode(
     val barnetsAldersgruppe: String?,
     val antallBarnIEgenHusstand: Double?,
     val sivilstand: String?,
-    val barnBorMedBM: Boolean?,
-    val inntektListe: List<Inntekt>,
+    val barnBorMedMottaker: Boolean?,
+    val mottakerInntektListe: List<Inntekt>,
+    val kravhaverInntektListe: List<Inntekt>?,
 )

@@ -2,7 +2,6 @@ package no.nav.bidrag.transport.behandling.statistikk
 
 import no.nav.bidrag.domene.enums.beregning.Samværsklasse
 import no.nav.bidrag.domene.enums.vedtak.Stønadstype
-import no.nav.bidrag.transport.behandling.statistikk.Inntekt
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -29,14 +28,15 @@ data class BidragPeriode(
     val resultat: String,
     val bidragsevne: BigDecimal?,
     val underholdskostnad: BigDecimal?,
-    val bPsAndelUnderholdskostnad: BigDecimal?,
+    val skyldnersAndelUnderholdskostnad: BigDecimal?,
     val nettoTilsynsutgift: BigDecimal?,
     val faktiskUtgift: BigDecimal?,
     val samværsfradrag: BigDecimal?,
-    val nettoBarnetilleggBP: BigDecimal?,
-    val nettoBarnetilleggBM: BigDecimal?,
-    val bPBorMedAndreVoksne: Boolean?,
+    val nettoBarnetilleggSkyldner: BigDecimal?,
+    val nettoBarnetilleggMottaker: BigDecimal?,
+    val skyldnerBorMedAndreVoksne: Boolean?,
     val samværsklasse: Samværsklasse?,
-    val bPInntektListe: List<Inntekt>?,
-    val bMInntektListe: List<Inntekt>?,
+    val skyldnerInntektListe: List<Inntekt>?,
+    val mottakerInntektListe: List<Inntekt>?,
+    val kravhaverInntektListe: List<Inntekt>?,
 )
