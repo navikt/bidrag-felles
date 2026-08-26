@@ -182,7 +182,7 @@ fun List<GrunnlagDto>.resultatSluttberegning(grunnlagsreferanseListe: List<Grunn
         }
 
         bidragTilFordeling?.innhold?.uMinusNettoBarnetilleggBM == nettoBidragEtterBarnetilleggBM
-        -> {
+            -> {
             Resultatkode.BIDRAG_JUSTERT_FOR_NETTO_BARNETILLEGG_BM
         }
 
@@ -495,6 +495,18 @@ data class DelberegningBidragTilFordelingLøpendeBidrag(
     @Schema(description = "Er dette et oppfostringsbidrag?")
     val erOppfostringsbidrag: Boolean = false,
 ) : Delberegning
+
+data class FatteVedtakResultat(
+    val erRevurderingsbarn: Boolean = false,
+    val skalFatteVedtak: Boolean = true,
+    val ingenOverlappendePerioderMedSøknadsbarn: Boolean = false,
+)
+
+data class DelberegningFatteVedtak(
+    override val periode: ÅrMånedsperiode,
+    val fatteVedtakResultat: FatteVedtakResultat
+) : Delberegning
+
 
 // ---------- Deprekerte verdier. Skal ikke slettes helt til vedtak databasen er konvertert i PROD --------------------------
 
