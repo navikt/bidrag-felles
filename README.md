@@ -1,6 +1,11 @@
 # Bidrag felles
 Felles biblioteker som brukes av applikasjoner utviklet av bidrag.
 
+## ⚠️ DETTE REPOET ER FLYTTET
+
+> **Dette repoet er flyttet til [navikt/bidrag-backend](https://github.com/navikt/bidrag-backend).**
+> Bruk det nye repoet for videre utvikling — dette repoet oppdateres ikke lenger.
+
 [![Release Drafter](https://github.com/navikt/bidrag-felles/actions/workflows/release-draft.yaml/badge.svg?branch=main)](https://github.com/navikt/bidrag-felles/actions/workflows/release-draft.yaml)
 [![Publish](https://github.com/navikt/bidrag-felles/actions/workflows/publish.yaml/badge.svg?branch=main)](https://github.com/navikt/bidrag-felles/actions/workflows/publish.yaml)
 
