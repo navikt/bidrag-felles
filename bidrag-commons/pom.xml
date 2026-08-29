@@ -43,7 +43,7 @@
     <httpclient5.version>5.5.1</httpclient5.version>
     <token-support.version>6.0.8</token-support.version>
     <jackson.fasterXml.version>2.16.0</jackson.fasterXml.version>
-    <aspectj.version>1.9.24</aspectj.version>
+    <aspectj.version>1.9.25.1</aspectj.version>
     <micrometer-registry.version>1.15.2</micrometer-registry.version>
     <slack-api.version>1.49.0</slack-api.version>
 
